@@ -126,69 +126,34 @@
 </script>
 
 <div id="home-page-outer">
-<s:if test="role == 'ADMIN'">
-    <div id="stat-preferences">
-        <table border="0" width="100%" cellpadding="5" cellspacing="5">
-            <tr bgcolor="#eeeeee">
-                <th colspan="5" align="left">Custom Search</th>
-            </tr>
-            <tr>
-                <td width="20%" align="right">District</td>
-                <td width="30%" align="left">
-                    <s:select id="district" name="districtId" list="districtList"/>
-                </td>
-                <td width="20%" align="right">DSDivision</td>
-                <td width="30%" align="left">
-                    <s:select id="dsDivision" name="dsDivisionId" list="divisionList"/>
-                </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td align="right">Start Date</td>
-                <td align="left">
-                    <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
-                </td>
-                <td align="right">End Date</td>
-                <td align="left">
-                    <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
-                </td>
-                <td class="button" align="right"><s:submit id="search_button" align="right" value="Search"/></td>
-            </tr>
-        </table>
-    </div>
-</s:if>
-<s:else>
-    <%--<s:if test="role != 'DEO'">--%>
-    <div id="stat-preferences">
-        <table border="0" width="100%" cellpadding="5" cellspacing="5">
-            <tr bgcolor="#eeeeee">
-                <th colspan="5" align="left">Custom Search</th>
-            </tr>
-            <tr>
-                <td width="20%" align="right">District</td>
-                <td width="30%" align="left">
-                    <s:select id="district" name="districtId" list="districtList"/>
-                </td>
-                <td width="20%" align="right">DSDivision</td>
-                <td width="30%" align="left">
-                    <s:select id="dsDivision" name="dsDivisionId" list="divisionList"/>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">Start Date</td>
-                <td align="left">
-                    <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
-                </td>
-                <td align="right">End Date</td>
-                <td align="left">
-                    <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
-                </td>
-                <td class="button"><s:submit id="search_button" align="right" value="Search"/></td>
-            </tr>
-        </table>
-    </div>
-    <%--</s:if>--%>
-</s:else>
+<div id="stat-preferences">
+    <table border="0" width="100%" cellpadding="5" cellspacing="5">
+        <tr bgcolor="#eeeeee">
+            <th colspan="5" align="left">Custom Search</th>
+        </tr>
+        <tr>
+            <td width="20%" align="right">District</td>
+            <td width="30%" align="left">
+                <s:select id="district" name="districtId" list="districtList"/>
+            </td>
+            <td width="20%" align="right">DSDivision</td>
+            <td width="30%" align="left">
+                <s:select id="dsDivision" name="dsDivisionId" list="divisionList"/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Start Date</td>
+            <td align="left">
+                <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
+            </td>
+            <td align="right">End Date</td>
+            <td align="left">
+                <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
+            </td>
+            <td class="button"><s:submit id="search_button" align="right" value="Search"/></td>
+        </tr>
+    </table>
+</div>
 
 <div id="statpane">
 <s:if test="role == 'DEO' || role == 'ADR' || role == 'DR'">
@@ -196,7 +161,7 @@
         <div id="stat-birth">
             <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center">
                 <tr>
-                    <td colspan="4"><b>Birth Statistics</b></td>
+                    <td colspan="4" class="topic"><b>Birth Statistics</b></td>
                 </tr>
                 <tr>
                     <td width="25%">Total Approval Pending :
@@ -204,7 +169,7 @@
                         &nbsp;&nbsp;&nbsp;Total Approved Items :
                         <input type="text" id="approved_b" readonly="true" maxlength="6"/>
                     </td>
-                    <td width="25%">Arrears :
+                    <td width="25%" class="pending">Arrears :
                         <input type="text" id="arrears_b" readonly="true" maxlength="6"/>
                     </td>
                     <td width="50%" colspan="2" rowspan="6">
@@ -221,7 +186,7 @@
                     <td>Total Submitted Items :
                         <input type="text" id="total_submitted_b" readonly="true" maxlength="6"/>
                     </td>
-                    <td>Late Items :
+                    <td class="pending">Late Items :
                         <input type="text" id="late_b" readonly="true" maxlength="6"/>
                     </td>
                 </tr>
@@ -237,7 +202,7 @@
         <div id="stat-death">
             <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center">
                 <tr>
-                    <td colspan="4"><b>Death Statistics</b></td>
+                    <td colspan="4" class="topic"><b>Death Statistics</b></td>
                 </tr>
                 <tr>
                     <td width="25%">Total Approval Pending :
@@ -245,7 +210,7 @@
                         &nbsp;&nbsp;&nbsp;Total Approved Items :
                         <input type="text" id="approved_d" readonly="true" maxlength="6"/>
                     </td>
-                    <td width="25%">Arrears :
+                    <td width="25%" class="pending">Arrears :
                         <input type="text" id="arrears_d" readonly="true" maxlength="6"/>
                     </td>
                     <td width="50%" colspan="2" rowspan="6">
@@ -262,7 +227,7 @@
                     <td>Total Submitted Items :
                         <input type="text" id="total_submitted_d" readonly="true" maxlength="6"/>
                     </td>
-                    <td>Late Items :
+                    <td class="pending">Late Items :
                         <input type="text" id="late_d" readonly="true" maxlength="6"/>
                     </td>
                 </tr>
@@ -278,7 +243,7 @@
         <div id="stat-marriage">
             <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center">
                 <tr>
-                    <td colspan="4"><b>Marriage Statistics</b></td>
+                    <td colspan="4" class="topic"><b>Marriage Statistics</b></td>
                 </tr>
                 <tr>
                     <td width="25%">Total Approval Pending :
@@ -286,7 +251,7 @@
                         &nbsp;&nbsp;&nbsp;Total Approved Items :
                         <input type="text" id="approved_m" readonly="true" maxlength="6"/>
                     </td>
-                    <td width="25%">Arrears :
+                    <td width="25%" class="pending">Arrears :
                         <input type="text" id="arrears_m" readonly="true" maxlength="6"/>
                     </td>
                     <td width="50%" colspan="2" rowspan="6">
@@ -303,7 +268,7 @@
                     <td>Total Submitted Items :
                         <input type="text" id="total_submitted_m" readonly="true" maxlength="6"/>
                     </td>
-                    <td>Late Items :
+                    <td class="pending">Late Items :
                         <input type="text" id="late_m" readonly="true" maxlength="6"/>
                     </td>
                 </tr>
@@ -340,9 +305,9 @@
                             <td>
                                 <input type="text" id="all_pending_b" readonly="true" maxlength="6"/>
                             </td>
-                            <td align="right">Arrears</td>
+                            <td align="right" class="pending">Arrears</td>
                             <td>:</td>
-                            <td>
+                            <td class="pending">
                                 <input type="text" id="arrears_b" readonly="true" maxlength="6"/>
                             </td>
                         </tr>
@@ -360,9 +325,9 @@
                             <td>
                                 <input type="text" id="total_submitted_b" readonly="true" maxlength="6"/>
                             </td>
-                            <td align="right">Late Items</td>
+                            <td align="right" class="pending">Late Items</td>
                             <td>:</td>
-                            <td>
+                            <td class="pending">
                                 <input type="text" id="late_b" readonly="true" maxlength="6"/>
                             </td>
                         </tr>
@@ -384,9 +349,9 @@
                             <td>
                                 <input type="text" id="all_pending_d" readonly="true" maxlength="6"/>
                             </td>
-                            <td align="right">Arrears</td>
+                            <td align="right" class="pending">Arrears</td>
                             <td>:</td>
-                            <td>
+                            <td class="pending">
                                 <input type="text" id="arrears_d" readonly="true" maxlength="6"/>
                             </td>
                         </tr>
@@ -404,9 +369,9 @@
                             <td>
                                 <input type="text" id="total_submitted_d" readonly="true" maxlength="6"/>
                             </td>
-                            <td align="right">Late Items</td>
+                            <td align="right" class="pending">Late Items</td>
                             <td>:</td>
-                            <td>
+                            <td class="pending">
                                 <input type="text" id="late_d" readonly="true" maxlength="6"/>
                             </td>
                         </tr>
@@ -428,9 +393,9 @@
                             <td>
                                 <input type="text" id="all_pending_m" readonly="true" maxlength="6"/>
                             </td>
-                            <td align="right">Arrears</td>
+                            <td align="right" class="pending">Arrears</td>
                             <td>:</td>
-                            <td>
+                            <td class="pending">
                                 <input type="text" id="arrears_m" readonly="true" maxlength="6"/>
                             </td>
                         </tr>
@@ -448,9 +413,9 @@
                             <td>
                                 <input type="text" id="total_submitted_m" readonly="true" maxlength="6"/>
                             </td>
-                            <td align="right">Late Items</td>
+                            <td align="right" class="pending">Late Items</td>
                             <td>:</td>
-                            <td>
+                            <td class="pending">
                                 <input type="text" id="late_m" readonly="true" maxlength="6"/>
                             </td>
                         </tr>

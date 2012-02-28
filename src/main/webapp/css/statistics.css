@@ -80,3 +80,30 @@
     width: 48px;
     border: none;
 }
+
+.pending {
+    color: red;
+}
+
+.pending input {
+    color: red;
+}
+
+#stat-title {
+    height: 35px;
+    background-color: #A9D0F5;
+    padding: 10px;
+    color: #08088A;
+    font-size: 14px;
+    font-weight: lighter;
+}
+
+.topic {
+    height: 30px;
+    /*border: #000 1px solid;*/
+    background-color: #E0FFFF;
+    text-align: center;
+    /*padding-top: 10px;*/
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;*/
+}
