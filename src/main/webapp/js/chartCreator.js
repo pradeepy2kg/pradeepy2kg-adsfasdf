@@ -18,12 +18,14 @@ function StatObject() {
     this.approved_d = 0;
     this.arrears_pend_d = 0;
     this.thismonth_pend_d = 0;
+    this.total_submitted_d = 0;
     this.late_m = 0;
     this.normal_m = 0;
     this.rejected_m = 0;
     this.approved_m = 0;
     this.arrears_pend_m = 0;
     this.thismonth_pend_m = 0;
+    this.total_submitted_m = 0;
 }
 
 var html_code = "<i><font color='red'>No Data Available</font></i>";
@@ -145,7 +147,7 @@ function drawChart(data) {
                         "Arrears",
                         "This Month",
                         "birth-bar"
-                        );
+                );
             }
         }
 
@@ -166,7 +168,7 @@ function drawChart(data) {
                         "Arrears",
                         "This Month",
                         "death-bar"
-                        );
+                );
             }
         }
 
@@ -185,7 +187,7 @@ function drawChart(data) {
                         "Arrears",
                         "This Month",
                         "mrg-bar"
-                        );
+                );
             }
         }
 
@@ -201,8 +203,12 @@ function drawChart(data) {
 
         var ele = document.getElementById("total_submitted_b");
         if (ele != null) {
-            document.getElementById("total_submitted_b").setAttribute("value", (data.late_b + data.normal_b));
-//            document.getElementById("total_submitted_b").setAttribute("value", (data.total_submitted_b));
+            document.getElementById("total_submitted_b").setAttribute("value", data.total_submitted_b);
+        }
+
+        var ele = document.getElementById("approved_b");
+        if (ele != null) {
+            document.getElementById("approved_b").setAttribute("value", (data.approved_b));
         }
 
         var ele = document.getElementById("late_b");
@@ -221,8 +227,14 @@ function drawChart(data) {
 
         var ele = document.getElementById("total_submitted_d");
         if (ele != null) {
-            document.getElementById("total_submitted_d").setAttribute("value", (data.late_d + data.normal_d));
+            document.getElementById("total_submitted_d").setAttribute("value", data.total_submitted_d);
         }
+
+        var ele = document.getElementById("approved_d");
+        if (ele != null) {
+            document.getElementById("approved_d").setAttribute("value", (data.approved_d));
+        }
+
         var ele = document.getElementById("late_d");
         if (ele != null) {
             document.getElementById("late_d").setAttribute("value", data.late_d);
@@ -239,8 +251,14 @@ function drawChart(data) {
 
         var ele = document.getElementById("total_submitted_m");
         if (ele != null) {
-            document.getElementById("total_submitted_m").setAttribute("value", (data.late_m + data.normal_m));
+            document.getElementById("total_submitted_m").setAttribute("value", data.total_submitted_m);
         }
+
+        var ele = document.getElementById("approved_m");
+        if (ele != null) {
+            document.getElementById("approved_m").setAttribute("value", (data.approved_m));
+        }
+
         var ele = document.getElementById("late_m");
         if (ele != null) {
             document.getElementById("late_m").setAttribute("value", data.late_m);
@@ -263,7 +281,7 @@ function drawChart(data) {
                         "Arrears",
                         "This Month",
                         "chart1"
-                        );
+                );
             }
         }
 
@@ -291,15 +309,19 @@ function drawChart(data) {
                         "Late",
                         "Normal",
                         "chart2"
-                        );
+                );
             }
         }
 
-//        var ele = document.getElementById("total_submitted_b");
-//        if (ele != null) {
-//            document.getElementById("total_submitted_b").setAttribute("value", (data.late_b + data.normal_b));
-////            document.getElementById("total_submitted_b").setAttribute("value", (data.total_submitted_b));
-//        }
+        var ele = document.getElementById("total_submitted_b");
+        if (ele != null) {
+            document.getElementById("total_submitted_b").setAttribute("value", data.total_submitted_b);
+        }
+
+        var ele = document.getElementById("approved_b");
+        if (ele != null) {
+            document.getElementById("approved_b").setAttribute("value", (data.approved_b));
+        }
 
         var ele = document.getElementById("late_b");
         if (ele != null) {
@@ -324,7 +346,7 @@ function drawChart(data) {
                         "Arrears",
                         "This Month",
                         "chart4"
-                        );
+                );
             }
         }
         var ele = document.getElementById("all_pending_d");
@@ -351,14 +373,20 @@ function drawChart(data) {
                         "Late",
                         "Normal",
                         "chart5"
-                        );
+                );
             }
         }
 
         var ele = document.getElementById("total_submitted_d");
         if (ele != null) {
-            document.getElementById("total_submitted_d").setAttribute("value", (data.late_d + data.normal_d));
+            document.getElementById("total_submitted_d").setAttribute("value", data.total_submitted_d);
         }
+
+        var ele = document.getElementById("approved_d");
+        if (ele != null) {
+            document.getElementById("approved_d").setAttribute("value", (data.approved_d));
+        }
+
         var ele = document.getElementById("late_d");
         if (ele != null) {
             document.getElementById("late_d").setAttribute("value", data.late_d);
@@ -380,7 +408,7 @@ function drawChart(data) {
                         "Arrears",
                         "This Month",
                         "chart7"
-                        );
+                );
             }
         }
         var ele = document.getElementById("all_pending_m");
@@ -407,14 +435,20 @@ function drawChart(data) {
                         "Late",
                         "Normal",
                         "chart8"
-                        );
+                );
             }
         }
 
         var ele = document.getElementById("total_submitted_m");
         if (ele != null) {
-            document.getElementById("total_submitted_m").setAttribute("value", (data.late_m + data.normal_m));
+            document.getElementById("total_submitted_m").setAttribute("value", data.total_submitted_m);
         }
+
+        var ele = document.getElementById("approved_m");
+        if (ele != null) {
+            document.getElementById("approved_m").setAttribute("value", (data.approved_m));
+        }
+
         var ele = document.getElementById("late_m");
         if (ele != null) {
             document.getElementById("late_m").setAttribute("value", data.late_m);
@@ -431,27 +465,29 @@ function drawHorizontalBarChart(val_1, val_2, name_1, name_2, position) {
         [val_2, 1]
     ];
     plot = $.jqplot(position, [line1, line2], {
-        stackSeries: true,
-        legend: {show: true},
+        stackSeries:true,
+        legend:{show:true},
         grid:{shadow:false, borderWidth:0.0, show:false},
-        seriesDefaults: {
-            renderer: $.jqplot.BarRenderer,
-            rendererOptions: {barDirection: 'horizontal', barWidth:50},
-            border:false
+        seriesDefaults:{
+            renderer:$.jqplot.BarRenderer,
+            rendererOptions:{barDirection:'horizontal', barWidth:40},
+            border:false,
+            pointLabels:{ show:true }
         },
-        series: [
-            {label: name_1},
-            {label: name_2}
+        series:[
+            {label:name_1},
+            {label:name_2}
         ],
-        seriesColors: [ "#43BFC7", "#8EEBEC" ],
-        axes: {
-            yaxis: {
-                renderer: $.jqplot.CategoryAxisRenderer,
-                ticks: ['.']
+        seriesColors:[ "#43BFC7", "#8EEBEC" ],
+        axes:{
+            yaxis:{
+                renderer:$.jqplot.CategoryAxisRenderer,
+                ticks:[' ']
             },
-            xaxis: {min: 0, max: (val_1 + val_2), numberTicks:5}
+            xaxis:{min:0, max:(val_1 + val_2), numberTicks:5}
         }
     });
+    plot.replot();
 }
 
 function drawPieChart(data, name, bORd) {
@@ -477,21 +513,23 @@ function drawPieChart(data, name, bORd) {
     }
 
     line = [
-        ['Approved',approved],
-        ['Rejected',rejected],
-        ['Approval<br/>Pending',pending]
+        ['Approved', approved],
+        ['Rejected', rejected],
+        ['Approval<br/>Pending', pending]
     ];
     plot = $.jqplot(name, [line], {
-        title: '',
+        title:'',
         seriesDefaults:{
             renderer:$.jqplot.PieRenderer,
-            rendererOptions: {
+            rendererOptions:{
                 // Put data labels on the pie slices. By default, labels show the percentage of the slice.
-                showDataLabels: true
+                showDataLabels:true
             }
         },
         legend:{ show:true }
     });
+
+    plot.replot();
 }
 
 
