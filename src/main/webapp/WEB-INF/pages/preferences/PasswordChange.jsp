@@ -39,12 +39,8 @@
         </tr>
         <tr>
             <td colspan="2">
-                <s:fielderror cssStyle="color:red;font-size:10pt"/>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
                 <s:actionerror cssStyle="color:red;font-size:10pt"/>
+                <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
             </td>
         </tr>
         <tr>
@@ -70,6 +66,7 @@
             <td style="padding-right:30px;">
                 <s:password name="retypeNewPassword" cssStyle="width:100%"/>
             </td>
+            <s:hidden name="fromLogin" value="%{fromLogin}"/>
         </tr>
         <tr>
             <td>&nbsp;</td>
