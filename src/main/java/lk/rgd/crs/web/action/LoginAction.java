@@ -4,7 +4,6 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.*;
-import lk.rgd.common.api.service.StatisticsManager;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.crs.web.Menu;
@@ -51,38 +50,31 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private int SBPendingApprovals;
 
     private Map<Integer, String> districtList;
-    private Set<District> districtListStat;
     private Map<Integer, String> divisionList;
-    private Map<Integer, String> divisionListStat;
 
     private List<String> deoList;
     private List<String> adrList;
 
     private int dsDivisionId;
-    private int dsDivisionIdStat;
     private int districtId;
-    private int districtIdStat;
     private int deoUserId;
     private int adrUserId;
+    private boolean fromLogin;
 
     private String startDate;
     private String endDate;
 
     private Statistics statistics;
     private String role;
-    private final StatisticsDAO statisticsDAO;
-    private final StatisticsManager statisticsManager;
 
     public LoginAction(UserManager userManager, AppParametersDAO appParaDao, DistrictDAO districtDAO,
-        DSDivisionDAO dsDivisionDAO, UserDAO userDAO, RoleDAO roleDAO, StatisticsDAO statisticsDAO, StatisticsManager statisticsManager) {
+        DSDivisionDAO dsDivisionDAO, UserDAO userDAO, RoleDAO roleDAO) {
         this.userManager = userManager;
         this.appParaDao = appParaDao;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.userDAO = userDAO;
         this.roleDAO = roleDAO;
-        this.statisticsDAO = statisticsDAO;
-        this.statisticsManager = statisticsManager;
     }
 
     public Locale getLocale() {
@@ -173,81 +165,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
             /* check if password is expired */
             final String result = checkUserExpiry(user);
-            if (SUCCESS.equals(result)) {
-                String loginSuccess = result + userRole;
-                if ("successRG".equals(loginSuccess) || "successARG".equals(loginSuccess)) {
-                    populateLists(user, WebConstants.USER_ARG);
-                }
-                if ("successDR".equals(loginSuccess) || "successADR".equals(loginSuccess)) {
-                    populateLists(user, userRole);
-                }
 
-                return loginSuccess;   /* Login succeeded */
-            } else {
-                return result;      /* some wrong with password */
-            }
+            return result;
         } catch (Exception e) {
             logger.error("Exception is :P {} {} ", e, e.toString());
             return ERROR;
         }
-    }
-
-    public String showHomeStatistics() {
-
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        User tempUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        logger.debug("Logged user's UserName : {} and Role : {}", user.getUserId(), user.getRole().getName());
-
-        if (Role.ROLE_ADMIN.equalsIgnoreCase(user.getUserId())) {
-            user = userDAO.getUsersByRole(Role.ROLE_RG).get(0);
-        }
-        role = user.getRole().getRoleId();
-
-        statistics = statisticsManager.getStatisticsForUser(user, null, null);
-        if (statistics != null) {
-            if (!statisticsManager.existsStatisticsForUser(user)) {
-                statisticsManager.addStatistics(user, statistics);
-            } else {
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.HOUR, -(cal.get(Calendar.HOUR_OF_DAY) + 1));
-                if (statistics.getCreatedTimestamp().before(cal.getTime())) {
-                    statisticsManager.updateStatistics(user.getUserId(), statistics);
-                }
-            }
-        } else {
-            statistics = new Statistics();
-        }
-
-        // TODO quick fix must to refactor
-//        districtList = new HashMap<Integer, String>();
-//        if (Role.ROLE_ADMIN.equals(role)) {
-//            String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-//            districtList = districtDAO.getAllDistrictNames(language, user);
-//        } else {
-//            String userLang = user.getPrefLanguage();
-//            districtList = districtDAO.getDistrictNames(userLang, user);
-//        }
-//
-//        if (Role.ROLE_RG.equals(user.getRole().getRoleId()) || Role.ROLE_ADMIN.equals(role)) {
-//            districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-//        }
-//
-//        if (districtList.size() > 0) {
-//            districtId = districtList.keySet().iterator().next();
-//        }
-//        divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
-//        if (divisionList.size() > 0) {
-//            dsDivisionId = divisionList.keySet().iterator().next();
-//            deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
-//                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
-//        }
-        deoUserId = 1;
-
-        user = tempUser;
-        userName = user.getUserId();
-        role = user.getRole().getRoleId();
-
-        return SUCCESS;
     }
 
     void populateLists(User user, String userType) {
@@ -340,6 +263,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
         if (gCal.getTime().after(user.getPasswordExpiry())) {
             logger.warn("password has been expired for user :{}", user.getUserName());
+            fromLogin = true;
             return "expired";
         }
 
@@ -600,5 +524,13 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean isFromLogin() {
+        return fromLogin;
+    }
+
+    public void setFromLogin(boolean fromLogin) {
+        this.fromLogin = fromLogin;
     }
 }
