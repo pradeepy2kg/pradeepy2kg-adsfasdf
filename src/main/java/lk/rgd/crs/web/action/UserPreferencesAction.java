@@ -1,28 +1,27 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
-import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.Statistics;
-import lk.rgd.common.api.service.StatisticsManager;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.util.HashUtil;
+import lk.rgd.common.util.WebUtils;
+import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Pattern;
-
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.service.UserManager;
-import lk.rgd.common.util.WebUtils;
-import lk.rgd.common.util.HashUtil;
 
 /**
  * @author Duminda
  * @author amith jayasekara
+ * @author Chathuranga Withana
  */
 public class UserPreferencesAction extends ActionSupport implements SessionAware {
 
@@ -40,16 +39,13 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
-    private final StatisticsDAO statisticsDAO;
     private final UserManager userManager;
-    private final StatisticsManager statisticsManager;
     private static final Logger logger = LoggerFactory.getLogger(UserPreferencesAction.class);
 
     private boolean emptyField;
+    private boolean message;
+    private boolean fromLogin;
     private Pattern pattern;
-
-    private final UserDAO userDAO;
-    private final RoleDAO roleDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
@@ -65,8 +61,8 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private String endDate;
     private String role;
     private Statistics statistics;
-
     private String userRole;
+    private static final String EXPIRED = "expired";
 
     /**
      * following properties are checked by  PASSWORD_PATTERN
@@ -80,25 +76,25 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private static final String PASSWORD_PATTERN =
         "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
 
-    public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager, RoleDAO roleDAO, UserDAO userDAO,
-        StatisticsDAO statisticsDAO, StatisticsManager statisticsManager) {
+    public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.userManager = userManager;
-        this.roleDAO = roleDAO;
-        this.userDAO = userDAO;
-        this.statisticsDAO = statisticsDAO;
-        this.statisticsManager = statisticsManager;
     }
 
     /**
-     * Set the Language that the user preffered to work
-     * And set preffered language to the session
+     * Set the Language that the user preferred to work and set preferred language to the session
      */
-
     public String userPreferenceInit() {
+        populateUserPreferenceInitPage();
+        if (message) {
+            addActionMessage(getText("message.preferences.added"));
+        }
+        return SUCCESS;
+    }
+
+    private void populateUserPreferenceInitPage() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-//        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         userType = user.getRole().getRoleId();
         logger.debug("Role of the {} is  :{}", user.getUserName(), userType);
         if (!(userType.equals(WebConstants.SESSION_USER_ADMIN))) {
@@ -116,26 +112,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
                 dsDivisionId = dsDivisionList.keySet().iterator().next();
             }
         }
-
         role = userType;
-        /*statistics = statisticsDAO.getByUser(user.getUserId());
-        if (statistics == null) {
-            statistics = new Statistics();
-        }
-
-        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-        if (districtList.size() > 0) {
-            districtId = districtList.keySet().iterator().next();
-        }
-        divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
-        if (divisionList.size() > 0) {
-            dsDivisionId = divisionList.keySet().iterator().next();
-            deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
-        }
-        deoUserId = 1;*/
-
-        return "pageload";
     }
 
     public String selectUserPreference() {
@@ -154,13 +131,6 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
         role = user.getRole().getRoleId();
 
-        //statistics = new Statistics();    //todo remove this after performance test
-
-        statistics = statisticsDAO.getByUser(user.getUserId());   //todo uncomment this after performance test
-        if (statistics == null) {
-            statistics = new Statistics();
-        }
-
         districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
         if (districtList.size() > 0) {
             districtId = districtList.keySet().iterator().next();
@@ -168,48 +138,14 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
         if (divisionList.size() > 0) {
             dsDivisionId = divisionList.keySet().iterator().next();
-            deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
         }
         deoUserId = 1;
         userRole = role;
 
-        return SUCCESS;
-    }
-
-    public String showStatistics () {
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        logger.debug("Logged User's UserName : {}", user.getUserId());
-        logger.debug("Logged User's Role : {}", user.getRole());
-        role = user.getRole().getRoleId();
-
-        statistics = statisticsDAO.getByUser(user.getUserId());    //TODO: remove this comments after the performance tests
-        if (statistics == null) {
-            statistics = statisticsManager.getStatisticsForUser(user, null, null);
-            if (statistics == null) {
-                statistics = new Statistics();
-            }
-        }
-
-        //statistics = new Statistics();   // TODO: remove this line after the performance tests
-
-        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-        if (districtList.size() > 0) {                                                                 // TODO: uncomment this after the performance tests
-            districtId = districtList.keySet().iterator().next();
-        }
-        divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
-        if (divisionList.size() > 0) {
-            dsDivisionId = divisionList.keySet().iterator().next();
-            deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
-        }
-        deoUserId = 1;
-        /*adrList = userDAO.getADRsByDistrictId(districtDAO.getDistrict(districtId), roleDAO.getRole(Role.ROLE_ADR));
-        adrUserId = 1;*/
+        populateUserPreferenceInitPage();
 
         return SUCCESS;
     }
-
 
     /**
      * Validate password with regular expression
@@ -232,162 +168,25 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
         if (emptyField) {
             addActionError(getText("emptry.feild.lable"));
-            return "error";
+            return fromLogin ? EXPIRED : ERROR;
         }
         if (!user.getPasswordHash().equals(HashUtil.hashString(existingPassword))) {
             addActionError(getText("existing.password.mismatch.lable"));
-            return "error";
+            return fromLogin ? EXPIRED : ERROR;
         }
         if (!validate(newPassword)) {
             addActionError(getText("password.not.Strong.Enough.lable"));
-            return "error";
+            return fromLogin ? EXPIRED : ERROR;
         }
         if (newPassword.equals(retypeNewPassword)) {
             userManager.updatePassword(newPassword, user);
             String uRole = user.getRole().getRoleId();
             logger.debug("return value of change password method is success{}", uRole);
             addActionMessage(getText("password.changed.success.label"));
-            //return "success" + userRole;
-
-            if (uRole.equals("RG") || uRole.equals("ARG")) {
-                populateLists(user, WebConstants.USER_ARG);
-            }
-            if (uRole.equals("DR") || (uRole).equals("ADR")) {
-                populateLists(user, uRole);
-            }
-
-            role = userType;
-
-            statistics = statisticsDAO.getByUser(user.getUserId());   //TODO: remove this comments after the performance tests
-            if (statistics == null) {
-                statistics = new Statistics();
-            }
-
-            //statistics = new Statistics();  // TODO: remove this line after the performance tests
-
-            districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-            if (districtList.size() > 0) {                                                                    //TODO: remove this comments after the performance tests
-                districtId = districtList.keySet().iterator().next();
-            }
-            divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
-            if (divisionList.size() > 0) {
-                dsDivisionId = divisionList.keySet().iterator().next();
-                deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
-                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
-            }
-            deoUserId = 1;
-            userRole = uRole;
-
-            return SUCCESS + uRole;
-
+            return SUCCESS;
         } else {
             addActionError(getText("password.mismatch.lable"));
-            return ERROR;
-        }
-    }
-
-    public String showPasswordChangeStatistics() {
-
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        logger.debug("Logged User's UserName : {}", user.getUserId());
-        logger.debug("Logged User's Role : {}", user.getRole());
-        role = user.getRole().getRoleId();
-
-        statistics = statisticsDAO.getByUser(user.getUserId());      // TODO: remove this comments after the performance tests
-        if (statistics == null) {
-            statistics = statisticsManager.getStatisticsForUser(user, null, null);
-            if (statistics == null) {
-                statistics = new Statistics();
-            }
-        }
-
-        //statistics = new Statistics();    // TODO: remove this line after the performance tests
-
-        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-        if (districtList.size() > 0) {
-            districtId = districtList.keySet().iterator().next();                              //TODO: remove this comments after the performance tests
-        }
-        divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
-        if (divisionList.size() > 0) {
-            dsDivisionId = divisionList.keySet().iterator().next();
-            deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
-        }
-        deoUserId = 1;
-        /*adrList = userDAO.getADRsByDistrictId(districtDAO.getDistrict(districtId), roleDAO.getRole(Role.ROLE_ADR));
-        adrUserId = 1;*/
-
-        return SUCCESS;
-    }
-
-    void populateLists(User user, String usertype) {
-
-        if (usertype.equals(WebConstants.USER_ARG) || usertype.equals(WebConstants.USER_RG)) {
-            if (districtList == null) {
-                districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
-                logger.debug("district List : {}", districtList.size());
-            }
-
-            if (divisionList == null && districtList != null) {
-                divisionList = dsDivisionDAO.getAllDSDivisionNames(
-                    districtList.keySet().iterator().next(),
-                    user.getPrefLanguage(),
-                    user);
-                logger.debug("division List : {}", divisionList.size());
-            } else {
-                if (districtList == null) {
-                    logger.debug("DistrictList null for user : {}", user.getUserId());
-                }
-            }
-
-        } else if (usertype.toLowerCase().equals(WebConstants.USER_ADR)) {
-            if (districtList == null) {
-                districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
-                logger.debug("district List : {}", districtList.size());
-            }
-
-            if (divisionList == null && districtList != null) {
-                divisionList = dsDivisionDAO.getAllDSDivisionNames(
-                    districtList.keySet().iterator().next(),
-                    user.getPrefLanguage(),
-                    user);
-                logger.debug("division List : {}", divisionList.size());
-            } else {
-                if (districtList == null) {
-                    logger.debug("DistrictList null for user : {}", user.getUserId());
-                }
-            }
-
-            if (deoList == null && divisionList != null) {
-                logger.debug("Role = {}", user.getRole());
-                deoList = userDAO.getDEOsByDSDivision(
-                    user.getPrefLanguage(), user, dsDivisionDAO.getDSDivisionByPK(divisionList.keySet().iterator().next()), roleDAO.getRole("DEO"));
-                logger.debug("DEO List : {}", deoList.size());
-            }
-        } else if (usertype.toLowerCase().equals(WebConstants.USER_DR)) {
-            if (districtList == null) {
-                districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
-                logger.debug("district List : {}", districtList.size());
-            }
-
-            if (divisionList == null && districtList != null) {
-                divisionList = dsDivisionDAO.getAllDSDivisionNames(
-                    districtList.keySet().iterator().next(),
-                    user.getPrefLanguage(),
-                    user);
-                logger.debug("division List : {}", divisionList.size());
-            } else {
-                if (districtList == null) {
-                    logger.debug("DistrictList null for user : {}", user.getUserId());
-                }
-            }
-
-            if (adrList == null && divisionList != null) {
-                logger.debug("Role = {}", user.getRole());
-                adrList = userDAO.getADRsByDistrictId(
-                    districtDAO.getDistrict(districtList.keySet().iterator().next()), roleDAO.getRole("ADR"));
-                logger.debug("ADR List : {}", adrList.size());
-            }
+            return fromLogin ? EXPIRED : SUCCESS;
         }
     }
 
@@ -396,26 +195,6 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     }
 
     public String back() {
-        //return this.userPreferenceInit();    //TODO: remove this comments after the performance tests
-        statistics = statisticsDAO.getByUser(user.getUserId());
-        if (statistics == null) {
-            statistics = new Statistics();
-        }
-
-        statistics = new Statistics();  // TODO: remove this line after the performance tests
-
-        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-        if (districtList.size() > 0) {                                                             //TODO: remove this comments after the performance tests
-            districtId = birthDistrictId = districtList.keySet().iterator().next();
-        }
-        divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
-        if (divisionList.size() > 0) {
-            dsDivisionId = divisionList.keySet().iterator().next();
-            deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
-        }
-        deoUserId = 1;
-        role = userRole = user.getRole().getRoleId();
         return SUCCESS;
     }
 
@@ -611,5 +390,21 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    public boolean isMessage() {
+        return message;
+    }
+
+    public void setMessage(boolean message) {
+        this.message = message;
+    }
+
+    public boolean isFromLogin() {
+        return fromLogin;
+    }
+
+    public void setFromLogin(boolean fromLogin) {
+        this.fromLogin = fromLogin;
     }
 }
