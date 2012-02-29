@@ -283,8 +283,8 @@ function dateRange() {
         //comparing 90 days delay
         var one_day = 1000 * 60 * 60 * 24;
         var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
-        if (numDays >= 90) {
-            if (numDays >= 365) {
+        if (numDays >= 92) {
+            if (numDays >= 367) {
                 document.getElementById('belatedError').innerHTML = document.getElementById('error8').value;
             } else {
 
