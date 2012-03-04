@@ -100,7 +100,11 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     }
 
     public District getDistrict(int id) {
-        return districtsByPK.get(id);
+        District district = districtsByPK.get(id);
+        if (district == null) {
+            district = em.find(District.class, id);
+        }
+        return district;
     }
 
     public District getDistrictByCode(int districtId) {
@@ -108,8 +112,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         q.setParameter("districtId", districtId);
         try {
             return (District) q.getSingleResult();
-        }
-        catch (NoResultException e) {
+        } catch (NoResultException e) {
             return null;
         }
     }
@@ -161,10 +164,18 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     private void updateCache(District d) {
         final int districtId = d.getDistrictId();
         final int districtUKey = d.getDistrictUKey();
-        districtsByPK.put(districtUKey, d);
-        siDistricts.put(districtUKey, districtId + SPACER + d.getSiDistrictName());
-        enDistricts.put(districtUKey, districtId + SPACER + d.getEnDistrictName());
-        taDistricts.put(districtUKey, districtId + SPACER + d.getTaDistrictName());
-    }
+        final boolean active = d.isActive();
 
+        if (active) {
+            districtsByPK.put(districtUKey, d);
+            siDistricts.put(districtUKey, districtId + SPACER + d.getSiDistrictName());
+            enDistricts.put(districtUKey, districtId + SPACER + d.getEnDistrictName());
+            taDistricts.put(districtUKey, districtId + SPACER + d.getTaDistrictName());
+        } else {
+            districtsByPK.remove(districtUKey);
+            siDistricts.remove(districtUKey);
+            enDistricts.remove(districtUKey);
+            taDistricts.remove(districtUKey);
+        }
+    }
 }

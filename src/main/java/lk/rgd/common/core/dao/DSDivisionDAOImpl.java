@@ -108,7 +108,11 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     }
 
     public DSDivision getDSDivisionByPK(int dsDivisionUKey) {
-        return dsDivisionsByPK.get(dsDivisionUKey);
+        DSDivision dsDivision = dsDivisionsByPK.get(dsDivisionUKey);
+        if (dsDivision == null) {
+            dsDivision = em.find(DSDivision.class, dsDivisionUKey);
+        }
+        return dsDivision;
     }
 
     /**
@@ -190,32 +194,39 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     }
 
     private void updateCache(DSDivision d) {
-        Map<Integer, String> subMap;
-        int districtUKey = d.getDistrict().getDistrictUKey();
-        int divisionId = d.getDivisionId();
-        int divisionUKey = d.getDsDivisionUKey();
+        final int districtUKey = d.getDistrict().getDistrictUKey();
+        final int divisionId = d.getDivisionId();
+        final int divisionUKey = d.getDsDivisionUKey();
+        final boolean active = d.isActive();
 
-        dsDivisionsByPK.put(d.getDsDivisionUKey(), d);
-
-        subMap = siNames.get(districtUKey);
-        if (subMap == null) {
-            subMap = new TreeMap<Integer, String>();
-            siNames.put(districtUKey, subMap);
+        Map<Integer, String> subMapSi = siNames.get(districtUKey);
+        if (subMapSi == null) {
+            subMapSi = new TreeMap<Integer, String>();
+            siNames.put(districtUKey, subMapSi);
         }
-        subMap.put(divisionUKey, divisionId + SPACER + d.getSiDivisionName());
 
-        subMap = enNames.get(districtUKey);
-        if (subMap == null) {
-            subMap = new TreeMap<Integer, String>();
-            enNames.put(districtUKey, subMap);
+        Map<Integer, String> subMapEn = enNames.get(districtUKey);
+        if (subMapEn == null) {
+            subMapEn = new TreeMap<Integer, String>();
+            enNames.put(districtUKey, subMapEn);
         }
-        subMap.put(divisionUKey, divisionId + SPACER + d.getEnDivisionName());
 
-        subMap = taNames.get(districtUKey);
-        if (subMap == null) {
-            subMap = new TreeMap<Integer, String>();
-            taNames.put(districtUKey, subMap);
+        Map<Integer, String> subMapTa = taNames.get(districtUKey);
+        if (subMapTa == null) {
+            subMapTa = new TreeMap<Integer, String>();
+            taNames.put(districtUKey, subMapTa);
         }
-        subMap.put(divisionUKey, divisionId + SPACER + d.getTaDivisionName());
+
+        if (active) {
+            dsDivisionsByPK.put(divisionUKey, d);
+            subMapSi.put(divisionUKey, divisionId + SPACER + d.getSiDivisionName());
+            subMapEn.put(divisionUKey, divisionId + SPACER + d.getEnDivisionName());
+            subMapTa.put(divisionUKey, divisionId + SPACER + d.getTaDivisionName());
+        } else {
+            dsDivisionsByPK.remove(divisionUKey);
+            subMapSi.remove(divisionUKey);
+            subMapEn.remove(divisionUKey);
+            subMapTa.remove(divisionUKey);
+        }
     }
 }
