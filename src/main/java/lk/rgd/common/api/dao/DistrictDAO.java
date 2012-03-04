@@ -18,6 +18,7 @@ public interface DistrictDAO {
      * @return a Map of known districts for the given language along with the ID
      */
     public Map<Integer, String> getDistrictNames(String language, User user);
+
     /**
      * Returns All Districts
      *
@@ -26,6 +27,7 @@ public interface DistrictDAO {
      * @return a Map of all Districts for the given language along with the ID
      */
     public Map<Integer, String> getAllDistrictNames(String language, User user);
+
     /**
      * Return the name of the district in the selected language
      *
@@ -34,6 +36,7 @@ public interface DistrictDAO {
      * @return the name of the district in the selected language
      */
     public String getNameByPK(int districtUKey, String language);
+
     /**
      * Return District by id
      *
