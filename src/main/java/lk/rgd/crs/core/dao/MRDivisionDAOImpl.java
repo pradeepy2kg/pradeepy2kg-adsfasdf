@@ -11,7 +11,6 @@ import lk.rgd.crs.api.domain.MRDivision;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
@@ -148,28 +147,36 @@ public class MRDivisionDAOImpl extends BaseDAO implements MRDivisionDAO, Preload
         final int dsDivisionUKey = r.getDsDivision().getDsDivisionUKey();
         final int mrDivisionId = r.getDivisionId();
         final int mrDivisionUKey = r.getMrDivisionUKey();
+        final boolean active = r.isActive();
 
-        mrDivisionsByPK.put(mrDivisionUKey, r);
-
-        Map<Integer, String> districtMap = siDivisions.get(dsDivisionUKey);
-        if (districtMap == null) {
-            districtMap = new TreeMap<Integer, String>();
-            siDivisions.put(dsDivisionUKey, districtMap);
+        Map<Integer, String> districtMapSi = siDivisions.get(dsDivisionUKey);
+        if (districtMapSi == null) {
+            districtMapSi = new TreeMap<Integer, String>();
+            siDivisions.put(dsDivisionUKey, districtMapSi);
         }
-        districtMap.put(mrDivisionUKey, mrDivisionId + ": " + r.getSiDivisionName());
 
-        districtMap = enDivisions.get(dsDivisionUKey);
-        if (districtMap == null) {
-            districtMap = new TreeMap<Integer, String>();
-            enDivisions.put(dsDivisionUKey, districtMap);
+        Map<Integer, String> districtMapEn = enDivisions.get(dsDivisionUKey);
+        if (districtMapEn == null) {
+            districtMapEn = new TreeMap<Integer, String>();
+            enDivisions.put(dsDivisionUKey, districtMapEn);
         }
-        districtMap.put(mrDivisionUKey, mrDivisionId + SPACER + r.getEnDivisionName());
 
-        districtMap = taDivisions.get(dsDivisionUKey);
-        if (districtMap == null) {
-            districtMap = new TreeMap<Integer, String>();
-            taDivisions.put(dsDivisionUKey, districtMap);
+        Map<Integer, String> districtMapTa = taDivisions.get(dsDivisionUKey);
+        if (districtMapTa == null) {
+            districtMapTa = new TreeMap<Integer, String>();
+            taDivisions.put(dsDivisionUKey, districtMapTa);
         }
-        districtMap.put(mrDivisionUKey, mrDivisionId + SPACER + r.getTaDivisionName());
+
+        if (active) {
+            mrDivisionsByPK.put(mrDivisionUKey, r);
+            districtMapSi.put(mrDivisionUKey, mrDivisionId + SPACER + r.getSiDivisionName());
+            districtMapEn.put(mrDivisionUKey, mrDivisionId + SPACER + r.getEnDivisionName());
+            districtMapTa.put(mrDivisionUKey, mrDivisionId + SPACER + r.getTaDivisionName());
+        } else {
+            mrDivisionsByPK.remove(mrDivisionUKey);
+            districtMapSi.remove(mrDivisionUKey);
+            districtMapEn.remove(mrDivisionUKey);
+            districtMapTa.remove(mrDivisionUKey);
+        }
     }
 }

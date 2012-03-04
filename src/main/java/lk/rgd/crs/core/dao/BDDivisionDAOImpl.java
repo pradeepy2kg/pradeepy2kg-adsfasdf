@@ -147,28 +147,42 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
         final int dsDivisionUKey = r.getDsDivision().getDsDivisionUKey();
         final int bdDivisionId = r.getDivisionId();
         final int bdDivisionUKey = r.getBdDivisionUKey();
+        final boolean active = r.isActive();
 
-        bdDivisionsByPK.put(bdDivisionUKey, r);
-
-        Map<Integer, String> districtMap = siDivisions.get(dsDivisionUKey);
-        if (districtMap == null) {
-            districtMap = new TreeMap<Integer, String>();
-            siDivisions.put(dsDivisionUKey, districtMap);
+        Map<Integer, String> districtMapSi = siDivisions.get(dsDivisionUKey);
+        if (districtMapSi == null) {
+            districtMapSi = new TreeMap<Integer, String>();
+            if (active) {
+                siDivisions.put(dsDivisionUKey, districtMapSi);
+            }
         }
-        districtMap.put(bdDivisionUKey, bdDivisionId + ": " + r.getSiDivisionName());
 
-        districtMap = enDivisions.get(dsDivisionUKey);
-        if (districtMap == null) {
-            districtMap = new TreeMap<Integer, String>();
-            enDivisions.put(dsDivisionUKey, districtMap);
+        Map<Integer, String> districtMapEn = enDivisions.get(dsDivisionUKey);
+        if (districtMapEn == null) {
+            districtMapEn = new TreeMap<Integer, String>();
+            if (active) {
+                enDivisions.put(dsDivisionUKey, districtMapEn);
+            }
         }
-        districtMap.put(bdDivisionUKey, bdDivisionId + SPACER + r.getEnDivisionName());
 
-        districtMap = taDivisions.get(dsDivisionUKey);
-        if (districtMap == null) {
-            districtMap = new TreeMap<Integer, String>();
-            taDivisions.put(dsDivisionUKey, districtMap);
+        Map<Integer, String> districtMapTa = taDivisions.get(dsDivisionUKey);
+        if (districtMapTa == null) {
+            districtMapTa = new TreeMap<Integer, String>();
+            if (active) {
+                taDivisions.put(dsDivisionUKey, districtMapTa);
+            }
         }
-        districtMap.put(bdDivisionUKey, bdDivisionId + SPACER + r.getTaDivisionName());
+
+        if (active) {
+            bdDivisionsByPK.put(bdDivisionUKey, r);
+            districtMapSi.put(bdDivisionUKey, bdDivisionId + SPACER + r.getSiDivisionName());
+            districtMapEn.put(bdDivisionUKey, bdDivisionId + SPACER + r.getEnDivisionName());
+            districtMapTa.put(bdDivisionUKey, bdDivisionId + SPACER + r.getTaDivisionName());
+        } else {
+            bdDivisionsByPK.remove(bdDivisionUKey);
+            districtMapSi.remove(bdDivisionUKey);
+            districtMapEn.remove(bdDivisionUKey);
+            districtMapTa.remove(bdDivisionUKey);
+        }
     }
 }
