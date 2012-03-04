@@ -10,8 +10,8 @@ import lk.rgd.crs.api.domain.Court;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Query;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +62,11 @@ public class CourtDAOImpl extends BaseDAO implements CourtDAO, PreloadableDAO {
      * @inheritDoc
      */
     public Court getCourt(int id) {
-        return courtsByPK.get(id);
+        Court court = courtsByPK.get(id);
+        if (court == null) {
+            court = em.find(Court.class, id);
+        }
+        return court;
     }
 
     /**
@@ -134,9 +138,19 @@ public class CourtDAOImpl extends BaseDAO implements CourtDAO, PreloadableDAO {
     private void updateCache(Court court) {
         final int courtId = court.getCourtId();
         final int courtUKey = court.getCourtUKey();
-        courtsByPK.put(courtUKey, court);
-        siCourts.put(courtUKey, courtId + SPACER + court.getSiCourtName());
-        enCourts.put(courtUKey, courtId + SPACER + court.getEnCourtName());
-        taCourts.put(courtUKey, courtId + SPACER + court.getTaCourtName());
+        final boolean active = court.isActive();
+
+        if (active) {
+            courtsByPK.put(courtUKey, court);
+            siCourts.put(courtUKey, courtId + SPACER + court.getSiCourtName());
+            enCourts.put(courtUKey, courtId + SPACER + court.getEnCourtName());
+            taCourts.put(courtUKey, courtId + SPACER + court.getTaCourtName());
+        } else {
+            courtsByPK.remove(courtUKey);
+            siCourts.remove(courtUKey);
+            enCourts.remove(courtUKey);
+            taCourts.remove(courtUKey);
+        }
+
     }
 }
