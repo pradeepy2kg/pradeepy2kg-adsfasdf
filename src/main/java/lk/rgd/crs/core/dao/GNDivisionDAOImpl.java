@@ -155,28 +155,36 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
         final int dsDivisionUKey = r.getDsDivision().getDsDivisionUKey();
         final int gnDivisionId = r.getGnDivisionId();
         final int gnDivisionUKey = r.getGnDivisionUKey();
+        final boolean active = r.isActive();
 
-        gnDivisionsByPK.put(gnDivisionUKey, r);
-
-        Map<Integer, String> districtMap = siGNDivisions.get(dsDivisionUKey);
-        if (districtMap == null) {
-            districtMap = new TreeMap<Integer, String>();
-            siGNDivisions.put(dsDivisionUKey, districtMap);
+        Map<Integer, String> districtMapSi = siGNDivisions.get(dsDivisionUKey);
+        if (districtMapSi == null) {
+            districtMapSi = new TreeMap<Integer, String>();
+            siGNDivisions.put(dsDivisionUKey, districtMapSi);
         }
-        districtMap.put(gnDivisionUKey, gnDivisionId + ": " + r.getSiGNDivisionName());
 
-        districtMap = enGNDivisions.get(dsDivisionUKey);
-        if (districtMap == null) {
-            districtMap = new TreeMap<Integer, String>();
-            enGNDivisions.put(dsDivisionUKey, districtMap);
+        Map<Integer, String> districtMapEn = enGNDivisions.get(dsDivisionUKey);
+        if (districtMapEn == null) {
+            districtMapEn = new TreeMap<Integer, String>();
+            enGNDivisions.put(dsDivisionUKey, districtMapEn);
         }
-        districtMap.put(gnDivisionUKey, gnDivisionId + SPACER + r.getEnGNDivisionName());
 
-        districtMap = taGNDivisions.get(dsDivisionUKey);
-        if (districtMap == null) {
-            districtMap = new TreeMap<Integer, String>();
-            taGNDivisions.put(dsDivisionUKey, districtMap);
+        Map<Integer, String> districtMapTa = taGNDivisions.get(dsDivisionUKey);
+        if (districtMapTa == null) {
+            districtMapTa = new TreeMap<Integer, String>();
+            taGNDivisions.put(dsDivisionUKey, districtMapTa);
         }
-        districtMap.put(gnDivisionUKey, gnDivisionId + SPACER + r.getTaGNDivisionName());
+
+        if (active) {
+            gnDivisionsByPK.put(gnDivisionUKey, r);
+            districtMapSi.put(gnDivisionUKey, gnDivisionId + SPACER + r.getSiGNDivisionName());
+            districtMapEn.put(gnDivisionUKey, gnDivisionId + SPACER + r.getEnGNDivisionName());
+            districtMapTa.put(gnDivisionUKey, gnDivisionId + SPACER + r.getTaGNDivisionName());
+        } else {
+            gnDivisionsByPK.remove(gnDivisionUKey);
+            districtMapSi.remove(gnDivisionUKey);
+            districtMapEn.remove(gnDivisionUKey);
+            districtMapTa.remove(gnDivisionUKey);
+        }
     }
 }
