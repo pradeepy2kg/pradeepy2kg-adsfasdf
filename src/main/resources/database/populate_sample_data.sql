@@ -311,7 +311,7 @@ INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, enDivisionName, siDivi
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, enDivisionName, siDivisionName, taDivisionName) VALUES(1, 6, 'Kolonnawa', 'කොළොන්නාව', 'கொ‎லொண்ணா‍வை');
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, enDivisionName, siDivisionName, taDivisionName) VALUES(1, 9, 'Kaduwela', 'කඩුවෙළ', 'கடு‎வெ‍லை');
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, enDivisionName, siDivisionName, taDivisionName) VALUES(1, 12, 'Homagama', 'හෝමගම', 'ஹோமாகம');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, enDivisionName, siDivisionName, taDivisionName) VALUES(1, 15, 'Hanwella', 'හංවැල්ල', 'ஹங்‎வெல்‍லை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, enDivisionName, siDivisionName, taDivisionName) VALUES(1, 15, 'Seethawaka', 'සීතාවක', 'சீதாவக்க');
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, enDivisionName, siDivisionName, taDivisionName) VALUES(1, 18, 'Padukka', 'පාදුක්ක', 'பாதுக்‍கை');
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, enDivisionName, siDivisionName, taDivisionName) VALUES(1, 21, 'Maharagama', 'මහරගම', 'மஹரகம');
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, enDivisionName, siDivisionName, taDivisionName) VALUES(1, 24, 'Sri Jayawardanapura Kotte', 'ශ්‍රී ජයවර්ධනපුර කෝට්ටෙ', 'ஸ்ரீ ஜயவர்தணபுர ‍கோட்‍டை');
