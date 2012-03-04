@@ -31,17 +31,17 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private static final Logger logger = LoggerFactory.getLogger(BirthAlterationAction.class);
     private static final String BA_APPROVAL_ROWS_PER_PAGE = "crs.br_approval_rows_per_page";
 
-    private BirthRegistrationService service;
-    private BirthAlterationService alterationService;
+    private final BirthRegistrationService service;
+    private final BirthAlterationService alterationService;
 
     private DistrictDAO districtDAO;
-    private CountryDAO countryDAO;
-    private RaceDAO raceDAO;
-    private BDDivisionDAO bdDivisionDAO;
-    private DSDivisionDAO dsDivisionDAO;
-    private AppParametersDAO appParametersDAO;
+    private final CountryDAO countryDAO;
+    private final RaceDAO raceDAO;
+    private final BDDivisionDAO bdDivisionDAO;
+    private final DSDivisionDAO dsDivisionDAO;
+    private final AppParametersDAO appParametersDAO;
 
-    private BirthAlterationValidator birthAlterationValidator;
+    private final BirthAlterationValidator birthAlterationValidator;
     private final CommonUtil commonUtil;
 
     private Map session;
@@ -164,20 +164,17 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             return ERROR;
         } else {
             parent = bdf.getParent();
-            try {
-                List<BirthAlteration> baList = alterationService.getBirthAlterationByBirthCertificateNumber(bdf.getIdUKey(), user);
-                for (BirthAlteration ba : baList) {
-                    if (ba.getLifeCycleInfo().isActiveRecord()) {
-                        logger.debug("there is  a pending birth alteration for this birth of idUKey", bdf.getIdUKey());
-                        addActionMessage(getText("error.ongoing.alteration.on.this.section"));
-                        populateBasicLists();
-                        return ERROR;
-                    }
+
+            List<BirthAlteration> baList = alterationService.getBirthAlterationByBirthCertificateNumber(bdf.getIdUKey(), user);
+            for (BirthAlteration ba : baList) {
+                if (ba.getLifeCycleInfo().isActiveRecord()) {
+                    logger.debug("there is  a pending birth alteration for this birth of idUKey", bdf.getIdUKey());
+                    addActionMessage(getText("error.ongoing.alteration.on.this.section"));
+                    populateBasicLists();
+                    return ERROR;
                 }
-            } catch (Exception e) {
-
-
             }
+
             try {
                 birthAlterationValidator.checkOnGoingAlterationOnThisSection(bdf.getIdUKey(), alterationType, user);
             } catch (CRSRuntimeException e) {
@@ -1307,18 +1304,18 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         List<Date> altApproveDates = new ArrayList<Date>();
         int count = 0;
         try {
-            if (bdfList.size() > 0) {
-                for (int j = 0; j < bdfList.size(); j++) {
-                    bdf = bdfList.get(j);
-                    List<BirthAlteration> birthAlterations = alterationService.getBirthAlterationByBirthCertificateNumber
-                        (bdf.getIdUKey(), user);
-                    for (int i = 0; i < birthAlterations.size(); i++) {
-                        idUKey = birthAlterations.get(i).getIdUKey();
+            if (bdfList != null && bdfList.size() > 0) {
+                for (BirthDeclaration aBdfList : bdfList) {
+                    bdf = aBdfList;
+                    List<BirthAlteration> birthAlterations =
+                        alterationService.getBirthAlterationByBirthCertificateNumber(bdf.getIdUKey(), user);
+
+                    for (BirthAlteration birthAlteration1 : birthAlterations) {
+                        idUKey = birthAlteration1.getIdUKey();
                         birthAlteration = alterationService.getByIDUKey(idUKey, user);
                         if (birthAlteration != null) {
                             bdf = service.getById(birthAlteration.getBdfIdUKey());
                             String language = bdf.getRegister().getPreferredLanguage();
-                            //alterationHistoryDate.put(count, birthAlteration.getLifeCycleInfo().getApprovalOrRejectTimestamp());
 
                             switch (birthAlteration.getType()) {
                                 case TYPE_27:
@@ -1345,36 +1342,35 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                             return ERROR;
                         }
                     }
-
-
                 }
 
                 int maxFiledValue = 0;
                 int minFiledValue = changesList.get(0).getFieldConstant();
                 logger.debug("min max value is", minFiledValue);
+                for (FieldValue aChangesList : changesList) {
+                    if (aChangesList.getFieldConstant() > maxFiledValue) {
+                        maxFiledValue = aChangesList.getFieldConstant();
+                    }
+                }
+                for (FieldValue aChangesList : changesList) {
+                    if (aChangesList.getFieldConstant() < minFiledValue) {
+                        minFiledValue = aChangesList.getFieldConstant();
+                    }
+                }
+
                 List<FieldValue> changesListTemp = new LinkedList<FieldValue>();
-                for (int i = 0; i < changesList.size(); i++) {
-                    if (changesList.get(i).getFieldConstant() > maxFiledValue) {
-                        maxFiledValue = changesList.get(i).getFieldConstant();
-                    }
-                }
-                for (int i = 0; i < changesList.size(); i++) {
-                    if (changesList.get(i).getFieldConstant() < minFiledValue) {
-                        minFiledValue = changesList.get(i).getFieldConstant();
-                    }
-                }
                 for (int i = minFiledValue; i < maxFiledValue + 1; i++) {
-                    for (int j = 0; j < changesList.size(); j++) {
-                        if (changesList.get(j).getFieldConstant() == i) {
-                            changesListTemp.add(new FieldValue(changesList.get(j).getExistingValue(),
-                                changesList.get(j).getAlterationValue(), changesList.get(j).getFieldConstant(),
-                                changesList.get(j).getApproved()));
-                            // changesList.remove(j);
+                    for (FieldValue aChangesList : changesList) {
+                        if (aChangesList.getFieldConstant() == i) {
+                            changesListTemp.add(new FieldValue(aChangesList.getExistingValue(),
+                                aChangesList.getAlterationValue(), aChangesList.getFieldConstant(),
+                                aChangesList.getApproved()));
                         }
                     }
                 }
                 changesList = changesListTemp;
             }
+
             int fieldConstantTemp = changesList.get(0).getFieldConstant();
             ArrayList<HistoryFieldValue> historyChangesListTemp = new ArrayList<HistoryFieldValue>();
             historyChangesListTemp.add(new HistoryFieldValue(changesList.get(0).getAlterationValue(), altApproveDates.get(0)));
