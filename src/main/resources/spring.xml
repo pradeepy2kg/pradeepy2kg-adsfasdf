@@ -140,7 +140,6 @@
     <!--Utility singletons-->
     <bean id="birthDeclarationValidator" class="lk.rgd.crs.core.service.BirthDeclarationValidator">
         <constructor-arg ref="ecivilService"/>
-        <constructor-arg ref="birthDeclarationDAOImpl"/>
     </bean>
     <bean id="deathDeclarationValidator" class="lk.rgd.crs.core.service.DeathDeclarationValidator">
         <constructor-arg ref="deathRegisterDAOImpl"/>
