@@ -16,7 +16,7 @@ public class AppParametersTest extends TestCase {
 
     public void testAppParameters() throws Exception {
         AppParametersDAO bean = (AppParametersDAO) ctx.getBean("appParametersDAOImpl", AppParametersDAO.class);
-        Assert.assertEquals(bean.getIntParameter(AppParameter.CRS_BIRTH_LATE_REG_DAYS), 90);
+        Assert.assertEquals(bean.getIntParameter(AppParameter.CRS_BIRTH_LATE_REG_DAYS), 92);
 
         bean.setIntParameter("test_int", 3);
         Assert.assertEquals(bean.getIntParameter("test_int"), 3);
