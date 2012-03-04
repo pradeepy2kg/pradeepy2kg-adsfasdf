@@ -1,6 +1,5 @@
 package lk.rgd.crs.api.service;
 
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthAlteration;
@@ -93,7 +92,8 @@ public interface BirthAlterationService {
      * @param user       the user initiating the action
      * @return the birth alteration results
      */
-    public List<BirthAlteration> getApprovalPendingByBDDivision(BDDivision bdDivision, int pageNo, int noOfRows, User user);
+    public List<BirthAlteration> getApprovalPendingByBDDivision(BDDivision bdDivision, int pageNo, int noOfRows,
+        User user);
 
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
@@ -117,8 +117,8 @@ public interface BirthAlterationService {
      * @param user         the user initiating the action
      * @return the birth alteration results
      */
-    public List<BirthAlteration> getApprovalPendingByUserLocationIdUKey
-        (int locationUKey, int pageNo, int noOfRows, User user);
+    public List<BirthAlteration> getApprovalPendingByUserLocationIdUKey(int locationUKey, int pageNo, int noOfRows,
+        User user);
 
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
@@ -130,8 +130,7 @@ public interface BirthAlterationService {
      * @param user     the user initiating the action
      * @return the birth alteration results
      */
-    public BirthAlteration getApprovalPendingByIdUKey
-        (Long idUKey, int pageNo, int noOfRows, User user);
+    public BirthAlteration getApprovalPendingByIdUKey(Long idUKey, int pageNo, int noOfRows, User user);
 
     /**
      * get birth alterations done to given birth certificate
