@@ -7,10 +7,7 @@ import lk.rgd.common.util.PinAndNicUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
-import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.api.domain.ChildInfo;
-import lk.rgd.crs.api.domain.InformantInfo;
-import lk.rgd.crs.api.domain.ParentInfo;
+import lk.rgd.crs.api.domain.*;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,11 +34,9 @@ public class BirthDeclarationValidator {
     private static final String SERIAL_NUMBER_PATTERN = "20([1-9][0-9])[0|1]([0-9]{5})";
 
     private final PopulationRegistry ecivil;
-    private final BirthDeclarationDAO birthDeclarationDAO;
 
-    public BirthDeclarationValidator(PopulationRegistry ecivil, BirthDeclarationDAO birthDeclarationDAO) {
+    public BirthDeclarationValidator(PopulationRegistry ecivil) {
         this.ecivil = ecivil;
-        this.birthDeclarationDAO = birthDeclarationDAO;
     }
 
     /**
@@ -258,6 +253,17 @@ public class BirthDeclarationValidator {
         }
 
         // TODO validate if confirmant is known to be dead on this date
+
+        // if married status is Married or No,Since married, place of marriage and date of marriage cannot be empty
+        MarriageInfo marriage = bdf.getMarriage();
+        final MarriageInfo.MarriedStatus marriedStatus = marriage.getParentsMarried();
+        if (marriedStatus == MarriageInfo.MarriedStatus.MARRIED || marriedStatus == MarriageInfo.MarriedStatus.NO_SINCE_MARRIED) {
+            checkValidString(marriage.getPlaceOfMarriage(), warnings, rb, "place_married_empty");
+
+            if (marriage.getDateOfMarriage() == null) {
+                warnings.add(new UserWarning(rb.getString("date_married_empty")));
+            }
+        }
 
         return warnings;
     }
