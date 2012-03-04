@@ -159,10 +159,19 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
     private void updateCache(Location l) {
         final String locationId = l.getLocationCode();
         final int locationUKey = l.getLocationUKey();
-        locationsByPK.put(locationUKey, l);
-        siLocationName.put(locationUKey, locationId + SPACER + l.getSiLocationName());
-        enLocationName.put(locationUKey, locationId + SPACER + l.getEnLocationName());
-        taLocationName.put(locationUKey, locationId + SPACER + l.getTaLocationName());
+        final boolean active = l.getLifeCycleInfo().isActive();
+
+        if (active) {
+            locationsByPK.put(locationUKey, l);
+            siLocationName.put(locationUKey, locationId + SPACER + l.getSiLocationName());
+            enLocationName.put(locationUKey, locationId + SPACER + l.getEnLocationName());
+            taLocationName.put(locationUKey, locationId + SPACER + l.getTaLocationName());
+        } else {
+            locationsByPK.remove(locationUKey);
+            siLocationName.remove(locationUKey);
+            enLocationName.remove(locationUKey);
+            taLocationName.remove(locationUKey);
+        }
     }
 
 }
