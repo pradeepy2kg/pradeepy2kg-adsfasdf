@@ -260,8 +260,9 @@ function validateParentSigns(domObject) {
 
 // validate place of marriage
 function validateMarriageDetails(domObject) {
-    if (domObject.checked) {
+    var check=document.getElementById('skipjs');
 
+    if (domObject.checked && !check.checked) {
         domObject = document.getElementById('placeOfMarriage');
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
