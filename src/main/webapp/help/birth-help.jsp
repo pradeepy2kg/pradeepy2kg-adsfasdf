@@ -1383,11 +1383,11 @@ page</span></span></font></b></a></p>
     </ul>
 </ul>
 
-<p align="justify" style="margin-bottom: 0in; font-style: normal"><font
+<p align="justify" style="margin-bottom: 0in; font-style: normal"><a name="BirthRegisterForm4"><font
         face="Liberation Serif, serif"><font size="3"><b><span
         style="text-decoration: none">After entering data click </span><u>Next</u><span
         style="text-decoration: none">to proceed to the next
-page</span></b></font></font></p>
+page</span></b></font></font></a></p>
 
 <p align="justify"
    style="margin-bottom: 0in; font-style: normal; text-decoration: none"><br>
