@@ -9,9 +9,8 @@
 </style>
 <link rel="stylesheet" type="text/css" href="../css/solrsearch.css" media="screen"/>
 
-<link rel="stylesheet" type="text/css" href="ext/smoothness/jquery-ui.css" media="screen"/>
-<link rel="stylesheet" type="text/css" href="ext/smoothness/ui.theme.css" media="screen"/>
-
+<%--<link rel="stylesheet" type="text/css" href="ext/smoothness/jquery-ui.css" media="screen"/>--%>
+<%--<link rel="stylesheet" type="text/css" href="ext/smoothness/ui.theme.css" media="screen"/>--%>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 
 <script type="text/javascript" src="../lib/ajaxsolr/core/Core.js"></script>
