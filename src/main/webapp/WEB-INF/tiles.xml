@@ -10,6 +10,7 @@
         <put-attribute name="body" value="/WEB-INF/pages/login/login.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/pages/template/footer.jsp"/>
         <put-attribute name="title-text" value=""/>
+        <put-attribute name="help" value=""/>
     </definition>
 
     <definition name="epr.welcome" extends="epr.template">
@@ -76,21 +77,25 @@
     <definition name="epr.birthRegistration_form1" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationForm1.jsp"/>
         <put-attribute name="title" value="form1.title"/>
+        <put-attribute name="help" value="../help/birth-help.jsp#BirthRegisterForm1"/>
     </definition>
 
     <definition name="epr.birthRegistration_form2" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationForm2.jsp"/>
         <put-attribute name="title" value="form2.title"/>
+        <put-attribute name="help" value="../help/birth-help.jsp#BirthRegisterForm2"/>
     </definition>
 
     <definition name="epr.birthRegistration_form3" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationForm3.jsp"/>
         <put-attribute name="title" value="form3.title"/>
+        <put-attribute name="help" value="../help/birth-help.jsp#BirthRegisterForm3"/>
     </definition>
 
     <definition name="epr.birthRegistration_form4" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationForm4.jsp"/>
         <put-attribute name="title" value="form4.title"/>
+        <put-attribute name="help" value="../help/birth-help.jsp#BirthRegisterForm4"/>
     </definition>
 
     <definition name="epr.non_editable_birthRegistration_form1" extends="epr.template">
@@ -221,6 +226,7 @@
     <definition name="epr.birthRegistrationHome" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationHome.jsp"/>
         <put-attribute name="title" value="birth_registration.label1"/>
+        <put-attribute name="help" value="../help/birth-help.jsp#BirthProcess"/>
     </definition>
 
     <definition name="epr.stillBirth" extends="epr.template">
