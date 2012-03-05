@@ -20,34 +20,40 @@
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/webform.css"/> '/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
     <link rel="stylesheet" type="text/css" media="print" href='<s:url value="/css/print.css"/>'/>
-    <%--    <script type="text/javascript" src="/js/validate.js"/>--%>
-    <style type="text/css">
-        @font-face
-        {
-            font-family: Potha
-        ;
-            src: url(POTHA0.eot)
-        ;
-        }
-        @font-face
-        {
-            font-family: Bamini
-        ;
-            src: url(eot/BAMINI0.eot)
-        ;
-        @font-face
-        {
-        font-family
-        :
-        Latha
-        ;
-            src: url(eot/LATHA0.eot)
-        ;
 
+    <style type="text/css">
+        @font-face {
+            font-family: Potha;
+            src: url(POTHA0.eot);
+        }
+
+        @font-face {
+            font-family: Bamini;
+            src: url(eot/BAMINI0.eot);
+        }
+
+        @font-face {
+            font-family: Latha;
+            src: url(eot/LATHA0.eot);
         }
     </style>
 
 </head>
+<script type="text/javascript">
+    function initPage() {
+    }
+
+    // Display popup by using specified url
+    function displayHelpPopup(url) {
+        var w = 990;
+        var h = 850;
+        var left = (w / 2 - 300);
+        var top = (h / 2 - 350);
+        var features = "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left;
+        features += ",scrollbars=1,resizable=0,status=0,directories=no,menubar=0,toolbar=0";
+        window.open(url, 'Help Window',features);
+    }
+</script>
 <body onload="initPage()">
 <div id="wrapper">
     <%-- Header  --%>
@@ -105,6 +111,17 @@
         </div>
         <div id="body-content">
             <div id="body-content-title">
+                <div id="page-help">
+                    <tiles:importAttribute name="help" scope="request"/>
+
+                    <% String url = (String) request.getAttribute("help"); %>
+                    <%if (url.length() > 0) {%>
+                    <s:a href="#" title="%{getText('helpToolTip.label')}"><img
+                            src="<s:url value='/images/help.png'/>" width="25" height="25"
+                            border="none" onclick="javascript:return displayHelpPopup('<%= url%>')"/></s:a>
+                    <% } %>
+                </div>
+
                 <div id="page-title">
                     <tiles:importAttribute name="title" toName="title" scope="request"/>
                     <s:label value="%{getText(#request.title)}"/>
