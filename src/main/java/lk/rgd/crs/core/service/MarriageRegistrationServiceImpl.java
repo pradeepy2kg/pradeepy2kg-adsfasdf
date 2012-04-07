@@ -717,7 +717,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
 
         if (Person.CivilStatus.MARRIED == civilStatus) {
             // adding marriage entry to the PRS
-            if (groom != null && bride != null && mr.getDateOfMarriage() != null) {
+            if (groom != null && bride != null && mr.getDateOfMarriage() != null
+                && mr.getRegPlaceInOfficialLang() != null) {
                 Marriage m = new Marriage();
                 m.setGroom(groom);
                 m.setBride(bride);
