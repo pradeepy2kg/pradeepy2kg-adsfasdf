@@ -1759,7 +1759,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             }
 
             // set father as married to mother if marriage exists
-            if (mother != null && marriage.getDateOfMarriage() != null) {
+            if (mother != null && marriage.getDateOfMarriage() != null && marriage.getPlaceOfMarriage() != null) {
                 Marriage m = new Marriage();
                 m.setBride(mother);
                 m.setGroom(father);
