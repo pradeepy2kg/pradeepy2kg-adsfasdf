@@ -85,7 +85,8 @@
         <property name="cronExpression" value="0 20 * ? * MON-FRI"/>
     </bean>
 
-    <bean id="scheduledStatJobs" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <!--trigger for statistics commented-->
+    <!--<bean id="scheduledStatJobs" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="statisticsManagerService"/>
         <property name="targetMethod" value="triggerScheduledStatJobs"/>
         <property name="concurrent" value="false"/>
@@ -94,15 +95,15 @@
     <bean id="cronTriggerStat" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="scheduledStatJobs"/>
         <property name="cronExpression" value="0 0 23 ? * MON-FRI"/>
-        <!--0 0 23 ? * MON-FRI-->
-    </bean>
+        &lt;!&ndash;0 0 23 ? * MON-FRI&ndash;&gt;
+    </bean>-->
 
     <!-- Start the Triggers - use Cron trigger for production use with an appropriate schedule -->
     <bean id="scheduleFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
                 <ref bean="cronTriggerBirth"/>
-                <ref bean="cronTriggerStat"/>
+                <!--<ref bean="cronTriggerStat"/>-->
                 <ref bean="cronTriggerMarriageNotice"/>
             </list>
         </property>
