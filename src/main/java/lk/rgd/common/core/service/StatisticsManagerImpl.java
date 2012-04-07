@@ -656,7 +656,8 @@ public class StatisticsManagerImpl implements StatisticsManager {
     @Override
     public Statistics getStatisticsForUser(User user, Date startDate, Date endDate) {
 
-        Statistics statistics = statisticsDAO.getByUser(user.getUserId());
+        // Statistics statistics = statisticsDAO.getByUser(user.getUserId());
+        Statistics statistics = new Statistics();
         final String userRole = user.getRole().getRoleId();
 
         if (statistics != null) {

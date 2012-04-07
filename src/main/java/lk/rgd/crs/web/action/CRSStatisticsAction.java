@@ -66,21 +66,6 @@ public class CRSStatisticsAction extends ActionSupport implements SessionAware {
         role = user.getRole().getRoleId();
 
         statistics = statService.getStatisticsForUser(statUser, null, null);
-        if (statistics != null) {
-            Statistics stat = statService.getStatisticsByUserId(statUser.getUserId());
-
-            if (stat == null) {
-                statService.addStatistics(user, statistics);
-            } else {
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.HOUR, -(cal.get(Calendar.HOUR_OF_DAY) + 1));
-                if (statistics.getCreatedTimestamp().before(cal.getTime())) {
-                    statService.updateStatistics(user.getUserId(), statistics);
-                }
-            }
-        } else {
-            statistics = new Statistics();
-        }
 
         populateDateRange();
         populateDivision();
