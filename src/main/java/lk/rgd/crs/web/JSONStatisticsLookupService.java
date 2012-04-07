@@ -1,14 +1,12 @@
 package lk.rgd.crs.web;
 
-import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.UserDAO;
-import lk.rgd.common.api.domain.*;
+import lk.rgd.common.api.domain.CommonStatistics;
+import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.domain.Statistics;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.StatisticsManager;
 import lk.rgd.common.util.DateTimeUtils;
-import lk.rgd.crs.api.service.BirthRegistrationService;
-import lk.rgd.crs.api.service.DeathRegistrationService;
-import lk.rgd.crs.api.service.MarriageRegistrationService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
 
 /**
  * @author shan
@@ -145,126 +144,6 @@ public class JSONStatisticsLookupService extends HttpServlet {
         populateBirthStatistics(cs_b);
         populateDeathStatistics(cs_d);
         populateMarriageStatistics(cs_m);
-
-
-        // TODO refactor this part
-        /*try {
-            if (Role.ROLE_DR.equals(userRole)) {  // DR selects ADR
-                cs_b = new CommonStatistics();
-                cs_d = new CommonStatistics();
-                cs_m = new CommonStatistics();
-                cs = new CommonStatistics();    // default
-                List<User> temp = new ArrayList<User>();
-                User user = userDAO.getUserByPK(userName);
-
-                if (user != null) {
-                    List<User> allUsers = userDAO.getUsersByRole("DEO");
-                    Set<DSDivision> set = user.getAssignedBDDSDivisions();
-
-                    for (User selected : allUsers) {
-                        for (DSDivision dsd : set) {
-                            if (selected.getAssignedBDDSDivisions().contains(dsd)) {
-                                temp.add(selected);
-                            }
-                        }
-                    }
-                    if (temp.size() > 0) {
-                        // adding together all the birth statistics objects which belongs to 'temp' list members
-                        for (User one : temp) {
-                            cs_b.add(birthRegistrationService.getBirthStatisticsForUser(one.getUserId()));
-                            cs_d.add(deathRegistrationService.getDeathStatisticsForUser(one.getUserId()));
-                            cs_m.add(marriageRegistrationService.getMarriageStatisticsForUser(one.getUserId()));
-                        }
-                        // adding combined statistics object to response object
-                        populateBirthStatistics(cs_b);
-                        populateDeathStatistics(cs_d);
-                        populateMarriageStatistics(cs_m);
-                    }
-                } else {
-                    // if user is null, populate default(0) values
-                    populateBirthStatistics(cs);
-                }
-
-            } else if (Role.ROLE_ADR.equals(userRole) || Role.ROLE_DEO.equals(userRole)) {  // ADR selects DEO
-                cs = new CommonStatistics();
-
-                if (userDAO.getUserByPK(userId) != null) {
-                    cs = birthRegistrationService.getBirthStatisticsForUser(userId);
-                    populateBirthStatistics(cs);
-
-                    cs = deathRegistrationService.getDeathStatisticsForUser(userId);
-                    populateDeathStatistics(cs);
-
-                    cs = marriageRegistrationService.getMarriageStatisticsForUser(userId);
-                    populateMarriageStatistics(cs);
-                } else {
-                    // if user is null, populate default(0) values
-                    populateBirthStatistics(cs);
-                }
-
-            } else if (Role.ROLE_RG.equals(userRole) || Role.ROLE_ARG.equals(userRole)) { // RG selects District or DsDivision
-
-                logger.debug("District = {} DSDivision = {}", districtId, dsDivisionId);
-                cs_b = new CommonStatistics();
-                cs_d = new CommonStatistics();
-                cs_m = new CommonStatistics();
-                cs = new CommonStatistics();
-                List<User> allUsers = userDAO.getUsersByRole("DEO");
-                List<User> temp = new ArrayList<User>();
-
-                if (districtId != null) {
-                    District district = districtDAO.getDistrict(Integer.parseInt(districtId));
-                    for (User user : allUsers) {
-                        if (user.getAssignedBDDistricts().contains(district)) {
-                            temp.add(user);
-                        }
-                    }
-                    if (temp.size() > 0) {
-                        // adding together all the birth statistics objects which belongs to 'temp' list members
-                        for (User user : temp) {
-                            cs_b.add(birthRegistrationService.getBirthStatisticsForUser(user.getUserId()));
-                            cs_d.add(deathRegistrationService.getDeathStatisticsForUser(user.getUserId()));
-                            cs_m.add(marriageRegistrationService.getMarriageStatisticsForUser(user.getUserId()));
-                        }
-                        // adding combined statistics object to response object
-                        populateBirthStatistics(cs_b);
-                        populateDeathStatistics(cs_d);
-                        populateMarriageStatistics(cs_m);
-                    }
-                } else if (dsDivisionId != null) {
-                    DSDivision dsDivision = dsDivisionDAO.getDSDivisionByPK(Integer.parseInt(dsDivisionId));
-                    for (User user : allUsers) {
-                        if (user.getAssignedBDDSDivisions().contains(dsDivision)) {
-                            temp.add(user);
-                        }
-                    }
-                    if (temp.size() > 0) {
-                        // adding together all the birth statistics objects which belongs to 'temp' list members
-                        for (User user : temp) {
-                            cs_b.add(birthRegistrationService.getBirthStatisticsForUser(user.getUserId()));
-                            cs_d.add(deathRegistrationService.getDeathStatisticsForUser(user.getUserId()));
-                            cs_m.add(marriageRegistrationService.getMarriageStatisticsForUser(user.getUserId()));
-                        }
-                        // adding combined statistics object to response object
-                        populateBirthStatistics(cs_b);
-                        populateDeathStatistics(cs_d);
-                        populateMarriageStatistics(cs_m);
-                    }
-
-                } else {
-                    // if user is null, populate default(0) values
-                    populateBirthStatistics(cs);
-                }
-
-                logger.debug("temp.size = {}", temp.size());
-
-            }
-
-
-        } catch (Exception e) {
-            logger.error("[JSONStatisticsLookupService] Fatal Error : {}", e);
-            return;
-        }*/
 
         response.setContentType("application/json; charset=utf-8");
         PrintWriter out = response.getWriter();
