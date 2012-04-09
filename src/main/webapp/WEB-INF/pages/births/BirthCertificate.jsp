@@ -54,13 +54,13 @@
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <script>
-    $(function() {
-        $('select#locationId').bind('change', function(evt1) {
+    $(function () {
+        $('select#locationId').bind('change', function (evt1) {
             var id = $("select#locationId").attr('value');
             var options = '';
             if (id > 0) {
-                $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:1,certificateId:0},
-                        function(data) {
+                $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id, mode:1, certificateId:0},
+                        function (data) {
                             var users = data.authorizedUsers;
                             for (var i = 0; i < users.length; i++) {
                                 options += '<option value="' + users[i].optionValue + '">' + users[i].optionDisplay + '</option>';
@@ -71,8 +71,8 @@
                             var user = $('select#issueUserId').attr('value');
                             var certId = $('label#certificateId').text();
                             $("text#user").html(user);
-                            $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:10,userId:user,certificateId:certId},
-                                    function(data) {
+                            $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id, mode:10, userId:user, certificateId:certId},
+                                    function (data) {
                                         var officerSign = data.officerSignature;
                                         var locationSign = data.locationSignature;
                                         var location = data.locationName;
@@ -89,13 +89,13 @@
             }
         });
 
-        $('select#issueUserId').bind('change', function(evt2) {
+        $('select#issueUserId').bind('change', function (evt2) {
             var id = $('select#locationId').attr('value');
             var user = $('select#issueUserId').attr('value');
             var certId = $('label#certificateId').text();
             $("text#user").html(user);
-            $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:10,userId:user,certificateId:certId},
-                    function(data) {
+            $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id, mode:10, userId:user, certificateId:certId},
+                    function (data) {
                         var officerSign = data.officerSignature;
                         var locationSign = data.locationSignature;
                         var location = data.locationName;
@@ -268,6 +268,8 @@
     </tbody>
 </table>
 
+<s:if test="birthType.ordinal() != 0">
+<%-- Not a still birth --%>
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
     <col width="195px">
     <col width="220px">
@@ -276,12 +278,12 @@
     <col width="185px">
     <tbody>
     <tr height="70px">
-        <td>දිස්ත්‍රික්කය<br>மாவட்டம் <br>District</td>
+        <td>(1) දිස්ත්‍රික්කය<br>மாவட்டம் <br>District</td>
         <td>
             <s:label name="" value="%{childDistrict}" cssStyle="font-size:11pt;"/><br/>
             <s:label name="" value="%{childDistrictEn}" cssStyle="text-transform:uppercase;"/>
         </td>
-        <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+        <td>(2) ප්‍රාදේශීය ලේකම් කොට්ඨාශය
             <br/>பிரதேச செயளாளர் பிரிவு
             <br/>Divisional Secretary Division
         </td>
@@ -290,52 +292,37 @@
             <s:label name="" value="%{childDsDivisionEn}" cssStyle="text-transform:uppercase;"/>
         </td>
     </tr>
-    <s:if test="birthType.ordinal() != 0">
-        <tr height="70px">
-            <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය
-                <br>பதிவுப் பிரிவு
-                <br>Registration Division
-            </td>
-            <td colspan="2">
-                <s:label name="" value="%{#request.register.bdDivisionPrint}" cssStyle="font-size:11pt;"/><br>
-                <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"
-                         cssStyle="text-transform:uppercase;"/>
-            </td>
-            <td style="font-size:9pt;">මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
-                <br>முதல் பதிவின் பின் நிறைவேற்றிய மாற்றங்கள்
-                <br>Changes After First Registration
-            </td>
-            <td style="font-size:9pt;">
-                <s:if test="changedFields.size() > 0">
-                    ඔව්, <label class="font-9">**</label> ලකුණින් පෙන්වා ඈත
-                    <br>
-                    ஆம், <label class="font-9">**</label> குறியீட்டில் குறிப்பிடப்பட்டுள்ளது
-                    <br>
-                    Yes, marked with <label class="font-9">**</label>
-                </s:if>
-                <s:else>
-                    නැත
-                    <br>
-                    இல்லை
-                    <br>
-                    No
-                </s:else>
-            </td>
-        </tr>
-    </s:if>
-    <s:else>
-        <tr height="70px">
-            <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය
-                <br>பதிவுப் பிரிவு
-                <br>Registration Division
-            </td>
-            <td colspan="4">
-                <s:label name="" value="%{#request.register.bdDivisionPrint}" cssStyle="font-size:11pt;"/><br>
-                <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"
-                         cssStyle="text-transform:uppercase;"/>
-            </td>
-        </tr>
-    </s:else>
+    <tr height="70px">
+        <td>(3) ලියාපදිංචි කිරීමේ කොට්ඨාශය
+            <br>பதிவுப் பிரிவு
+            <br>Registration Division
+        </td>
+        <td colspan="2">
+            <s:label name="" value="%{#request.register.bdDivisionPrint}" cssStyle="font-size:11pt;"/><br>
+            <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"
+                     cssStyle="text-transform:uppercase;"/>
+        </td>
+        <td style="font-size:9pt;">(4) මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
+            <br>முதல் பதிவின் பின் நிறைவேற்றிய மாற்றங்கள்
+            <br>Changes After First Registration
+        </td>
+        <td style="font-size:9pt;">
+            <s:if test="changedFields.size() > 0">
+                ඔව්, <label class="font-9">**</label> ලකුණින් පෙන්වා ඈත
+                <br>
+                ஆம், <label class="font-9">**</label> குறியீட்டில் குறிப்பிடப்பட்டுள்ளது
+                <br>
+                Yes, marked with <label class="font-9">**</label>
+            </s:if>
+            <s:else>
+                නැත
+                <br>
+                இல்லை
+                <br>
+                No
+            </s:else>
+        </td>
+    </tr>
     </tbody>
 </table>
 
@@ -348,161 +335,111 @@
 <col width="115px">
 <col width="100px">
 <tbody>
-<s:if test="birthType.ordinal() != 0">
-    <tr height="70px">
-        <td>අනන්‍යතා අංකය<br>தனிநபர்அடையாள எண் <br>Identification Number</td>
-        <td align="center" style="font-size:14pt;"><s:label name="" value="%{#request.child.pin}"/></td>
-        <td>උපන් දිනය <br>பிறந்த திகதி<br>Date of Birth</td>
-        <td>
-            <div class="changes-done">
-                <s:if test="changedFields.get(21)">
-                    **&nbsp;<br/>&nbsp;
-                </s:if>
-            </div>
-            <div>
-                <s:label name="" value="%{#request.child.childDateOfBirthForPrint}" cssStyle="font-size:12pt;"/><br>
-                <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
-            </div>
-        </td>
-        <td>ස්ත්‍රී පුරුෂ භාවය<br>பால்<br>Gender</td>
-        <td colspan="2">
-            <div class="changes-done">
-                <s:if test="changedFields.get(25)">
-                    **&nbsp;<br/>&nbsp;
-                </s:if>
-            </div>
-            <div>
-                <s:label name="" value="%{gender}" cssStyle="font-size:12pt;"/><br/>
-                <s:label name="" value="%{genderEn}"/>
-            </div>
-        </td>
-    </tr>
-    <tr height="70px">
-        <td>උපන් ස්ථානය <br>பிறந்த இடம்<br>Place of birth
-        </td>
-        <td colspan="2">
-            <div class="changes-done">
-                <s:if test="changedFields.get(22)">
-                    **&nbsp;
-                </s:if>
-            </div>
-            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:11pt;"/>
-            <br>
+<tr height="70px">
+    <td>(5) අනන්‍යතා අංකය<br>தனிநபர்அடையாள எண் <br>Identification Number</td>
+    <td align="center" style="font-size:14pt;"><s:label name="" value="%{#request.child.pin}"/></td>
+    <td>(6) උපන් දිනය <br>பிறந்த திகதி<br>Date of Birth</td>
+    <td>
+        <div class="changes-done">
+            <s:if test="changedFields.get(21)">
+                **&nbsp;<br/>&nbsp;
+            </s:if>
+        </div>
+        <div>
+            <s:label name="" value="%{#request.child.childDateOfBirthForPrint}" cssStyle="font-size:12pt;"/><br>
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
+        </div>
+    </td>
+    <td>(7) ස්ත්‍රී පුරුෂ භාවය<br>பால்<br>Gender</td>
+    <td colspan="2">
+        <div class="changes-done">
+            <s:if test="changedFields.get(25)">
+                **&nbsp;<br/>&nbsp;
+            </s:if>
+        </div>
+        <div>
+            <s:label name="" value="%{gender}" cssStyle="font-size:12pt;"/><br/>
+            <s:label name="" value="%{genderEn}"/>
+        </div>
+    </td>
+</tr>
+<tr height="70px">
+    <td>(8) උපන් ස්ථානය <br>பிறந்த இடம்<br>Place of birth
+    </td>
+    <td colspan="2">
+        <div class="changes-done">
+            <s:if test="changedFields.get(22)">
+                **&nbsp;
+            </s:if>
+        </div>
+        <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:11pt;"/>
+        <br>
 
+        <div class="changes-done">
+            <s:if test="changedFields.get(23)">
+                **&nbsp;
+            </s:if>
+        </div>
+        <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
+                 cssStyle="font-size:10pt;"/>
+    </td>
+    <td colspan="2">(9) මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா?<br>Were Parents Married?
+    </td>
+    <td colspan="2">
+        <div class="changes-done">
+            <s:if test="changedFields.get(17)">
+                **&nbsp;<br/>&nbsp;
+            </s:if>
+        </div>
+        <div>
+            <s:label name="" value="%{marriedStatus}" cssStyle="font-size:11pt;"/><br>
+            <s:label name="" value="%{marriedStatusEn}"/>
+        </div>
+    </td>
+</tr>
+
+<tr height="150px">
+    <td>(10) නම <br>பெயர்<br>Name
+    </td>
+    <td colspan="6" class="bc-name" style="font-size:14pt">
+        <s:if test="child.childFullNameOfficialLang != null">
             <div class="changes-done">
-                <s:if test="changedFields.get(23)">
+                <s:if test="changedFields.get(0)">
                     **&nbsp;
                 </s:if>
             </div>
-            <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
-                     cssStyle="font-size:10pt;"/>
-        </td>
-        <td colspan="2">මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா?<br>Were Parents Married?
-        </td>
-        <td colspan="2">
-            <div class="changes-done">
-                <s:if test="changedFields.get(17)">
-                    **&nbsp;<br/>&nbsp;
-                </s:if>
+            <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
+        </s:if>
+        <s:else>
+            <div class="center-text">
+                <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                <s:label name="unknownFieldEn"/>
             </div>
-            <div>
-                <s:label name="" value="%{marriedStatus}" cssStyle="font-size:11pt;"/><br>
-                <s:label name="" value="%{marriedStatusEn}"/>
-            </div>
-        </td>
-    </tr>
-</s:if>
-<s:else>
-    <tr height="60px">
-        <td>උපන් දිනය <br>பிறந்த திகதி<br>Date of Birth</td>
-        <td>
+        </s:else>
+    </td>
+</tr>
+<tr height="140px">
+    <td>(11) නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
+    </td>
+    <td colspan="6" class="bc-name" style="font-size:12pt">
+        <s:if test="child.childFullNameEnglish != null">
             <div class="changes-done">
                 <s:if test="changedFields.get(1)">
-                    **&nbsp;<br/>&nbsp;
+                    **&nbsp;
                 </s:if>
             </div>
-            <div>
-                <s:label name="" value="%{#request.child.childDateOfBirthForPrint}" cssStyle="font-size:12pt;"/><br>
-                <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
+            <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
+        </s:if>
+        <s:else>
+            <div class="center-text">
+                <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                <s:label name="unknownFieldEn"/>
             </div>
-        </td>
-        <td>ස්ත්‍රී පුරුෂ භාවය<br>பால்<br>Gender</td>
-        <td>
-            <s:label name="" value="%{gender}" cssStyle="font-size:11pt;"/><br/>
-            <s:label name="" value="%{genderEn}"/>
-        </td>
-        <td colspan="2">
-            දරුවා මැරී උපදින විට ගර්භයට සති කීයක් ගත වී තිබුනේද යන්න
-            <br>பிள்ளை இறந்து பிறந்த பொழுது கர்ப்பந் தரித்து எத்தனை வாரம்
-            <br>Number of weeks pregnant at the time of still-birth
-        </td>
-        <td>
-            <s:if test="child.weeksPregnant != null && child.weeksPregnant != 0">
-                <s:label name="" value="%{#request.child.weeksPregnant}"/>
-            </s:if>
-            <s:else>
-                <div class="center-text">
-                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
-                    <s:label name="unknownFieldEn"/>
-                </div>
-            </s:else>
-        </td>
-    </tr>
-    <tr height="70px">
-        <td>උපන් ස්ථානය <br>பிறந்த இடம்<br>Place of birth
-        </td>
-        <td colspan="6">
-            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:11pt;"/><br>
-            <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
-                     cssStyle="font-size:12pt;"/>
-        </td>
-    </tr>
-</s:else>
-
-<s:if test="birthType.ordinal() != 0">
-    <tr height="150px">
-        <td>නම <br>பெயர்<br>Name
-        </td>
-        <td colspan="6" class="bc-name" style="font-size:14pt">
-            <s:if test="child.childFullNameOfficialLang != null">
-                <div class="changes-done">
-                    <s:if test="changedFields.get(0)">
-                        **&nbsp;
-                    </s:if>
-                </div>
-                <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
-            </s:if>
-            <s:else>
-                <div class="center-text">
-                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
-                    <s:label name="unknownFieldEn"/>
-                </div>
-            </s:else>
-        </td>
-    </tr>
-    <tr height="140px">
-        <td>නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
-        </td>
-        <td colspan="6" class="bc-name" style="font-size:12pt">
-            <s:if test="child.childFullNameEnglish != null">
-                <div class="changes-done">
-                    <s:if test="changedFields.get(1)">
-                        **&nbsp;
-                    </s:if>
-                </div>
-                <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
-            </s:if>
-            <s:else>
-                <div class="center-text">
-                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
-                    <s:label name="unknownFieldEn"/>
-                </div>
-            </s:else>
-        </td>
-    </tr>
-</s:if>
+        </s:else>
+    </td>
+</tr>
 <tr height="100px">
-    <td>පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர்<br> Father's Full Name
+    <td>(12) පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர்<br> Father's Full Name
     </td>
     <td colspan="6" class="bc-name">
         <s:if test="parent.fatherFullName != null || parent.fatherFullNameInEnglish != null">
@@ -511,7 +448,7 @@
                     **&nbsp;
                 </s:if>
             </div>
-        <span style="padding-right:5px"><s:label cssStyle="font-size:14pt" name=""
+        <span style="padding-right:5px"><s:label cssStyle="font-size:10pt" name=""
                                                  value="%{#request.parent.fatherFullName}"/> </span>
             | <span style="padding-left:5px"><s:label cssStyle="font-size:8pt" name=""
                                                       value="%{#request.parent.fatherFullNameInEnglish}"/> </span>
@@ -525,7 +462,7 @@
     </td>
 </tr>
 <tr height="50px">
-    <td>පියාගේ අනන්‍යතා අංකය<br>
+    <td>(13) පියාගේ අනන්‍යතා අංකය<br>
         தந்தையின் அடையாள எண்<br>
         Father's Identification No.
     </td>
@@ -543,7 +480,7 @@
             </div>
         </s:else>
     </td>
-    <td colspan="2">පියාගේ ජන වර්ගය<br>தந்தையின் இனம்<br> Father's Ethnic Group</td>
+    <td colspan="2">(14) පියාගේ ජන වර්ගය<br>தந்தையின் இனம்<br> Father's Ethnic Group</td>
     <td colspan="3">
         <s:if test="parent.fatherRace != null">
             <div class="changes-done">
@@ -566,18 +503,18 @@
 </tr>
 
 <tr height="100px">
-    <td>මවගේ සම්පූර්ණ නම
+    <td>(15) මවගේ සම්පූර්ණ නම
         <br> தாயின் முழுப் பெயர்
         <br> Mother's Full Name
     </td>
-    <td colspan="6" class="bc-name" style="font-size:14pt">
+    <td colspan="6" class="bc-name">
         <s:if test="parent.motherFullName != null || parent.motherFullNameInEnglish != null">
             <div class="changes-done">
                 <s:if test="changedFields.get(26)">
                     **&nbsp;
                 </s:if>
             </div>
-        <span style="padding-right:5px"><s:label cssStyle="font-size:14pt" name=""
+        <span style="padding-right:5px"><s:label cssStyle="font-size:10pt" name=""
                                                  value="%{#request.parent.motherFullName}"/> </span>
             | <span style="padding-left:5px"><s:label cssStyle="font-size:8pt" name=""
                                                       value="%{#request.parent.motherFullNameInEnglish}"/> </span>
@@ -591,7 +528,7 @@
     </td>
 </tr>
 <tr height="50px">
-    <td>ම‌වගේ අනන්‍යතා අංකය<br>
+    <td>(16) ම‌වගේ අනන්‍යතා අංකය<br>
         தாயின் அடையாள எண் <br>
         Mother's Identification No.
     </td>
@@ -609,7 +546,7 @@
             </div>
         </s:else>
     </td>
-    <td colspan="2">මවගේ ජන වර්ගය<br>தாயின் இனம்<br> Mother's Ethnic Group
+    <td colspan="2">(17) මවගේ ජන වර්ගය<br>தாயின் இனம்<br> Mother's Ethnic Group
     </td>
     <td colspan="3">
         <s:if test="parent.motherRace != null">
@@ -642,12 +579,12 @@
     <col width="460px">
     <tbody>
     <tr height="60px">
-        <td>ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி<br> Date of Registration</td>
+        <td>(18) ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி<br> Date of Registration</td>
         <td>
             <s:label name="" value="%{#request.register.dateOfRegistrationForPrint}" cssStyle="font-size:12pt;"/><br>
             <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
-        <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி<br> Date of Issue
+        <td>(19) නිකුත් කළ දිනය<br>வழங்கிய திகதி<br> Date of Issue
         </td>
         <td>
             <label style="font-size:12pt;"><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
@@ -657,7 +594,7 @@
     </tr>
     <tr>
         <td colspan="2" height="85px">
-            සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන<br>
+            (20) සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන<br>
             சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
             Name, Signature and Designation of certifying officer
         </td>
@@ -668,7 +605,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2" height="40px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
+        <td colspan="2" height="40px">(21) නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
         </td>
         <td colspan="2" cssStyle="font-size:11pt;">
             <s:textarea id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}" disabled="true"
@@ -678,6 +615,279 @@
     </tr>
     </tbody>
 </table>
+
+</s:if>
+<s:else>
+<%-- Still birth --%>
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+    <col width="195px">
+    <col width="220px">
+    <col width="210px">
+    <col width="220px">
+    <col width="185px">
+    <tbody>
+    <tr height="70px">
+        <td>(1) දිස්ත්‍රික්කය<br>மாவட்டம் <br>District</td>
+        <td>
+            <s:label name="" value="%{childDistrict}" cssStyle="font-size:11pt;"/><br/>
+            <s:label name="" value="%{childDistrictEn}" cssStyle="text-transform:uppercase;"/>
+        </td>
+        <td>(2) ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+            <br/>பிரதேச செயளாளர் பிரிவு
+            <br/>Divisional Secretary Division
+        </td>
+        <td colspan="2">
+            <s:label name="" value="%{childDsDivision}" cssStyle="font-size:11pt;"/><br/>
+            <s:label name="" value="%{childDsDivisionEn}" cssStyle="text-transform:uppercase;"/>
+        </td>
+    </tr>
+
+    <tr height="70px">
+        <td>(3) ලියාපදිංචි කිරීමේ කොට්ඨාශය
+            <br>பதிவுப் பிரிவு
+            <br>Registration Division
+        </td>
+        <td colspan="4">
+            <s:label name="" value="%{#request.register.bdDivisionPrint}" cssStyle="font-size:11pt;"/><br>
+            <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"
+                     cssStyle="text-transform:uppercase;"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+    <col width="195px">
+    <col width="220px">
+    <col width="155px">
+    <col width="130px">
+    <col width="115px">
+    <col width="115px">
+    <col width="100px">
+    <tbody>
+
+    <tr height="60px">
+        <td>(4) උපන් දිනය <br>பிறந்த திகதி<br>Date of Birth</td>
+        <td>
+            <div class="changes-done">
+                <s:if test="changedFields.get(1)">
+                    **&nbsp;<br/>&nbsp;
+                </s:if>
+            </div>
+            <div>
+                <s:label name="" value="%{#request.child.childDateOfBirthForPrint}" cssStyle="font-size:12pt;"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
+            </div>
+        </td>
+        <td>(5) ස්ත්‍රී පුරුෂ භාවය<br>பால்<br>Gender</td>
+        <td>
+            <s:label name="" value="%{gender}" cssStyle="font-size:11pt;"/><br/>
+            <s:label name="" value="%{genderEn}"/>
+        </td>
+        <td colspan="2">
+            (6) දරුවා මැරී උපදින විට ගර්භයට සති කීයක් ගත වී තිබුනේද යන්න
+            <br>பிள்ளை இறந்து பிறந்த பொழுது கர்ப்பந் தரித்து எத்தனை வாரம்
+            <br>Number of weeks pregnant at the time of still-birth
+        </td>
+        <td>
+            <s:if test="child.weeksPregnant != null && child.weeksPregnant != 0">
+                <s:label name="" value="%{#request.child.weeksPregnant}"/>
+            </s:if>
+            <s:else>
+                <div class="center-text">
+                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                    <s:label name="unknownFieldEn"/>
+                </div>
+            </s:else>
+        </td>
+    </tr>
+    <tr height="70px">
+        <td>(7) උපන් ස්ථානය <br>பிறந்த இடம்<br>Place of birth
+        </td>
+        <td colspan="6">
+            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:11pt;"/><br>
+            <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
+                     cssStyle="font-size:12pt;"/>
+        </td>
+    </tr>
+    <tr height="100px">
+        <td>(8) පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர்<br> Father's Full Name
+        </td>
+        <td colspan="6" class="bc-name">
+            <s:if test="parent.fatherFullName != null || parent.fatherFullNameInEnglish != null">
+                <div class="changes-done">
+                    <s:if test="changedFields.get(10)">
+                        **&nbsp;
+                    </s:if>
+                </div>
+        <span style="padding-right:5px"><s:label cssStyle="font-size:10pt" name=""
+                                                 value="%{#request.parent.fatherFullName}"/> </span>
+                | <span style="padding-left:5px"><s:label cssStyle="font-size:8pt" name=""
+                                                          value="%{#request.parent.fatherFullNameInEnglish}"/> </span>
+            </s:if>
+            <s:else>
+                <div class="center-text">
+                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                    <s:label name="unknownFieldEn"/>
+                </div>
+            </s:else>
+        </td>
+    </tr>
+    <tr height="50px">
+        <td>(9) පියාගේ අනන්‍යතා අංකය<br>
+            தந்தையின் அடையாள எண்<br>
+            Father's Identification No.
+        </td>
+        <td align="center">
+            <s:if test="parent.fatherNICorPIN !=null">
+                <s:if test="changedFields.get(11)">
+                    <label class="changes-noalign">**&nbsp;</label>
+                </s:if>
+                <s:label name="" value="%{#request.parent.fatherNICorPIN}" cssStyle="font-size:12pt;"/>
+            </s:if>
+            <s:else>
+                <div class="center-text">
+                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                    <s:label name="unknownFieldEn"/>
+                </div>
+            </s:else>
+        </td>
+        <td colspan="2">(10) පියාගේ ජන වර්ගය<br>தந்தையின் இனம்<br> Father's Ethnic Group</td>
+        <td colspan="3">
+            <s:if test="parent.fatherRace != null">
+                <div class="changes-done">
+                    <s:if test="changedFields.get(16)">
+                        **&nbsp;<br/>&nbsp;
+                    </s:if>
+                </div>
+                <div>
+                    <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:12pt;"/><br/>
+                    <s:label name="" value="%{fatherRacePrintEn}" cssStyle="text-transform:uppercase;"/>
+                </div>
+            </s:if>
+            <s:else>
+                <div class="center-text">
+                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                    <s:label name="unknownFieldEn"/>
+                </div>
+            </s:else>
+        </td>
+    </tr>
+    <tr height="100px">
+        <td>(11) මවගේ සම්පූර්ණ නම
+            <br> தாயின் முழுப் பெயர்
+            <br> Mother's Full Name
+        </td>
+        <td colspan="6" class="bc-name">
+            <s:if test="parent.motherFullName != null || parent.motherFullNameInEnglish != null">
+                <div class="changes-done">
+                    <s:if test="changedFields.get(26)">
+                        **&nbsp;
+                    </s:if>
+                </div>
+        <span style="padding-right:5px"><s:label cssStyle="font-size:10pt" name=""
+                                                 value="%{#request.parent.motherFullName}"/> </span>
+                | <span style="padding-left:5px"><s:label cssStyle="font-size:8pt" name=""
+                                                          value="%{#request.parent.motherFullNameInEnglish}"/> </span>
+            </s:if>
+            <s:else>
+                <div class="center-text">
+                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                    <s:label name="unknownFieldEn"/>
+                </div>
+            </s:else>
+        </td>
+    </tr>
+    <tr height="50px">
+        <td>(12) ම‌වගේ අනන්‍යතා අංකය<br>
+            தாயின் அடையாள எண் <br>
+            Mother's Identification No.
+        </td>
+        <td align="center">
+            <s:if test="parent.motherNICorPIN != null">
+                <s:if test="changedFields.get(27)">
+                    <label class="changes-noalign">**&nbsp;</label>
+                </s:if>
+                <s:label name="" value="%{#request.parent.motherNICorPIN}" cssStyle="font-size:12pt;"/>
+            </s:if>
+            <s:else>
+                <div class="center-text">
+                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                    <s:label name="unknownFieldEn"/>
+                </div>
+            </s:else>
+        </td>
+        <td colspan="2">(13) මවගේ ජන වර්ගය<br>தாயின் இனம்<br> Mother's Ethnic Group
+        </td>
+        <td colspan="3">
+            <s:if test="parent.motherRace != null">
+                <div class="changes-done">
+                    <s:if test="changedFields.get(32)">
+                        **&nbsp;<br/>&nbsp;
+                    </s:if>
+                </div>
+                <div>
+                    <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:12pt;"/><br/>
+                    <s:label name="" value="%{motherRacePrintEn}" cssStyle="text-transform:uppercase;"/>
+                </div>
+            </s:if>
+            <s:else>
+                <div class="center-text">
+                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                    <s:label name="unknownFieldEn"/>
+                </div>
+            </s:else>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+    <col width="195px">
+    <col width="220px">
+    <col width="155px">
+    <col width="460px">
+    <tbody>
+    <tr height="60px">
+        <td>(14) ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி<br> Date of Registration</td>
+        <td>
+            <s:label name="" value="%{#request.register.dateOfRegistrationForPrint}" cssStyle="font-size:12pt;"/><br>
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
+        </td>
+        <td>(15) නිකුත් කළ දිනය<br>வழங்கிய திகதி<br> Date of Issue
+        </td>
+        <td>
+            <label style="font-size:12pt;"><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
+            </label><br>
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" height="85px">
+            (16) සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන<br>
+            சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
+            Name, Signature and Designation of certifying officer
+        </td>
+        <td colspan="2" style="font-size:11pt">
+            <s:textarea id="signature" value="%{#request.register.originalBCIssueUserSignPrint}" disabled="true"
+                        rows="4"
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;text-transform:uppercase;"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" height="40px">(17) නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
+        </td>
+        <td colspan="2" cssStyle="font-size:11pt;">
+            <s:textarea id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}" disabled="true"
+                        rows="3"
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;text-transform:uppercase;"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</s:else>
+
 
 <p style="font-size:9pt">
     උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
