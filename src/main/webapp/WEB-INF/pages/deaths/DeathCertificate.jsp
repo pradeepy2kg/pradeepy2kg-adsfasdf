@@ -256,14 +256,14 @@
     <tbody>
     <tr>
         <td>
-            දිස්ත්‍රික්කය
+            (1) දිස්ත්‍රික්කය
             <br>மாவட்டம்
             <br>District
         </td>
         <td><s:label name="" value="%{deathPersonDistrict}"/><br>
             <s:label name="" value="%{deathPersonDistrictEn}" cssStyle="text-transform:uppercase;"/></td>
         <td>
-            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+            (2) ප්‍රාදේශීය ලේකම් කොට්ඨාශය
             <br/>பிரதேச செயளாளர் பிரிவு
             <br/>Divisional Secretary Division
         </td>
@@ -273,14 +273,14 @@
     </tr>
     <tr>
         <td>
-            ලියාපදිංචි කිරීමේ කොට්ඨාශය
+            (3) ලියාපදිංචි කිරීමේ කොට්ඨාශය
             <br>பதிவுப் பிரிவு
             <br>Registration Division
         </td>
         <td><s:label name="" value="%{deathPersonDeathDivision}"/><br>
             <s:label name="" value="%{deathPersonDeathDivisionEn}" cssStyle="text-transform:uppercase;"/></td>
         <td>
-            මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
+            (4) මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
             <br>நிறைவேற்றிய மாற்றங்கள்
             <br>Changes after first registration
         </td>
@@ -309,14 +309,14 @@
 <col width="160px"/>
 <col width="100px"/>
 <col width="100px"/>
-<col width="180px"/>
+<col width="150px"/>
+<col width="130px"/>
 <col width="120px"/>
-<col width="100px"/>
 <col/>
 <tbody>
 <tr>
     <td>
-        අනන්‍යතා අංකය
+        (5) අනන්‍යතා අංකය
         <br>அடையாள எண்
         <br>Identification Number
     </td>
@@ -328,7 +328,7 @@
         </div>
     </td>
     <td>
-        වයස
+        (6) වයස
         <br>வயது
         <br>Age
     </td>
@@ -340,7 +340,7 @@
         </div>
     </td>
     <td>
-        මරණය සිදුවූ දිනය
+        (7) මරණය සිදුවූ දිනය
         <br>இறப்பு நிகழ்ந்த திகதி
         <br>Date of death
     </td>
@@ -352,7 +352,7 @@
         </div>
     </td>
     <td>
-        ස්ත්‍රී පුරුෂ භාවය
+        (8) ස්ත්‍රී පුරුෂ භාවය
         <br>பால்
         <br>Gender
     </td>
@@ -368,7 +368,7 @@
 </tr>
 <tr>
     <td colspan="1">
-        මරණයේ ස්වභාවය
+        (9) මරණයේ ස්වභාවය
         <br>மரணத்தின் வகை
         <br>Type of Death
     </td>
@@ -385,7 +385,7 @@
 </tr>
 <tr>
     <td colspan="1" height="60px">
-        මරණය සිදුවූ ස්ථානය
+        (10) මරණය සිදුවූ ස්ථානය
         <br>இறப்பு நிகழந்த இடம்
         <br>Place of death
     </td>
@@ -400,7 +400,7 @@
 </tr>
 <tr>
     <td colspan="1" height="60px">
-        මරණයට හේතු
+        (11) මරණයට හේතු
         <br>இறப்பிற்கான காரணம்
         <br>Cause of Death
     </td>
@@ -416,7 +416,7 @@
 </tr>
 <tr>
     <td colspan="1">
-        ආදාහන හෝ භූමදාන ස්ථානය
+        (12) ආදාහන හෝ භූමදාන ස්ථානය
         <br>அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம்
         <br>Place of burial or cremation
     </td>
@@ -430,7 +430,7 @@
 </tr>
 <tr>
     <td colspan="1" height="100px">
-        නම
+        (13) නම
         <br>பெயர்
         <br>Name
     </td>
@@ -445,7 +445,7 @@
 </tr>
 <tr>
     <td colspan="1" height="90px">
-        නම ඉංග්‍රීසි භාෂාවෙන්
+        (14) නම ඉංග්‍රීසි භාෂාවෙන්
         <br>பெயர் ஆங்கில மொழியில்
         <br>Name in English
     </td>
@@ -459,7 +459,7 @@
 </tr>
 <tr>
     <td colspan="1" height="80px">
-        පියාගේ සම්පුර්ණ නම
+        (15) පියාගේ සම්පුර්ණ නම
         <br>தந்தையின்முழுப் பெயர்
         <br>Father's Full Name
     </td>
@@ -471,7 +471,7 @@
         </div>
     </td>
     <td colspan="1">
-        අනන්‍යතා අංකය
+        (16) අනන්‍යතා අංකය
         <br>அடையாள எண்
         <br>Identification No.
     </td>
@@ -485,7 +485,7 @@
 </tr>
 <tr>
     <td colspan="1" height="80px">
-        මවගේ සම්පූර්ණ නම
+        (17) මවගේ සම්පූර්ණ නම
         <br>தாயின் முழுப் பெயர்
         <br>Mother's Full Name
     </td>
@@ -497,7 +497,7 @@
         </div>
     </td>
     <td colspan="1">
-        අනන්‍යතා අංකය
+        (18) අනන්‍යතා අංකය
         <br>அடையாள எண்
         <br>Identification No.
     </td>
@@ -511,13 +511,13 @@
 </tr>
 <tr>
     <td colspan="1" height="80px">
-        දැනුම් දෙන්නාගේ නම
+        (19) දැනුම් දෙන්නාගේ නම
         <br>தகவலளிப்பவரின் பெயர்
         <br>Informant's Name
     </td>
     <td colspan="4" style="font-size:10pt"><s:label name="" value="%{declarant.declarantFullName}"/></td>
     <td colspan="1">
-        අනන්‍යතා අංකය
+        (20) අනන්‍යතා අංකය
         <br>அடையாள எண்
         <br>Identification No.
     </td>
@@ -525,7 +525,7 @@
 </tr>
 <tr>
     <td colspan="1" height="80px">
-        දැනුම් දෙන්නාගේ ලිපිනය
+        (21) දැනුම් දෙන්නාගේ ලිපිනය
         <br>தகவலளிப்பவரின் முகவரி
         <br>Informant's Address
     </td>
@@ -537,19 +537,19 @@
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin-bottom:0;"
        class="font-9">
     <col width="215px"/>
-    <col width="180px"/>
-    <col width="120px"/>
+    <col width="160px"/>
+    <col width="140px"/>
     <col/>
     <tbody>
     <tr>
         <td height="50px">
-            ලියාපදිංචි කළ දිනය
+            (22) ලියාපදිංචි කළ දිනය
             <br>பதிவு செய்யப்பட்ட திகதி
             <br>Date of Registration
         </td>
         <td><s:label name="" value="%{death.dateOfRegistration}"/></td>
         <td>
-            නිකුත් කළ දිනය
+            (23) නිකුත් කළ දිනය
             <br>வழங்கிய திகதி
             <br>Date of Issue
         </td>
@@ -558,7 +558,7 @@
     </tr>
     <tr>
         <td colspan="2" height="75px">
-            සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන
+            (24) සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන
             <br>சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்
             <br>Name, Signature and Designation of certifying officer
         </td>
@@ -570,7 +570,7 @@
     </tr>
     <tr>
         <td colspan="2" height="30px">
-            නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
+            (25) නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
         </td>
         <td colspan="2" style="font-size:11pt">
             <s:textarea id="placeSign" value="%{deathRegister.originalDCPlaceOfIssueSignPrint}" disabled="true"
