@@ -330,8 +330,8 @@
 <col width="195px">
 <col width="220px">
 <col width="155px">
-<col width="130px">
-<col width="115px">
+<col width="110px">
+<col width="135px">
 <col width="115px">
 <col width="100px">
 <tbody>
