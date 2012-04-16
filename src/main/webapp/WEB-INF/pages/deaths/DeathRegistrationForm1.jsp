@@ -27,22 +27,22 @@
 <script type="text/javascript">
 
 
-$(function() {
-    $("#timePicker").cantipi({size:140, roundto: 5});
+$(function () {
+    $("#timePicker").cantipi({size:140, roundto:5});
 });
 
-$(function() {
+$(function () {
     $("#deathDatePicker").datepicker({
-        changeYear: true,
+        changeYear:true,
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
         endDate:'2020-12-31'
     });
 });
 
-$(function() {
+$(function () {
     $("#dateOfRegistrationDatePicker").datepicker({
-        changeYear: true,
+        changeYear:true,
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
         endDate:'2020-12-31'
@@ -50,9 +50,9 @@ $(function() {
 });
 
 
-$(function() {
+$(function () {
     $("#deathPersonDOB").datepicker({
-        changeYear: true,
+        changeYear:true,
         dateFormat:'yy-mm-dd',
         startDate:'1920-01-01',
         endDate:'2020-12-31'
@@ -62,11 +62,11 @@ $(function() {
 // mode 1 = passing District, will return DS list
 // mode 2 = passing DsDivision, will return BD list
 // any other = passing district, will return DS list and the BD list for the first DS
-$(function() {
-    $('select#deathDistrictId').bind('change', function(evt1) {
+$(function () {
+    $('select#deathDistrictId').bind('change', function (evt1) {
         var id = $("select#deathDistrictId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                function(data) {
+                function (data) {
                     var options1 = '';
                     var ds = data.dsDivisionList;
                     for (var i = 0; i < ds.length; i++) {
@@ -92,10 +92,10 @@ $(function() {
                 });
     });
 
-    $('select#deathPersonPermenentAddressDistrictId').bind('change', function(evt1) {
+    $('select#deathPersonPermenentAddressDistrictId').bind('change', function (evt1) {
         var id = $("select#deathPersonPermenentAddressDistrictId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:16},
-                function(data) {
+                function (data) {
                     var options1 = '';
                     var ds = data.dsDivisionList;
                     var dsDivisionsSelect = document.getElementById('selectDSDivision').value;
@@ -118,10 +118,10 @@ $(function() {
     });
 
 
-    $('select#deathDsDivisionId').bind('change', function(evt2) {
+    $('select#deathDsDivisionId').bind('change', function (evt2) {
         var id = $("select#deathDsDivisionId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                function(data) {
+                function (data) {
                     var options = '';
                     var bd = data.bdDivisionList;
                     for (var i = 0; i < bd.length; i++) {
@@ -131,10 +131,10 @@ $(function() {
                 });
     });
 
-    $('select#deathPersonPermenentAddressDSDivisionId').bind('change', function(evt2) {
+    $('select#deathPersonPermenentAddressDSDivisionId').bind('change', function (evt2) {
         var id = $("select#deathPersonPermenentAddressDSDivisionId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                function(data) {
+                function (data) {
 
                     var options4 = '';
                     var gn = data.gnDivisionList;
@@ -152,14 +152,14 @@ $(function() {
      fatherNameInOfficialLang fatherIdentificationNumber
      motherNameInOfficialLang motherIdentificationNumber
      */
-    $('img#death_person_lookup').bind('click', function(evt3) {
+    $('img#death_person_lookup').bind('click', function (evt3) {
         var id1 = $("input#deathPerson_PINorNIC").attr("value");
         var datePicker = $('#deathPersonDOB');
         var error = "error message for invalid date of birth";
         datePicker.datepicker('setDate', calculateBirthDay(id1, error));
 
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                function(data1) {
+                function (data1) {
                     if (data1 != null) {
                         $("textarea#deathPersonNameOfficialLang").val(data1.fullNameInOfficialLanguage);
                         $("textarea#deathPersonNameInEnglish").val(data1.fullNameInEnglishLanguage)
@@ -173,20 +173,21 @@ $(function() {
                         $("textarea#deathPersonMotherFullName").val(data1.motherNameInOfficialLang);
                     }
                 });
+        personAgeDeath();
     });
-    $('img#death_person_father_lookup').bind('click', function(evt4) {
+    $('img#death_person_father_lookup').bind('click', function (evt4) {
         var id2 = $("input#deathPersonFather_PINorNIC").attr("value");
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
-                function(data2) {
+                function (data2) {
                     if (data2 != null) {
                         $("textarea#deathPersonFatherFullName").val(data2.fullNameInOfficialLanguage);
                     }
                 });
     });
-    $('img#death_person_mother_lookup').bind('click', function(evt5) {
+    $('img#death_person_mother_lookup').bind('click', function (evt5) {
         var id3 = $("input#deathPersonMother_PINorNIC").attr("value");
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id3},
-                function(data3) {
+                function (data3) {
                     if (data3 != null) {
                         $("textarea#deathPersonMotherFullName").val(data3.fullNameInOfficialLanguage);
                     }
@@ -338,12 +339,12 @@ function otherValidations() {
     }
 }
 
-$(function() {
-    $('img#place').bind('click', function(evt6) {
+$(function () {
+    $('img#place').bind('click', function (evt6) {
         var text = $("textarea#placeOfDeath").attr("value");
 
-        $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
-                function(data) {
+        $.post('/ecivil/TransliterationService', {text:text, gender:'U'},
+                function (data) {
                     if (data != null) {
                         var s = data.translated;
                         $("input#placeOfDeathInEnglish").val(s);
@@ -351,13 +352,13 @@ $(function() {
                 });
     });
 
-    $('img#deathName').bind('click', function(evt7) {
+    $('img#deathName').bind('click', function (evt7) {
         var text = $("textarea#deathPersonNameOfficialLang").attr("value");
         var genderVal = $("select#deathPersonGender").attr("value");
         var gender = genderVal == 0 ? 'M' : 'F';
 
-        $.post('/ecivil/TransliterationService', {text:text,gender:gender},
-                function(data) {
+        $.post('/ecivil/TransliterationService', {text:text, gender:gender},
+                function (data) {
                     if (data != null) {
                         var s = data.translated;
                         $("textarea#deathPersonNameInEnglish").val(s);
