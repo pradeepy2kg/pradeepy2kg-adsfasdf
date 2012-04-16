@@ -183,6 +183,11 @@ function validate() {
 function initPage() {
 }
 
+function setInformant(id, nICorPIN, name){
+    $('#declarant_pinOrNic').val(nICorPIN);
+    $('#declarantFullName').val(name);
+}
+
 function validateCertifyingAuthority() {
     // certifying authority PIN or NIC
     var domObject = document.getElementById('certifying_authority_NICorPIN');
@@ -254,7 +259,10 @@ function maxLengthCalculate(id, max, divId) {
             <br>Father / Mother
         </td>
         <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
-                                                list="#@java.util.HashMap@{'FATHER':''}"/></td>
+                                                list="#@java.util.HashMap@{'FATHER':''}"
+                                                onchange="javascript:setInformant('FATHER', '%{deathPerson.deathPersonFatherPINorNIC}',
+                                 '%{deathPerson.deathPersonFatherFullName}')"
+                /></td>
         <td colspan="1">
             ස්වාමිපුරුෂයා / භාර්යාව
             <br>கணவன்/ மனைவி

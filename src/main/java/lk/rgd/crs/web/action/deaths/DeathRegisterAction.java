@@ -13,6 +13,7 @@ import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.dao.AssignmentDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.GNDivisionDAO;
 import lk.rgd.crs.api.domain.*;
@@ -67,6 +68,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private final RaceDAO raceDAO;
     private final CommonUtil commonUtil;
     private final GNDivisionDAO gnDivisionDAO;
+    private final AssignmentDAO assignmentDAO;
 
     private BitSet changedFields;
 
@@ -140,7 +142,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
         CountryDAO countryDAO, DeathRegistrationService deathRegistrationService, AppParametersDAO appParametersDAO,
         RaceDAO raceDAO, DeathAlterationService deathAlterationService, UserLocationDAO userLocationDAO, UserDAO userDAO,
-        LocationDAO locationDAO, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO) {
+        LocationDAO locationDAO, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO, AssignmentDAO assignmentDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -154,6 +156,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.locationDAO = locationDAO;
         this.commonUtil = commonUtil;
         this.gnDivisionDAO = gnDivisionDAO;
+        this.assignmentDAO = assignmentDAO;
     }
 
 
@@ -195,6 +198,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                     pageNo = 0;
                     session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
                 }
+                populateRegistrars(ddf);
                 populateDeathType(pageType);
                 ddf.setDeath(death);
                 ddf.setDeathPerson(deathPerson);
@@ -949,6 +953,28 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             gnDivisionList = gnDivisionDAO.getGNDivisionNames(dsDivisionUKey, language, user);
         } catch (RGDRuntimeException e) {
             gnDivisionList = Collections.emptyMap();
+        }
+    }
+
+    private void populateRegistrars(DeathRegister ddf) {
+        if (!addNewMode && (ddf.getDeath().getDeathDivision() == null ||
+            ddf.getDeath().getDeathDivision().getBdDivisionUKey() != deathDivisionId)) {
+            List<Assignment> deathRegistrarsAssigned = assignmentDAO.getAllAssignmentsByBDorMRDivisionAndType(
+                deathDivisionId, Assignment.Type.DEATH, true, false);
+            if(deathRegistrarsAssigned.size() > 0){
+                // Get the first registrar from the list.
+                Registrar registrar = deathRegistrarsAssigned.get(0).getRegistrar();
+                notifyingAuthority = new NotifyingAuthorityInfo();
+                notifyingAuthority.setNotifyingAuthorityName(registrar.getFullNameInOfficialLanguage());
+                if(registrar.getNic() != null){
+                    notifyingAuthority.setNotifyingAuthorityPIN(registrar.getNic());
+                }
+                if(registrar.getCurrentAddress() != null){
+                    notifyingAuthority.setNotifyingAuthorityAddress(registrar.getCurrentAddress());
+                }
+                ddf.setNotifyingAuthority(notifyingAuthority);
+                logger.debug("Registrar {} info set for the notifying authority", registrar.getRegistrarUKey());
+            }
         }
     }
 
