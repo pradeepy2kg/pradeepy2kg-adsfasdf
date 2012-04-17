@@ -1,0 +1,13 @@
+MySQL tables are bound by the underlying file systems space. Thus enough space should be allocated to the file system. When using Xen, allocate a large size for the disk, and let the size grow to this maximum dynamically as the dataset grows. This will allow easier backups while still allowing the database to hold a lot of data.
+
+http://www.mysqlperformanceblog.com/2007/11/01/innodb-performance-optimization-basics/
+
+Tuning innodb_buffer_pool_size - http://www.mysqlperformanceblog.com/2007/11/03/choosing-innodb_buffer_pool_size/
+Its better to run MySQL on a separate machine, and allocate enough RAM to it - as much as possible
+
+Use separate tablespaces for each table using innodb_file_per_table See http://vdachev.net/2007/02/22/mysql-reducing-ibdata1/
+
+
+Manually Index the following tables as instructed
+Schema PRS
+Person - pin, nic, motherukey, father ukey

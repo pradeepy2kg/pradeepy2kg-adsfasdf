@@ -1,0 +1,224 @@
+    # include text for tamil translation here
+
+* (No, but since married Tamil) இல்லை, பின் விவாகமானவர்கள் 
+* (Unmarried) திருமணமாகாதவர் 
+* (Married) திருமணமானவர் 
+* (Unknown) தெரியாது 
+
+*(Preferred Language for)சான்றிதழ் வழங்கப்பட வேண்டிய மொழி  
+*(The serial number of the existing Birth Certificate)தற்போதைய பிறப்புச்சான்றிதழின் தொடர் இலக்கம் 
+*(Late Birth Registration) தாமதித்த பிறப்புப் பதிவு
+*(Belated Birth Registration)காலங் கடந்த பிறப்புப் பதிவு 
+*(Case File Number)கோவை இலக்கம் 
+*(Add Comments)கருத்தினை தெரிவிக்கவும் 
+*(Hospital Admission Number) வைத்தியசாலை அனுமதி இலக்கம் 
+*(Hospital Admission Date)வைத்தியசாலையில் அனுமதித்த திகதி 
+*(Preferred Language for Death Certificate) இறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய மொழி
+*(Declaranat Signed Date)பிரதிக்கினையாளர் கையொப்பமிட்ட திகதி 
+
+* (Select Option)
+* (Signing Officer) உறுதிப்படுத்தும் அலுவலலர் 
+* (Select Place) இடத்தினை தெரிவு செய்க 
+* (Select Officer) அலுவலரை தெரிவு செய்க 
+* (Language) மொழி 
+* Birth and Death Certificate Search Pages(solr) not translated
+
+* (Registration of a person in the Population Registry) குடிமதிப்பு ஆவணத்தில் நபரினை பதிவு செய்தல்  
+*Male ஆண் 
+*Female பெண் 
+*Unknown தெரியாது 
+
+*Married திருமணமானவர் 
+*Unmarried திருமணமாகாதவர் 
+
+
+*Alive உயிருடன் 
+*Dead இறப்பு 
+*Missing காணாமல்போன  
+*Non resident  வதிவற்றவர் 
+
+*(Preferred Language for Person Registration Certificate) நபரின் பதிவிற்கான சான்றிதழினை வழங்கப்படவேண்டிய மொழி 
+*(Marriages Details not available.) திருமணம் சம்மந்தமான விபரங்கள் அறிக்கையிடப்படவில்லை 
+*(Citizenships and Passport Details not available.) வேறு நாட்டினது பிரஜாவுரிமை சம்பந்தமான விபரங்கள் இல்லை 
+
+
+
+* (Preferred Language for Person Registration Certificate )நபரின் பதிவிற்கான சான்றிதழினை வழங்கப்படவேண்டிய மொழி 
+Late registration,Normal Death காலங்கடந்த பதிவு, இயற்கை மரணம் 
+Late registration,Sudden Death  காலங்கடந்த பதிவு, திடீர்  மரணம் 
+Death of missing person காணாமற் போன நபரின் இறப்பு
+
+කාලය ඉකුත් වූ මරණ(සාමාන්‍ය මරණ)  காலந் தாழ்த்திய இறப்பு ( சாதாரண மரணம்)
+කාලය ඉකුත් වූ මරණ(හදිසි මරණ )  காலந் தாழ்த்திய இறப்பு ( திடீர்  மரணம்)
+You can apply for a new death certificate with altered value தங்களால் புதிய மரணச்சான்றிதழினை மாற்றங்களுடன் பெற விண்ணப்பிக்க முடியும் 
+
+# following in LifeStatusUtil class
+* ජීවතුන් අතර ඇත (Alive) உயிருடன் உள்ளார் 
+* ජීවතුන් අතර නැත  (Dead) உயிருடன் இல்லை 
+* අතුරුදන්(Missing) காணாமற் போன 
+* පදිංචිව නැත (Non resident) வதிவற்றவர் 
+
+# following in DeathTypeUtil class
+* සාමාන්‍ය මරණ/Normal Death சாதாரண மரணம் 
+* හදිසි මරණ/Sudden Death திடீர் மரணம் 
+* කාලය ඉකුත් වූ සාමාන්‍ය මරණ /Late registration,Normal Death காலங்கடந்த சாதாரண மரணம் 
+* කාලය ඉකුත් වූ හදිසි මරණ/Late registration,Sudden Death காலங்கடந்த திடீர் மரணம் 
+* නැතිවුණු පුද්ගලයෙකුගේ මරණ/Death of missing person காணாமற் போன நபரின் மரணம் 
+
+# following in AssignmentUtil class
+* උපත්(Birth) பிறப்பு 
+* මරණ (Death) இறப்பு 
+* සාමාන්‍ය විවාහ(General Marriage) பொது விவாகம்
+* උඩරට විවාහ (Kandyan Marriage) கண்டிய விவாகம் 
+* මුස්ලිම් විවාහ(Muslim Marriage) முஸ்லிம் விவாகம் 
+
+* උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව (Preferred Language for Birth Certificate) பிறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய  மொழி 
+
+normal death registration சாதாரண இறப்புப்பதிவு 
+late death registration காலங்கடந்த இறப்புப்பதிவு 
+sudden death registration திடீர் இறப்புப் பதிவு 
+missing death registration காணாமற் போன நபரின் இறப்புப்பதிவு 
+
+Type of Marriage Place / திருமண நிகழ்விடத்தின் வகை 
+Scanned Image of Marriage Certificate
+
+general marriage / பொது 
+Kandyan binna / கண்டிய  பின்ன 
+kandyan deega/ கண்டிய தீக 
+Muslim/ முஸ்லிம்
+
+Registrars Office/ பதிவாளர் அலுவலகம் 
+DS Office  / பிரதேச செயலகம் 
+Church / தேவாலயம் 
+Other / வேறு 
+
+Effective Date of Divorce / விவாகரத்து செல்லுபடியகும் திகதி 
+Comments / கருத்து 
+State/ நிலவரம் 
+දික්කසාදය සිදුකල නිලධාරියා விவாகரத்தினை நடாத்திய அதிகாரி 
+Name, Signature and Designation of the officer விவாகரத்தினை நடாத்திய அதிகாரியின் பெயரும் முகவரியும்  
+Date of Divorce/ விவாகரத்தினை நடாத்திய திகதி 
+Effective Date of Divorce/ விவாகரத்து செல்லுபடியகும் திகதி
+Divorce Certificate /  விவாகரத்துச்சான்றிதழ் 
+
+Marriage License Search / திருமண  உத்தரவுப்பத்திரம் தேடுதல்
+
+Person Registration Management நபர் பதிவு முகாமைத்துவம் 
+MARRIAGE REGISTRATION திருமணப்பதிவு 
+Marriage Notice திருமண அறிவித்தல் 
+Marriage Register Search திருமணச்சான்றிதழ் தேடுதல் 
+Marriage License Search திருமண உத்தரவுப்பத்திரம் தேடுதல்  
+Marriage Registration திருமணப்பதிவு 
+Search Notice தேடுதல் அறிவித்தல் 
+
+Status / තත්ත්වය நிலைமை 
+DIVORCED TAMIL / දික්කසාද விவாகரத்து 
+
+
+//tamil translations for adoptions
+
+serial number தொடர் இலக்கம் 
+Received Date ஏற்றுக்கொள்ளப்பட்ட திகதி 
+Court நீதிமன்றம்
+order Issued Date கட்டளை  வழங்கப்பட்ட் திகதி 
+Court order number நீதிமன்ற கட்டளை இலக்கம் 
+Name of the Judge நீதிபதியின் பெயர் 
+Date of birth பிறந்த திகதி
+Gender பால் 
+Age வயது 
+Years வருடங்கள் 
+Months மாதங்கள் 
+Existing Name தற்போதைய பெயர் 
+(if already given) (ஏலவே வழங்கப்பட்டிருந்தால்) 
+ New name given வழங்கப்பட்ட புதிய பெயர் 
+Applicant விண்ணப்பதாரர் 
+Father தந்தை 
+Mother தாய் 
+ Other வேறு 
+  Name of the Applicant விண்ணப்பதாரரின் பெயர் 
+  Address முகவரி 
+
+சான்றிதழ் அச்சிடல,  සහතික මුද්‍රණය  ்//write in short
+
+----------------------------------------------------------------------------------------------------
+Informant Signed Date/ தகவல் அளித்தவர் கையொப்பமிட்ட திகதி දැනුම් දෙන්නා අත්සන්කල දිනය
+Enter informant name/ தகவல் அளித்தவரது திகதியினை உட்புகுத்தவும் දැනුම් දෙන්නාගේ නම ඇතුල් කරන්න
+Enter informant address/தகவல் அளித்தவரது முகவரியினை உட்புகுத்தவும் දැනුම් දෙන්නාගේ ලිපිනය ඇතුල් කරන්න
+
+Select Ethnic Group/ இனவர்க்கத்தினை தெரிவு செய்யயயவும் ජන වර්ගය තෝරන්න
+Select Grama Niladhari Division/ கிராம சேவையாளரின் பிரிவினை தெரிவு செய்யவும் ග්‍රාම නිලධාරී කොට්ඨාශය තෝරන්න
+Father's Ethnic Group/ தந்தையின் இனவர்க்கம் යාගේ ජන වර්ගය
+Mother's Ethnic Group/  தாயின் இனவர்க்கம் මවගේ ජන වර්ගය
+Civil Status & Ethnic Group/ சிவில் நிலைமை மற்றும் இனவர்க்கம் සිවිල් තත්වය සහ ජන වර්ගය
+Bride's Ethnic Group/ மணமகனின் இனவர்க்கம் මනමාලියාගේ ජන වර්ගය
+Groom's Ethnic Group/ மணமகளின் இனவர்க்க்ம் මනමාලයාගේ ජන වර්ගය
+Please Select Ethnis Group/ தயவு செய்து இனவர்க்கத்தினை உட்புகுத்தவும் කරුණාකර ජන වර්ගය ඇතුලත් කරන්න
+
+අනුමත නොකළ /அனுமதிக்கப்படாத  / UNVERIFIED
+අර්ධව අනුමතයි / பாதி அனுமதிக்கப்பட்ட  / SEMI VERIFIED
+දත්ත ඇතුලත් කිරීම/ தரவினை உட்புகுத்தல்  ENTRY
+අනුමතයි / அனுமதி  / VERIFIED
+අවලංගුයි / இரத்து  / CANCELLED
+ප්‍රතික්ෂේපිතයි / #தள்ளுபடி  / REJECTED
+
+වාර්තාව පිළිබඳ අදහස් / தகவல்பற்றிய கருத்து Record Comments
+
+--------- marriage related -------------------------
+විවාහ දිනය/திருமண திகதி/ Date of Marriage
+විවාහය සිදු කල ස්ථානය/ திருமணம் நகழ்ந்த இடம்/place of Marriage
+රෙජිස්ට්‍රාර්තැන / දේවගැතිතැන/ பதிவாளர்/குருவானவர்/Registrar / Minister
+විවාහයේ ස්වභාවය/ திருமணத்தின் தன்மை/Type of Marriage
+පුරුෂ පාර්ශ්වය / மாப்பிள்ள திறத்தார்/Male Party
+ස්ත්‍රී පාර්ශ්වය /பெண் திறத்தார்/  Female Party
+පසුවූ උපන් දිනයට වයස/ சென்ற வருட பிறந்த தினத்தில் வயதி/ Age at last Birthday
+
+Divisional Secretariat, பிரதேச செயலகம் 
+Divisional Secretary Division Office,பிரதேச செயலகத்தின் பிரிவு அலுவலகம் 
+මව පදිංචි දිස්ත්‍රික්කය/ தாயின் பதிவு மாவட்டம்/Mother's Districtம்
+මව පදිංචි ග්‍රාම නිලධාරී කොට්ඨාශය/   தாயின் கிராம சேவையாளர் பிரிவு/Mother's Grama Niladhari Division
+මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ඨාශය/ தாயின் பிரதேச செயலக பிரிவு/Mother's Divisional Secretary Division
+
+ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) / பிள்ளையின்  பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)Childs name in the official languages (Sinhala / Tamil)
+ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්/பிள்ளையின்  பெயர் ஆங்கில மொழியில்Child's name in English
+නම වෙනස් විය යුතු අයුරු/பெயர் மாற்றப்பட வேண்டிய விதம்  Corrected name
+පියාගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)/ தந்தையின் முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)Father's Full Name in any of the official languages (Sinhala / Tamil)
+පියාගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්) /தந்தையின் முழுப் பெயர் ஆங்கில மொழியில்(பெரிய எழுத்துக்களில்) Father's Full Name in English (in block letters)
+මවගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)/தாயின் முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)Mother's Full Name in any of the official languages (Sinhala / Tamil)
+මවගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)/தாயின் முழுப் பெயர் ஆங்கில மொழியில் (பெரிய எழுத்துக்களில்) Mother's Full Name in English (in block letters)
+උපත තහවුරු කරන්නාගේ විස්තර/  பிறப்பினை உறுதிப்படுத்துபவரின் விபரம் Person confirming the birth details
+උපත් විස්තර තහවුරු කරන්නාගේ සම්පූර්ණ නම/பிறப்பினை உறுதிப்படுத்துபவரின் முழுப் பெயர்Full Name of the person confirming the birth details
+උපත තහවුරු කරන්නේ කවුරුන් විසින්ද/பிறப்பினை உறுதிப்படுத்துவது யாரால்? Person confirming the details
+උපත් විස්තර තහවුරු කරන්නාගේ සම්පූර්ණ නම/பிறப்பினை உறுதிப்படுத்துபவரின் முழுப் பெயர்Full Name of the person confirming the birth details
+
+------------Race List----------------
+සිංහල	சிங்களவ
+ශ්‍රී ලාංකික දෙමලர்	இலங்கைத்தமிழர்
+ඉන්දියානු දෙමල	இந்தியத்தமிழர்
+ශ්‍රී ලාංකික යෝනක	இலங்கை சோனகர்
+බර්ගර්	பர்கர்
+මැලේ	மலே
+ශ්‍රී ලාංකික චෙට්ටි	இலங்கை செட்டி
+භාරත	பாரத
+ඉන්දියානු යෝනක	இந்திய சோனகர்
+පකිස්තානි යෝනක	பாகிஸ்தானிய சோனகர் 
+වෙනත් - පිටරට	வேறு - வெளிநாட்டவர்
+වෙනත් - ශ්‍රී ලාංකික வேறு - இலங்கையர் 
+නොදත් தெரியாது 
+Malayali- මලයාලි/மலயாளம் 
+
+------------------------------------------------------------------------------------------------------------------------
+සහතිකයේ පැවති දත්තය
+සිදුකල වෙනස්කම
+
+S. R. Piyasiri
+Additional District Registrar
+Colombo
+
+නැතිවුණු පුද්ගලයෙකුගේ මරණයකි / Death of Missing Person
+කාලය ඉකුත්වූ මරණයකි/ Late Death
+දරුවා මැරී උපදින විට ගර්භයට සති කීයක් ගත වී තිබුනේද යන්න ඇතුලත් කර නැත
+මරණ පරීක්ෂක හෝ අධිකරණ වෛද්‍ය නිලධාරී ගේ අනන්‍යතා අංකය
+මරණ පරීක්ෂක හෝ අධිකරණ වෛද්‍ය නිලධාරී ගේ නම
+මරණ පරීක්ෂක හෝ අධිකරණ වෛද්‍ය නිලධාරී ගේ ලිපිනය
+
+Statistics /සංඛ්‍යාලේඛන

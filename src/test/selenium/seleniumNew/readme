@@ -1,0 +1,27 @@
+
+Run selenium tests in below order from left to right
+
+1. birth : adr, deo and arg.
+
+2. death : adr and deo.
+
+3. adoption : arg and deo.
+	In arg : lastly run adoptionReregistration.
+
+4. user preference.
+
+5. adminTask arg and deo.
+	In arg : addRegistar, searchRegistar and manageAssinment.
+
+6. search : adr, deo and arg.
+
+7. prs : adr, deo.
+
+8. admin : first run test cases in addDivisions.
+	Lastly run manageAssignment.
+
+9. marriage : adr and deo.
+
+10. alteration : adr.
+
+	

@@ -1,0 +1,89 @@
+/* Styles to show all inputs in uppercase */
+input, textarea{text-transform:uppercase;}
+
+.actionerror{
+   color:red;
+}
+
+.actionmessage{
+   color:red;
+}
+
+.alreadyPrinted{
+   color:red;
+}
+
+/*To change background color of table, odd and even rows*/
+/*#approval-list-table, #confirm-list-table, #confirm-print-table, #birth-certificate-print table{margin:10px auto;}*/
+.table-title{background:url(../images/table-title.png); line-height:30px; color:#000;}
+.table-title th{text-align:center; text-transform:capitalize;}
+.table-row-index{text-align:center; width:40px;}
+
+.odd{
+    background:url(../images/odd-row.png);
+    line-height:30px;
+}
+.row_selected {
+    background-color:#99B3FF;
+    line-height:30px;
+}
+.even{
+    background:url(../images/even-row.png);
+    line-height:30px;
+}
+.odd img, .even img{width:20px;  height:20px; text-align:center; vertical-align:middle;}
+/* Styles for the birth register approval page. */
+#birth-register-approval, #birth-confirm-approval, #birth-confirm-print, #user-preference-outer, #birth-certificate-print{padding:10px;}
+#birth-register-approval .form-submit, #birth-confirm-approval .form-submit, #birth-confirm-print .form-submit, #birth-certificate-print .form-submit{float:left; margin-left:40px;}
+#birth-register-approval .next-previous, #birth-confirm-approval .next-previous, #birth-confirm-print .next-previous, #birth-certificate-print .next-previous, #birth-confirmation-form-outer .next-previous{float:right;}
+#birth-register-approval .next-previous img, #birth-confirm-approval .next-previous img, #birth-confirm-print .next-previous img, #birth-certificate-print .next-previous img, #birth-confirmation-form-outer .next-previous img{width:30px; height:25px;}
+
+#birth-certificate-outer .form-submit{float:right; margin-top:15px;}
+#alteration-print-letter-outer .form-submit{float:right; margin-top:15px;}
+#adoption-registration-form-outer .form-submit{float:right; margin-top:15px;}
+#birth-confirmation-print-form-outer-page .form-submit{float:right; margin-top:15px;}
+#adoption-certificate-form-outer .form-submit{float:right; margin-top:15px;}
+#prs-certificate-outer .form-submit{float:right; margin-top:15px;}
+#scanned-marriage-cert-outer .form-submit{float:right; margin-top:1px; margin-left:1px;}
+
+.form-submit input, .button input, .form-submit button{margin:10px 0 10px 5px; text-transform:capitalize; background:url(../images/button_bg_hover_1.png) no-repeat; width:120px; height:31px; border:none; }
+.form-submit input:hover, .form-submit button:hover, .button input:hover, .form-submit button:hover{color:darkred; background:url(../images/button_bg_hover_2.png)   no-repeat;}
+
+.form-submit-long input, .form-submit-long button{margin:10px 0 10px 5px; text-transform:capitalize; background:url(../images/button_bg_hover_1_long.png) no-repeat; width:175px; height:35px; border:none; }
+.form-submit-long input:hover, .form-submit-long button:hover, .form-submit-long button:hover{color:darkred; background:url(../images/button_bg_hover_2_long.png)   no-repeat;}
+                                                                                                                                                                
+.skip-validation{float:left; margin-top:15px; }
+.skip-validation label{float:right; line-height:20px;}
+
+
+#birth-registration-form-2-outer .next-previous, #birth-registration-form-2-outer .next-previous a, #birth-registration-form-3-outer .next-previous, #birth-registration-form-3-outer .next-previous a, #birth-registration-form-4-outer .next-previous, #birth-registration-form-4-outer .next-previous a, .birth-confirmation-print-form-outer .form-submit, .birth-confirmation-print-form-outer .form-submit a,#prs-certificate-outer .form-submit,#prs-certificate-outer .form-submit a,#birth-certificate-outer .form-submit, #birth-certificate-outer .form-submit a, #alteration-print-letter-outer .form-submit, #alteration-print-letter-outer .form-submit a, #adoption-registration-form-outer .form-submit, #adoption-registration-form-outer .form-submit a, #birth-confirmation-print-form-outer-page .form-submit, #birth-confirmation-print-form-outer-page .form-submit a, #adoption-certificate-form-outer .form-submit, #adoption-certificate-form-outer .form-submit a {float:right; width:112px; height:30px; background:url(../images/button_bg_hover_1.png) no-repeat; text-align:center; vertical-align:middle;}
+#birth-confirmation-form-outer .next-previous, #birth-registration-form-2-outer .next-previous, #birth-registration-form-3-outer .next-previous, #birth-registration-form-4-outer .next-previous, .birth-confirmation-print-form-outer .form-submit, #birth-certificate-outer .form-submit,#prs-certificate-outer .form-submit ,  #alteration-print-letter-outer .form-submit, #adoption-registration-form-outer .form-submit, #birth-confirmation-print-form-outer-page .form-submit, #adoption-certificate-form-outer .form-submit {margin-top:15px; background:none;}
+#birth-confirmation-form-outer .next-previous, #birth-registration-form-2-outer .next-previous a, #birth-registration-form-3-outer .next-previous a, #birth-registration-form-4-outer .next-previous a, .birth-confirmation-print-form-outer .form-submit a,#birth-certificate-outer .form-submit a ,#prs-certificate-outer .form-submit a,#alteration-print-letter-outer .form-submit a, #adoption-registration-form-outer .form-submit a, #birth-confirmation-print-form-outer-page .form-submit a, #adoption-certificate-form-outer .form-submit a {text-decoration:none; line-height:30px; color:#000;}
+#birth-confirmation-form-outer .next-previous, #birth-registration-form-2-outer .next-previous a:hover, #birth-registration-form-3-outer .next-previous a:hover, #birth-registration-form-4-outer .next-previous a:hover, .birth-confirmation-print-form-outer .form-submit a:hover, #birth-certificate-outer .form-submit a:hover,#prs-certificate-outer .form-submit a:hover , #alteration-print-letter-outer .form-submit a:hover, #adoption-registration-form-outer .form-submit a:hover, #birth-confirmation-print-form-outer-page .form-submit a:hover, #adoption-certificate-form-outer .form-submit a:hover {color:darkred; background:url(../images/button_bg_hover_2.png) no-repeat;}
+#birth-registration-form-2-outer .passport input{width:95%;}
+
+#birth-register-approval-footer a,#adoption-page a,#birthRegistration-page a,#prsCertificate-page a { margin-right:20px;float:right; width:112px; height:30px; background:url(../images/button_bg_hover_1.png) no-repeat; text-align:center; vertical-align:middle;}
+#birth-register-approval-footer,#adoption-page,#birthRegistration-page,#prsCertificate-page {margin-top:15px; background:none;}
+#birth-register-approval-footer a,#adoption-page a,#birthRegistration-page a,#prsCertificate-page a{text-decoration:none; line-height:30px; color:#000;}
+#birth-register-approval-footer a:hover,#adoption-page a:hover,#birthRegistration-page a:hover,#prsCertificate-page a:hover{color:darkred; background:url(../images/button_bg_hover_2.png) no-repeat;}
+
+#birth-confirmation-form-outer .next-previous,#death-certificate-outer .next-previous a{float:right; width:112px; height:30px; background:url(../images/button_bg_hover_1.png) no-repeat; text-align:center; vertical-align:middle;} ;
+#birth-confirmation-form-outer .next-previous,#death-certificate-outer .next-previous {background:none;}
+#birth-confirmation-form-outer .next-previous,#death-certificate-outer .next-previous  a{text-decoration:none; line-height:30px; color:#000;}
+#birth-confirmation-form-outer .next-previous,#death-certificate-outer .next-previous  a:hover{color:darkred; background:url(../images/button_bg_hover_2.png) no-repeat;}
+
+
+#error-page-outer{width:1030px;}
+#error-page-outer .error-title{margin-left:20px;font-size:15pt;color:black;}
+#error-page-outer .error{margin-left:20px;font-size:12pt;color:black;}
+#error-page-outer .technical-msg-title{margin-left:20px;font-size:15pt;color:#FFFFFF;text-align:justify;}
+#error-page-outer .technical-error-msg{margin-left:20px;font-size:10pt;color:#FFFFFF}
+
+#ADR-home-page-outer{width:1030px;float:right;}
+
+/* Styles in Death Module */
+#death-declaration-form-2-outer .next-previous, #death-declaration-form-3-outer .next-previous, #death-registration-deatails-outer .form-submit{float:right; background:none; margin-top:15px;}
+#death-declaration-form-2-outer .next-previous a, #death-declaration-form-3-outer .next-previous a, #death-registration-deatails-outer .form-submit a{float:right; width:120px; height:30px; background:url(../images/button_bg_hover_1.png) no-repeat; text-align:center; vertical-align:middle; text-decoration:none; line-height:30px; color:#000; margin-left:10px;}
+#death-declaration-form-2-outer .next-previous   a:hover, #death-declaration-form-3-outer .next-previous   a:hover, #death-registration-deatails-outer .form-submit a:hover{color:darkred; background:url(../images/button_bg_hover_2.png) no-repeat;}
+
+#death-certificate-outer .form-submit{float:right; margin-top:15px;}
