@@ -29,6 +29,10 @@ function printForm() {
     jsPrintSetup.setGlobalOption('paperWidth', 210);
     jsPrintSetup.setGlobalOption('paperHeight', 297);
 
+    // Define paper size. (To be A4)
+    jsPrintSetup.setPaperSizeData(9);
+//    jsPrintSetup.definePaperSize(9, 9, 'iso_a4', 'iso_a4_210x297mm', 'A4', 210, 297, jsPrintSetup.kPaperSizeMillimeters);
+
     // set margins.
     jsPrintSetup.setOption('marginTop', 0);
     jsPrintSetup.setOption('marginBottom', 0);
