@@ -87,3 +87,11 @@ input, textarea{text-transform:uppercase;}
 #death-declaration-form-2-outer .next-previous   a:hover, #death-declaration-form-3-outer .next-previous   a:hover, #death-registration-deatails-outer .form-submit a:hover{color:darkred; background:url(../images/button_bg_hover_2.png) no-repeat;}
 
 #death-certificate-outer .form-submit{float:right; margin-top:15px;}
+
+/* Styles for the buttons in stats filtering */
+#search_all_district_button{
+    background: url(../images/button_bg_hover_11.png);
+}
+#search_all_district_button:hover{
+    background: url(../images/button_bg_hover_22.png);
+}

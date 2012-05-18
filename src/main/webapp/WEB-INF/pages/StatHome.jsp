@@ -38,9 +38,12 @@
     });
 
     $(function () {
+        var selectedDistrict = document.getElementById('district').options[document.getElementById('district').selectedIndex].text;
+        $('#search_all_district_button').val(selectedDistrict);
         $('select#district').bind('change', function (evt1) {
             var id = $("select#district").attr("value");
-
+            var selectedDistrict = document.getElementById('district').options[document.getElementById('district').selectedIndex].text;
+            $('#search_all_district_button').val(selectedDistrict);
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:13},
                     function (data) {
                         var options1 = '';
@@ -79,6 +82,34 @@
             var endDate = $("input#edate").val();
             var districtId = $("select#district").val();
             var dsDivisionId = $("select#dsDivision").val();
+            var userRole = $("input#userRole").val();
+
+            $.getJSON('/ecivil/crs/StatisticsLookupService', {userId:deo, startDate:startDate, endDate:endDate, districtId:districtId, dsDivisionId:dsDivisionId},
+                    function (data) {
+                        drawChart(data);
+                    });
+        });
+
+        $('#search_all_district_button').bind('click', function (evt1) {
+            var deo = $("input#userId").val();
+            var startDate = $("input#sdate").val();
+            var endDate = $("input#edate").val();
+            var districtId = $("select#district").val();
+            var dsDivisionId = 0;
+            var userRole = $("input#userRole").val();
+
+            $.getJSON('/ecivil/crs/StatisticsLookupService', {userId:deo, startDate:startDate, endDate:endDate, districtId:districtId, dsDivisionId:dsDivisionId},
+                    function (data) {
+                        drawChart(data);
+                    });
+        });
+
+        $('#search_all_country_button').bind('click', function (evt1) {
+            var deo = $("input#userId").val();
+            var startDate = $("input#sdate").val();
+            var endDate = $("input#edate").val();
+            var districtId = 0;
+            var dsDivisionId = 0;
             var userRole = $("input#userRole").val();
 
             $.getJSON('/ecivil/crs/StatisticsLookupService', {userId:deo, startDate:startDate, endDate:endDate, districtId:districtId, dsDivisionId:dsDivisionId},
@@ -152,6 +183,16 @@
             </td>
             <td class="button"><s:submit id="search_button" align="right" value="Search"/></td>
         </tr>
+        <s:if test="role == 'ADMIN' || role == 'RG' || role == 'ARG'">
+            <tr>
+                <td colspan="5" class="button" align="right" style="border-top: 1px solid #000;">
+                    <h3 style="display: inline;">Show statistics of </h3>
+                    <s:submit id="search_all_country_button" align="right" value="All Districts"/>
+                    <h3 style="display: inline;">or</h3>
+                    <s:submit id="search_all_district_button" align="right" value="District" cssStyle="width: 150px;"/>
+                </td>
+            </tr>
+        </s:if>
     </table>
 </div>
 
@@ -320,6 +361,12 @@
                             <td colspan="3"></td>
                         </tr>
                         <tr>
+                            <td>Total Rejected</td>
+                            <td>:</td>
+                            <td><input type="text" id="rejected_b" readonly="true" maxlength="6"/></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
                             <td align="right">Total Submitted Items</td>
                             <td>:</td>
                             <td>
@@ -364,6 +411,12 @@
                             <td colspan="3"></td>
                         </tr>
                         <tr>
+                            <td>Total Rejected</td>
+                            <td>:</td>
+                            <td><input type="text" id="rejected_d" readonly="true" maxlength="6"/></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
                             <td align="right">Total Submitted Items</td>
                             <td>:</td>
                             <td>
@@ -405,6 +458,12 @@
                             <td>
                                 <input type="text" id="approved_m" readonly="true" maxlength="6"/>
                             </td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td>Total Rejected</td>
+                            <td>:</td>
+                            <td><input type="text" id="rejected_m" readonly="true" maxlength="6"/></td>
                             <td colspan="3"></td>
                         </tr>
                         <tr>

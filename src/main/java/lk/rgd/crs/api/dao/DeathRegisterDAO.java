@@ -171,6 +171,29 @@ public interface DeathRegisterDAO {
     public List<DeathRegister> getByCreatedUser(User user, Date start, Date end);
 
     /**
+     * Returns all Death Certificate records which are created by the given user in given district.
+     *
+     * @param user
+     * @param start
+     * @param end
+     * @param districtId
+     * @return
+     */
+    public List<DeathRegister> getByCreatedUser(User user, Date start, Date end, int districtId);
+
+    /**
+     * Returns all Death Certificate records which are created by the given user in given dsDivision
+     *
+     * @param user
+     * @param start
+     * @param end
+     * @param districtId
+     * @param dsDivisionId
+     * @return
+     */
+    public List<DeathRegister> getByCreatedUser(User user, Date start, Date end, int districtId, int dsDivisionId);
+
+    /**
      * get death register object list for given death ds division and for the given time frame
      *
      * @param dsDivisionId dsDivision
