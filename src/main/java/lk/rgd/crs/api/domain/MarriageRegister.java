@@ -178,7 +178,15 @@ import java.util.Date;
         "WHERE mr.state <> 0 AND (mr.mrDivision.mrDivisionUKey = :mrId " +
         "OR mr.mrDivisionOfMaleNotice.mrDivisionUKey = :mrId OR mr.mrDivisionOfFemaleNotice.mrDivisionUKey = :mrId)"),
     @NamedQuery(name = "count.marriage.location.usage", query = "SELECT COUNT(mr) FROM MarriageRegister mr " +
-        "WHERE mr.state <> 0 AND (mr.licenseIssueLocation.locationUKey = :locationId OR mr.extractIssuedLocation.locationUKey = :locationId)")
+        "WHERE mr.state <> 0 AND (mr.licenseIssueLocation.locationUKey = :locationId OR mr.extractIssuedLocation.locationUKey = :locationId)"),
+    @NamedQuery(
+        name = "get.mr.by.createdUser.district",
+        query = "SELECT mr FROM MarriageRegister mr WHERE mr.lifeCycleInfo.createdUser =:user AND (mr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate) AND mr.mrDivision.dsDivision.district.districtUKey = :districtId"
+    ),
+    @NamedQuery(
+        name = "get.mr.by.createdUser.dsDivision",
+        query = "SELECT mr FROM MarriageRegister mr WHERE mr.lifeCycleInfo.createdUser =:user AND (mr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate) AND mr.mrDivision.dsDivision.dsDivisionUKey = :dsDivisionId"
+    )
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MarriageRegister implements Serializable, Cloneable {

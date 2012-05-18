@@ -34,9 +34,22 @@ public interface StatisticsManager {
      *
      * @param user      user
      * @param startDate
-     * @param endDate   @return statistics object
+     * @param endDate
+     * @return statistics object
      */
     public Statistics getStatisticsForUser(User user, Date startDate, Date endDate);
+
+    /**
+     * Return Statistics object for given user
+     *
+     * @param user User requesting statistics
+     * @param startDate     Start date
+     * @param endDate       End date
+     * @param districtId    District id
+     * @param dsDivisionId  DSDivision id
+     * @return statistics object
+     */
+    public Statistics getStatisticsForUser(User user, Date startDate, Date endDate, int districtId, int dsDivisionId);
 
     /**
      * Save a statistics record

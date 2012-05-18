@@ -90,8 +90,8 @@ public class JSONStatisticsLookupService extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getParameter("userId");
-        String districtId = request.getParameter("districtId");
-        String dsDivisionId = request.getParameter("dsDivisionId");
+        int districtId = Integer.parseInt(request.getParameter("districtId"));
+        int dsDivisionId = Integer.parseInt(request.getParameter("dsDivisionId"));
 
         String startD = request.getParameter("startDate");
         String endD = request.getParameter("endDate");
@@ -131,7 +131,8 @@ public class JSONStatisticsLookupService extends HttpServlet {
             statUser = loggedUser;
         }
         String userRole = statUser.getRole().getRoleId();
-        Statistics statistics = statisticsService.getStatisticsForUser(statUser, startDate, endDate);
+        Statistics statistics = statisticsService.getStatisticsForUser(statUser, startDate, endDate, districtId, dsDivisionId);
+//        Statistics statistics = statisticsService.getStatisticsForUser(statUser, startDate, endDate);
 
         CommonStatistics cs_b = new CommonStatistics();
         CommonStatistics cs_d = new CommonStatistics();

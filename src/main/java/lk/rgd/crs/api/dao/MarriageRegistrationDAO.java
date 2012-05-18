@@ -348,6 +348,29 @@ public interface MarriageRegistrationDAO {
     public List<MarriageRegister> getByCreatedUser(User user, Date start, Date end);
 
     /**
+     * Returns all Marriage Registration records which are created by the given user in given district.
+     *
+     * @param user
+     * @param start
+     * @param end
+     * @param districtId
+     * @return
+     */
+    public List<MarriageRegister> getByCreatedUser(User user, Date start, Date end, int districtId);
+
+    /**
+     * Returns all Marriage Registration records which are created by the given user in given dsDivision
+     *
+     * @param user
+     * @param start
+     * @param end
+     * @param districtId
+     * @param dsDivisionId
+     * @return
+     */
+    public List<MarriageRegister> getByCreatedUser(User user, Date start, Date end, int districtId, int dsDivisionId);
+
+    /**
      * Find marriage register by the Serial Number and the MR division
      *
      * @param serialNumber Serial Number of the marriage register
