@@ -336,6 +336,29 @@ public interface BirthDeclarationDAO {
     public List<BirthDeclaration> getByCreatedUser(User user, Date start, Date end);
 
     /**
+     * Returns all Birth Declaration records which are created by given user in the given period in the given district
+     *
+     * @param user
+     * @param start
+     * @param end
+     * @param districtId
+     * @return
+     */
+    public List<BirthDeclaration> getByCreatedUser(User user, Date start, Date end, int districtId);
+
+    /**
+     * Returns all Birth Declaration records which are created by the given user in the given date period of the given DSDivision
+     *
+     * @param user          User
+     * @param start         Start date
+     * @param end           End date
+     * @param districtId    District id
+     * @param dsDivisionId  DSDivision id
+     * @return List of birth declarations
+     */
+    public List<BirthDeclaration> getByCreatedUser(User user, Date start, Date end, int districtId, int dsDivisionId);
+
+    /**
      * get active birth records by dsDivision and serial number
      *
      * @param serialNumber serial number

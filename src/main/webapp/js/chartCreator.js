@@ -206,6 +206,11 @@ function drawChart(data) {
             document.getElementById("total_submitted_b").setAttribute("value", data.total_submitted_b);
         }
 
+        var ele = document.getElementById("rejected_b");
+        if (ele != null) {
+            document.getElementById("rejected_b").setAttribute("value", (data.rejected_b));
+        }
+
         var ele = document.getElementById("approved_b");
         if (ele != null) {
             document.getElementById("approved_b").setAttribute("value", (data.approved_b));
@@ -230,6 +235,11 @@ function drawChart(data) {
             document.getElementById("total_submitted_d").setAttribute("value", data.total_submitted_d);
         }
 
+        var ele = document.getElementById("rejected_d");
+        if (ele != null) {
+            document.getElementById("rejected_d").setAttribute("value", (data.rejected_d));
+        }
+
         var ele = document.getElementById("approved_d");
         if (ele != null) {
             document.getElementById("approved_d").setAttribute("value", (data.approved_d));
@@ -252,6 +262,11 @@ function drawChart(data) {
         var ele = document.getElementById("total_submitted_m");
         if (ele != null) {
             document.getElementById("total_submitted_m").setAttribute("value", data.total_submitted_m);
+        }
+
+        var ele = document.getElementById("rejected_m");
+        if (ele != null) {
+            document.getElementById("rejected_m").setAttribute("value", (data.rejected_m));
         }
 
         var ele = document.getElementById("approved_m");
