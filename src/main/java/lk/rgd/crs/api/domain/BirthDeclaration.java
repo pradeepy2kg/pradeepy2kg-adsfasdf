@@ -125,7 +125,15 @@ import java.io.Serializable;
     @NamedQuery(name = "count.birth.bdDivision.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision.bdDivisionUKey = :bdDivisionId AND bdf.register.status <> 0"),
     @NamedQuery(name = "count.birth.location.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
-        "WHERE bdf.register.originalBCPlaceOfIssue.locationUKey = :locationId AND bdf.register.status <> 0")
+        "WHERE bdf.register.originalBCPlaceOfIssue.locationUKey = :locationId AND bdf.register.status <> 0"),
+    @NamedQuery(
+        name = "get.bc.by.createdUser.dsDivision",
+        query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.lifeCycleInfo.createdUser =:user AND (bdf.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate) AND bdf.register.birthDivision.dsDivision.dsDivisionUKey = :dsDivisionId"
+    ),
+    @NamedQuery(
+        name = "get.bc.by.createdUser.district",
+        query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.lifeCycleInfo.createdUser =:user AND (bdf.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate) AND bdf.register.birthDivision.dsDivision.district.districtUKey = :districtId"
+    )
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BirthDeclaration implements Serializable, Cloneable {

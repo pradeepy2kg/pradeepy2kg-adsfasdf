@@ -172,12 +172,12 @@ public class Statistics implements Serializable {
         DeathsRejectedItems = deathsRejectedItems;
     }
 
-    public int getDeathsTateSubmissions() {
-        return DeathsLateSubmissions;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setDeathsTateSubmissions(int deathsLateSubmissions) {
-        DeathsLateSubmissions = deathsLateSubmissions;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public int getDeathsThisMonthPendingItems() {
@@ -234,14 +234,6 @@ public class Statistics implements Serializable {
 
     public void setMrgRejectedItems(int mrgRejectedItems) {
         MrgRejectedItems = mrgRejectedItems;
-    }
-
-    public int getMrgTateSubmissions() {
-        return MrgLateSubmissions;
-    }
-
-    public void setMrgTateSubmissions(int mrgLateSubmissions) {
-        MrgLateSubmissions = mrgLateSubmissions;
     }
 
     public int getMrgThisMonthPendingItems() {
