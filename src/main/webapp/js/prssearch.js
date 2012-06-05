@@ -119,7 +119,7 @@ var Manager;
             target: '#searchPhone',
             field: 'phone'
         }));
-        
+
         Manager.addWidget(new AjaxSolr.TextWidget({
             id: 'searchEmail',
             target: '#searchEmail',
