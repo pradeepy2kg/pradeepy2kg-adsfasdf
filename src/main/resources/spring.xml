@@ -304,6 +304,11 @@
     </bean>
 
     <!--Solr index manager-->
+    <!--<bean id="solrIndexManager" class="lk.rgd.common.core.index.SolrIndexManager">
+        <constructor-arg value="http://localhost:9443/solr/births"/>
+        <constructor-arg value="http://localhost:9443/solr/prs"/>
+        <constructor-arg value="http://localhost:9443/solr/deaths"/>
+    </bean>-->
     <bean id="solrIndexManager" class="lk.rgd.common.core.index.SolrIndexManager">
         <constructor-arg value="http://localhost:8080/solr/births"/>
         <constructor-arg value="http://localhost:8080/solr/prs"/>

@@ -637,7 +637,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 case REGISTRATION_REJECTED:
                     statistics.setMrgRejectedItems(statistics.getMrgRejectedItems() + 1);
                     break;
-                case DATA_ENTRY:
+                case REG_DATA_ENTRY:
                     if (marriageRegister.getLifeCycleInfo().getCreatedTimestamp().before(thisMonthStart)) {
                         statistics.setMrgArrearsPendingItems(statistics.getMrgArrearsPendingItems() + 1);
                     } else {
