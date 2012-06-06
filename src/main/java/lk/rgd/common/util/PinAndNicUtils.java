@@ -98,7 +98,7 @@ public class PinAndNicUtils {
      * @return true if pin is valid
      */
     public static boolean isValidPIN(String pin) {
-        if (pin == null) {
+        if (pin == null || pin.length() != 12) {
             return false;
         }
 
