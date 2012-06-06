@@ -354,10 +354,10 @@
 </table>
 
 <p style="font-size:9pt">
-    උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
+    <%--උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
     ලදි,<br>
     பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின் (110 வது அதிகாரத்தின் ) கீழ் பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது<br>
-    Issued by Registrar General's Department according to Birth and Death Registration Act (Chapter 110)
+    Issued by Registrar General's Department according to Birth and Death Registration Act (Chapter 110)--%>
 </p>
 
 <div class="form-submit" style="margin:5px 0 0 0;">

@@ -364,6 +364,7 @@
         <constructor-arg ref="birthAlterationService"/>
         <constructor-arg ref="commonUtil"/>
         <constructor-arg ref="gnDivisionDAOImpl"/>
+        <constructor-arg ref="ecivilService"/>
     </bean>
 
     <bean id="birthAlterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthAlterationAction">

@@ -227,31 +227,53 @@
     </div>
 </div>
 
-<table style="width:100%; border:none; border-collapse:collapse;">
+<table style="width:99%; border:none; border-collapse:collapse;">
     <col width="300px">
     <col width="400px">
     <col width="340px">
     <tbody>
     <tr>
-        <td rowspan="3"></td>
+        <td></td>
         <td rowspan="2" align="center">
             <img src="<s:url value="../images/official-logo.png" />"
-                 style="display: block; text-align: center;" width="100" height="120">
+                 style="display: block; margin-top: 5px; text-align: center;" width="100" height="120">
         </td>
-        <td>
-            <table border="1" style="width:50%;border:1px solid #000;border-collapse:collapse;float:right;">
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="3">
+            <s:if test="birthType.ordinal() != 0">
+                <img src="${pageContext.request.contextPath}/prs/ImageServlet?personUKey=${person.personUKey}"
+                     width="100" height="100"/>
+            </s:if>
+        </td>
+        <td rowspan="3">
+            <table style="width:50%;border-collapse:collapse;float:right;">
+                <tr style="border: none;">
+                    <td style="border: none;">
+                        ලියපදිංචි කිරීම<br/>பதிவு செய்தல்<br/>Registration
+                    </td>
+                    <td style="border: none; font-size: 25px;">}</td>
+                    <td style="border: none;">
+                        <s:if test="birthType.ordinal() != 0">B1A</s:if>
+                        <s:else>B3A</s:else>
+                    </td>
+                </tr>
                 <tr height="60px">
-                    <td width="100%">සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
+                    <td width="100%" colspan="3" style="border: 1px solid #000;">සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate
+                        Number
+                    </td>
                 </tr>
                 <tr height="40px">
-                    <td align="center"><s:label id="certificateId" name="bdId" cssStyle="font-size:11pt;"/></td>
+                    <td align="center" colspan="3" style="border: 1px solid #000;"><s:label id="certificateId"
+                                                                                            name="bdId"
+                                                                                            cssStyle="font-size:11pt;"/></td>
                 </tr>
             </table>
         </td>
     </tr>
-    <tr></tr>
     <tr>
-        <td align="center" style="font-size:15pt;">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
+        <td rowspan="2" align="center" style="font-size:15pt;">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
             <s:if test="birthType.ordinal() != 0">
                 උප්පැන්න සහතිකය<br>
                 பிறப்பு சான்றிதழ்﻿<br>
@@ -259,18 +281,17 @@
             </s:if>
             <s:else>
                 මළ උප්පැන්න සහතිකය<br>
-                சாப்பிள்னள பிறப்பு சான்றிதழ்﻿<br>
+                சாப்பிள்ளை பிறப்பு சான்றிதழ்﻿<br>
                 STILL BIRTH CERTIFICATE
             </s:else>
         </td>
-        <td></td>
     </tr>
     </tbody>
 </table>
 
 <s:if test="birthType.ordinal() != 0">
 <%-- Not a still birth --%>
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+<table border="1" style="width: 99%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
     <col width="195px">
     <col width="220px">
     <col width="210px">
@@ -326,7 +347,7 @@
     </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+<table border="1" style="width: 99%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
 <col width="195px">
 <col width="220px">
 <col width="155px">
@@ -572,7 +593,7 @@
 </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+<table border="1" style="width: 99%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
     <col width="195px">
     <col width="220px">
     <col width="155px">
@@ -619,7 +640,7 @@
 </s:if>
 <s:else>
 <%-- Still birth --%>
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+<table border="1" style="width: 99%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
     <col width="195px">
     <col width="220px">
     <col width="210px">
@@ -656,7 +677,7 @@
     </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+<table border="1" style="width: 99%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
     <col width="195px">
     <col width="220px">
     <col width="155px">
@@ -843,7 +864,7 @@
     </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+<table border="1" style="width: 99%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
     <col width="195px">
     <col width="220px">
     <col width="155px">
