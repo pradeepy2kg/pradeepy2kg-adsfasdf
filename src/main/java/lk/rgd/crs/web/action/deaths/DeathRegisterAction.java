@@ -272,7 +272,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         if ((deathRegister.getStatus() != DeathRegister.State.ARCHIVED_CERT_GENERATED) && (deathRegister.getStatus()
             != DeathRegister.State.ARCHIVED_ALTERED) && (deathRegister.getStatus() != DeathRegister.State.APPROVED)) {
             addActionError(getText("death.error.no.permission.print"));
-            logger.debug("Current state of adoption certificate : {}", deathRegister.getStatus());
+            logger.debug("Current state of death certificate : {}", deathRegister.getStatus());
             return ERROR;
         } else {
             deathPerson = deathRegister.getDeathPerson();
