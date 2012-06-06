@@ -74,7 +74,7 @@
 
 <br/>
 
-<table style="width:100%; border:none;border-collapse:collapse;margin-top:20px;">
+<table style="width:99%; border:none;border-collapse:collapse;margin-top:20px;">
     <col width="300px">
     <col width="430px">
     <col width="300px">
@@ -114,7 +114,7 @@
 </table>
 
 <table border="1"
-       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+       style="width: 99%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
     <col width="20%"/>
     <col width="20%"/>
     <col width="10%"/>
@@ -213,7 +213,7 @@
     </tbody>
 </table>
 <table border="1"
-       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
+       style="width: 99%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
     <col width="20%"/>
     <col width="30%"/>
     <col width="20%"/>
@@ -270,7 +270,7 @@
 </table>
 
 <s:if test="person.countries.size() != 0">
-    <table style="width:100%; border:none; border-collapse:collapse;margin-bottom:2px;">
+    <table style="width:99%; border:none; border-collapse:collapse;margin-bottom:2px;">
         <tr>
             <td align="center" style="font-size:12pt;">
                 වෙනත් රටවල පුරවැසිභාවය ඇතිනම් ඒ පිලිබඳ විස්තර
@@ -309,7 +309,7 @@
     </table>
 </s:if>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+<table border="1" style="width: 99%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
     <col width="20%"/>
     <col width="20%"/>
     <col width="20%"/>
