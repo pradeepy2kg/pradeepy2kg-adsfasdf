@@ -23,6 +23,8 @@ import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
 import lk.rgd.crs.web.util.DateState;
+import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PopulationRegistry;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +53,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final LocationDAO locationDAO;
     private final AssignmentDAO assignmentDAO;
     private final GNDivisionDAO gnDivisionDAO;
+    private final PopulationRegistry ecivilService;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> countryList;
@@ -80,6 +83,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private User user;
     private OldBDInfo oldBDInfo;
     private BitSet changedFields;
+    private Person person;
 
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
@@ -147,7 +151,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
         CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
         AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO,
-        AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO) {
+        AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO, PopulationRegistry ecivilService) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -162,6 +166,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.birthAlterationService = birthAlterationService;
         this.commonUtil = commonUtil;
         this.gnDivisionDAO = gnDivisionDAO;
+        this.ecivilService = ecivilService;
 
         dsDivisionList = new HashMap<Integer, String>();
         bdDivisionList = new HashMap<Integer, String>();
@@ -888,6 +893,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     if (archivedEntryList.size() > 0) {
                         displayChangesInStarMark(archivedEntryList);
                     }
+                }
+                if (BirthDeclaration.BirthType.STILL != bdf.getRegister().getBirthType()) {
+                    person = ecivilService.findPersonByPIN(bdf.getChild().getPin(), user);
                 }
                 return "pageLoad";
             }
@@ -1753,5 +1761,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setUnknownFieldEn(String unknownFieldEn) {
         this.unknownFieldEn = unknownFieldEn;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

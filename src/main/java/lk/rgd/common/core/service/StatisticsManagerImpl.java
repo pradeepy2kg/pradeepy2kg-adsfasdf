@@ -637,7 +637,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 case REGISTRATION_REJECTED:
                     statistics.setMrgRejectedItems(statistics.getMrgRejectedItems() + 1);
                     break;
-                case REG_DATA_ENTRY:
+                case REG_DATA_ENTRY:      //TODO check all data entry status
                     if (marriageRegister.getLifeCycleInfo().getCreatedTimestamp().before(thisMonthStart)) {
                         statistics.setMrgArrearsPendingItems(statistics.getMrgArrearsPendingItems() + 1);
                     } else {
@@ -932,7 +932,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 case REGISTRATION_REJECTED:
                     statistics.setMrgRejectedItems(statistics.getMrgRejectedItems() + 1);
                     break;
-                case REG_DATA_ENTRY:
+                case REG_DATA_ENTRY:       //TODO check all data entry status
                     if (marriageRegister.getLifeCycleInfo().getCreatedTimestamp().before(thisMonthStart)) {
                         statistics.setMrgArrearsPendingItems(statistics.getMrgArrearsPendingItems() + 1);
                     } else {
