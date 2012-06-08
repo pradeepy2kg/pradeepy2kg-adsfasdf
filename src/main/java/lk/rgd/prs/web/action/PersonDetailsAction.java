@@ -45,6 +45,9 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private Address permanentAddress;
     private Address currentAddress;
     private Set<Address> address;
+    private String approvedUserSign;
+    private String issueLocation;
+
 
     private Person person;
     private long personUKey;
@@ -144,6 +147,14 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
                     break;
                 }
             }
+        }
+        User approvalUser = person.getLifeCycleInfo().getApprovalOrRejectUser();
+        if(approvalUser != null){
+            logger.debug("Approval user {}", approvalUser.getUserId());
+            String prefLang = person.getPreferredLanguage();
+            approvedUserSign = approvalUser.getUserSignature(prefLang);
+            issueLocation = person.getSubmittedLocation().getLocationSignature(prefLang);
+            logger.debug("Approved by {} in location {}", approvedUserSign, issueLocation);
         }
         return SUCCESS;
     }
@@ -296,5 +307,21 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
     public void setCurrentAddress(Address currentAddress) {
         this.currentAddress = currentAddress;
+    }
+
+    public String getApprovedUserSign() {
+        return approvedUserSign;
+    }
+
+    public void setApprovedUserSign(String approvedUserSign) {
+        this.approvedUserSign = approvedUserSign;
+    }
+
+    public String getIssueLocation() {
+        return issueLocation;
+    }
+
+    public void setIssueLocation(String issueLocation) {
+        this.issueLocation = issueLocation;
     }
 }
