@@ -336,7 +336,7 @@
             Name, Signature and Designation of certifying officer
         </td>
         <td colspan="2" style="font-size:11pt">
-            <s:textarea id="signature" value="%{person.originalBCIssueUserSignPrint}" disabled="true"
+            <s:textarea id="signature" value="%{approvedUserSign}" disabled="true"
                         rows="4"
                         cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
         </td>
@@ -345,7 +345,7 @@
         <td colspan="2" height="40px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
         </td>
         <td colspan="2" cssStyle="font-size:11pt;">
-            <s:textarea id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}" disabled="true"
+            <s:textarea id="placeSign" value="%{issueLocation}" disabled="true"
                         rows="3"
                         cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
         </td>
