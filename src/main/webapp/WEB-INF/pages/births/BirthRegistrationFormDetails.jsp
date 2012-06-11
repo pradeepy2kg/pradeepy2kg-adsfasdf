@@ -45,6 +45,18 @@
             <s:param name="directPrint" value="true"/>
         </s:url>
         <s:url id="mainUrl" action="eprBirthRegistrationHome.do"/>
+        <s:url id="rejectSelected" action="eprRejectBirthDeclaration.do">
+            <s:param name="bdId" value="#request.bdId"/>
+            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+            <s:param name="recordCounter" value="#request.recordCounter"/>
+            <s:param name="reject" value="true"/>
+        </s:url>
+        <s:url id="birthRegisterApprovalUrl" action="eprBirthRegisterApproval.do"/>
 
         <s:if test="#request.warnings.size>0">
 
@@ -99,7 +111,13 @@
                 </s:if>
             </s:else>
         </s:if>
-        <s:a href="%{mainUrl}"><s:label value="%{getText('goToMain_link.label')}"/></s:a>
+        <s:if test="#request.allowApproveBDF">
+            <s:if test="register.birthType.ordinal() != 3">
+                <s:a href="%{rejectSelected}" title="%{getText('reject.label')}"><s:label value="%{getText('reject.label')}"/></s:a>
+            </s:if>
+        </s:if>
+        <%--<s:a href="%{mainUrl}"><s:label value="%{getText('goToMain_link.label')}"/></s:a>--%>
+        <s:a href="%{birthRegisterApprovalUrl}"><s:label value="%{getText('goToMain_link.label')}"/></s:a>
     </div>
 </div>
 
