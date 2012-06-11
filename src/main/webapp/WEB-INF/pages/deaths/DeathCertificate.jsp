@@ -194,7 +194,7 @@
     </div>
 </s:if>
 
-<table style="width: 100%; border:none; border-collapse:collapse; ">
+<table style="width: 99%; border:none; border-collapse:collapse; ">
     <col width="250px"/>
     <col width="530px"/>
     <col width="250px"/>
@@ -217,38 +217,50 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="3"></td>
+        <td></td>
         <td rowspan="2" align="center">
             <img src="<s:url value="../images/official-logo.png" />"
-                 style="display: block; text-align: center;" width="80" height="100">
+                 style="display: block; margin-top: 5px; text-align: center;" width="80" height="100">
         </td>
-        <td class="font-9" height="60px">
-            <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse;float:right;">
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="3">
+            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personUKey=${idUKey}&certificateType=death"
+                 width="100" height="100"/>
+        </td>
+        <td rowspan="3">
+            <table style="width:100%;border-collapse:collapse;float:right;">
+                <tr style="border: none;">
+                    <td style="border: none;">
+                        ලියපදිංචි කිරීම<br/>பதிவு செய்தல்<br/>Registration
+                    </td>
+                    <td style="border: none; font-size: 25px;">}</td>
+                    <td style="border: none;">
+                        B2A
+                    </td>
+                </tr>
                 <tr height="60px">
-                    <td>සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
+                    <td style="border: 1px solid #000;" colspan="3">සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
                 </tr>
                 <tr height="40px">
-                    <td align="center"><s:label name="idUKey" cssStyle="font-size:11pt;" id="certificateId"/></td>
+                    <td align="center" style="border: 1px solid #000;" colspan="3"><s:label name="idUKey" cssStyle="font-size:11pt;" id="certificateId"/></td>
                 </tr>
             </table>
         </td>
     </tr>
     <tr>
-        <td colspan="2"></td>
-    </tr>
-    <tr>
-        <td align="center" class="font-12">
+        <td rowspan="2" align="center" class="font-12">
             ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA
             <br>මරණ ලියාපදිංචි කිරීමේ ලේඛනය
             <br>இறப்பு சான்றிதழ்
             <br>REGISTER OF DEATHS
         </td>
-        <td colspan="2"></td>
     </tr>
     </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; " class="font-9">
+<table border="1" style="width: 99%; border:1px solid #000; border-collapse:collapse; " class="font-9">
     <col width="215px"/>
     <col width="300px"/>
     <col width="215px"/>
@@ -304,7 +316,7 @@
     </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; " class="font-9">
+<table border="1" style="width: 99%; border:1px solid #000; border-collapse:collapse; " class="font-9">
 <col width="215px"/>
 <col width="160px"/>
 <col width="100px"/>
@@ -534,7 +546,7 @@
 </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin-bottom:0;"
+<table border="1" style="width: 99%; border:1px solid #000; border-collapse:collapse; margin-bottom:0;"
        class="font-9">
     <col width="215px"/>
     <col width="160px"/>
@@ -581,7 +593,7 @@
     </tbody>
 </table>
 
-<s:label><p class="font-8" style="width:100%; text-align:center;">
+<s:label><p class="font-8" style="width:99%; text-align:center;">
     උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
     ලදි,<br>
     பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின் (110 வது அதிகாரத்தின் ) கீழ் பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது<br>

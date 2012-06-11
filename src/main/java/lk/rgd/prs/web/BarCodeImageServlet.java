@@ -1,6 +1,9 @@
 package lk.rgd.prs.web;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.api.domain.DeathPersonInfo;
+import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
@@ -32,6 +35,7 @@ public class BarCodeImageServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(BarCodeImageServlet.class);
 
     private PopulationRegistry ecivil;
+    private DeathRegistrationService service;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -39,13 +43,16 @@ public class BarCodeImageServlet extends HttpServlet {
         WebApplicationContext context =
             WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
         ecivil = (PopulationRegistry) context.getBean("ecivilService");
+        service = (DeathRegistrationService) context.getBean("deathRegisterService");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         try {
             long personId = Long.parseLong(request.getParameter(WebConstants.PERSON_ID));
-            logger.debug("Person Id received {}", personId);
+            String certificateType = request.getParameter(WebConstants.CERTIFICATE_TYPE);
+
+            logger.debug("Person Id received {} and the certificate type {}", personId, certificateType);
 
             User user = null;
             HttpSession session = request.getSession(false);
@@ -60,61 +67,88 @@ public class BarCodeImageServlet extends HttpServlet {
                 }
             }
 
-            Person person = ecivil.getByUKey(personId, user);
-            if (person != null) {
-                // Hard-coded for a GIF image.
-                response.setContentType("image/gif");
-                //response.setContentLength(length);
+            // Refactored barcode begins here...
 
-                // Get the output stream from our response object, so we
-                // can write our image data to the client:
-                ServletOutputStream out = response.getOutputStream();
+            // Hard-coded for a GIF image.
+            response.setContentType("image/gif");
+            //response.setContentLength(length);
 
-                try {
-                    //Create the barcode bean
-                    DataMatrixBean bean = new DataMatrixBean();
+            // Get the output stream from our response object, so we
+            // can write our image data to the client:
+            ServletOutputStream out = response.getOutputStream();
 
-                    //Configure the barcode generator
-                    final int dpi = 300;
-                    bean.setModuleWidth(0.330); //UnitConv.in2mm(2.0f / dpi));
-                    bean.doQuietZone(true);
-                    bean.setShape(SymbolShapeHint.FORCE_SQUARE);
+            try {
+                //Create the barcode bean
+                DataMatrixBean bean = new DataMatrixBean();
 
-                    //Set up the canvas provider for monochrome gif output
-                    BitmapCanvasProvider canvas = new BitmapCanvasProvider(
-                        out, "image/gif", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
-                    canvas.establishDimensions(new BarcodeDimension(25, 25));
+                //Configure the barcode generator
+                final int dpi = 300;
+                bean.setModuleWidth(0.330); //UnitConv.in2mm(2.0f / dpi));
+                bean.doQuietZone(true);
+                bean.setShape(SymbolShapeHint.FORCE_SQUARE);
 
-                    //prepare data
-                    StringBuffer buffer = new StringBuffer();
-                    //buffer.append(URLEncoder.encode(person.getFullNameInOfficialLanguage(), "UTF-8"));
-                    //buffer.append("|");
-                    buffer.append(person.getFullNameInEnglishLanguage());
+                //Set up the canvas provider for monochrome gif output
+                BitmapCanvasProvider canvas = new BitmapCanvasProvider(
+                    out, "image/gif", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+                canvas.establishDimensions(new BarcodeDimension(25, 25));
+
+                //prepare data
+                StringBuffer buffer = new StringBuffer();
+                if (WebConstants.PRS_CERTIFICATE.equals(certificateType) || WebConstants.BIRTH_CERTIFICATE.equals(certificateType)) {
+                    Person person = ecivil.getByUKey(personId, user);
+
+                    if (person != null) {
+                        if (WebConstants.PRS_CERTIFICATE.equals(certificateType)) {
+                            // Data for the PRS BarCode
+                            buffer.append(person.getFullNameInEnglishLanguage());
+                            buffer.append("|");
+                            buffer.append(person.getPin());
+                            buffer.append("|");
+                            buffer.append(person.getGender());
+                            buffer.append("|");
+                            buffer.append(person.getPersonUKey());
+                            buffer.append("|");
+                            buffer.append(person.getDateOfBirth());
+                        } else if (WebConstants.BIRTH_CERTIFICATE.equals(certificateType)) {
+                            // Data for the Birth Certificate BarCode
+                            buffer.append(person.getFullNameInEnglishLanguage());
+                            buffer.append("|");
+                            buffer.append(person.getPin());
+                            buffer.append("|");
+                            buffer.append(person.getGender());
+                            buffer.append("|");
+                            buffer.append(person.getPersonUKey());
+                            buffer.append("|");
+                            buffer.append(person.getDateOfBirth());
+                        }
+                    } else {
+                        logger.debug("Person {} not found.", personId);
+                    }
+                } else if (WebConstants.DEATH_CERTIFICATE.equals(certificateType)) {
+                    // personID in Death is the idUKey of Death Certificate.
+                    DeathRegister deathRegister = service.getById(personId, user);
+                    DeathPersonInfo deathPersonInfo = deathRegister.getDeathPerson();
+
+                    buffer.append(deathPersonInfo.getDeathPersonNameInEnglish());
                     buffer.append("|");
-                    //buffer.append("NIC=");
-                    //buffer.append(person.getNic());
-                    //buffer.append("|");
-                    buffer.append(person.getPin());
+                    buffer.append(deathPersonInfo.getDeathPersonPINorNIC());
                     buffer.append("|");
-                    buffer.append(person.getGender());
+                    buffer.append(deathPersonInfo.getDeathPersonGender());
                     buffer.append("|");
-                    buffer.append(person.getPersonUKey());
-                    buffer.append("|");
-                    buffer.append(person.getDateOfBirth());
-                    logger.debug("Barcode data size : {}", buffer.length());
-
-                    //Generate the barcode
-                    bean.generateBarcode(canvas, buffer.toString());
-
-                    //Signal end of generation
-                    canvas.finish();
-                } finally {
-                    out.flush();
-                    out.close();
+                    buffer.append(deathRegister.getDeath().getDateOfDeath());
                 }
-            } else {
-                logger.debug("person not found {}", personId);
+                logger.debug("Barcode data size : {}", buffer.length());
+
+                //Generate the barcode
+                bean.generateBarcode(canvas, buffer.toString());
+
+                //Signal end of generation
+                canvas.finish();
+            } finally {
+                out.flush();
+                out.close();
             }
+            // Refactored barcode ends here...
         } catch (Exception e) {
             logger.error("Unexpected error generating the bar code : " + e.getLocalizedMessage());
         }

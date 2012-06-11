@@ -59,6 +59,10 @@ public class WebConstants {
     public static final String CERTIFICATE_ID = "certificateId";
     public static final String PERSON_ID = "personUKey";
     public static final String SEARCH_USERS_LIST = "viewUsers";
+    public static final String CERTIFICATE_TYPE = "certificateType";
+    public static final String PRS_CERTIFICATE = "prs";
+    public static final String BIRTH_CERTIFICATE = "birth";
+    public static final String DEATH_CERTIFICATE = "death";
 
     //to indicate time durations for statistics
     public static final int WEEK = 1;

@@ -81,7 +81,7 @@
     <tbody>
     <tr>
         <td>
-            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personUKey=${person.personUKey}" width="100"
+            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personUKey=${person.personUKey}&certificateType=prs" width="100"
                  height="100"/>
         </td>
         <td rowspan="2" align="center">
