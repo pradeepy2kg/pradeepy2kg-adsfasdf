@@ -256,8 +256,8 @@
                 <th width="90px"><s:label name="received" value="%{getText('received.label')}"/></th>
                 <th width="40px"><s:label name="live" value="%{getText('live.label')}"/></th>
                 <th width="20px"></th>
-                <th width="20px"></th>
-                <th width="20px"></th>
+                <%--<th width="20px"></th>--%>
+                <%--<th width="20px"></th>--%>
                 <th width="20px"></th>
             </tr>
             </thead>
@@ -303,7 +303,7 @@
                 </td>
 
 
-                <td align="center">
+                <%--<td align="center">
                     <s:if test="#request.allowApproveBDF">
                         <s:url id="approveSelected" action="eprApproveBirthDeclaration.do">
                             <s:param name="bdId" value="idUKey"/>
@@ -343,7 +343,7 @@
                             </s:a>
                         </s:if>
                     </s:if>
-                </td>
+                </td>--%>
 
                 <td align="center">
                     <s:if test="#request.allowApproveBDF">
