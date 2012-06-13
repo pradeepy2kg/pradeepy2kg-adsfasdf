@@ -823,14 +823,12 @@ public class StatisticsManagerImpl implements StatisticsManager {
             logger.debug("Loading Birth statistics of ds division {}", dsDivisionId);
             bdfList = birthDeclarationDAO.getByCreatedUser(user, startDate, endDate, districtId, dsDivisionId);
         }
-        statistics.setBirthsTotalSubmissions(bdfList.size());
+        statistics.setBirthsTotalSubmissions(statistics.getBirthsTotalSubmissions() + bdfList.size());
+        logger.debug("Total Births: {}", bdfList.size());
         for (BirthDeclaration birthDeclaration : bdfList) {
 
             BirthDeclaration.State status = birthDeclaration.getRegister().getStatus();
             switch (status) {
-                case APPROVED:
-                    statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() + 1);
-                    break;
                 case ARCHIVED_REJECTED:
                     statistics.setBirthsRejectedItems(statistics.getBirthsRejectedItems() + 1);
                     break;
@@ -840,6 +838,10 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     } else {
                         statistics.setBirthsThisMonthPendingItems(statistics.getBirthsThisMonthPendingItems() + 1);
                     }
+                    break;
+                case APPROVED:
+                default:
+                    statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() + 1);
             }
 
             BirthDeclaration.BirthType birthType = birthDeclaration.getRegister().getBirthType();
@@ -879,13 +881,11 @@ public class StatisticsManagerImpl implements StatisticsManager {
             deathList = deathRegisterDAO.getByCreatedUser(user, startDate, endDate, districtId, dsDivisionId);
         }
 //        List<DeathRegister> deathList = deathRegisterDAO.getByCreatedUser(user, startDate, endDate);
-        statistics.setDeathsTotalSubmissions(deathList.size());
+        statistics.setDeathsTotalSubmissions(statistics.getDeathsTotalSubmissions() + deathList.size());
+        logger.debug("Total deaths: {}", deathList.size());
         for (DeathRegister deathRegister : deathList) {
             DeathRegister.State status = deathRegister.getStatus();
             switch (status) {
-                case APPROVED:
-                    statistics.setDeathsApprovedItems(statistics.getDeathsApprovedItems() + 1);
-                    break;
                 case REJECTED:
                     statistics.setDeathsRejectedItems(statistics.getDeathsRejectedItems() + 1);
                     break;
@@ -895,6 +895,11 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     } else {
                         statistics.setDeathsThisMonthPendingItems(statistics.getDeathsThisMonthPendingItems() + 1);
                     }
+                    break;
+                case APPROVED:
+                default:
+                    statistics.setDeathsApprovedItems(statistics.getDeathsApprovedItems() + 1);
+
             }
 
             DeathRegister.Type deathType = deathRegister.getDeathType();
@@ -922,7 +927,8 @@ public class StatisticsManagerImpl implements StatisticsManager {
             logger.debug("Loading Marriage statistics of ds division {}", dsDivisionId);
             mrList = marriageRegistrationDAO.getByCreatedUser(user, startDate, endDate, districtId, dsDivisionId);
         }
-        statistics.setMrgTotalSubmissions(mrList.size());
+        statistics.setMrgTotalSubmissions(statistics.getMrgTotalSubmissions() + mrList.size());
+        logger.debug("Total marriages: {}", mrList.size());
         for (MarriageRegister marriageRegister : mrList) {
             MarriageRegister.State status = marriageRegister.getState();
             switch (status) {

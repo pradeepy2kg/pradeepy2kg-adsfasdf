@@ -208,7 +208,7 @@ function drawChart(data) {
 
         var ele = document.getElementById("rejected_b");
         if (ele != null) {
-            document.getElementById("rejected_b").setAttribute("value", (data.rejected_b));
+            document.getElementById("rejected_b").setAttribute("value", data.rejected_b);
         }
 
         var ele = document.getElementById("approved_b");
@@ -309,6 +309,11 @@ function drawChart(data) {
             document.getElementById("arrears_b").setAttribute("value", data.arrears_pend_b);
         }
 
+        var ele = document.getElementById("rejected_b");
+        if (ele != null) {
+            document.getElementById("rejected_b").setAttribute("value", data.rejected_b);
+        }
+
         if (data.late_b == 0 && data.normal_b == 0) {
             var ele = document.getElementById("chart2");
             if (ele != null) {
@@ -402,6 +407,11 @@ function drawChart(data) {
             document.getElementById("approved_d").setAttribute("value", (data.approved_d));
         }
 
+        var ele = document.getElementById("rejected_d");
+        if (ele != null) {
+            document.getElementById("rejected_d").setAttribute("value", (data.rejected_d));
+        }
+
         var ele = document.getElementById("late_d");
         if (ele != null) {
             document.getElementById("late_d").setAttribute("value", data.late_d);
@@ -462,6 +472,11 @@ function drawChart(data) {
         var ele = document.getElementById("approved_m");
         if (ele != null) {
             document.getElementById("approved_m").setAttribute("value", (data.approved_m));
+        }
+
+        var ele = document.getElementById("rejected_m");
+        if (ele != null) {
+            document.getElementById("rejected_m").setAttribute("value", (data.rejected_m));
         }
 
         var ele = document.getElementById("late_m");

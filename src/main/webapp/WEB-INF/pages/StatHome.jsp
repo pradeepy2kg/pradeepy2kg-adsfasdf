@@ -208,7 +208,9 @@
                     <td width="25%">Total Approval Pending :
                         <input type="text" id="all_pending_b" readonly="true" maxlength="6"/><br/>
                         &nbsp;&nbsp;&nbsp;Total Approved Items :
-                        <input type="text" id="approved_b" readonly="true" maxlength="6"/>
+                        <input type="text" id="approved_b" readonly="true" maxlength="6"/><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Total Rejected Items :
+                        <input type="text" id="rejected_b" readonly="true" maxlength="6"/>
                     </td>
                     <td width="25%" class="pending">Arrears :
                         <input type="text" id="arrears_b" readonly="true" maxlength="6"/>
@@ -249,7 +251,9 @@
                     <td width="25%">Total Approval Pending :
                         <input type="text" id="all_pending_d" readonly="true" maxlength="6"/><br/>
                         &nbsp;&nbsp;&nbsp;Total Approved Items :
-                        <input type="text" id="approved_d" readonly="true" maxlength="6"/>
+                        <input type="text" id="approved_d" readonly="true" maxlength="6"/><br/>
+                        &nbsp;&nbsp;&nbsp;Total Rejected Items :
+                        <input type="text" id="rejected_d" readonly="true" maxlength="6"/>
                     </td>
                     <td width="25%" class="pending">Arrears :
                         <input type="text" id="arrears_d" readonly="true" maxlength="6"/>
@@ -290,7 +294,9 @@
                     <td width="25%">Total Approval Pending :
                         <input type="text" id="all_pending_m" readonly="true" maxlength="6"/><br/>
                         &nbsp;&nbsp;&nbsp;Total Approved Items :
-                        <input type="text" id="approved_m" readonly="true" maxlength="6"/>
+                        <input type="text" id="approved_m" readonly="true" maxlength="6"/><br/>
+                        &nbsp;&nbsp;&nbsp;Total Rejected Items :
+                        <input type="text" id="rejected_m" readonly="true" maxlength="6"/>
                     </td>
                     <td width="25%" class="pending">Arrears :
                         <input type="text" id="arrears_m" readonly="true" maxlength="6"/>
