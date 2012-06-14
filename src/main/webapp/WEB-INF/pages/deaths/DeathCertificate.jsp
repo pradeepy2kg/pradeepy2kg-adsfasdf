@@ -321,10 +321,10 @@
 <col width="160px"/>
 <col width="100px"/>
 <col width="100px"/>
-<col width="150px"/>
+<col width="154px"/>
 <col width="130px"/>
 <col width="120px"/>
-<col width="55px"/>
+<col width="51px"/>
 <tbody>
 <tr>
     <td>
@@ -395,19 +395,19 @@
         <br>இறப்பு நிகழ்ந்த திகதி
         <br>Date of death
     </td>
-    <td><s:label name="" value="%{death.dateOfDeath}"/>
+    <td colspan="3"><s:label name="" value="%{death.dateOfDeath}"/>
         <div class="changes-done">
             <s:if test="changedFields.get(1)">
                 **
             </s:if>
         </div>
     </td>
-    <td colspan="2">
+    <td>
         (8) ස්ත්‍රී පුරුෂ භාවය
         <br>பால்
         <br>Gender
     </td>
-    <td colspan="4">
+    <td colspan="3">
         <s:label name="" value="%{genderSi}"/>
         <br> <s:label name="" value="%{genderEn}"/>
         <div class="changes-done">
