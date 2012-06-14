@@ -324,7 +324,7 @@
 <col width="150px"/>
 <col width="130px"/>
 <col width="120px"/>
-<col/>
+<col width="55px"/>
 <tbody>
 <tr>
     <td>
@@ -339,18 +339,57 @@
             </s:if>
         </div>
     </td>
-    <td>
+    <td colspan="2">
         (6) වයස
         <br>வயது
         <br>Age
     </td>
-    <td><s:label name="" value="%{deathPerson.deathPersonAge}"/>
+    <td colspan="4">
+        <s:if test="deathPerson.deathPersonAge > 0 || deathPerson.deathPersonAgeMonth > 0 || deathPerson.deathPersonAgeDate > 0">
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 0;" height="50px">
+                <tr>
+                    <td width="60px" style="font-size:8pt; border-right: 1px solid #aaa;">අවුරුදු<br/>ஆண்டுகள்<br/>Years</td>
+                    <td align="center" width="30px" style="border-right: 1px solid #aaa;">
+                        <s:if test="deathPerson.deathPersonAge > 0">
+                            <s:label name="" value="%{deathPerson.deathPersonAge}"/>
+                        </s:if>
+                        <s:else>
+                            -
+                        </s:else>
+                    </td>
+                    <td width="60px" style="font-size:8pt; border-right: 1px solid #aaa;">මාස<br/>மாதங்கள்<br/>Months</td>
+                    <td align="center" width="30px" style="border-right: 1px solid #aaa;">
+                        <s:if test="deathPerson.deathPersonAgeMonth > 0">
+                            <s:label name="" value="%{deathPerson.deathPersonAgeMonth}"/>
+                        </s:if>
+                        <s:else>
+                            -
+                        </s:else>
+                    </td>
+                    <td width="60px" style="font-size:8pt; border-right: 1px solid #aaa;">දින<br/>நாட்கள்<br/>Days</td>
+                    <td align="center" width="30px">
+                        <s:if test="deathPerson.deathPersonAgeDate > 0">
+                            <s:label name="" value="%{deathPerson.deathPersonAgeDate}"/>
+                        </s:if>
+                        <s:else>
+                            -
+                        </s:else>
+                    </td>
+                </tr>
+            </table>
+        </s:if>
+        <s:else>
+            <s:label name="unknownFieldPref" cssStyle="font-size:9pt;"/> <br/>
+            <s:label name="unknownFieldEn"/>
+        </s:else>
         <div class="changes-done">
             <s:if test="changedFields.get(12)">
                 **
             </s:if>
         </div>
     </td>
+</tr>
+<tr>
     <td>
         (7) මරණය සිදුවූ දිනය
         <br>இறப்பு நிகழ்ந்த திகதி
@@ -363,12 +402,12 @@
             </s:if>
         </div>
     </td>
-    <td>
+    <td colspan="2">
         (8) ස්ත්‍රී පුරුෂ භාවය
         <br>பால்
         <br>Gender
     </td>
-    <td>
+    <td colspan="4">
         <s:label name="" value="%{genderSi}"/>
         <br> <s:label name="" value="%{genderEn}"/>
         <div class="changes-done">
