@@ -1,8 +1,11 @@
 package lk.rgd.prs.web;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.DateTimeUtils;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.DeathPersonInfo;
 import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.prs.api.domain.Person;
@@ -25,6 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Generates and serves a barcode image of a person registered in PRS
@@ -35,7 +40,8 @@ public class BarCodeImageServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(BarCodeImageServlet.class);
 
     private PopulationRegistry ecivil;
-    private DeathRegistrationService service;
+    private BirthRegistrationService birthRegistrationService;
+    private DeathRegistrationService deathRegistrationService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -43,7 +49,8 @@ public class BarCodeImageServlet extends HttpServlet {
         WebApplicationContext context =
             WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
         ecivil = (PopulationRegistry) context.getBean("ecivilService");
-        service = (DeathRegistrationService) context.getBean("deathRegisterService");
+        birthRegistrationService = (BirthRegistrationService) context.getBean("manageBirthService");
+        deathRegistrationService = (DeathRegistrationService) context.getBean("deathRegisterService");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -94,48 +101,93 @@ public class BarCodeImageServlet extends HttpServlet {
 
                 //prepare data
                 StringBuffer buffer = new StringBuffer();
+                BirthDeclaration birthDeclaration;
+                DeathRegister deathRegister;
+
                 if (WebConstants.PRS_CERTIFICATE.equals(certificateType) || WebConstants.BIRTH_CERTIFICATE.equals(certificateType)) {
                     Person person = ecivil.getByUKey(personId, user);
-
+                    List<DeathRegister> deathRegisterList;
                     if (person != null) {
-                        if (WebConstants.PRS_CERTIFICATE.equals(certificateType)) {
-                            // Data for the PRS BarCode
-                            buffer.append(person.getFullNameInEnglishLanguage());
-                            buffer.append("|");
-                            buffer.append(person.getPin());
-                            buffer.append("|");
-                            buffer.append(person.getGender());
-                            buffer.append("|");
-                            buffer.append(person.getPersonUKey());
-                            buffer.append("|");
-                            buffer.append(person.getDateOfBirth());
-                        } else if (WebConstants.BIRTH_CERTIFICATE.equals(certificateType)) {
-                            // Data for the Birth Certificate BarCode
-                            buffer.append(person.getFullNameInEnglishLanguage());
-                            buffer.append("|");
-                            buffer.append(person.getPin());
-                            buffer.append("|");
-                            buffer.append(person.getGender());
-                            buffer.append("|");
-                            buffer.append(person.getPersonUKey());
-                            buffer.append("|");
-                            buffer.append(person.getDateOfBirth());
+                        if (person.getPin() != null) {
+                            birthDeclaration = birthRegistrationService.getByPINorNIC(person.getPin(), user);
+                            deathRegisterList = deathRegistrationService.getByPinOrNic(person.getPin().toString(), user);
+                            if (deathRegisterList != null && deathRegisterList.size() > 0) {
+                                deathRegister = deathRegisterList.iterator().next();
+                            } else {
+                                deathRegister = null;
+                            }
+                        } else {
+                            birthDeclaration = null;
+                            deathRegister = null;
                         }
+
+                        // Data for the PRS Certificate and Birth Certificate BarCode
+                        buffer.append(person.getFullNameInEnglishLanguage());                       // NAME
+                        buffer.append("|");
+                        buffer.append(person.getPin());                                             // PIN
+                        buffer.append("|");
+                        buffer.append(person.getDateOfBirth());                                     // Date of Birth
+                        buffer.append("|");
+                        buffer.append(person.getGender());                                          // Gender
+                        buffer.append("|");
+                        buffer.append(person.getPersonUKey());                                      // PRS Certificate Number
+                        buffer.append("|");
+                        if (birthDeclaration != null) {                                             // Birth Certificate Number
+                            buffer.append(birthDeclaration.getIdUKey());
+                        } else {
+                            buffer.append(" - ");
+                        }
+                        buffer.append("|");
+                        if (deathRegister != null) {                                                // Death Certificate Number
+                            buffer.append(deathRegister.getIdUKey());
+                        } else {
+                            buffer.append(" - ");
+                        }
+                        buffer.append("|");
+                        buffer.append(birthDeclaration.getRegister().getDateOfRegistration());      // Date of Registration
+                        buffer.append("|");
+                        buffer.append(DateTimeUtils.getISO8601FormattedString(new Date()));         // Date of Issue
+                        buffer.append("|");
+                        buffer.append(" - ");                                                      // TODO Hash
                     } else {
                         logger.debug("Person {} not found.", personId);
                     }
                 } else if (WebConstants.DEATH_CERTIFICATE.equals(certificateType)) {
                     // personID in Death is the idUKey of Death Certificate.
-                    DeathRegister deathRegister = service.getById(personId, user);
-                    DeathPersonInfo deathPersonInfo = deathRegister.getDeathPerson();
+                    deathRegister = deathRegistrationService.getById(personId, user);
+                    if (deathRegister != null) {
+                        DeathPersonInfo deathPersonInfo = deathRegister.getDeathPerson();
 
-                    buffer.append(deathPersonInfo.getDeathPersonNameInEnglish());
-                    buffer.append("|");
-                    buffer.append(deathPersonInfo.getDeathPersonPINorNIC());
-                    buffer.append("|");
-                    buffer.append(deathPersonInfo.getDeathPersonGender());
-                    buffer.append("|");
-                    buffer.append(deathRegister.getDeath().getDateOfDeath());
+                        if (deathPersonInfo.getDeathPersonNameInEnglish() != null) {
+                            buffer.append(deathPersonInfo.getDeathPersonNameInEnglish());                   // NAME
+                        } else {
+                            buffer.append(" - ");
+                        }
+                        buffer.append("|");
+                        if (deathPersonInfo.getDeathPersonPINorNIC() != null) {
+                            buffer.append(deathPersonInfo.getDeathPersonPINorNIC());                        // PIN or NIC
+                        } else {
+                            buffer.append(" - ");
+                        }
+                        buffer.append("|");
+                        buffer.append(deathRegister.getDeath().getDateOfDeath());                       // Date of Death
+                        buffer.append("|");
+                        buffer.append(deathPersonInfo.getDeathPersonGender());                          // Gender
+                        buffer.append("|");
+                        buffer.append(" - ");                                                           // TODO PRS Certificate Number
+                        buffer.append("|");
+                        buffer.append(" - ");                                                           // TODO Birth Certificate Number
+                        buffer.append("|");
+                        buffer.append(deathRegister.getIdUKey());                                       // Death Certificate Number
+                        buffer.append("|");
+                        buffer.append(deathRegister.getDeath().getDateOfRegistration());                // Date of Registration
+                        buffer.append("|");
+                        buffer.append(DateTimeUtils.getISO8601FormattedString(new Date()));             // Date of Issue
+                        buffer.append("|");
+                        buffer.append(" - ");                                                          // TODO Hash
+                    } else {
+                        logger.debug("Death {} not found.", personId);
+                    }
                 }
                 logger.debug("Barcode data size : {}", buffer.length());
 
