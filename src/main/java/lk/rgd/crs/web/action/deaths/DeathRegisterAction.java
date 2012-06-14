@@ -127,6 +127,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private String placeOfIssue;
     private String issueUserId;
     private String language;
+    private String unknownFieldPref;
+    private String unknownFieldEn;
 
     private Date fromDate;
     private Date endDate;
@@ -314,6 +316,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             }
             locationId = user.getPrimaryLocation().getLocationUKey();
             issueUserId = user.getUserId();
+            unknownFieldPref = lk.rgd.common.util.CommonUtil.getUnknownForCertificate(death.getPreferredLanguage());
+            unknownFieldEn = lk.rgd.common.util.CommonUtil.getUnknownForCertificate(AppConstants.ENGLISH);
             return SUCCESS;
         }
     }
@@ -1672,5 +1676,21 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setCertifyingAuthority(CertifyingAuthority certifyingAuthority) {
         this.certifyingAuthority = certifyingAuthority;
+    }
+
+    public String getUnknownFieldPref() {
+        return unknownFieldPref;
+    }
+
+    public void setUnknownFieldPref(String unknownFieldPref) {
+        this.unknownFieldPref = unknownFieldPref;
+    }
+
+    public String getUnknownFieldEn() {
+        return unknownFieldEn;
+    }
+
+    public void setUnknownFieldEn(String unknownFieldEn) {
+        this.unknownFieldEn = unknownFieldEn;
     }
 }
