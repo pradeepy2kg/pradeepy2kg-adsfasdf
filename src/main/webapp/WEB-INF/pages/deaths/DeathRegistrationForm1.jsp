@@ -385,12 +385,12 @@ function initPage() {
 }
 
 function personAgeDeath() {
-    var dateOdBirthSubmitted = true;
+    var dateOfBirthSubmitted = true;
     var dateOfDeathSubmitted = true;
 
     var dom = document.getElementById('deathPersonDOB');
     if (isFieldEmpty(dom)) {
-        dateOdBirthSubmitted = false;
+        dateOfBirthSubmitted = false;
     }
     dom = document.getElementById('deathDatePicker');
     if (isFieldEmpty(dom)) {
@@ -399,13 +399,61 @@ function personAgeDeath() {
     var person_bd = new Date(document.getElementById('deathPersonDOB').value);
     var date_of_death = new Date(document.getElementById('deathDatePicker').value);
     var death_person_age = date_of_death.getYear() - person_bd.getYear();
-    if (!(dateOdBirthSubmitted && dateOfDeathSubmitted)) {
+
+    var birthYear = person_bd.getYear();
+    var birthMonth = person_bd.getMonth();
+    var birthDay = person_bd.getDate();
+
+    var deathYear = date_of_death.getYear();
+    var deathMonth = date_of_death.getMonth();
+    var deathDay = date_of_death.getDate();
+
+    var ageYears = 0;
+    var ageMonths = 0;
+    var ageDays = 0;
+
+    if(date_of_death > person_bd){
+        if(deathYear >= birthYear){
+            ageYears = (deathYear - birthYear);
+            if(deathMonth > birthMonth){
+                ageMonths = (deathMonth - birthMonth);
+                if(deathDay >= birthDay){
+                    ageDays = (deathDay - birthDay);
+                }else if(deathDay < birthDay){
+                    ageMonths = (ageMonths - 1);
+                    ageDays = ((30 - birthDay) + deathDay);
+                }
+            }else if(deathMonth < birthMonth){
+                ageYears = (ageYears > 0)?(ageYears - 1):0;
+                ageMonths = ((12 - birthMonth) + deathMonth);
+                if(deathDay >= birthDay){
+                    ageDays = (deathDay - birthDay);
+                }else if(deathDay < birthDay){
+                    ageMonths = (ageMonths - 1);
+                    ageDays = ((30 - birthDay) + deathDay);
+                }
+            }else if(deathMonth == birthMonth){
+                ageMonths = 0;
+                if(deathDay >= birthDay){
+                    ageDays = (deathDay - birthDay);
+                }else if(deathDay < birthDay){
+                    ageYears = (ageYears > 0)?(ageYears - 1):0;
+                    ageDays = ((30 - birthDay) + deathDay);
+                }
+            }
+        }
+    }
+
+    if (!(dateOfBirthSubmitted && dateOfDeathSubmitted)) {
         if (isFieldEmpty(document.getElementById("deathPersonAge"))) {
             document.getElementById("deathPersonAge").value = 0;
         }
     }
     else {
-        document.getElementById("deathPersonAge").value = death_person_age;
+//        document.getElementById("deathPersonAge").value = death_person_age;
+        $('#deathPersonAge').val(ageYears);
+        $('#deathPersonAgeMonth').val(ageMonths);
+        $('#deathPersonAgeDate').val(ageDays);
     }
 
 }
