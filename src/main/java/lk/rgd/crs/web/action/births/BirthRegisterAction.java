@@ -837,13 +837,15 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                 locationList = commonUtil.populateActiveUserLocations(user, language);
                 if (!locationList.isEmpty()) {
-                    //TODO get primary location
-                    int selectedLocationId = locationList.keySet().iterator().next();
+                    logger.debug("Location list size: {}", locationList.size());
                     userList = new HashMap<String, String>();
-                    // TODO temporary solution have to change this after caching done for user locations
-                    for (User u : userLocationDAO.getBirthCertSignUsersByLocationId(selectedLocationId, true)) {
-                        userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
+                    for (int i=0; i < locationList.size(); i++) {
+                        int currentLocationId = locationList.keySet().iterator().next();
+                        for (User u : userLocationDAO.getBirthCertSignUsersByLocationId(currentLocationId, true)) {
+                            userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
+                        }
                     }
+                    logger.debug("User list size: {}", userList.size());
                 }
                 if ((bdf.getRegister().getOriginalBCIssueUser() == null &&
                     bdf.getRegister().getOriginalBCPlaceOfIssue() == null &&
