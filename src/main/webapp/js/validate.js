@@ -388,28 +388,36 @@ function customAlert(text) {
 
 function calculateBirthDay(id, error) {
     var regNIC = /^([0-9]{9}[X|x|V|v])$/;
-    var day = id.substring(2, 5);
-    var BirthYear = 19 + id.substring(0, 2);
+    var regPIN = /^([0-9]{12})$/;
+    var day;
+    var BirthYear;
+    if(id.length == 12){
+        day = id.substring(4, 7);
+        BirthYear = id.substring(0, 4);
+    }else if( id.length == 10){
+        day = id.substring(2, 5);
+        BirthYear = 19 + id.substring(0, 2);
+    }
     var D = new Date(BirthYear);
-    if ((id.search(regNIC) == 0) && (day >= 501 && day <= 866)) {
+    if (((id.search(regNIC) == 0) || id.search(regPIN) == 0) && (day >= 501 && day <= 866)) {
         if ((day > 559) && ((D.getFullYear() % 4) != 0 )) {
-            day = id.substring(2, 5) - 2;
+            day = day - 2;
             D.setDate(D.getDate() + day - 500);
         } else {
             D.setDate(D.getDate() + day - 1500);
         }
-        return   new Date(D.getYear(), D.getMonth(), D.getDate());
+        return   new Date(D.getFullYear(), D.getMonth(), D.getDate());
 
-    } else if ((id.search(regNIC) == 0) && (day > 0 && day <= 366)) {
+    } else if (((id.search(regNIC) == 0) || id.search(regPIN) == 0) && (day > 0 && day <= 366)) {
         if ((day > 59) && ((D.getFullYear() % 4) != 0 )) {
-            day = id.substring(2, 5) - 2;
+            day = day - 2;
             D.setDate(D.getDate() + day);
         } else {
             D.setDate(D.getDate() + day - 1000);
         }
-        return new Date(D.getYear(), D.getMonth(), D.getDate());
+        return new Date(D.getFullYear(), D.getMonth(), D.getDate());
 
-    } else if ((id.search(regNIC) == 0) && ((day >= 367 && day <= 501)) | (day > 867)) {
+    } else if (((id.search(regNIC) == 0) || id.search(regPIN) == 0) && ((day >= 367 && day <= 501)) | (day > 867)) {
         alert(error);
     }
 }
