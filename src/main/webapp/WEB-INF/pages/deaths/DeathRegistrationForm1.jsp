@@ -162,7 +162,7 @@ $(function () {
                 function (data1) {
                     if (data1 != null) {
                         $("textarea#deathPersonNameOfficialLang").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#deathPersonNameInEnglish").val(data1.fullNameInEnglishLanguage)
+                        $("textarea#deathPersonNameInEnglish").val(data1.fullNameInEnglishLanguage);
                         $("input#deathPersonDOB").val(data1.dateOfBirth);
                         $("select#deathPersonGender").val(data1.gender);
                         $("select#deathPersonRace").val(data1.race);
@@ -398,7 +398,6 @@ function personAgeDeath() {
     }
     var person_bd = new Date(document.getElementById('deathPersonDOB').value);
     var date_of_death = new Date(document.getElementById('deathDatePicker').value);
-    var death_person_age = date_of_death.getYear() - person_bd.getYear();
 
     var birthYear = person_bd.getYear();
     var birthMonth = person_bd.getMonth();
