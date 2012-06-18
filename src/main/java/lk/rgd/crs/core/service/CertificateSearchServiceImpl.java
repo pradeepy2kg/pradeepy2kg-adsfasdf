@@ -1,6 +1,8 @@
 package lk.rgd.crs.core.service;
 
 import lk.rgd.ErrorCodes;
+import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
@@ -31,16 +33,20 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
     private final CertificateSearchDAO certificateSearchDAO;
     private final BirthRecordsIndexer birthRecordsIndexer;
     private final DeathRecordsIndexer deathRecordsIndexer;
+    private final DSDivisionDAO dsDivisionDAO;
+    private final DistrictDAO districtDAO;
 
     public CertificateSearchServiceImpl(
-        BirthDeclarationDAO birthDeclarationDAO, DeathRegisterDAO deathRegisterDAO,
-        CertificateSearchDAO certificateSearchDAO, BirthRecordsIndexer birthRecordsIndexer,
-        DeathRecordsIndexer deathRecordsIndexer) {
+            BirthDeclarationDAO birthDeclarationDAO, DeathRegisterDAO deathRegisterDAO,
+            CertificateSearchDAO certificateSearchDAO, BirthRecordsIndexer birthRecordsIndexer,
+            DeathRecordsIndexer deathRecordsIndexer, DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.deathRegisterDAO = deathRegisterDAO;
         this.certificateSearchDAO = certificateSearchDAO;
         this.birthRecordsIndexer = birthRecordsIndexer;
         this.deathRecordsIndexer = deathRecordsIndexer;
+        this.dsDivisionDAO = dsDivisionDAO;
+        this.districtDAO = districtDAO;
     }
 
     /**
@@ -50,7 +56,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
     public boolean isValidCertificateSearchApplicationNo(DSDivision dsDivision, String applicationNo) {
 
         logger.debug("Get record by DSDivision ID : {} and Application No : {}", dsDivision.getDsDivisionUKey(),
-            applicationNo);
+                applicationNo);
         CertificateSearch cs = certificateSearchDAO.getByDSDivisionAndApplicationNo(dsDivision, applicationNo);
         return (cs == null);
     }
@@ -59,7 +65,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<BirthDeclaration> performBirthCertificateSearch(CertificateSearch cs, User user) {
+    public List<BirthDeclaration> performBirthCertificateSearch(CertificateSearch cs, User user, int dsDivisionUKey, int birthDistrictId) {
 
         //TODO validations for CertificateSearch
         logger.debug("Birth certificate search started");
@@ -75,7 +81,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
 
         if (certificate.getApplicationNo() != null && certificate.getDsDivision() != null) {
             existing = certificateSearchDAO.getByDSDivisionAndApplicationNo(certificate.getDsDivision(),
-                certificate.getApplicationNo());
+                    certificate.getApplicationNo());
         }
 
         if (existing == null) {
@@ -97,16 +103,41 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
             // add exact match using Birth Declaration serial no and BDDivision
             if (exactRecord == null && search.getSearchSerialNo() != null && search.getBdDivision() != null) {
                 logger.debug("Search narrowed against Birth declaration Serial No : {} and BDDivision : {}",
-                    search.getSearchSerialNo(), search.getBdDivision().getBdDivisionUKey());
+                        search.getSearchSerialNo(), search.getBdDivision().getBdDivisionUKey());
                 exactRecord = birthDeclarationDAO.getActiveRecordByBDDivisionAndSerialNo(
-                    search.getBdDivision(), search.getSearchSerialNo());
+                        search.getBdDivision(), search.getSearchSerialNo());
                 addMatchingBirth(results, exactRecord, search);
             }
 
-            // add any matches from Solr search, except for the exact match
-            for (BirthDeclaration bdf : birthRecordsIndexer.searchBirthRecords(cs)) {
-                if (exactRecord == null || exactRecord.getIdUKey() != bdf.getIdUKey()) {
-                    results.add(bdf);
+            //add exact match using DSDivision
+            if (search.getCertificateNo() == null && search.getSearchPIN() == null) {
+                if (results.size() == 0 && exactRecord == null) {
+                    if (dsDivisionUKey != 0) {
+                        logger.debug("Search narrowed against DSDivision");
+                        for (BirthDeclaration bdf : birthDeclarationDAO.getByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionUKey))) {
+                            results.add(bdf);
+                        }
+                        logger.debug("BirthDeclaration List:{}", results.size());
+                    } else if (birthDistrictId != 0 && dsDivisionUKey == 0) {
+                        logger.debug("Search narrowed against DSDivision - for all DSDivisions");
+                        for (BirthDeclaration bdf : birthDeclarationDAO.getByDistrict(districtDAO.getDistrict(birthDistrictId))) {
+                            results.add(bdf);
+                        }
+                    } else if (birthDistrictId == 0) {
+                        logger.debug("Search narrowed against DSDivision - for all Districts");
+                        for (BirthDeclaration bdf : birthDeclarationDAO.findAll()) {
+                            results.add(bdf);
+                        }
+                    }
+                }
+
+                // add any matches from Solr search, except for the exact match
+                if (results.size() == 0) {
+                    for (BirthDeclaration bdf : birthRecordsIndexer.searchBirthRecords(cs)) {
+                        if (exactRecord == null || exactRecord.getIdUKey() != bdf.getIdUKey()) {
+                            results.add(bdf);
+                        }
+                    }
                 }
             }
 
@@ -117,11 +148,11 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
 
             certificateSearchDAO.addCertificateSearch(cs);
             logger.debug("Birth certificate search completed and recorded as SearchUKey : {} Results found : {}",
-                cs.getIdUKey(), results.size());
+                    cs.getIdUKey(), results.size());
 
         } else {
             handleException("The birth certificate search DS Division/Application number is a duplicate : " +
-                certificate.getDsDivision().getDsDivisionUKey() + " " + certificate.getApplicationNo(), ErrorCodes.INVALID_DATA);
+                    certificate.getDsDivision().getDsDivisionUKey() + " " + certificate.getApplicationNo(), ErrorCodes.INVALID_DATA);
         }
 
         return results;
@@ -130,7 +161,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
     /**
      * @inheritDoc
      */
-    public List<DeathRegister> performDeathCertificateSearch(CertificateSearch cs, User user) {
+    public List<DeathRegister> performDeathCertificateSearch(CertificateSearch cs, User user, int dsDivisionUKey, int birthDistrictId) {
 
         //TODO validations for CertificateSearch
         logger.debug("Death certificate search started");
@@ -147,7 +178,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
 
         if (certificate.getApplicationNo() != null && certificate.getDsDivision() != null) {
             existing = certificateSearchDAO.getByDSDivisionAndApplicationNo(certificate.getDsDivision(),
-                certificate.getApplicationNo());
+                    certificate.getApplicationNo());
         }
 
         if (existing == null) {
@@ -163,7 +194,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
             if (exactRecord == null && search.getSearchPIN() != null) {
                 logger.debug("Search narrowed against Person PIN");
                 possibleRecords =
-                    deathRegisterDAO.getDeathRegisterByDeathPersonPINorNIC(search.getSearchPIN().toString());
+                        deathRegisterDAO.getDeathRegisterByDeathPersonPINorNIC(search.getSearchPIN().toString());
                 for (DeathRegister record : possibleRecords) {
                     addMatchingDeath(results, record, search);
                 }
@@ -172,9 +203,9 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
             // add exact match using Death Register serial no and BDDivision
             if (exactRecord == null && search.getSearchSerialNo() != null && search.getBdDivision() != null) {
                 logger.debug("Search narrowed against Death declaration Serial No : {} and BDDivision : {}",
-                    search.getSearchSerialNo(), search.getBdDivision().getBdDivisionUKey());
+                        search.getSearchSerialNo(), search.getBdDivision().getBdDivisionUKey());
                 exactRecord = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(
-                    search.getBdDivision(), search.getSearchSerialNo());
+                        search.getBdDivision(), search.getSearchSerialNo());
                 addMatchingDeath(results, exactRecord, search);
             }
 
@@ -192,11 +223,11 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
 
             certificateSearchDAO.addCertificateSearch(cs);
             logger.debug("Death certificate search completed and recorded as SearchUKey : {} Results found : {}",
-                cs.getIdUKey(), results.size());
+                    cs.getIdUKey(), results.size());
 
         } else {
             handleException("The death certificate search DS Division/Application number is a duplicate : " +
-                certificate.getDsDivision().getDsDivisionUKey() + " " + certificate.getApplicationNo(), ErrorCodes.INVALID_DATA);
+                    certificate.getDsDivision().getDsDivisionUKey() + " " + certificate.getApplicationNo(), ErrorCodes.INVALID_DATA);
         }
 
         return results;
@@ -216,7 +247,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
                 results.add(exactRecord);
             } else {
                 handleException("The birth declaration state is invalid for IDUKey : " +
-                    search.getCertificateNo() + " " + currentState, ErrorCodes.INVALID_DATA);
+                        search.getCertificateNo() + " " + currentState, ErrorCodes.INVALID_DATA);
             }
         }
     }
@@ -235,7 +266,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
                 results.add(exactRecord);
             } else {
                 handleException("The death declaration state is invalid for IDUKey : " +
-                    search.getCertificateNo() + " " + currentState, ErrorCodes.INVALID_DATA);
+                        search.getCertificateNo() + " " + currentState, ErrorCodes.INVALID_DATA);
             }
         }
     }
@@ -243,13 +274,13 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
     private void validateCertificateType(CertificateSearch cs, CertificateSearch.CertificateType certificateType) {
         if (certificateType != cs.getCertificate().getCertificateType()) {
             handleException("Certificate type : " + cs.getCertificate().getCertificateType() + ", but required : " +
-                certificateType + " for Certificate Search AppNo/DSDivision : " + cs.getCertificate().getApplicationNo() +
-                " , " + cs.getCertificate().getDsDivision().getDsDivisionUKey(), ErrorCodes.ILLEGAL_STATE);
+                    certificateType + " for Certificate Search AppNo/DSDivision : " + cs.getCertificate().getApplicationNo() +
+                    " , " + cs.getCertificate().getDsDivision().getDsDivisionUKey(), ErrorCodes.ILLEGAL_STATE);
         }
         if (logger.isDebugEnabled()) {
             logger.debug("Certificate type checking for Certificate AppNo/DSDivision : " +
-                cs.getCertificate().getApplicationNo() + " , " + cs.getCertificate().getDsDivision().getDsDivisionUKey()
-                + " passed for Certificate type : " + cs.getCertificate().getCertificateType());
+                    cs.getCertificate().getApplicationNo() + " , " + cs.getCertificate().getDsDivision().getDsDivisionUKey()
+                    + " passed for Certificate type : " + cs.getCertificate().getCertificateType());
         }
     }
 

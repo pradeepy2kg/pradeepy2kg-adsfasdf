@@ -88,4 +88,6 @@ public class WebConstants {
     public static final String TEXT_TO_TRANS = "text";
     public static final String GENDER = "gender";
     public static final String TEXT_TRANSLATED = "translated";
+
+    public static final int STAMP_CHARGES = 25;
 }

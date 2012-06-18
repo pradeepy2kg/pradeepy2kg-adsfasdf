@@ -54,35 +54,35 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
 
         // should find when the search term does occur within the field
         cs.getSearch().setSearchFullNameEnglish("aaaa bbbb");
-        List<BirthDeclaration> results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo);
+        List<BirthDeclaration> results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo,1,1);
         Assert.assertEquals(1, results.size());
 
         // should find when the search term does occur within the field
         cs.getSearch().setSearchFullNameEnglish("ffff zzzz");
         cs.setIdUKey(0);
         cs.getCertificate().setApplicationNo("2");
-        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo);
+        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo,1,1);
         Assert.assertEquals(1, results.size());
 
         // should not find when the search term does not occur
         cs.getSearch().setSearchFullNameEnglish("xxxx yyyy");
         cs.setIdUKey(0);
         cs.getCertificate().setApplicationNo("3");
-        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo);
+        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo,1,1);
         Assert.assertEquals(0, results.size());
 
         cs.getSearch().setGender(0);
         cs.getSearch().setSearchFullNameEnglish("zzzz");
         cs.setIdUKey(0);
         cs.getCertificate().setApplicationNo("4");
-        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo);
+        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo,1,1);
         Assert.assertEquals(3, results.size());
 
         // should not match zzzz for gender = 1 as gender is an exact match
         cs.getSearch().setGender(1);
         cs.setIdUKey(0);
         cs.getCertificate().setApplicationNo("5");
-        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo);
+        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo,1,1);
         Assert.assertEquals(0, results.size());
 
         cs.getSearch().setGender(0);
@@ -92,7 +92,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
 
         cs.setIdUKey(0);
         cs.getCertificate().setApplicationNo("6");
-        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo);
+        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo,1,1);
         Assert.assertEquals(2, results.size());
 
         cs.getSearch().setMotherFullName("zzzz");
@@ -100,7 +100,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         cs.getSearch().setDateOfEvent(DateTimeUtils.getDateFromISO8601String("2010-07-21"));
         cs.setIdUKey(0);
         cs.getCertificate().setApplicationNo("7");
-        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo);
+        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo,1,1);
         Assert.assertEquals(1, results.size());
 
         // search on issued date
@@ -110,7 +110,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         cs.getSearch().setCertificateIssueDate(new Date()); // TODO
         cs.setIdUKey(0);
         cs.getCertificate().setApplicationNo("8");
-        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo);
+        results = certSearchSvc.performBirthCertificateSearch(cs, adrColomboColombo,1,1);
         Assert.assertEquals(3, results.size());
     }
 }

@@ -97,6 +97,10 @@ import java.io.Serializable;
         "WHERE bdf.register.birthDivision.dsDivision = :dsDivision " +
         "ORDER BY bdf.register.dateOfRegistration desc"),
 
+    @NamedQuery(name = "get.by.district", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.dsDivision.district = :district " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
+
     @NamedQuery(name = "get.by.NicOrPin", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.child.pin = :PINorNIC AND bdf.lifeCycleInfo.activeRecord=true "),
     @NamedQuery(name = "get.historical.alteration.records.by.bdDivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf" +

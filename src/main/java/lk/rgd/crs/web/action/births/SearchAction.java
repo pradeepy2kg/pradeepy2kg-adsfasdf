@@ -57,7 +57,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private int pageNo;
 
     public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-        BDDivisionDAO bdDivisionDAO, CertificateSearchService certificateSearchService) {
+                        BDDivisionDAO bdDivisionDAO, CertificateSearchService certificateSearchService) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -87,14 +87,14 @@ public class SearchAction extends ActionSupport implements SessionAware {
     public String searchBDFBySerialNumber() {
         if (logger.isDebugEnabled()) {
             logger.debug("attempt to search birth record by serial number :" + serialNo + "and birth division :" +
-                birthDivisionId + " and ds division id :" + dsDivisionId);
+                    birthDivisionId + " and ds division id :" + dsDivisionId);
         }
         try {
             if (serialNo != null) {
                 if (birthDivisionId != 0) {
                     //search by birth division and the serial number
                     bdf = service.getActiveRecordByBDDivisionAndSerialNo(
-                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
+                            bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
                 } else {
                     //search by ds division
                     searchResultList = service.getActiveRecordByDSDivisionAndSerialNumber(serialNo, dsDivisionId, user);
@@ -102,7 +102,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
                 if (bdf == null & (searchResultList != null && searchResultList.size() == 0)) {
                     if (logger.isDebugEnabled()) {
                         logger.debug("no result found for birth registration serial number :" + serialNo +
-                            " and birth division id :" + birthDistrictId + " and ds division id : " + dsDivisionId);
+                                " and birth division id :" + birthDistrictId + " and ds division id : " + dsDivisionId);
                     }
                     addActionMessage(getText("SearchBDF.error.NoResult.for.serial", new String[]{Long.toString(serialNo)}));
                 }
@@ -177,8 +177,9 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("{} certificate search: Page {}", certificateType, pageNo);
         if (pageNo == 1) {
             try {
-                // setting Certificate type, DSdivision and BDDivision to Certificate Search 
-                certSearch.getCertificate().setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                // setting Certificate type, DSdivision and BDDivision to Certificate Search
+                logger.debug("User preferred DSDivision :{}", user.getPrefBDDSDivision().getDsDivisionUKey());
+                certSearch.getCertificate().setDsDivision(dsDivisionDAO.getDSDivisionByPK(user.getPrefBDDSDivision().getDsDivisionUKey()));
                 certSearch.getCertificate().setCertificateType(certificateType);
                 if (birthDivisionId != 0 && certSearch.getSearch().getSearchSerialNo() != null) {
                     certSearch.getSearch().setBdDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
@@ -186,16 +187,16 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
                 // validate duplicate application number entering
                 boolean validNo = certificateSearchService.isValidCertificateSearchApplicationNo(
-                    certSearch.getCertificate().getDsDivision(), certSearch.getCertificate().getApplicationNo());
+                        certSearch.getCertificate().getDsDivision(), certSearch.getCertificate().getApplicationNo());
 
                 if (!validNo) {
                     addFieldError("duplicateApplicationNoError", getText("duplicateApplicationNo.label"));
                     pageNo = 0;
                 } else {
                     if (certificateType == CertificateSearch.CertificateType.BIRTH) {
-                        searchResultList = certificateSearchService.performBirthCertificateSearch(certSearch, user);
+                        searchResultList = certificateSearchService.performBirthCertificateSearch(certSearch, user, dsDivisionId, birthDistrictId);
                     } else if (certificateType == CertificateSearch.CertificateType.DEATH) {
-                        searchResultList = certificateSearchService.performDeathCertificateSearch(certSearch, user);
+                        searchResultList = certificateSearchService.performDeathCertificateSearch(certSearch, user, dsDivisionId, birthDistrictId);
                     }
                     logger.debug("Certificate search result size : {}", searchResultList.size());
                     if (searchResultList.size() == 0) {
@@ -205,7 +206,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
             } catch (CRSRuntimeException e) {
                 logger.error("inside birthCertificateSearch()", e);
                 addActionError(getText("CertSearch.error." + e.getErrorCode()) + "\n" + certSearch.getCertificate().getApplicationNo() +
-                    " , " + certSearch.getCertificate().getDsDivision().getDsDivisionUKey());
+                        " , " + certSearch.getCertificate().getDsDivision().getDsDivisionUKey());
             } catch (Exception e) {
                 logger.error("inside birthCertificateSearch()", e);
                 return ERROR;

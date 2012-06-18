@@ -280,6 +280,8 @@
         <constructor-arg ref="certSearchDAOImpl"/>
         <constructor-arg ref="birthRecordsIndexer"/>
         <constructor-arg ref="deathRecordsIndexer"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="districtDAOImpl"/>
     </bean>
 
     <bean id="eventManagementService" class="lk.rgd.common.core.service.EventViewerServiceImpl">

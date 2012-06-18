@@ -24,21 +24,26 @@ public interface CertificateSearchService {
      */
     public boolean isValidCertificateSearchApplicationNo(DSDivision dsDivision, String applicationNo);
 
+   
     /**
      * Perform a birth certificate search, and add an entry on the search performed
      *
-     * @param cs   the birth certificate search details
+     * @param cs the birth certificate search details
      * @param user the user performing the action
-     * @return the list of birth records
+     * @param dsDivisionUKey
+     * @param birthDistrictId
+     * @return list of birth records
      */
-    public List<BirthDeclaration> performBirthCertificateSearch(CertificateSearch cs, User user);
+    public List<BirthDeclaration> performBirthCertificateSearch(CertificateSearch cs, User user, int dsDivisionUKey, int birthDistrictId);
 
     /**
      * Perform a death certificate search, and add an entry on the search performed
      *
      * @param cs   the death certificate search details
      * @param user the user performing the action
+     * @param dsDivisionUKey
+     * @param birthDistrictId
      * @return the list of death records
      */
-    public List<DeathRegister> performDeathCertificateSearch(CertificateSearch cs, User user);
+    public List<DeathRegister> performDeathCertificateSearch(CertificateSearch cs, User user, int dsDivisionUKey, int birthDistrictId);
 }

@@ -298,6 +298,14 @@ public interface BirthDeclarationDAO {
     public List<BirthDeclaration> getByDSDivision(DSDivision dsDivision);
 
     /**
+     * Returns a limited set of BirthDeclarations for a given district
+     *
+     * @param district
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getByDistrict(District district);
+
+    /**
      * @param PINorNIC PIN or NIC number of child
      * @return BirthDeclaration or null if none exist
      */
