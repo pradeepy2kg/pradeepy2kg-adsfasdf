@@ -344,6 +344,13 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         return q.getResultList();
     }
 
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getByDistrict(District district) {
+        Query q = em.createNamedQuery("get.by.district");
+        q.setParameter("district", district);
+        return q.getResultList();
+    }
+
     public BirthDeclaration getByPINorNIC(long PINorNIC) {
         Query q = em.createNamedQuery("get.by.NicOrPin");
         q.setParameter("PINorNIC", PINorNIC);

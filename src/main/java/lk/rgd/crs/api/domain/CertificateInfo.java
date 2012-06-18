@@ -57,7 +57,7 @@ public class CertificateInfo implements Serializable {
     /**
      * This is the stamps supplied in payment of charges for the certificate search
      */
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Float stampCharges;
 
     /**
