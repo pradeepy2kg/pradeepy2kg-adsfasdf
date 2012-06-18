@@ -1720,7 +1720,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         if (father == null && parent.getFatherFullName() != null) {
             father = new Person();
             father.setFullNameInOfficialLanguage(parent.getFatherFullName());
-            father.setFullNameInEnglishLanguage(parent.getMotherFullNameInEnglish());
+            father.setFullNameInEnglishLanguage(parent.getFatherFullNameInEnglish());
             father.setDateOfBirth(parent.getFatherDOB());
             father.setGender(AppConstants.Gender.MALE.ordinal());
             father.setPreferredLanguage(prefLanguage);
