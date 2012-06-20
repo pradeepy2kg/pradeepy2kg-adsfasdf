@@ -27,185 +27,207 @@
 <div class="birth-certificate-search-form-outer" id="birth-certificate-search-form-outer">
 <script>
 
-    $(function() {
-        $("#datePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+$(function() {
+    $("#datePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
     });
-    $(function() {
-        $("#dateOdEvent").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+});
+$(function() {
+    $("#dateOdEvent").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
     });
-    $(function() {
-        $("#dateOfSubmission").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+});
+$(function() {
+    $("#dateOfSubmission").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
     });
+});
 
-    $(function() {
+$(function() {
+    var id = $("select#districtId").attr("value");
+
+    if (id == 0) {
+        $('select#dsDivisionId').attr('disabled', 'disabled');
+    }
+    $('select#districtId').bind('change', function(evt1) {
         var id = $("select#districtId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:16},
+                function(data) {
+                    var options1 = '';
+                    options1 = '<option value="0">' + $('#select').val() + '</option>';
+                    if (id > 0) {
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                    }
+                    $("select#dsDivisionId").html(options1);
 
+                });
         if (id == 0) {
             $('select#dsDivisionId').attr('disabled', 'disabled');
+        } else {
+            $('select#dsDivisionId').removeAttr('disabled');
         }
-        $('select#districtId').bind('change', function(evt1) {
-            var id = $("select#districtId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:16},
-                    function(data) {
-                        var options1 = '';
-                        options1 = '<option value="0">'+ $('#select').val()+'</option>';
-                        if (id > 0) {
-                            var ds = data.dsDivisionList;
-                            for (var i = 0; i < ds.length; i++) {
-                                options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                            }
-                        }
-                        $("select#dsDivisionId").html(options1);
-
-                    });
-            if (id == 0) {
-                $('select#dsDivisionId').attr('disabled', 'disabled');
-            } else {
-                $('select#dsDivisionId').removeAttr('disabled');
-            }
-        });
-
-
-        $('img#personName').bind('click', function(evt4) {
-            var text = $("textarea#searchFullNameOfficialLang").attr("value");
-
-            $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
-                    function(data) {
-                        if (data != null) {
-                            var s = data.translated;
-                            $("textarea#searchFullNameEnglish").val(s);
-                        }
-                    });
-        });
-
-        $('#noOfCopies').bind('change', function(evt4) {
-            var stampCharge = '<s:property value="@lk.rgd.crs.web.WebConstants@STAMP_CHARGES"/>';
-            var noOfCopies = $('#noOfCopies').attr("value");
-            $('#stampCharges').val(stampCharge * noOfCopies);
-        });
-
     });
 
-    var errormsg = "";
 
-    function validate() {
-        var domObject;
-        var returnval = true;
+    $('img#personName').bind('click', function(evt4) {
+        var text = $("textarea#searchFullNameOfficialLang").attr("value");
 
-        commonTags();
+        $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("textarea#searchFullNameEnglish").val(s);
+                    }
+                });
+    });
 
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        errormsg = "";
-        return returnval;
+    $('#noOfCopies').bind('change', function(evt4) {
+        var stampCharge = '<s:property value="@lk.rgd.crs.web.WebConstants@STAMP_CHARGES"/>';
+        var noOfCopies = $('#noOfCopies').attr("value");
+        $('#stampCharges').val(stampCharge * noOfCopies);
+    });
+
+});
+
+var errormsg = "";
+
+function validate() {
+    var domObject;
+    var returnval = true;
+
+    commonTags();
+
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
+    }
+    errormsg = "";
+    return returnval;
+}
+
+function commonTags() {
+    var domObject;
+
+    // validate application number field
+    domObject = document.getElementById('applicationNo');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, '', 'error3');
+
+    // validate submitted date
+    domObject = document.getElementById('dateOfSubmission');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, '', 'error2');
+    else
+        isDate(domObject.value, 'error1', 'error4');
+
+    // validate applicant data
+    domObject = document.getElementById('applicantFullName');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, '', 'error5')
+
+    domObject = document.getElementById('applicantAddress');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, '', 'error6');
+
+    domObject = document.getElementById('searchFullNameOfficialLang');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, '', 'error12');
+
+    // validate number of copies needed
+    domObject = document.getElementById('noOfCopies');
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, '', 'error11');
+    } else {
+        isNumeric(domObject.value, 'error1', 'error9');
     }
 
-    function commonTags() {
-        var domObject;
+    // validate stamp charges field
+    domObject = document.getElementById('stampCharges');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, '', 'error7');
+    else
+        validateNumber(domObject.value, 'error1', 'error8');
+}
 
-        // validate application number field
-        domObject = document.getElementById('applicationNo');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, '', 'error3');
+function initPage() {
+}
 
-        // validate submitted date
-        domObject = document.getElementById('dateOfSubmission');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, '', 'error2');
-        else
-            isDate(domObject.value, 'error1', 'error4');
+function validateMandatory() {
+    var domObject;
+    var returnval = true;
 
-        // validate applicant data
-        domObject = document.getElementById('applicantFullName');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, '', 'error5')
+    mandatoryFields();
 
-        domObject = document.getElementById('applicantAddress');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, '', 'error6');
-
-        domObject = document.getElementById('searchFullNameOfficialLang');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, '', 'error12');
-
-        // validate number of copies needed
-        domObject = document.getElementById('noOfCopies');
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, '', 'error11');
-        } else {
-            isNumeric(domObject.value, 'error1', 'error9');
-        }
-
-        // validate stamp charges field
-        domObject = document.getElementById('stampCharges');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, '', 'error7');
-        else
-            validateNumber(domObject.value, 'error1', 'error8');
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
     }
+    errormsg = "";
+    return returnval;
+}
 
-    function initPage() {
-    }
+function mandatoryFields() {
+    var domObject;
 
-    function validateMandatory() {
-        var domObject;
-        var returnval = true;
+    // validate application number field
+    domObject = document.getElementById('applicationNo');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, '', 'error3');
 
-        mandatoryFields();
+    // validate submitted date
+    domObject = document.getElementById('dateOfSubmission');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, '', 'error2');
+    else
+        isDate(domObject.value, 'error1', 'error4');
 
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        errormsg = "";
-        return returnval;
-    }
+    // validate applicant data
+    domObject = document.getElementById('applicantFullName');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, '', 'error5')
 
-    function mandatoryFields() {
-        var domObject;
+    domObject = document.getElementById('applicantAddress');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, '', 'error6');
 
-        // validate application number field
-        domObject = document.getElementById('applicationNo');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, '', 'error3');
+    if (isFieldEmpty(document.getElementById('certificateNo')) && isFieldEmpty(document.getElementById('searchPIN')))
+        isEmpty(document.getElementById('certificateNo'), '', 'error16')
 
-        // validate submitted date
-        domObject = document.getElementById('dateOfSubmission');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, '', 'error2');
-        else
-            isDate(domObject.value, 'error1', 'error4');
+}
 
-        // validate applicant data
-        domObject = document.getElementById('applicantFullName');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, '', 'error5')
+function numbersonly(e, decimal) {
+    var key;
+    var keychar;
 
-        domObject = document.getElementById('applicantAddress');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, '', 'error6');
+    if (window.event)
+        key = window.event.keyCode;
+    else if (e)
+        key = e.which;
+    else
+        return true;
 
-        if (isFieldEmpty(document.getElementById('certificateNo')) && isFieldEmpty(document.getElementById('searchPIN')))
-            isEmpty(document.getElementById('certificateNo'), '', 'error16')
-
-    }
+    keychar = String.fromCharCode(key);
+    if ((key == null) || (key == 0) || (key == 8) || (key == 9) || (key == 13) || (key == 27))
+        return true;
+    else if ((("0123456789").indexOf(keychar) > -1))
+        return true;
+    else if (decimal && (keychar == "."))
+        return true;
+    else
+        return false;
+}
 </script>
 <s:if test="certificateType.ordinal() == 0">
     <s:url id="certificateSearch" value="eprBirthCertificateSearch.do"/>
@@ -360,7 +382,8 @@
                 cssStyle="width:190px; margin-left:5px;"/></td>
         <td><label>අවශ‍ය පිටපත් ගණන<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>தேவையான பிரதிகளின்
             எண்ணிக்கை<br>No. of Copies required</label></td>
-        <td><s:textfield name="certSearch.certificate.noOfCopies" id="noOfCopies" maxLength="2"/></td>
+        <td><s:textfield name="certSearch.certificate.noOfCopies" id="noOfCopies" maxLength="2"
+                         onKeyPress="return numbersonly(event,true)"/></td>
     </tr>
     <tr>
         <td class="font-9" rowspan="2"><label>(3) රෙජිසිට්‍රර්ගේ කොට්ඨාශය
@@ -394,7 +417,7 @@
             முத்திரைகளின் பெறுமதி <br>Value of stamps affixed</label>
         </td>
         <td colspan="6"><s:textfield name="certSearch.certificate.stampCharges" id="stampCharges"
-                                     maxLength="5"/></td>
+                                     maxLength="5" onKeyPress="return numbersonly(event,true)"/></td>
     </tr>
     </tbody>
 </table>
@@ -416,13 +439,15 @@
                 <label> මරණ සහතිකයේ අංකය<br>இறப்புச் சான்றிதழின் இலக்கம் <br>Death Certificate Number</label>
             </s:elseif>
         </td>
-        <td><s:textfield name="certSearch.search.certificateNo" id="certificateNo"/></td>
+        <td><s:textfield name="certSearch.search.certificateNo" id="certificateNo"
+                         onKeyPress="return numbersonly(event,true)"/></td>
     </tr>
     <tr>
         <td class="font-9"><label>
             අනන්‍යතා අංකය <br>அடையாள எண் <br>Identification Number</label>
         </td>
-        <td colspan="3"><s:textfield name="certSearch.search.searchPIN" maxLength="12" id="searchPIN"/></td>
+        <td colspan="3"><s:textfield name="certSearch.search.searchPIN" maxLength="12" id="searchPIN"
+                                     onKeyPress="return numbersonly(event,true)"/></td>
     </tr>
 </table>
 <div class="form-submit">

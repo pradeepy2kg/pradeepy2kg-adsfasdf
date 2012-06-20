@@ -109,9 +109,15 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
                 addMatchingBirth(results, exactRecord, search);
             }
 
-            //add exact match using DSDivision
-            if (search.getCertificateNo() == null && search.getSearchPIN() == null) {
-                if (results.size() == 0 && exactRecord == null) {
+            if (search.getCertificateNo() == null && search.getSearchPIN() == null && exactRecord == null) {
+
+                // add any matches from Solr search, except for the exact match
+                for (BirthDeclaration bdf : birthRecordsIndexer.searchBirthRecords(cs)) {
+                    results.add(bdf);
+                }
+
+                //add exact match using DSDivision
+                if (results.size() == 0) {
                     if (dsDivisionUKey != 0) {
                         logger.debug("Search narrowed against DSDivision");
                         for (BirthDeclaration bdf : birthDeclarationDAO.getByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionUKey))) {
@@ -126,15 +132,6 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
                     } else if (birthDistrictId == 0) {
                         logger.debug("Search narrowed against DSDivision - for all Districts");
                         for (BirthDeclaration bdf : birthDeclarationDAO.findAll()) {
-                            results.add(bdf);
-                        }
-                    }
-                }
-
-                // add any matches from Solr search, except for the exact match
-                if (results.size() == 0) {
-                    for (BirthDeclaration bdf : birthRecordsIndexer.searchBirthRecords(cs)) {
-                        if (exactRecord == null || exactRecord.getIdUKey() != bdf.getIdUKey()) {
                             results.add(bdf);
                         }
                     }
