@@ -180,7 +180,7 @@
 </s:else>
 <div style="width:65%;float:left;margin-top:5px;" id="locationSignId">
     <s:form action="%{print}" method="post">
-    <s:if test="register.status.ordinal() == 8 || #request.certificateSearch">
+    <s:if test="register.status.ordinal() == 8 || register.status.ordinal() == 9 || #request.certificateSearch">
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
             <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
             <table>
