@@ -496,6 +496,8 @@
         <constructor-arg ref="ecivilService"/>
         <constructor-arg ref="raceDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="userLocationDAOImpl"/>
+        <constructor-arg ref="commonUtil"/>
     </bean>
 
     <bean id="personApprovalAction" class="lk.rgd.prs.web.action.PersonApprovalAction">
