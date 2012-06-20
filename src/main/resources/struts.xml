@@ -756,7 +756,7 @@
 
         <action name="eprChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction"
                 method="changePassword">
-            <result name="success" type="tiles">epr.passwordChange</result>
+            <result name="success" type="tiles">epr.success</result>
             <result name="error" type="tiles">epr.passwordChange</result>
             <param name="fromLogin">${fromLogin}</param>
             <result name="expired">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
