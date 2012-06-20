@@ -12,7 +12,9 @@
         .form-submit {
             display: none;
         }
-
+        #locationSignId {
+            display: none;
+        }
         td {
             font-size: 10pt;
         }

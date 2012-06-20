@@ -147,7 +147,7 @@ public class BarCodeImageServlet extends HttpServlet {
                         buffer.append("|");
                         if (WebConstants.PRS_CERTIFICATE.equals(certificateType)) {
                             if (person.getDateOfRegistration() != null) {
-                                buffer.append(birthDeclaration.getRegister().getDateOfRegistration());      // Date of Registration PRS
+                                buffer.append(person.getDateOfRegistration());                          // Date of Registration PRS
                             } else {
                                 buffer.append(" - ");
                             }
