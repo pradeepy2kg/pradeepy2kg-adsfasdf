@@ -4,11 +4,14 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
+import lk.rgd.common.api.dao.UserLocationDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.CivilStatusUtil;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.LifeStatusUtil;
+import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.util.CommonUtil;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
@@ -27,6 +30,8 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private final PopulationRegistry service;
     private final RaceDAO raceDAO;
     private final CountryDAO countryDAO;
+    private final UserLocationDAO userLocationDAO;
+    private final CommonUtil commonUtil;
 
     private Map session;
     private User user;
@@ -47,6 +52,8 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private Set<Address> address;
     private String approvedUserSign;
     private String issueLocation;
+    private Map<Integer, String> locationList;
+    private Map<String, String> userList;
 
 
     private Person person;
@@ -54,10 +61,12 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private List<Person> children;
     private List<Person> siblings;
 
-    public PersonDetailsAction(PopulationRegistry service, RaceDAO raceDAO, CountryDAO countryDAO) {
+    public PersonDetailsAction(PopulationRegistry service, RaceDAO raceDAO, CountryDAO countryDAO, CommonUtil commonUtil, UserLocationDAO userLocationDAO) {
         this.service = service;
         this.raceDAO = raceDAO;
         this.countryDAO = countryDAO;
+        this.commonUtil = commonUtil;
+        this.userLocationDAO = userLocationDAO;
     }
 
     public String personDetails() {
@@ -148,13 +157,22 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
                 }
             }
         }
-        User approvalUser = person.getLifeCycleInfo().getApprovalOrRejectUser();
-        if(approvalUser != null){
-            logger.debug("Approval user {}", approvalUser.getUserId());
-            String prefLang = person.getPreferredLanguage();
-            approvedUserSign = approvalUser.getUserSignature(prefLang);
-            issueLocation = person.getSubmittedLocation().getLocationSignature(prefLang);
-            logger.debug("Approved by {} in location {}", approvedUserSign, issueLocation);
+        locationList = commonUtil.populateActiveUserLocations(user, user.getPrefLanguage());
+        if (!locationList.isEmpty()) {
+            userList = new HashMap<String, String>();
+            int selectedLocationId = locationList.keySet().iterator().next();
+            for (User u : userLocationDAO.getBirthCertSignUsersByLocationId(selectedLocationId, true)) {
+                userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
+            }
+            // TODO Use PRS related permissions (Having Birth permission at present)
+            User approvalUser = userLocationDAO.getBirthCertSignUsersByLocationId(selectedLocationId, true).iterator().next();
+            if (approvalUser != null) {
+                logger.debug("Approval user {}", approvalUser.getUserId());
+                String prefLang = person.getPreferredLanguage();
+                approvedUserSign = approvalUser.getUserSignature(prefLang);
+                issueLocation = userLocationDAO.getUserLocation(approvalUser.getUserId(), selectedLocationId).getLocation().getLocationSignature(prefLang);
+                logger.debug("Approved by {} in location {}", approvedUserSign, issueLocation);
+            }
         }
         return SUCCESS;
     }
@@ -323,5 +341,21 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
     public void setIssueLocation(String issueLocation) {
         this.issueLocation = issueLocation;
+    }
+
+    public Map<Integer, String> getLocationList() {
+        return locationList;
+    }
+
+    public void setLocationList(Map<Integer, String> locationList) {
+        this.locationList = locationList;
+    }
+
+    public Map<String, String> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(Map<String, String> userList) {
+        this.userList = userList;
     }
 }

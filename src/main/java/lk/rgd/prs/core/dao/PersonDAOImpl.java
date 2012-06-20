@@ -218,4 +218,15 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
         q.setParameter("tempPin", tempPin);
         return q.getResultList();
     }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public Person getPersonByPIN(long pin, User user) {
+        Query q = em.createNamedQuery("getPersonByPIN");
+        q.setParameter("pin", pin);
+        try{
+            return (Person)q.getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }
+    }
 }

@@ -1033,6 +1033,16 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         return grandFather;
     }
 
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public Person getPersonByPIN(long pin, User user) {
+        logger.debug("Find person of pin : {} by user : {}", pin, user.getUserId());
+        return personDao.getPersonByPIN(pin, user);
+    }
+
     /**
      * Checks whether the given state is in data entry level, that is not approved yet
      *
