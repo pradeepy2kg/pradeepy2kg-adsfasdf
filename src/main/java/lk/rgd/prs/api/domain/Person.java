@@ -32,7 +32,11 @@ import java.util.Set;
     @NamedQuery(name = "get.by.location.and.nic", query = "SELECT p FROM Person p WHERE p.submittedLocation = :location " +
         "AND p.nic = :nic AND p.status <= 2 AND p.lifeCycleInfo.activeRecord IS TRUE ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC "),
     @NamedQuery(name = "get.by.location.and.tempPin", query = "SELECT p FROM Person p WHERE p.submittedLocation = :location " +
-        "AND p.temporaryPin = :tempPin AND p.status <= 2 AND p.lifeCycleInfo.activeRecord IS TRUE ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC ")
+        "AND p.temporaryPin = :tempPin AND p.status <= 2 AND p.lifeCycleInfo.activeRecord IS TRUE ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC "),
+    @NamedQuery(
+        name = "getPersonByPIN",
+        query = "SELECT p FROM Person p WHERE  p.pin = :pin AND p.lifeCycleInfo.activeRecord IS TRUE ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC "
+    )
 })
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Person implements Serializable {

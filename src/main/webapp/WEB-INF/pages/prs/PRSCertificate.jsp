@@ -23,6 +23,59 @@
     }
 </style>
 <script type="text/javascript">
+    $(function () {
+        $('select#locationId').bind('change', function (evt1) {
+            var id = $("select#locationId").attr('value');
+            var options = '';
+            if (id > 0) {
+                $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id, mode:1, certificateId:0},
+                        function (data) {
+                            var users = data.authorizedUsers;
+                            for (var i = 0; i < users.length; i++) {
+                                options += '<option value="' + users[i].optionValue + '">' + users[i].optionDisplay + '</option>';
+                            }
+                            $("select#issueUserId").html(options);
+
+                            var id = $('select#locationId').attr('value');
+                            var user = $('select#issueUserId').attr('value');
+                            var certId = $('label#certificateId').text();
+                            $("text#user").html(user);
+                            $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id, mode:10, userId:user, certificateId:certId},
+                                    function (data) {
+                                        var officerSign = data.officerSignature;
+                                        var locationSign = data.locationSignature;
+                                        var location = data.locationName;
+                                        var locationAddress = data.locationAddress;
+                                        $("textarea#signature").html(officerSign);
+                                        $("textarea#placeSign").html(locationSign);
+                                        $("label#placeName").html(location);
+                                        $("textarea#retAddress").html(locationAddress);
+                                    });
+                        });
+
+            } else {
+                $("select#issueUserId").html(options);
+            }
+        });
+
+        $('select#issueUserId').bind('change', function (evt2) {
+            var id = $('select#locationId').attr('value');
+            var user = $('select#issueUserId').attr('value');
+            var certId = $('label#certificateId').text();
+            $("text#user").html(user);
+            $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id, mode:10, userId:user, certificateId:certId},
+                    function (data) {
+                        var officerSign = data.officerSignature;
+                        var locationSign = data.locationSignature;
+                        var location = data.locationName;
+                        var locationAddress = data.locationAddress;
+                        $("textarea#signature").html(officerSign);
+                        $("textarea#placeSign").html(locationSign);
+                        $("label#placeName").html(location);
+                        $("textarea#retAddress").html(locationAddress);
+                    });
+        });
+    });
     function initPage() {
     }
 </script>
@@ -74,6 +127,28 @@
 
 <br/>
 
+<div style="width:65%;float:left;margin-top:5px;" id="locationSignId">
+    <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
+        <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
+        <table>
+            <tr>
+                <td>
+                    <s:label value="%{getText('placeOfIssue.label')}"/>
+                </td>
+                <td>
+                    <s:select id="locationId" name="locationId" list="locationList" cssStyle="width:300px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td><s:label value="%{getText('signOfficer.label')}"/></td>
+                <td>
+                    <s:select id="issueUserId" name="issueUserId" list="userList" cssStyle="width:300px;"/>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+
 <table style="width:99%; border:none;border-collapse:collapse;margin-top:20px;">
     <col width="300px">
     <col width="430px">
@@ -81,7 +156,8 @@
     <tbody>
     <tr>
         <td>
-            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personUKey=${person.personUKey}&certificateType=prs" width="100"
+            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personUKey=${person.personUKey}&certificateType=prs"
+                 width="100"
                  height="100"/>
         </td>
         <td rowspan="2" align="center">
@@ -94,7 +170,7 @@
                     <td width="140px;">
                         සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number
                     </td>
-                    <td width="150px" style="font-size:11pt"><s:label name="personUKey"/></td>
+                    <td width="150px" style="font-size:11pt"><s:label id="certificateId" name="personUKey"/></td>
                 </tr>
             </table>
         </td>
@@ -233,7 +309,8 @@
     </tr>
     <tr>
         <td colspan="4" height="40px">
-            වර්තමාන පදිංචිය වෙනත් ස්ථානයක නම් පමණක්, தற்போதைய முகவரி வேறு இடமாயின் மட்டும், Only if residing at a different location,
+            වර්තමාන පදිංචිය වෙනත් ස්ථානයක නම් පමණක්, தற்போதைய முகவரி வேறு இடமாயின் மட்டும், Only if residing at a
+            different location,
         </td>
     </tr>
     <tr>
@@ -354,10 +431,10 @@
 </table>
 
 <p style="font-size:9pt">
-    <%--උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
-    ලදි,<br>
-    பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின் (110 வது அதிகாரத்தின் ) கீழ் பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது<br>
-    Issued by Registrar General's Department according to Birth and Death Registration Act (Chapter 110)--%>
+        <%--උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
+ලදි,<br>
+பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின் (110 வது அதிகாரத்தின் ) கீழ் பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது<br>
+Issued by Registrar General's Department according to Birth and Death Registration Act (Chapter 110)--%>
 </p>
 
 <div class="form-submit" style="margin:5px 0 0 0;">

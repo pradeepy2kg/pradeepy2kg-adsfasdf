@@ -322,4 +322,13 @@ public interface PopulationRegistry {
      * @return list of persons
      */
     public List<Person> findGrandFather(Person person, User user);
+
+    /**
+     * Find a person by PIN.
+     *
+     * @param pin
+     * @param user
+     * @return
+     */
+    public Person getPersonByPIN(long pin, User user);
 }

@@ -190,4 +190,12 @@ public interface PersonDAO {
      */
     public List<Person> getByLocationAndTempPIN(Location location, long tempPin);
 
+    /**
+     * Find a person by PIN.
+     *
+     * @param pin
+     * @param user
+     * @return
+     */
+    public Person getPersonByPIN(long pin, User user);
 }
