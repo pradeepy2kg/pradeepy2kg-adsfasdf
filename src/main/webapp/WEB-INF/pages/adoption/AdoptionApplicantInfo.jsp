@@ -8,10 +8,12 @@
     $(function() {
         $('img#adoption_applicant_lookup').bind('click', function(evt3) {
             var id1 = $("input#certifcateApplicantPin").attr("value");
+
+            $("textarea#certificateApplicantName").val('');
+            $("textarea#certificateApplicantAddress").val('');
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#certificateApplicantName").val(data1.fullNameInOfficialLanguage);
-                        //$("textarea#deathPersonNameInEnglish").val(data1.fullNameInOfficialLanguage);
                         $("textarea#certificateApplicantAddress").val(data1.lastAddress);
                     });
         });

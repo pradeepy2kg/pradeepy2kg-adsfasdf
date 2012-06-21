@@ -2,6 +2,14 @@
 //TODO: calculate age at person lookup
 function personLookup(pin, type) {
     var id1 = $("input#" + pin).attr("value");
+
+// Clear data before lookup
+    $("textarea#nameOfficial" + type).val('');
+    $("textarea#name_english_" + type).val('');
+    $("textarea#address" + type).val('');
+    $("input#dateOfBirth" + type).val('');
+    $("input#age" + type).val('');
+    $("select#race" + type).val('');
     $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
             function(data1) {
                 $("textarea#nameOfficial" + type).val(data1.fullNameInOfficialLanguage);
@@ -78,6 +86,14 @@ function calAgeAtLastBirthday(personDOB) {
 
 function malePersonLookUp(pin) {
     var id1 = $("input#" + pin).attr("value");
+
+// Clear data before lookup
+    $("textarea#name_official_male").val('');
+    $("textarea#name_english_male").val('');
+    $("textarea#address_male_official").val('');
+    $("input#date_of_birth_male").val('');
+    $("input#age_at_last_bd_male").val('');
+    $("select#raceMaleId").val('');
     $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
             function(data1) {
                 $("textarea#name_official_male").val(data1.fullNameInOfficialLanguage);
@@ -96,6 +112,14 @@ function malePersonLookUp(pin) {
 
 function femalePersonLookUp(pin) {
     var id1 = $("input#" + pin).attr("value");
+
+// Clear data before lookup
+    $("textarea#name_official_female").val('');
+    $("textarea#name_english_female").val('');
+    $("textarea#address_female_official").val('');
+    $("input#date_of_birth_female").val('');
+    $("input#age_at_last_bd_female").val('');
+    $("select#raceFemaleId").val('');
     $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
             function(data1) {
                 $("textarea#name_official_female").val(data1.fullNameInOfficialLanguage);
@@ -113,6 +137,10 @@ function femalePersonLookUp(pin) {
 
 function malePartyFather(pin) {
     var id1 = $("input#" + pin).attr("value");
+
+// Clear data before lookup
+    $("textarea#father_full_name_male_official").val('');
+    $("textarea#father_full_name_male_english").val('');
     $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
             function(data1) {
                 $("textarea#father_full_name_male_official").val(data1.fullNameInOfficialLanguage);
@@ -122,6 +150,10 @@ function malePartyFather(pin) {
 
 function femalePartyFather(pin) {
     var id1 = $("input#" + pin).attr("value");
+
+// Clear data before lookup
+    $("textarea#father_full_name_female_official").val('');
+    $("textarea#father_full_name_female_english").val('');
     $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
             function(data1) {
                 $("textarea#father_full_name_female_official").val(data1.fullNameInOfficialLanguage);

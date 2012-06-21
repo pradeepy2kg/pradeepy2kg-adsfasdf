@@ -34,6 +34,9 @@
     $(function() {
         $('img#notifier_lookup').bind('click', function(evt1) {
             var id1 = $("input#notifyingAuthorityPIN").attr("value");
+
+            $("textarea#notifyingAuthorityName").val('');
+            $("textarea#notifyingAuthorityAddress").val('');
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         if (data1 != null) {
