@@ -9,6 +9,7 @@
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/timePicker.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/agecalculator.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <s:if test="pageType == 0">
@@ -156,7 +157,6 @@ $(function () {
         var id1 = $("input#deathPerson_PINorNIC").attr("value");
         var datePicker = $('#deathPersonDOB');
         var error = "error message for invalid date of birth";
-        datePicker.datepicker('setDate', calculateBirthDay(id1, error));
 
         $("textarea#deathPersonNameOfficialLang").val('');
         $("textarea#deathPersonNameInEnglish").val('');
@@ -168,6 +168,7 @@ $(function () {
         $("textarea#deathPersonFatherFullName").val('');
         $("input#deathPersonMother_PINorNIC").val('');
         $("textarea#deathPersonMotherFullName").val('');
+        datePicker.datepicker('setDate', calculateBirthDay(id1, error));
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function (data1) {
                     if (data1 != null) {
@@ -412,50 +413,7 @@ function personAgeDeath() {
     }
     var person_bd = new Date(document.getElementById('deathPersonDOB').value);
     var date_of_death = new Date(document.getElementById('deathDatePicker').value);
-
-    var birthYear = person_bd.getYear();
-    var birthMonth = person_bd.getMonth();
-    var birthDay = person_bd.getDate();
-
-    var deathYear = date_of_death.getYear();
-    var deathMonth = date_of_death.getMonth();
-    var deathDay = date_of_death.getDate();
-
-    var ageYears = 0;
-    var ageMonths = 0;
-    var ageDays = 0;
-
-    if(date_of_death > person_bd){
-        if(deathYear >= birthYear){
-            ageYears = (deathYear - birthYear);
-            if(deathMonth > birthMonth){
-                ageMonths = (deathMonth - birthMonth);
-                if(deathDay >= birthDay){
-                    ageDays = (deathDay - birthDay);
-                }else if(deathDay < birthDay){
-                    ageMonths = (ageMonths - 1);
-                    ageDays = ((30 - birthDay) + deathDay);
-                }
-            }else if(deathMonth < birthMonth){
-                ageYears = (ageYears > 0)?(ageYears - 1):0;
-                ageMonths = ((12 - birthMonth) + deathMonth);
-                if(deathDay >= birthDay){
-                    ageDays = (deathDay - birthDay);
-                }else if(deathDay < birthDay){
-                    ageMonths = (ageMonths - 1);
-                    ageDays = ((30 - birthDay) + deathDay);
-                }
-            }else if(deathMonth == birthMonth){
-                ageMonths = 0;
-                if(deathDay >= birthDay){
-                    ageDays = (deathDay - birthDay);
-                }else if(deathDay < birthDay){
-                    ageYears = (ageYears > 0)?(ageYears - 1):0;
-                    ageDays = ((30 - birthDay) + deathDay);
-                }
-            }
-        }
-    }
+    var age = calculateAge(person_bd, date_of_death);
 
     if (!(dateOfBirthSubmitted && dateOfDeathSubmitted)) {
         if (isFieldEmpty(document.getElementById("deathPersonAge"))) {
@@ -463,10 +421,9 @@ function personAgeDeath() {
         }
     }
     else {
-//        document.getElementById("deathPersonAge").value = death_person_age;
-        $('#deathPersonAge').val(ageYears);
-        $('#deathPersonAgeMonth').val(ageMonths);
-        $('#deathPersonAgeDate').val(ageDays);
+        $('#deathPersonAge').val(age[0]);
+        $('#deathPersonAgeMonth').val(age[1]);
+        $('#deathPersonAgeDate').val(age[2]);
     }
 
 }

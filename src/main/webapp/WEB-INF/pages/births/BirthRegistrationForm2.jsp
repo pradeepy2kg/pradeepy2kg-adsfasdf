@@ -20,6 +20,7 @@
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/agecalculator.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <s:hidden id="p2error1" value="%{getText('p2.fatherName.error.value')}"/>
@@ -60,23 +61,10 @@ $(function() {
         startDate:'2000-01-01',
         endDate:'2020-12-31',
         onSelect: function(dateText, inst) {
-            var child_bday = new Date(document.getElementById('childDateOfBirth').value);
-            var mother_bday = document.getElementById('motherDatePicker').value;
-            if (mother_bday != "") {
-                var motherbday = new Date(mother_bday);
-                var mother_age = child_bday.getYear() - motherbday.getYear();
-                $("input#motherAgeAtBirth").val(mother_age);
-            }
+            motherAgeBirth();
         },
         defaultDate:-365 * 18
     });
-    var child_bday = new Date(document.getElementById('childDateOfBirth').value);
-    var mother_bday = document.getElementById('motherDatePicker').value;
-    if (mother_bday != "") {
-        var motherbday = new Date(mother_bday);
-        var mother_age = child_bday.getYear() - motherbday.getYear();
-        $("input#motherAgeAtBirth").val(mother_age);
-    }
 
     /*trans iterators for father and mothers name*/
     $('img#name_english_father').bind('click', function(evt4) {
@@ -120,13 +108,13 @@ $(function() {
         var id1 = $("input#father_pinOrNic").attr("value");
         var datePicker = $('#fatherDatePicker');
         var error = document.getElementById('error10').value;
-        datePicker.datepicker('setDate', calculateBirthDay(id1, error));
 
         $("textarea#fatherFullName").val('');
         $("textarea#fatherFullNameInEnglish").val('');
         $("input#fatherPlaceOfBirth").val('');
         $("select#fatherRaceId").val('');
         $("input#fatherDatePicker").val('');
+        datePicker.datepicker('setDate', calculateBirthDay(id1, error));
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
                     if (data1 != null) {
@@ -146,7 +134,6 @@ $(function() {
         var id2 = $("input#mother_pinOrNic").attr("value");
         var datePicker = $('#motherDatePicker');
         var error = document.getElementById('error11').value;
-        datePicker.datepicker('setDate', calculateBirthDay(id2, error));
 
         $("textarea#motherFullName").val('');
         $("textarea#motherFullNameInEnglish").val('');
@@ -154,6 +141,7 @@ $(function() {
         $("textarea#motherAddress").val('');
         $("select#motherRaceId").val('');
         $("input#motherDatePicker").val('');
+        datePicker.datepicker('setDate', calculateBirthDay(id2, error));
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
                     if (data2 != null) {
@@ -168,17 +156,18 @@ $(function() {
                         }
                     }
                 });
+        motherAgeBirth();
     });
 
-    $('#mother_lookup').click(function() {
-        var child_bday = new Date(document.getElementById('childDateOfBirth').value);
-        var mother_bday = document.getElementById('motherDatePicker').value;
-        if (mother_bday != "") {
-            var motherbday = new Date(mother_bday);
-            var mother_age = child_bday.getYear() - motherbday.getYear();
-            $("input#motherAgeAtBirth").val(mother_age);
-        }
-    });
+//    $('#mother_lookup').click(function() {
+//        var child_bday = new Date(document.getElementById('childDateOfBirth').value);
+//        var mother_bday = document.getElementById('motherDatePicker').value;
+//        if (mother_bday != "") {
+//            var motherbday = new Date(mother_bday);
+//            var mother_age = child_bday.getYear() - motherbday.getYear();
+//            $("input#motherAgeAtBirth").val(mother_age);
+//        }
+//    });
 
     $('select#motherDistrictId').bind('change', function(evt3) {
         var id = $("select#motherDistrictId").attr("value");
@@ -317,9 +306,9 @@ function checkFatherAge(domElement, errorText, errorCode) {
 function motherAgeBirth() {
     var child_bday = new Date(document.getElementById('childDateOfBirth').value);
     var mother_bday = new Date(document.getElementById('motherDatePicker').value);
-    var mother_age = child_bday.getYear() - mother_bday.getYear();
-    document.getElementById("motherAgeAtBirth").value = mother_age;
-    if (mother_age <= 0 || isNaN(mother_bday)) {
+    var mother_age = calculateAge(mother_bday, child_bday);
+    document.getElementById("motherAgeAtBirth").value = mother_age[0];
+    if (mother_age[0] <= 0 || isNaN(mother_bday)) {
         document.getElementById("motherAgeAtBirth").value = 0;
     }
 }

@@ -153,7 +153,7 @@ public class BarCodeImageServlet extends HttpServlet {
                             }
                         } else if (WebConstants.BIRTH_CERTIFICATE.equals(certificateType)) {
                             if (birthDeclaration.getRegister().getDateOfRegistration() != null) {
-                                buffer.append(birthDeclaration.getRegister().getDateOfRegistration());      // Date of Registration Birth
+                                buffer.append(birthDeclaration.getRegister().getDateOfRegistration());  // Date of Registration Birth
                             } else {
                                 buffer.append(" - ");
                             }
@@ -161,10 +161,10 @@ public class BarCodeImageServlet extends HttpServlet {
                             buffer.append(" - ");
                         }
                         buffer.append("|");
-                        buffer.append(DateTimeUtils.getISO8601FormattedString(new Date()));         // Date of Issue
+                        buffer.append(DateTimeUtils.getISO8601FormattedString(new Date()));             // Date of Issue
                         buffer.append("|");
                         String hash = HashUtil.hashString(buffer.toString());
-                        buffer.append(hash);                                                      // TODO Hash
+                        buffer.append(hash);                                                            // TODO Hash
                     } else {
                         logger.debug("Person {} not found.", personId);
                     }
@@ -230,7 +230,7 @@ public class BarCodeImageServlet extends HttpServlet {
                         buffer.append(DateTimeUtils.getISO8601FormattedString(new Date()));             // Date of Issue
                         buffer.append("|");
                         String hash = HashUtil.hashString(buffer.toString());
-                        buffer.append(hash);                                                          // TODO Hash
+                        buffer.append(hash);                                                            // TODO Hash
                     } else {
                         logger.debug("Death {} not found.", personId);
                     }
