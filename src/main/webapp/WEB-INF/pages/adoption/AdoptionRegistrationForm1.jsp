@@ -91,6 +91,9 @@ $(function() {
     $(function() {
         $('img#adoption_applicant_lookup').bind('click', function(evt3) {
             var id1 = $("input#applicantPin").attr("value");
+
+            $("textarea#applicantName").val('');
+            $("textarea#applicantAddress").val('');
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#applicantName").val(data1.fullNameInOfficialLanguage);
@@ -101,6 +104,8 @@ $(function() {
     $(function() {
         $('img#mother_lookup').bind('click', function(evt3) {
             var id1 = $("input#wifePINorNIC").attr("value");
+
+            $("textarea#wifeName").val('');
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#wifeName").val(data1.fullNameInOfficialLanguage);

@@ -122,6 +122,11 @@ $(function() {
         var error = document.getElementById('error10').value;
         datePicker.datepicker('setDate', calculateBirthDay(id1, error));
 
+        $("textarea#fatherFullName").val('');
+        $("textarea#fatherFullNameInEnglish").val('');
+        $("input#fatherPlaceOfBirth").val('');
+        $("select#fatherRaceId").val('');
+        $("input#fatherDatePicker").val('');
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
                     if (data1 != null) {
@@ -143,6 +148,12 @@ $(function() {
         var error = document.getElementById('error11').value;
         datePicker.datepicker('setDate', calculateBirthDay(id2, error));
 
+        $("textarea#motherFullName").val('');
+        $("textarea#motherFullNameInEnglish").val('');
+        $("input#motherPlaceOfBirth").val('');
+        $("textarea#motherAddress").val('');
+        $("select#motherRaceId").val('');
+        $("input#motherDatePicker").val('');
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
                     if (data2 != null) {

@@ -38,6 +38,9 @@ $(function() {
 $(function() {
     $('img#declarant_lookup').bind('click', function(evt1) {
         var id1 = $("input#declarant_pinOrNic").attr("value");
+
+        $("textarea#declarantFullName").val('');
+        $("textarea#declarantAddress").val('');
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
                     if (data1 != null) {
@@ -49,6 +52,9 @@ $(function() {
 
     $('img#first_witness_lookup').bind('click', function(evt2) {
         var id2 = $("input#first_witness_NICorPIN").attr("value");
+
+        $("textarea#firstWitnessFullName").val('');
+        $("textarea#firstWitnessAddress").val('');
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
                     $("textarea#firstWitnessFullName").val(data2.fullNameInOfficialLanguage);
@@ -58,6 +64,9 @@ $(function() {
 
     $('img#second_witness_lookup').bind('click', function(evt3) {
         var id3 = $("input#second_witness_NICorPIN").attr("value");
+
+        $("textarea#secondWitnessFullName").val('');
+        $("textarea#secondWitnessAddress").val('');
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id3},
                 function(data3) {
                     $("textarea#secondWitnessFullName").val(data3.fullNameInOfficialLanguage);
@@ -67,6 +76,9 @@ $(function() {
 
     $('img#notifying_authority_lookup').bind('click', function(evt4) {
         var id4 = $("input#notifying_authority_NICorPIN").attr("value");
+
+        $("textarea#notifyingAuthorityName").val('');
+        $("textarea#notifyingAuthorityAddress").val('');
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id4},
                 function(data4) {
                     if (data4 != null) {

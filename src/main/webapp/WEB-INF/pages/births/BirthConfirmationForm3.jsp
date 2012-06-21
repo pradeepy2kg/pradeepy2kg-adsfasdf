@@ -20,6 +20,8 @@
     $(function() {
         $('img#confirmant_lookup').bind('click', function(evt1) {
             var id1 = $("input#confirmantNICorPIN").attr("value");
+
+            $("textarea#confirmantFullName").val('');
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#confirmantFullName").val(data1.fullNameInOfficialLanguage);

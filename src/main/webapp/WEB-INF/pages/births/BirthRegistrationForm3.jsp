@@ -41,6 +41,9 @@ $(function() {
 $(function() {
     $('img#informant_lookup').bind('click', function(evt1) {
         var id1 = $("input#informantNICorPIN").attr("value");
+
+        $("textarea#informantName").val('');
+        $("textarea#informantAddress").val('');
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
                     if (data1 != null) {
@@ -52,6 +55,9 @@ $(function() {
 
     $('img#grandFather_lookup').bind('click', function(evt2) {
         var id2 = $("input#grandFatherNICorPIN").attr("value");
+
+        $("textarea#grandFatherFullName").val('');
+        $("input#grandFatherBirthPlace").val('');
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
                     if (data2 != null) {
@@ -63,6 +69,9 @@ $(function() {
 
     $('img#greatGrandFather_lookup').bind('click', function(evt3) {
         var id3 = $("input#greatGrandFatherNICorPIN").attr("value");
+
+        $("textarea#greatGrandFatherFullName").val('');
+        $("input#greatGrandFatherBirthPlace").val('');
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id3},
                 function(data3) {
                     if (data3 != null) {

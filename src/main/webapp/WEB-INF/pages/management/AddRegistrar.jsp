@@ -101,6 +101,15 @@
     $(function() {
         $('img#registrar_lookup').bind('click', function(evt1) {
             var id1 = $("input#registrarPin").attr("value");
+
+            $("input#registrarNameInOfficelaLang").val('');
+            $("input#registrarNameInEnglish").val('');
+            $("input#registrarNIC").val('');
+            $("select#registrarGender").val('');
+            $("input#dateOfBirthDatePicker").val('');
+            $("textarea#registrarAddress").val('');
+            $("input#registrarPhone").val('');
+            $("input#registrarEmail").val('');
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("input#registrarNameInOfficelaLang").val(data1.fullNameInOfficialLanguage);

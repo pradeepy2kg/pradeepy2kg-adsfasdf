@@ -158,6 +158,16 @@ $(function () {
         var error = "error message for invalid date of birth";
         datePicker.datepicker('setDate', calculateBirthDay(id1, error));
 
+        $("textarea#deathPersonNameOfficialLang").val('');
+        $("textarea#deathPersonNameInEnglish").val('');
+        $("input#deathPersonDOB").val('');
+        $("select#deathPersonGender").val('');
+        $("select#deathPersonRace").val('');
+        $("textarea#deathPersonPermanentAddress").val('');
+        $("input#deathPersonFather_PINorNIC").val('');
+        $("textarea#deathPersonFatherFullName").val('');
+        $("input#deathPersonMother_PINorNIC").val('');
+        $("textarea#deathPersonMotherFullName").val('');
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function (data1) {
                     if (data1 != null) {
@@ -177,6 +187,8 @@ $(function () {
     });
     $('img#death_person_father_lookup').bind('click', function (evt4) {
         var id2 = $("input#deathPersonFather_PINorNIC").attr("value");
+
+        $("textarea#deathPersonFatherFullName").val('');
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function (data2) {
                     if (data2 != null) {
@@ -186,6 +198,8 @@ $(function () {
     });
     $('img#death_person_mother_lookup').bind('click', function (evt5) {
         var id3 = $("input#deathPersonMother_PINorNIC").attr("value");
+
+        $("textarea#deathPersonMotherFullName").val('');
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id3},
                 function (data3) {
                     if (data3 != null) {
