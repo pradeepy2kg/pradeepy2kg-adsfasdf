@@ -150,9 +150,40 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
             raceEn = raceDAO.getNameByPK(person.getRace().getRaceId(), AppConstants.ENGLISH);
         }
         if (person.getAddresses() != null) {
-            for (Address address : person.getAddresses()) {
-                if (address.isPermanent()) {
-                    permanentAddress = address;
+            Set<Address> addresses = person.getAddresses();
+            Map<Long, Address> permanentMap = new LinkedHashMap<Long, Address>();
+            Map<Long, Address> currentMap = new LinkedHashMap<Long, Address>();
+
+            for (Address add : addresses) {
+                if (add.isPermanent()) {
+                    permanentMap.put(add.getAddressUKey(), add);
+                } else {
+                    currentMap.put(add.getAddressUKey(), add);
+                }
+            }
+
+            // load permanent address to the transient field
+            if (addresses != null) {
+                Set<Long> keys = permanentMap.keySet();
+                TreeSet<Long> addressTreeSet = new TreeSet<Long>(keys);
+
+                Iterator<Long> it = addressTreeSet.descendingIterator();
+                while (it.hasNext()) {
+                    Long addKey = it.next();
+                    permanentAddress = permanentMap.get(addKey);
+                    break;
+                }
+            }
+
+            // load current address to the transient field
+            if (addresses != null && currentMap.size() > 0) {
+                Set<Long> keys = currentMap.keySet();
+                TreeSet<Long> addressTreeSet = new TreeSet<Long>(keys);
+
+                Iterator<Long> it = addressTreeSet.descendingIterator();
+                while (it.hasNext()) {
+                    Long addKey = it.next();
+                    currentAddress = currentMap.get(addKey);
                     break;
                 }
             }
