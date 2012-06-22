@@ -238,7 +238,7 @@
         விவாக பதிவு
     </a>
     <ul class="acitem">
-        <li>
+        <%--<li>
             <a id="menu.marriage.notice" href="/ecivil/marriages/eprSelectNoticeType.do">
                 திருமண அறிவித்தல்
             </a>
@@ -252,7 +252,7 @@
             <a id="menu.marriagelicense.search" href="/ecivil/marriages/eprMarriageLicenseSearchInit.do">
                 திருமண உத்தரவுப்பத்திரம் தேடுதல்
             </a>
-        </li>
+        </li>--%>
         <li>
             <a id="menu.marriage.registration" href="/ecivil/marriages/eprMarriageRegistrationInit.do">
                 திருமணப்பதிவு
