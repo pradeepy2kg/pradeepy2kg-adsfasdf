@@ -322,9 +322,9 @@
             <br>Current Address
         </td>
         <td colspan="3" height="40px" style="font-size:12pt">
-            <s:label value="%{person.LastAddress.Line1}"/>
-            <br><s:label value="%{person.LastAddress.Line2}"/>
-            <br><s:label value="%{person.LastAddress.City}"/>
+            <s:label value="%{currentAddress.Line1}"/>
+            <br><s:label value="%{currentAddress.Line2}"/>
+            <br><s:label value="%{currentAddress.City}"/>
         </td>
     </tr>
     <tr>
