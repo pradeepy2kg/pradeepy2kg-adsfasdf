@@ -12,6 +12,12 @@ function StatObject() {
     this.thismonth_pend_b = 0;
     this.total_submitted_b = 0;
     this.still_b = 0;
+    this.confirmation_printed_b=0;
+    this.confirmation_approval_pending_b=0;
+    this.confirmation_approved_b=0;
+    this.certificate_generated_b=0;
+    this.certificate_printed_b=0;
+    this.deleted_b=0;
     this.late_d = 0;
     this.normal_d = 0;
     this.rejected_d = 0;
@@ -19,6 +25,8 @@ function StatObject() {
     this.arrears_pend_d = 0;
     this.thismonth_pend_d = 0;
     this.total_submitted_d = 0;
+    this.certificate_printed_d=0;
+    this.deleted_d=0;
     this.late_m = 0;
     this.normal_m = 0;
     this.rejected_m = 0;
@@ -221,6 +229,41 @@ function drawChart(data) {
             document.getElementById("late_b").setAttribute("value", data.late_b);
         }
 
+        var ele = document.getElementById("still_b");
+        if (ele != null) {
+            document.getElementById("still_b").setAttribute("value", data.still_b);
+        }
+
+        var ele = document.getElementById("confirmation_printed_b");
+        if (ele != null) {
+            document.getElementById("confirmation_printed_b").setAttribute("value", data.confirmation_printed_b);
+        }
+
+        var ele = document.getElementById("confirmation_approval_pending_b");
+        if (ele != null) {
+            document.getElementById("confirmation_approval_pending_b").setAttribute("value", data.confirmation_approval_pending_b);
+        }
+
+        var ele = document.getElementById("confirmation_approved_b");
+        if (ele != null) {
+            document.getElementById("confirmation_approved_b").setAttribute("value", data.confirmation_approved_b);
+        }
+
+        var ele = document.getElementById("certificate_generated_b");
+        if (ele != null) {
+            document.getElementById("certificate_generated_b").setAttribute("value", data.certificate_generated_b);
+        }
+
+        var ele = document.getElementById("certificate_printed_b");
+        if (ele != null) {
+            document.getElementById("certificate_printed_b").setAttribute("value", data.certificate_printed_b);
+        }
+
+        var ele = document.getElementById("deleted_b");
+        if (ele != null) {
+            document.getElementById("deleted_b").setAttribute("value", data.deleted_b);
+        }
+
         var ele = document.getElementById("all_pending_d");
         if (ele != null) {
             document.getElementById("all_pending_d").setAttribute("value", (data.arrears_pend_d + data.thismonth_pend_d));
@@ -248,6 +291,16 @@ function drawChart(data) {
         var ele = document.getElementById("late_d");
         if (ele != null) {
             document.getElementById("late_d").setAttribute("value", data.late_d);
+        }
+
+        var ele = document.getElementById("certificate_printed_d");
+        if (ele != null) {
+            document.getElementById("certificate_printed_d").setAttribute("value", data.certificate_printed_d);
+        }
+
+        var ele = document.getElementById("deleted_d");
+        if (ele != null) {
+            document.getElementById("deleted_d").setAttribute("value", data.deleted_d);
         }
 
         var ele = document.getElementById("all_pending_m");
@@ -348,6 +401,41 @@ function drawChart(data) {
             document.getElementById("late_b").setAttribute("value", data.late_b);
         }
 
+        var ele = document.getElementById("still_b");
+        if (ele != null) {
+            document.getElementById("still_b").setAttribute("value", data.still_b);
+        }
+
+        var ele = document.getElementById("confirmation_printed_b");
+        if (ele != null) {
+            document.getElementById("confirmation_printed_b").setAttribute("value", data.confirmation_printed_b);
+        }
+
+        var ele = document.getElementById("confirmation_approval_pending_b");
+        if (ele != null) {
+            document.getElementById("confirmation_approval_pending_b").setAttribute("value", data.confirmation_approval_pending_b);
+        }
+
+        var ele = document.getElementById("confirmation_approved_b");
+        if (ele != null) {
+            document.getElementById("confirmation_approved_b").setAttribute("value", data.confirmation_approved_b);
+        }
+
+        var ele = document.getElementById("certificate_generated_b");
+        if (ele != null) {
+            document.getElementById("certificate_generated_b").setAttribute("value", data.certificate_generated_b);
+        }
+
+        var ele = document.getElementById("certificate_printed_b");
+        if (ele != null) {
+            document.getElementById("certificate_printed_b").setAttribute("value", data.certificate_printed_b);
+        }
+
+        var ele = document.getElementById("deleted_b");
+        if (ele != null) {
+            document.getElementById("deleted_b").setAttribute("value", data.deleted_b);
+        }
+
         // -------------------------
         if (data.arrears_pend_d == 0 && data.thismonth_pend_d == 0) {
             var ele = document.getElementById("chart4");
@@ -415,6 +503,16 @@ function drawChart(data) {
         var ele = document.getElementById("late_d");
         if (ele != null) {
             document.getElementById("late_d").setAttribute("value", data.late_d);
+        }
+
+        var ele = document.getElementById("certificate_printed_d");
+        if (ele != null) {
+            document.getElementById("certificate_printed_d").setAttribute("value", data.certificate_printed_d);
+        }
+
+        var ele = document.getElementById("deleted_d");
+        if (ele != null) {
+            document.getElementById("deleted_d").setAttribute("value", data.deleted_d);
         }
 
         // -------------------------

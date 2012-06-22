@@ -59,6 +59,12 @@ public class JSONStatisticsLookupService extends HttpServlet {
         commonStat.setThisMonthPendingItems(stat.getBirthsThisMonthPendingItems());
         commonStat.setTotalPendingItems(stat.getBirthsTotalPendingItems());
         commonStat.setTotalSubmissions(stat.getBirthsTotalSubmissions());
+        commonStat.setCertificateGeneratedItems(stat.getBirthCertificateGenerated());
+        commonStat.setCertificatePrintedItems(stat.getBirthCertificatePrinted());
+        commonStat.setDeletedItems(stat.getBirthDeletedItems());
+        commonStat.setConfirmationApprovalPendingItems(stat.getBirthConfirmationApprovalPendingItems());
+        commonStat.setConfirmationApprovedItems(stat.getBirthConfirmationApprovedItems());
+        commonStat.setConfirmationPrintedItems(stat.getBirthConfirmationPrintedItems());
         return commonStat;
     }
 
@@ -72,6 +78,8 @@ public class JSONStatisticsLookupService extends HttpServlet {
         commonStat.setThisMonthPendingItems(stat.getDeathsThisMonthPendingItems());
         commonStat.setTotalPendingItems(stat.getDeathsTotalPendingItems());
         commonStat.setTotalSubmissions(stat.getDeathsTotalSubmissions());
+        commonStat.setDeletedItems(stat.getDeathsDeletedItems());
+        commonStat.setCertificatePrintedItems(stat.getDeathCertificatePrintedItems());
         return commonStat;
     }
 
@@ -162,6 +170,12 @@ public class JSONStatisticsLookupService extends HttpServlet {
         optionLists.put("total_submitted_b", cs.getTotalSubmissions());
         optionLists.put("normal_b", cs.getNormalSubmissions());
         optionLists.put("late_b", cs.getLateSubmissions());
+        optionLists.put("confirmation_printed_b", cs.getConfirmationPrintedItems());
+        optionLists.put("confirmation_approval_pending_b", cs.getConfirmationApprovalPendingItems());
+        optionLists.put("confirmation_approved_b", cs.getConfirmationApprovedItems());
+        optionLists.put("certificate_generated_b", cs.getCertificateGeneratedItems());
+        optionLists.put("certificate_printed_b", cs.getCertificatePrintedItems());
+        optionLists.put("deleted_b", cs.getDeletedItems());
         optionLists.put("userRole", cs.getUserRole());
     }
 
@@ -173,6 +187,8 @@ public class JSONStatisticsLookupService extends HttpServlet {
         optionLists.put("total_submitted_d", cs.getTotalSubmissions());
         optionLists.put("normal_d", cs.getNormalSubmissions());
         optionLists.put("late_d", cs.getLateSubmissions());
+        optionLists.put("certificate_printed_d", cs.getCertificatePrintedItems());
+        optionLists.put("deleted_d", cs.getDeletedItems());
         optionLists.put("userRole", cs.getUserRole());
     }
 

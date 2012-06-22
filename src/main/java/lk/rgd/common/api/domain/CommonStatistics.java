@@ -17,6 +17,13 @@ public class CommonStatistics {
     private int arrearsPendingItems;
     private int thisMonthPendingItems;
 
+    private int deletedItems;                       // Archived items
+    private int confirmationPrintedItems;           // Birth confirmation printed items
+    private int confirmationApprovalPendingItems;   // Birth confirmation captured and approval pending items
+    private int confirmationApprovedItems;          // Birth confirmation approved items
+    private int certificateGeneratedItems;          // Birth certificate generated items
+    private int certificatePrintedItems;            // Birth, Death certificate printed items
+
     public CommonStatistics() {
         totalSubmissions = 0;
         lateSubmissions = 0;
@@ -26,6 +33,10 @@ public class CommonStatistics {
         totalPendingItems = 0;
         arrearsPendingItems = 0;
         thisMonthPendingItems = 0;
+        deletedItems = 0;
+        confirmationPrintedItems = 0;
+        confirmationApprovalPendingItems = 0;
+        confirmationApprovedItems = 0;
     }
 
     public String getUserRole() {
@@ -108,6 +119,54 @@ public class CommonStatistics {
         this.totalSubmissions = totalSubmissions;
     }
 
+    public int getDeletedItems() {
+        return deletedItems;
+    }
+
+    public void setDeletedItems(int deletedItems) {
+        this.deletedItems = deletedItems;
+    }
+
+    public int getConfirmationPrintedItems() {
+        return confirmationPrintedItems;
+    }
+
+    public void setConfirmationPrintedItems(int confirmationPrintedItems) {
+        this.confirmationPrintedItems = confirmationPrintedItems;
+    }
+
+    public int getConfirmationApprovalPendingItems() {
+        return confirmationApprovalPendingItems;
+    }
+
+    public void setConfirmationApprovalPendingItems(int confirmationApprovalPendingItems) {
+        this.confirmationApprovalPendingItems = confirmationApprovalPendingItems;
+    }
+
+    public int getConfirmationApprovedItems() {
+        return confirmationApprovedItems;
+    }
+
+    public void setConfirmationApprovedItems(int confirmationApprovedItems) {
+        this.confirmationApprovedItems = confirmationApprovedItems;
+    }
+
+    public int getCertificateGeneratedItems() {
+        return certificateGeneratedItems;
+    }
+
+    public void setCertificateGeneratedItems(int certificateGeneratedItems) {
+        this.certificateGeneratedItems = certificateGeneratedItems;
+    }
+
+    public int getCertificatePrintedItems() {
+        return certificatePrintedItems;
+    }
+
+    public void setCertificatePrintedItems(int certificatePrintedItems) {
+        this.certificatePrintedItems = certificatePrintedItems;
+    }
+
     public void add(CommonStatistics cs) {
         this.totalSubmissions += cs.totalSubmissions;
         this.lateSubmissions += cs.lateSubmissions;
@@ -117,6 +176,9 @@ public class CommonStatistics {
         this.totalPendingItems += cs.totalPendingItems;
         this.arrearsPendingItems += cs.arrearsPendingItems;
         this.thisMonthPendingItems += cs.thisMonthPendingItems;
+        this.deletedItems += cs.deletedItems;
+        this.confirmationPrintedItems += cs.confirmationPrintedItems;
+        this.confirmationApprovalPendingItems += confirmationApprovalPendingItems;
+        this.confirmationApprovedItems += confirmationApprovedItems;
     }
-
 }

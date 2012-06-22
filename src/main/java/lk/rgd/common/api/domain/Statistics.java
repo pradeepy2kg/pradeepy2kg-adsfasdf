@@ -37,6 +37,18 @@ public class Statistics implements Serializable {
     private int birthsArrearsPendingItems;
 
     private int birthsThisMonthPendingItems;
+    
+    private int birthConfirmationPrintedItems;
+
+    private int birthConfirmationApprovalPendingItems;
+
+    private int birthConfirmationApprovedItems;
+    
+    private int birthCertificateGenerated;
+    
+    private int birthCertificatePrinted;
+    
+    private int birthDeletedItems;
 
     /* Deaths */
     private int DeathsTotalSubmissions;
@@ -54,6 +66,10 @@ public class Statistics implements Serializable {
     private int DeathsArrearsPendingItems;
 
     private int DeathsThisMonthPendingItems;
+
+    private int deathCertificatePrintedItems;
+
+    private int deathsDeletedItems;
 
     /* Marriages */
     private int MrgTotalSubmissions;
@@ -298,5 +314,69 @@ public class Statistics implements Serializable {
 
     public void setBirthsStillSubmissions(int birthsStillSubmissions) {
         this.birthsStillSubmissions = birthsStillSubmissions;
+    }
+
+    public int getBirthConfirmationPrintedItems() {
+        return birthConfirmationPrintedItems;
+    }
+
+    public void setBirthConfirmationPrintedItems(int birthConfirmationPrintedItems) {
+        this.birthConfirmationPrintedItems = birthConfirmationPrintedItems;
+    }
+
+    public int getBirthConfirmationApprovalPendingItems() {
+        return birthConfirmationApprovalPendingItems;
+    }
+
+    public void setBirthConfirmationApprovalPendingItems(int birthConfirmationApprovalPendingItems) {
+        this.birthConfirmationApprovalPendingItems = birthConfirmationApprovalPendingItems;
+    }
+
+    public int getBirthConfirmationApprovedItems() {
+        return birthConfirmationApprovedItems;
+    }
+
+    public void setBirthConfirmationApprovedItems(int birthConfirmationApprovedItems) {
+        this.birthConfirmationApprovedItems = birthConfirmationApprovedItems;
+    }
+
+    public int getBirthDeletedItems() {
+        return birthDeletedItems;
+    }
+
+    public void setBirthDeletedItems(int birthDeletedItems) {
+        this.birthDeletedItems = birthDeletedItems;
+    }
+
+    public int getDeathsDeletedItems() {
+        return deathsDeletedItems;
+    }
+
+    public void setDeathsDeletedItems(int deathsDeletedItems) {
+        this.deathsDeletedItems = deathsDeletedItems;
+    }
+
+    public int getBirthCertificateGenerated() {
+        return birthCertificateGenerated;
+    }
+
+    public void setBirthCertificateGenerated(int birthCertificateGenerated) {
+        this.birthCertificateGenerated = birthCertificateGenerated;
+    }
+
+    public int getBirthCertificatePrinted() {
+        return birthCertificatePrinted;
+    }
+
+    public void setBirthCertificatePrinted(int birthCertificatePrinted) {
+        this.birthCertificatePrinted = birthCertificatePrinted;
+    }
+
+    public int getDeathCertificatePrintedItems() {
+        return deathCertificatePrintedItems;
+    }
+
+    public void setDeathCertificatePrintedItems(int deathCertificatePrintedItems) {
+        this.deathCertificatePrintedItems = deathCertificatePrintedItems;
     }
 }
