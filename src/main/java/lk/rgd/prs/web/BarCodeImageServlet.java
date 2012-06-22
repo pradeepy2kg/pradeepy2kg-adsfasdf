@@ -123,7 +123,11 @@ public class BarCodeImageServlet extends HttpServlet {
                         }
 
                         // Data for the PRS Certificate and Birth Certificate BarCode
-                        buffer.append(person.getFullNameInEnglishLanguage());                           // NAME
+                        if (person.getFullNameInEnglishLanguage() != null && !person.getFullNameInEnglishLanguage().isEmpty()) {
+                            buffer.append(person.getFullNameInEnglishLanguage());                       // NAME
+                        } else {
+                            buffer.append(" - ");
+                        }
                         buffer.append("|");
                         buffer.append(person.getPin());                                                 // PIN
                         buffer.append("|");
@@ -177,7 +181,7 @@ public class BarCodeImageServlet extends HttpServlet {
                         Person person;
                         String PINorNIC = deathPersonInfo.getDeathPersonPINorNIC();
 
-                        if (deathPersonInfo.getDeathPersonNameInEnglish() != null) {
+                        if (deathPersonInfo.getDeathPersonNameInEnglish() != null && !deathPersonInfo.getDeathPersonNameInEnglish().isEmpty()) {
                             buffer.append(deathPersonInfo.getDeathPersonNameInEnglish());               // NAME
                         } else {
                             buffer.append(" - ");
