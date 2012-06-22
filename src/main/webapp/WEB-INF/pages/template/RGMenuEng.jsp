@@ -286,7 +286,7 @@
         MARRIAGE REGISTRATION
     </a>
     <ul class="acitem">
-        <li>
+        <%--<li>
             <a id="menu.marriage.notice" href="/ecivil/marriages/eprSelectNoticeType.do">
                 Marriage Notice
             </a>
@@ -300,7 +300,7 @@
             <a id="menu.marriagelicense.search" href="/ecivil/marriages/eprMarriageLicenseSearchInit.do">
                 Marriage License Search
             </a>
-        </li>
+        </li>--%>
         <li>
             <a id="menu.marriage.registration" href="/ecivil/marriages/eprMarriageRegistrationInit.do">
                 Marriage Registration

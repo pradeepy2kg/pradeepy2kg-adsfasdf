@@ -286,7 +286,7 @@
         විවාහ ලියාපදිංචිය
     </a>
     <ul class="acitem">
-        <li>
+        <%--<li>
             <a id="menu.marriage.notice" href="/ecivil/marriages/eprSelectNoticeType.do">
                 විවාහ දැන්වීම
             </a>
@@ -300,7 +300,7 @@
             <a id="menu.marriagelicense.search" href="/ecivil/marriages/eprMarriageLicenseSearchInit.do">
                 විවාහ බලපත්‍රය සෙවීම
             </a>
-        </li>
+        </li>--%>
         <li>
             <a id="menu.marriage.registration" href="/ecivil/marriages/eprMarriageRegistrationInit.do">
                 විවාහ ලියාපදිංචිය
