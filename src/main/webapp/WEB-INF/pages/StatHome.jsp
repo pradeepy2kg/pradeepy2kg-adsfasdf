@@ -132,6 +132,12 @@
         data.thismonth_pend_b = parseInt($("input#birthsThisMonthPendingItems").val());
         data.total_submitted_b = parseInt($("input#birthsThisMonthTotalItems").val());
         data.still_b = parseInt($("input#birthsStillSubmissions").val());
+        data.confirmation_printed_b = parseInt($('#birthConfirmationPrintedItems').val());
+        data.confirmation_approval_pending_b = parseInt($('#birthConfirmationApprovalPendingItems').val());
+        data.confirmation_approved_b = parseInt($('#birthConfirmationApprovedItems').val());
+        data.certificate_generated_b = parseInt($('#birthCertificateGenerated').val());
+        data.certificate_printed_b = parseInt($('#birthCertificatePrinted').val());
+        data.deleted_b = parseInt($('#birthDeletedItems').val());
 
         data.late_d = parseInt($("input#DeathsLateSubmissions").val());
         data.normal_d = parseInt($("input#DeathsNormalSubmissions").val());
@@ -140,6 +146,8 @@
         data.arrears_pend_d = parseInt($("input#DeathsArrearsPendingItems").val());
         data.thismonth_pend_d = parseInt($("input#DeathsThisMonthPendingItems").val());
         data.total_submitted_d = parseInt($("input#DeathsThisMonthTotalItems").val());
+        data.certificate_printed_d = parseInt($('#deathCertificatePrintedItems').val());
+        data.deleted_d = parseInt($('#deathsDeletedItems').val());
 
         data.late_m = parseInt($("input#MrgLateSubmissions").val());
         data.normal_m = parseInt($("input#MrgNormalSubmissions").val());
@@ -210,7 +218,19 @@
                         &nbsp;&nbsp;&nbsp;Total Approved Items :
                         <input type="text" id="approved_b" readonly="true" maxlength="6"/><br/>
                         &nbsp;&nbsp;&nbsp;&nbsp;Total Rejected Items :
-                        <input type="text" id="rejected_b" readonly="true" maxlength="6"/>
+                        <input type="text" id="rejected_b" readonly="true" maxlength="6"/><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Confirmation Printed :
+                        <input type="text" id="confirmation_printed_b" readonly="true" maxlength="6"/><br/>
+                        <%--Confirmation Approval Pending :--%>
+                        <%--<input type="text" id="confirmation_approval_pending_b" readonly="true" maxlength="6"/><br/>--%>
+                        Confirmation Approved :
+                        <input type="text" id="confirmation_approved_b" readonly="true" maxlength="6"/><br/>
+                        &nbsp;&nbsp;Certificate Generated :
+                        <input type="text" id="certificate_generated_b" readonly="true" maxlength="6"/><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Certificate Printed :
+                        <input type="text" id="certificate_printed_b" readonly="true" maxlength="6"/><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Total Deleted Items :
+                        <input type="text" id="deleted_b" readonly="true" maxlength="6"/>
                     </td>
                     <td width="25%" class="pending">Arrears :
                         <input type="text" id="arrears_b" readonly="true" maxlength="6"/>
@@ -252,8 +272,12 @@
                         <input type="text" id="all_pending_d" readonly="true" maxlength="6"/><br/>
                         &nbsp;&nbsp;&nbsp;Total Approved Items :
                         <input type="text" id="approved_d" readonly="true" maxlength="6"/><br/>
-                        &nbsp;&nbsp;&nbsp;Total Rejected Items :
-                        <input type="text" id="rejected_d" readonly="true" maxlength="6"/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Rejected Items :
+                        <input type="text" id="rejected_d" readonly="true" maxlength="6"/><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Certificate Printed :
+                        <input type="text" id="certificate_printed_d" readonly="true" maxlength="6"/><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Deleted Items :
+                        <input type="text" id="deleted_d" readonly="true" maxlength="6"/>
                     </td>
                     <td width="25%" class="pending">Arrears :
                         <input type="text" id="arrears_d" readonly="true" maxlength="6"/>
@@ -345,7 +369,7 @@
                     <div id="birth-bar">
 
                     </div>
-                    <table align="center">
+                    <table align="center" style="font-size: 12px;">
                         <tr>
                             <td align="right">All Pending</td>
                             <td>:</td>
@@ -367,9 +391,45 @@
                             <td colspan="3"></td>
                         </tr>
                         <tr>
-                            <td>Total Rejected</td>
+                            <td align="right">Total Rejected</td>
                             <td>:</td>
                             <td><input type="text" id="rejected_b" readonly="true" maxlength="6"/></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Confirmation Printed</td>
+                            <td>:</td>
+                            <td><input type="text" id="confirmation_printed_b" readonly="true" maxlength="6"/></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <%--<tr>--%>
+                            <%--<td align="right">Confirmation Approval Pending</td>--%>
+                            <%--<td>:</td>--%>
+                            <%--<td><input type="text" id="confirmation_approval_pending_b" readonly="true" maxlength="6"/></td>--%>
+                            <%--<td colspan="3"></td>--%>
+                        <%--</tr>--%>
+                        <tr>
+                            <td align="right">Confirmation Approved</td>
+                            <td>:</td>
+                            <td><input type="text" id="confirmation_approved_b" readonly="true" maxlength="6"/></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Certificate Generated</td>
+                            <td>:</td>
+                            <td><input type="text" id="certificate_generated_b" readonly="true" maxlength="6"/></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Certificate Printed</td>
+                            <td>:</td>
+                            <td><input type="text" id="certificate_printed_b" readonly="true" maxlength="6"/></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Deleted Items</td>
+                            <td>:</td>
+                            <td><input type="text" id="deleted_b" readonly="true" maxlength="6"/></td>
                             <td colspan="3"></td>
                         </tr>
                         <tr>
@@ -388,14 +448,14 @@
                 </div>
             </td>
             <td>
-                <div id="rg-death">
+                <div id="rg-death" style="padding-bottom: 85px;">
                     <div id="death-pie">
 
                     </div>
                     <div id="death-bar">
 
                     </div>
-                    <table align="center">
+                    <table align="center" style="font-size: 12px;">
                         <tr>
                             <td align="right">All Pending</td>
                             <td>:</td>
@@ -417,9 +477,21 @@
                             <td colspan="3"></td>
                         </tr>
                         <tr>
-                            <td>Total Rejected</td>
+                            <td align="right">Total Rejected</td>
                             <td>:</td>
                             <td><input type="text" id="rejected_d" readonly="true" maxlength="6"/></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Certificate Printed</td>
+                            <td>:</td>
+                            <td><input type="text" id="certificate_printed_d" readonly="true" maxlength="6"/></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Deleted Items</td>
+                            <td>:</td>
+                            <td><input type="text" id="deleted_d" readonly="true" maxlength="6"/></td>
                             <td colspan="3"></td>
                         </tr>
                         <tr>
@@ -434,18 +506,19 @@
                                 <input type="text" id="late_d" readonly="true" maxlength="6"/>
                             </td>
                         </tr>
+                        <tr><td colspan="6"></td></tr>
                     </table>
                 </div>
             </td>
             <td>
-                <div id="rg-mrg">
+                <div id="rg-mrg" style="padding-bottom: 135px;">
                     <div id="mrg-pie">
 
                     </div>
                     <div id="mrg-bar">
 
                     </div>
-                    <table align="center">
+                    <table align="center" style="font-size: 12px;">
                         <tr>
                             <td align="right">All Pending</td>
                             <td>:</td>
@@ -501,6 +574,12 @@
 <s:hidden id="birthsArrearsPendingItems" value="%{statistics.birthsArrearsPendingItems}"/>
 <s:hidden id="birthsThisMonthPendingItems" value="%{statistics.birthsThisMonthPendingItems}"/>
 <s:hidden id="birthsThisMonthTotalItems" value="%{statistics.birthsTotalSubmissions}"/>
+<s:hidden id="birthConfirmationPrintedItems" value="%{statistics.birthConfirmationPrintedItems}"/>
+<s:hidden id="birthConfirmationApprovalPendingItems" value="%{statistics.birthConfirmationApprovalPendingItems}"/>
+<s:hidden id="birthConfirmationApprovedItems" value="%{statistics.birthConfirmationApprovedItems}"/>
+<s:hidden id="birthCertificateGenerated" value="%{statistics.birthCertificateGenerated}"/>
+<s:hidden id="birthCertificatePrinted" value="%{statistics.birthCertificatePrinted}"/>
+<s:hidden id="birthDeletedItems" value="%{statistics.birthDeletedItems}"/>
 
 <s:hidden id="DeathsLateSubmissions" value="%{statistics.DeathsLateSubmissions}"/>
 <s:hidden id="DeathsNormalSubmissions" value="%{statistics.DeathsNormalSubmissions}"/>
@@ -509,6 +588,8 @@
 <s:hidden id="DeathsArrearsPendingItems" value="%{statistics.DeathsArrearsPendingItems}"/>
 <s:hidden id="DeathsThisMonthPendingItems" value="%{statistics.DeathsThisMonthPendingItems}"/>
 <s:hidden id="DeathsThisMonthTotalItems" value="%{statistics.DeathsTotalSubmissions}"/>
+<s:hidden id="deathCertificatePrintedItems" value="%{statistics.deathCertificatePrintedItems}"/>
+<s:hidden id="deathsDeletedItems" value="%{statistics.deathsDeletedItems}"/>
 
 <s:hidden id="MrgLateSubmissions" value="%{statistics.MrgLateSubmissions}"/>
 <s:hidden id="MrgNormalSubmissions" value="%{statistics.MrgNormalSubmissions}"/>

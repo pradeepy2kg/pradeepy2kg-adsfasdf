@@ -553,9 +553,6 @@ public class StatisticsManagerImpl implements StatisticsManager {
 
             BirthDeclaration.State status = birthDeclaration.getRegister().getStatus();
             switch (status) {
-                case APPROVED:
-                    statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() + 1);
-                    break;
                 case ARCHIVED_REJECTED:
                     statistics.setBirthsRejectedItems(statistics.getBirthsRejectedItems() + 1);
                     break;
@@ -565,6 +562,27 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     } else {
                         statistics.setBirthsThisMonthPendingItems(statistics.getBirthsThisMonthPendingItems() + 1);
                     }
+                case CONFIRMATION_PRINTED:
+                    statistics.setBirthConfirmationPrintedItems(statistics.getBirthConfirmationPrintedItems() + 1);
+                    break;
+                case CONFIRMATION_CHANGES_CAPTURED:
+                    statistics.setBirthConfirmationApprovalPendingItems(statistics.getBirthConfirmationApprovalPendingItems() + 1);
+                    break;
+                case CONFIRMATION_CHANGES_APPROVED:
+                    statistics.setBirthConfirmationApprovedItems(statistics.getBirthConfirmationApprovedItems() + 1);
+                    break;
+                case ARCHIVED_CANCELLED:
+                    statistics.setBirthDeletedItems(statistics.getBirthDeletedItems() + 1);
+                    break;
+                case APPROVED:
+                    statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() + 1);
+                    break;
+                case ARCHIVED_CERT_GENERATED:
+                    statistics.setBirthCertificateGenerated(statistics.getBirthCertificateGenerated() + 1);
+                    break;
+                case ARCHIVED_CERT_PRINTED:
+                    statistics.setBirthCertificatePrinted(statistics.getBirthCertificatePrinted() + 1);
+                    break;
             }
 
             BirthDeclaration.BirthType birthType = birthDeclaration.getRegister().getBirthType();
@@ -610,6 +628,13 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     } else {
                         statistics.setDeathsThisMonthPendingItems(statistics.getDeathsThisMonthPendingItems() + 1);
                     }
+                    break;
+                case ARCHIVED_CERT_GENERATED:
+                    statistics.setDeathCertificatePrintedItems(statistics.getDeathCertificatePrintedItems() + 1);
+                    break;
+                case ARCHIVED_CANCELLED:
+                    statistics.setDeathsDeletedItems(statistics.getDeathsDeletedItems() + 1);
+                    break;
             }
 
             DeathRegister.Type deathType = deathRegister.getDeathType();
@@ -839,9 +864,27 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         statistics.setBirthsThisMonthPendingItems(statistics.getBirthsThisMonthPendingItems() + 1);
                     }
                     break;
+                case CONFIRMATION_PRINTED:
+                    statistics.setBirthConfirmationPrintedItems(statistics.getBirthConfirmationPrintedItems() + 1);
+                    break;
+                case CONFIRMATION_CHANGES_CAPTURED:
+                    statistics.setBirthConfirmationApprovalPendingItems(statistics.getBirthConfirmationApprovalPendingItems() + 1);
+                    break;
+                case CONFIRMATION_CHANGES_APPROVED:
+                    statistics.setBirthConfirmationApprovedItems(statistics.getBirthConfirmationApprovedItems() + 1);
+                    break;
+                case ARCHIVED_CANCELLED:
+                    statistics.setBirthDeletedItems(statistics.getBirthDeletedItems() + 1);
+                    break;
                 case APPROVED:
-                default:
                     statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() + 1);
+                    break;
+                case ARCHIVED_CERT_GENERATED:
+                    statistics.setBirthCertificateGenerated(statistics.getBirthCertificateGenerated() + 1);
+                    break;
+                case ARCHIVED_CERT_PRINTED:
+                    statistics.setBirthCertificatePrinted(statistics.getBirthCertificatePrinted() + 1);
+                    break;
             }
 
             BirthDeclaration.BirthType birthType = birthDeclaration.getRegister().getBirthType();
@@ -897,9 +940,14 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     }
                     break;
                 case APPROVED:
-                default:
                     statistics.setDeathsApprovedItems(statistics.getDeathsApprovedItems() + 1);
-
+                    break;
+                case ARCHIVED_CERT_GENERATED:
+                    statistics.setDeathCertificatePrintedItems(statistics.getDeathCertificatePrintedItems() + 1);
+                    break;
+                case ARCHIVED_CANCELLED:
+                    statistics.setDeathsDeletedItems(statistics.getDeathsDeletedItems() + 1);
+                    break;
             }
 
             DeathRegister.Type deathType = deathRegister.getDeathType();
@@ -944,6 +992,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     } else {
                         statistics.setMrgThisMonthPendingItems(statistics.getMrgThisMonthPendingItems() + 1);
                     }
+                    break;
             }
         }
         statistics.setUser(user.getUserId());

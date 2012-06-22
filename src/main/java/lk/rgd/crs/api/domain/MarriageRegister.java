@@ -212,7 +212,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     public enum LicenseCollectType {
         HAND_COLLECT_MALE,  //male hand collect the license
         HAND_COLLECT_FEMALE,
-        MAIL_TO_MALE,       //mail to mail party mailing address
+        MAIL_TO_MALE,       //mail to male party mailing address
         MAIL_TO_FEMALE
     }
 

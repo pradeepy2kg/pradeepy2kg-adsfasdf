@@ -65,10 +65,10 @@ public class CRSStatisticsAction extends ActionSupport implements SessionAware {
         }
         role = user.getRole().getRoleId();
 
-        statistics = statService.getStatisticsForUser(statUser, null, null);
-
         populateDateRange();
         populateDivision();
+
+        statistics = statService.getStatisticsForUser(statUser, null, null, districtId, dsDivisionId);
 
         return SUCCESS;
     }
@@ -84,7 +84,7 @@ public class CRSStatisticsAction extends ActionSupport implements SessionAware {
         if (divisionList.size() > 0) {
             dsDivisionId = divisionList.keySet().iterator().next();
         }
-        // TODO else parts need to be implemented. i.e. all district and dsDiviosn selected
+        // TODO else parts need to be implemented. i.e. all district and dsDivision selected
     }
 
     private void populateDateRange() {
