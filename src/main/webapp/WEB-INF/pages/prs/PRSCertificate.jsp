@@ -26,8 +26,8 @@
 </style>
 <script type="text/javascript">
     $(function () {
-        $('select#locationId').bind('change', function (evt1) {
-            var id = $("select#locationId").attr('value');
+        $('select#issueLocationId').bind('change', function (evt1) {
+            var id = $("select#issueLocationId").attr('value');
             var options = '';
             if (id > 0) {
                 $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id, mode:1, certificateId:0},
@@ -38,7 +38,7 @@
                             }
                             $("select#issueUserId").html(options);
 
-                            var id = $('select#locationId').attr('value');
+                            var id = $('select#issueLocationId').attr('value');
                             var user = $('select#issueUserId').attr('value');
                             var certId = $('label#certificateId').text();
                             $("text#user").html(user);
@@ -61,7 +61,7 @@
         });
 
         $('select#issueUserId').bind('change', function (evt2) {
-            var id = $('select#locationId').attr('value');
+            var id = $('select#issueLocationId').attr('value');
             var user = $('select#issueUserId').attr('value');
             var certId = $('label#certificateId').text();
             $("text#user").html(user);
@@ -138,7 +138,7 @@
                     <s:label value="%{getText('placeOfIssue.label')}"/>
                 </td>
                 <td>
-                    <s:select id="locationId" name="locationId" list="locationList" cssStyle="width:300px;"/>
+                    <s:select id="issueLocationId" name="issueLocationId" list="locationList" cssStyle="width:300px;"/>
                 </td>
             </tr>
             <tr>
