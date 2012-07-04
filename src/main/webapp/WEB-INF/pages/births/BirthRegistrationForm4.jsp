@@ -97,7 +97,7 @@
         }
         // notify date before submitted date
         var submit = new Date(document.getElementById('submitDatePicker').value);
-        if (signdate.getTime() > submit.getTime()) {
+        if (signdate.getTime() < submit.getTime()) {
             errormsg = errormsg + "\n" + document.getElementById('p4error6').value;
         }
 
