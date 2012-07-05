@@ -48,7 +48,11 @@ import java.util.*;
     @NamedQuery(name = "filter.adr.by.district", query = "SELECT u.userId FROM User u " +
         "WHERE u.role = :role AND :assignedBDDistricts MEMBER OF u.assignedBDDistricts"),
     @NamedQuery(name = "get.user.by.name.id", query = "SELECT u FROM User u WHERE u.status !=3 " +
-        "AND (u.userName LIKE :name OR u.userId LIKE :name )")
+        "AND (u.userName LIKE :name OR u.userId LIKE :name )"),
+    @NamedQuery(
+        name = "getUsersByRoleAndAssignedBDDSDivision",
+        query = "SELECT u FROM User u WHERE u.status != 3 AND u.role = :role AND :assignedBDDSDivision MEMBER OF u.assignedBDDSDivisions ORDER BY u.userId"
+    )
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User implements Serializable {

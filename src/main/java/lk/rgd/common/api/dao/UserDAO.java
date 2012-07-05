@@ -133,4 +133,5 @@ public interface UserDAO {
      */
     public List<User> getUserByUserIdOrName(String name);
 
+    public List<User> getUsersByRoleAndAssignedBDDSDivision(Role role, DSDivision dsDivision, User user);
 }

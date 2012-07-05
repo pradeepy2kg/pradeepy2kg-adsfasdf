@@ -121,5 +121,13 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
         q.setParameter("name", "%" + name + "%");
         return q.getResultList();
     }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<User> getUsersByRoleAndAssignedBDDSDivision(Role role, DSDivision dsDivision, User user) {
+        Query q = em.createNamedQuery("getUsersByRoleAndAssignedBDDSDivision");
+        q.setParameter("role", role);
+        q.setParameter("assignedBDDSDivision", dsDivision);
+        return q.getResultList();
+    }
 }
 

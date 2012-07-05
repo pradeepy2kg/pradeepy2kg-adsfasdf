@@ -53,6 +53,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final LocationDAO locationDAO;
     private final AssignmentDAO assignmentDAO;
     private final GNDivisionDAO gnDivisionDAO;
+    private final UserDAO userDAO;
+    private final RoleDAO roleDAO;
     private final PopulationRegistry ecivilService;
 
     private Map<Integer, String> districtList;
@@ -151,7 +153,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
         CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
         AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO,
-        AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO, PopulationRegistry ecivilService) {
+        AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO, PopulationRegistry ecivilService, UserDAO userDAO, RoleDAO roleDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -167,6 +169,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.commonUtil = commonUtil;
         this.gnDivisionDAO = gnDivisionDAO;
         this.ecivilService = ecivilService;
+        this.userDAO = userDAO;
+        this.roleDAO = roleDAO;
 
         dsDivisionList = new HashMap<Integer, String>();
         bdDivisionList = new HashMap<Integer, String>();
@@ -203,7 +207,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
                     pageNo = 0;
                 }
-                populateRegistrars(bdf);
 
                 birthType = bdf.getRegister().getBirthType();
                 bdf.setChild(child);
@@ -228,6 +231,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 if (BirthDeclaration.BirthType.STILL != birthType && BirthDeclaration.BirthType.ADOPTION != birthType) {
                     bdfLateOrBelated = checkDateLateOrBelated(bdf);
                 }
+                populateRegistrars(bdf);
                 break;
             case 4:
                 birthType = bdf.getRegister().getBirthType();
@@ -839,7 +843,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 if (!locationList.isEmpty()) {
                     logger.debug("Location list size: {}", locationList.size());
                     userList = new HashMap<String, String>();
-                    for (int i=0; i < locationList.size(); i++) {
+                    for (int i = 0; i < locationList.size(); i++) {
                         int currentLocationId = locationList.keySet().iterator().next();
                         for (User u : userLocationDAO.getBirthCertSignUsersByLocationId(currentLocationId, true)) {
                             userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
@@ -943,22 +947,55 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private void populateRegistrars(BirthDeclaration bdf) {
         if (!addNewMode && (bdf.getRegister().getBirthDivision() == null ||
             bdf.getRegister().getBirthDivision().getBdDivisionUKey() != birthDivisionId)) {
-            // Registrar data populated to as Notifying authority considering the birthDivision
-            List<Assignment> registrarAssigns = assignmentDAO.getAllAssignmentsByBDorMRDivisionAndType(
-                birthDivisionId, Assignment.Type.BIRTH, true, false);
-            // only the first registrar in the assigned list is loaded as the notifying authority
-            if (registrarAssigns.size() > 0) {
-                Registrar registrar = registrarAssigns.get(0).getRegistrar();
-                notifyingAuthority = new NotifyingAuthorityInfo();
-                notifyingAuthority.setNotifyingAuthorityName(registrar.getFullNameInOfficialLanguage());
-                if (registrar.getNic() != null) {
-                    notifyingAuthority.setNotifyingAuthorityPIN(registrar.getNic());
+            String checkString = String.valueOf(bdf.getRegister().getBdfSerialNo());
+            if ("1".equals(checkString.substring(4, 5))) {
+                // Load ADR information as Notifying Officer.
+                List<User> adrList = userDAO.getUsersByRoleAndAssignedBDDSDivision(roleDAO.getRole(Role.ROLE_ADR), bdf.getRegister().getDsDivision(), user);
+                if (adrList != null && adrList.size() > 0) {
+                    User adr = adrList.iterator().next();
+                    notifyingAuthority = new NotifyingAuthorityInfo();
+                    // Set Notifying officer name to Name of the ADR
+                    notifyingAuthority.setNotifyingAuthorityName(adr.getUserName());
+                    if (String.valueOf(adr.getPin()) != null) {
+                        // Set Notifying officer PIN to be the ADR PIN
+                        notifyingAuthority.setNotifyingAuthorityPIN(String.valueOf(adr.getPin()));
+                    }
+
+                    String locationCode = bdf.getRegister().getDsDivision().getDistrict().getDistrictId() + "-" + bdf.getRegister().getDsDivision().getDivisionId();
+                    // Load the location according to the Birth Record entry division.
+                    Location location = locationDAO.getLocationByCode(locationCode).iterator().next();
+                    // Set Notifying officer address to be the location address.
+                    if (location != null) {
+                        if (AppConstants.ENGLISH.equals(language)) {
+                            notifyingAuthority.setNotifyingAuthorityAddress(location.getEnLocationMailingAddress());
+                        } else if (AppConstants.SINHALA.equals(language)) {
+                            notifyingAuthority.setNotifyingAuthorityAddress(location.getSiLocationMailingAddress());
+                        } else if (AppConstants.TAMIL.equals(language)) {
+                            notifyingAuthority.setNotifyingAuthorityAddress(location.getTaLocationMailingAddress());
+                        }
+                    }
+                    bdf.setNotifyingAuthority(notifyingAuthority);
+                    logger.debug("ADR info populated for ADR userID : {}", adr.getUserId());
                 }
-                if (registrar.getCurrentAddress() != null) {
-                    notifyingAuthority.setNotifyingAuthorityAddress(registrar.getCurrentAddress());
+            } else if ("0".equals(checkString.substring(4, 5))) {
+                // Load Registrar information as Notifying Officer.
+                // Registrar data populated to as Notifying authority considering the birthDivision
+                List<Assignment> registrarAssigns = assignmentDAO.getAllAssignmentsByBDorMRDivisionAndType(
+                    bdf.getRegister().getBirthDivision().getBdDivisionUKey(), Assignment.Type.BIRTH, true, false);
+                // only the first registrar in the assigned list is loaded as the notifying authority
+                if (registrarAssigns.size() > 0) {
+                    Registrar registrar = registrarAssigns.get(0).getRegistrar();
+                    notifyingAuthority = new NotifyingAuthorityInfo();
+                    notifyingAuthority.setNotifyingAuthorityName(registrar.getFullNameInOfficialLanguage());
+                    if (registrar.getNic() != null) {
+                        notifyingAuthority.setNotifyingAuthorityPIN(registrar.getNic());
+                    }
+                    if (registrar.getCurrentAddress() != null) {
+                        notifyingAuthority.setNotifyingAuthorityAddress(registrar.getCurrentAddress());
+                    }
+                    bdf.setNotifyingAuthority(notifyingAuthority);
+                    logger.debug("Registrar info populated for RegistrarUKey : {}", registrar.getRegistrarUKey());
                 }
-                bdf.setNotifyingAuthority(notifyingAuthority);
-                logger.debug("Registrar info populated for RegistrarUKey : {}", registrar.getRegistrarUKey());
             }
         }
     }
