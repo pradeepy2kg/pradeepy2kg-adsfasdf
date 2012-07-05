@@ -222,6 +222,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             case 2:
                 birthType = bdf.getRegister().getBirthType();
                 bdf.setParent(parent);
+                // TODO populate marriage information (if any)
+
                 break;
             case 3:
                 birthType = bdf.getRegister().getBirthType();
@@ -231,7 +233,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 if (BirthDeclaration.BirthType.STILL != birthType && BirthDeclaration.BirthType.ADOPTION != birthType) {
                     bdfLateOrBelated = checkDateLateOrBelated(bdf);
                 }
-                populateRegistrars(bdf);
+                if (bdf.getIdUKey() == 0) {
+                    populateRegistrars(bdf);
+                }
                 break;
             case 4:
                 birthType = bdf.getRegister().getBirthType();
