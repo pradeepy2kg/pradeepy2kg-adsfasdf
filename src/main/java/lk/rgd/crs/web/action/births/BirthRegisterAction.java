@@ -222,8 +222,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             case 2:
                 birthType = bdf.getRegister().getBirthType();
                 bdf.setParent(parent);
-                // TODO populate marriage information (if any)
-
+                // Populate marriage information (if any)
+                if (bdf.getIdUKey() == 0) {
+                    populateMarriageInfo(bdf);
+                }
                 break;
             case 3:
                 birthType = bdf.getRegister().getBirthType();
@@ -1000,6 +1002,49 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     bdf.setNotifyingAuthority(notifyingAuthority);
                     logger.debug("Registrar info populated for RegistrarUKey : {}", registrar.getRegistrarUKey());
                 }
+            }
+        }
+    }
+
+    private void populateMarriageInfo(BirthDeclaration bdf) {
+        logger.debug("Populate Marriage Information");
+        if (bdf.getParent() != null) {
+            if (bdf.getParent().getFatherNICorPIN() != null) {
+                String PINOrNIC = bdf.getParent().getFatherNICorPIN();
+                Person father = new Person();
+                marriage = new MarriageInfo();
+                switch (PINOrNIC.length()) {
+                    case 10:    // NIC, There can be multiple records for a single NIC.
+//                        father = ecivilService.findPersonsByNIC(PINOrNIC, user);
+                        break;
+                    case 12:    // PIN, There is only 1 record for a PIN.
+                        father = ecivilService.findPersonByPIN(Long.parseLong(PINOrNIC), user);
+                        break;
+                }
+                if (father.getLastMarriage() != null && father.getLastMarriage().getDateOfMarriage() != null && father.getLastMarriage().getPlaceOfMarriage() != null) {
+                    marriage.setDateOfMarriage(father.getLastMarriage().getDateOfMarriage());
+                    marriage.setPlaceOfMarriage(father.getLastMarriage().getPlaceOfMarriage());
+                    logger.debug("Set marriage date {} and place of marriage {}", marriage.getDateOfMarriage(), marriage.getPlaceOfMarriage());
+                }
+                bdf.setMarriage(marriage);
+            }else if(bdf.getParent().getMotherNICorPIN() != null){
+                String PINOrNIC = bdf.getParent().getMotherNICorPIN();
+                Person mother = new Person();
+                marriage = new MarriageInfo();
+                switch (PINOrNIC.length()) {
+                    case 10:    // NIC, There can be multiple records for a single NIC.
+//                        mother = ecivilService.findPersonsByNIC(PINOrNIC, user);
+                        break;
+                    case 12:    // PIN, There is only 1 record for a PIN.
+                        mother = ecivilService.findPersonByPIN(Long.parseLong(PINOrNIC), user);
+                        break;
+                }
+                if (mother.getLastMarriage() != null && mother.getLastMarriage().getDateOfMarriage() != null && mother.getLastMarriage().getPlaceOfMarriage() != null) {
+                    marriage.setDateOfMarriage(mother.getLastMarriage().getDateOfMarriage());
+                    marriage.setPlaceOfMarriage(mother.getLastMarriage().getPlaceOfMarriage());
+                    logger.debug("Set marriage date {} and place of marriage {}", marriage.getDateOfMarriage(), marriage.getPlaceOfMarriage());
+                }
+                bdf.setMarriage(marriage);
             }
         }
     }
