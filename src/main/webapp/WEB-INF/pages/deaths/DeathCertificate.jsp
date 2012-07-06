@@ -250,11 +250,11 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="2" align="center" class="font-12">
+        <td rowspan="2" align="center" style="font-size:15pt;">
             ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA
-            <br>මරණ ලියාපදිංචි කිරීමේ ලේඛනය
+            <br>මරණ සහතිකය
             <br>இறப்பு சான்றிதழ்
-            <br>REGISTER OF DEATHS
+            <br>CERTIFICATE OF DEATH
         </td>
     </tr>
     </tbody>

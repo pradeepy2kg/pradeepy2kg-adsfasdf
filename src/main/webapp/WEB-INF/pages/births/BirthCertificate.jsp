@@ -277,7 +277,7 @@
             <s:if test="birthType.ordinal() != 0">
                 උප්පැන්න සහතිකය<br>
                 பிறப்பு சான்றிதழ்﻿<br>
-                BIRTH CERTIFICATE
+                CERTIFICATE OF BIRTH
             </s:if>
             <s:else>
                 මළ උප්පැන්න සහතිකය<br>
@@ -429,7 +429,7 @@
                     **&nbsp;
                 </s:if>
             </div>
-            <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
+            <s:label cssClass="%{#language}" name="" value="%{#request.child.childFullNameOfficialLang}"/>
         </s:if>
         <s:else>
             <div class="center-text">
