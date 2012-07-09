@@ -27,7 +27,10 @@ import java.io.Serializable;
     @NamedQuery(name = "get.active.by.bddivision.and.deathSerialNo", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
         "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision = :deathDivision " +
         "AND deathRegister.lifeCycleInfo.activeRecord IS TRUE"),
-
+    @NamedQuery(
+        name = "getActiveRecordByDSDivisionAndDeathSerialNo",
+        query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision.dsDivision = :dsDivision AND deathRegister.lifeCycleInfo.activeRecord IS TRUE"
+    ),
     @NamedQuery(name = "get.by.division.register.date", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
         "WHERE deathRegister.death.deathDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate)" +
         " AND deathRegister.lifeCycleInfo.activeRecord IS TRUE ORDER BY deathRegister.death.dateOfRegistration desc"),

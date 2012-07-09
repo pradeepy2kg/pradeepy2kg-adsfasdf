@@ -219,6 +219,16 @@ public interface DeathRegistrationService {
     public DeathRegister getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user);
 
     /**
+     * Returns the active Death Declaration records for a given serialNo under a selected DS Division
+     *
+     * @param dsDivision    DS Division
+     * @param serialNo      Death Serial Number
+     * @param user          User requested the search
+     * @return  List of active Death Declaration records with the given serialNo within the given DS Division.
+     */
+    public List<DeathRegister> getActiveRecordsByDSDivisionAndSerialNo(DSDivision dsDivision, long serialNo, User user);
+    
+    /**
      * Returns historical records for the given BD Division and Serial number recodes witch are done before given death id
      *
      * @param bdDivision the birth death division

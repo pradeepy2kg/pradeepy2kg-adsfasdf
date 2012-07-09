@@ -532,6 +532,12 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         return ddf;
     }
 
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getActiveRecordsByDSDivisionAndSerialNo(DSDivision dsDivision, long serialNo, User user) {
+        logger.debug("Get active death records by DS Division {} and Serial No: {}", dsDivision.getEnDivisionName(), serialNo);
+        return deathRegisterDAO.getActiveRecordByDSDivisionAndDeathSerialNo(dsDivision, serialNo);
+    }
+
     /**
      * @inheritDoc
      */
