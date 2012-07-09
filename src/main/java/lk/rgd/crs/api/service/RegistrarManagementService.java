@@ -125,6 +125,15 @@ public interface RegistrarManagementService {
     public Registrar getRegistrarByPin(long pin, User user);
 
     /**
+     * Return a registrar by given NIC number
+     *
+     * @param nic   NIC number
+     * @param user  User requesting to find registrar
+     * @return Registrar with the given NIC
+     */
+    public Registrar getRegistrarByNIC(String nic, User user);
+
+    /**
      * get a assignment by assignmentUKey
      *
      * @param assignmentUKey unique for assignment

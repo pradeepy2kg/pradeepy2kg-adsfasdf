@@ -430,6 +430,19 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Registrar getRegistrarByNIC(String nic, User user) {
+        logger.debug("Looking for registrar with the nic: {} by user: {}", nic, user.getUserId());
+        if (!user.isAuthorized(Permission.SEARCH_REGISTRAR)) {
+            handleException("User : " + user.getUserId() +
+                " is not authorized to search registrars", ErrorCodes.PERMISSION_DENIED);
+        }
+        return registrarDao.getRegistrarByNIC(nic);
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Assignment> getAssignmentsByDistrictId(int districtId, Assignment.Type type, boolean active, User user) {
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {

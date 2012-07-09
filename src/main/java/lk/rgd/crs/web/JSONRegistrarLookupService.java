@@ -66,15 +66,28 @@ public class JSONRegistrarLookupService extends HttpServlet {
         }
 
         try {
-            Registrar registrar = registrarManager.getRegistrarByPin(Long.parseLong(pinOrNic), user);
+            Registrar registrar = null;
+            if (pinOrNic.length() == 10) {
+                registrar = registrarManager.getRegistrarByNIC(pinOrNic, user);
+            } else if (pinOrNic.length() == 12) {
+                registrar = registrarManager.getRegistrarByPin(Long.parseLong(pinOrNic), user);
+            }
             if (registrar != null) {
                 logger.debug("registrar found for pin or nic :{}", pinOrNic);
                 untyped.put("fullNameInOfficialLanguage", registrar.getFullNameInOfficialLanguage());
                 untyped.put("fullNameInEnglishLanguage", registrar.getFullNameInEnglishLanguage());
                 untyped.put("address", registrar.getCurrentAddress());
+            }else{
+                //find minister in PRS there is no way to validate given person is a minister
+                Person minister = populationRegistry.findUniquePersonByPINorNIC(pinOrNic, user);
+                if (minister != null) {
+                    logger.debug("person found as a minister , pin or nic : {}", pinOrNic);
+                    untyped.put("fullNameInOfficialLanguage", minister.getFullNameInOfficialLanguage());
+                    untyped.put("fullNameInEnglishLanguage", minister.getFullNameInEnglishLanguage());
+                    untyped.put("address", minister.getCurrentAddress());
+                }
             }
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             //find minister in PRS there is no way to validate given person is a minister
             Person minister = populationRegistry.findUniquePersonByPINorNIC(pinOrNic, user);
             if (minister != null) {
