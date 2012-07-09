@@ -49,6 +49,15 @@ public interface RegistrarDAO {
     public Registrar getRegistrarByPin(long pin);
 
     /**
+     * Find a registrar according to NIC.
+     * (As there can be more than one record for a given NIC, the first registrar of the list will be returned.)
+     *
+     * @param nic NIC of the registrar
+     * @return Registrar with the given NIC.
+     */
+    public Registrar getRegistrarByNIC(String nic);
+
+    /**
      * get registrars by name or part of the name
      *
      * @param name name or part of the name

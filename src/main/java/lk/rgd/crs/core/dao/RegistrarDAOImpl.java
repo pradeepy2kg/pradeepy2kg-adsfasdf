@@ -65,10 +65,23 @@ public class RegistrarDAOImpl extends BaseDAO implements RegistrarDAO {
         q.setParameter("pin", pin);
         try {
             return (Registrar) q.getSingleResult();
-        }
-        catch (NoResultException e) {
+        } catch (NoResultException e) {
             return null;
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Registrar getRegistrarByNIC(String nic) {
+        Query q = em.createNamedQuery("getRegistrarByNIC");
+        q.setParameter("nic", nic);
+        List<Registrar> registrarList = q.getResultList();
+        if (registrarList != null && registrarList.size() > 0) {
+            return registrarList.get(0);
+        }
+        return null;
     }
 
     /**
