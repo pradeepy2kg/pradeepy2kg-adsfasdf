@@ -54,6 +54,7 @@
         window.open(url, 'Help Window',features);
     }
 </script>
+<script type="text/javascript" src='<s:url value="/js/common.js"/>'></script>
 <body onload="initPage()">
 <div id="wrapper">
     <%-- Header  --%>

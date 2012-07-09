@@ -17,41 +17,42 @@
 <script>
 
     /*date pickers for start and end dates*/
-    $(function() {
+    $(function () {
         $("#fromDate").datepicker({
-            changeYear: true,
+            changeYear:true,
             dateFormat:'yy-mm-dd',
             startDate:'2000-01-01',
             endDate:'2020-12-31'
         });
     });
-    $(function() {
+    $(function () {
         $("#endDate").datepicker({
-            changeYear: true,
+            changeYear:true,
             dateFormat:'yy-mm-dd',
             startDate:'2000-01-01',
             endDate:'2020-12-31'
         });
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#approval-list-table').dataTable({
-            "bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": true,
-            "bSort": true,
-            "bInfo": false,
-            "bAutoWidth": false,
-            "bJQueryUI": true,
-            "sPaginationType": "full_numbers"
+            "bPaginate":true,
+            "bLengthChange":false,
+            "bFilter":true,
+            "bSort":true,
+            "bInfo":false,
+            "bAutoWidth":false,
+            "bJQueryUI":true,
+            "sPaginationType":"full_numbers"
         });
     });
 
-    $(function() {
-        $('select#birthDistrictId').bind('change', function(evt1) {
+    $(function () {
+        $('#deathSerialNo').val('');
+        $('select#birthDistrictId').bind('change', function (evt1) {
             var id = $("select#birthDistrictId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                    function(data) {
+                    function (data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
                         for (var i = 0; i < ds.length; i++) {
@@ -68,10 +69,10 @@
                     });
         });
 
-        $('select#dsDivisionId').bind('change', function(evt2) {
+        $('select#dsDivisionId').bind('change', function (evt2) {
             var id = $("select#dsDivisionId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                    function(data) {
+                    function (data) {
                         var options = '';
                         var bd = data.bdDivisionList;
                         for (var i = 0; i < bd.length; i++) {
@@ -150,8 +151,23 @@
             </tr>
             </tbody>
         </table>
+        <hr style="border:1px solid #c3dcee;"/>
+        <table width="100%">
+            <tr>
+                <td>
+                    <s:label value="%{getText('serial.label')}"/>
+                </td>
+                <td>
+                    <s:textfield id="deathSerialNo" name="deathSerialNo" maxLength="10" onkeypress="return numbersOnly(event, true);"/>
+                </td>
+                <td class="button" align="right">
+                    <s:submit name="" value="%{getText('bdfSearch.button')}"/>
+                </td>
+            </tr>
+        </table>
     </fieldset>
 </s:form>
+
 
 <div id="birth-register-approval-body">
 

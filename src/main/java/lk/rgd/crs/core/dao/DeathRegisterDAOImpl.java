@@ -110,6 +110,17 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<DeathRegister> getActiveRecordByDSDivisionAndDeathSerialNo(DSDivision dsDivision, long deathSerialNo) {
+        Query q = em.createNamedQuery("getActiveRecordByDSDivisionAndDeathSerialNo");
+        q.setParameter("deathSerialNo", deathSerialNo);
+        q.setParameter("dsDivision", dsDivision);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getHistoricalRecordsForBDDivisionAndSerialNo(BDDivision deathDivision, long serialNo, long deathId) {
         Query q = em.createNamedQuery("get.historical.death.records.by.bddivision.and.serialNo.deathID");

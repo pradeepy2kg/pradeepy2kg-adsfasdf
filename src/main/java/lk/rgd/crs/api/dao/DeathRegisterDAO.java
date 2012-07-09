@@ -84,6 +84,15 @@ public interface DeathRegisterDAO {
     public DeathRegister getActiveRecordByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo);
 
     /**
+     * Get the list of Death Declaration records with the given deathSerialNo within the DS Division.
+     *
+     * @param dsDivision        DS Division
+     * @param deathSerialNo     Death Serial Number
+     * @return List of Death Declaration records within the DS Division with the given deathSerialNo
+     */
+    public List<DeathRegister> getActiveRecordByDSDivisionAndDeathSerialNo(DSDivision dsDivision, long deathSerialNo);
+
+    /**
      * Returns historical records for the given BD Division and Serial number
      *
      * @param deathDivision the birth death division

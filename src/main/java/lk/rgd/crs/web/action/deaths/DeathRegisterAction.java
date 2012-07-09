@@ -98,6 +98,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     private long idUKey;
     private long oldIdUKey;
+    private long deathSerialNo;
 
     private boolean allowEditDeath;
     private boolean allowApproveDeath;
@@ -355,50 +356,60 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private void filterDeathRegistrationApprovalList() {
 
         initPermissionForApprovalAndPrint();
-        searchByDate = ((fromDate != null) && (endDate != null));
-
-        if (searchByDate) {
-            //search by date in given division deathDivisions and all the status
-            if (currentStatus == 0) {
-                if (deathDivisionId == 0) {
-                    //for all death divisions
-                    deathApprovalAndPrintList = service.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRange(
-                        dsDivisionId, fromDate, endDate, true, pageNo, noOfRows, user);
-                } else {
-                    deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRange(
-                        bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
-                }
+        if (deathSerialNo > 0l) {
+            if (deathDivisionId == 0) {
+                deathApprovalAndPrintList = service.getActiveRecordsByDSDivisionAndSerialNo(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), deathSerialNo, user);
             } else {
-                if (deathDivisionId == 0) {
-                    //for all death divisions
-                    deathApprovalAndPrintList = service.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRangeAndState(
-                        dsDivisionId, fromDate, endDate, true, pageNo, noOfRows, state, user);
-                } else {
-                    deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRangeAndState(
-                        bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, state, user);
-                }
+                // Here we can have only one record for a given serial number.
+                deathApprovalAndPrintList = new ArrayList<DeathRegister>();
+                deathApprovalAndPrintList.add(service.getByBDDivisionAndDeathSerialNo(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), deathSerialNo, user));
             }
-            addActionMessage(getText("message.search.results.form.to", new String[]
-                {DateTimeUtils.getISO8601FormattedString(fromDate), DateTimeUtils.getISO8601FormattedString(endDate)}));
-
         } else {
-            if (currentStatus == 0) {
-                if (deathDivisionId != 0) {
-                    //search by state with all state with in a deathDivision
-                    deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),
-                        pageNo, noOfRows, user);
+            searchByDate = ((fromDate != null) && (endDate != null));
+
+            if (searchByDate) {
+                //search by date in given division deathDivisions and all the status
+                if (currentStatus == 0) {
+                    if (deathDivisionId == 0) {
+                        //for all death divisions
+                        deathApprovalAndPrintList = service.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRange(
+                            dsDivisionId, fromDate, endDate, true, pageNo, noOfRows, user);
+                    } else {
+                        deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRange(
+                            bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
+                    }
                 } else {
-                    deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
-                        pageNo, noOfRows, user);
+                    if (deathDivisionId == 0) {
+                        //for all death divisions
+                        deathApprovalAndPrintList = service.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRangeAndState(
+                            dsDivisionId, fromDate, endDate, true, pageNo, noOfRows, state, user);
+                    } else {
+                        deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRangeAndState(
+                            bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, state, user);
+                    }
                 }
+                addActionMessage(getText("message.search.results.form.to", new String[]
+                    {DateTimeUtils.getISO8601FormattedString(fromDate), DateTimeUtils.getISO8601FormattedString(endDate)}));
+
             } else {
-                if (deathDivisionId != 0) {
-                    //search by state with a state with in a deathDivision
-                    deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),
-                        pageNo, noOfRows, state, user);
+                if (currentStatus == 0) {
+                    if (deathDivisionId != 0) {
+                        //search by state with all state with in a deathDivision
+                        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),
+                            pageNo, noOfRows, user);
+                    } else {
+                        deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                            pageNo, noOfRows, user);
+                    }
                 } else {
-                    deathApprovalAndPrintList = service.getPaginatedListForStateByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
-                        pageNo, noOfRows, state, user);
+                    if (deathDivisionId != 0) {
+                        //search by state with a state with in a deathDivision
+                        deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),
+                            pageNo, noOfRows, state, user);
+                    } else {
+                        deathApprovalAndPrintList = service.getPaginatedListForStateByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                            pageNo, noOfRows, state, user);
+                    }
                 }
             }
         }
@@ -959,15 +970,15 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             ddf.getDeath().getDeathDivision().getBdDivisionUKey() != deathDivisionId)) {
             List<Assignment> deathRegistrarsAssigned = assignmentDAO.getAllAssignmentsByBDorMRDivisionAndType(
                 deathDivisionId, Assignment.Type.DEATH, true, false);
-            if(deathRegistrarsAssigned.size() > 0){
+            if (deathRegistrarsAssigned.size() > 0) {
                 // Get the first registrar from the list.
                 Registrar registrar = deathRegistrarsAssigned.get(0).getRegistrar();
                 notifyingAuthority = new NotifyingAuthorityInfo();
                 notifyingAuthority.setNotifyingAuthorityName(registrar.getFullNameInOfficialLanguage());
-                if(registrar.getNic() != null){
+                if (registrar.getNic() != null) {
                     notifyingAuthority.setNotifyingAuthorityPIN(registrar.getNic());
                 }
-                if(registrar.getCurrentAddress() != null){
+                if (registrar.getCurrentAddress() != null) {
                     notifyingAuthority.setNotifyingAuthorityAddress(registrar.getCurrentAddress());
                 }
                 ddf.setNotifyingAuthority(notifyingAuthority);
@@ -1692,5 +1703,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setUnknownFieldEn(String unknownFieldEn) {
         this.unknownFieldEn = unknownFieldEn;
+    }
+
+    public long getDeathSerialNo() {
+        return deathSerialNo;
+    }
+
+    public void setDeathSerialNo(long deathSerialNo) {
+        this.deathSerialNo = deathSerialNo;
     }
 }
