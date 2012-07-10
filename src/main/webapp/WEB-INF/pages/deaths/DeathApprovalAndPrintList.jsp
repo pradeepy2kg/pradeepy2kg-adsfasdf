@@ -88,6 +88,7 @@
 
 </script>
 <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
+<script type="text/javascript" src='<s:url value="/js/common.js"/>'></script>
 
 
 <s:form action="eprDeathFilterByStatus" method="post">
