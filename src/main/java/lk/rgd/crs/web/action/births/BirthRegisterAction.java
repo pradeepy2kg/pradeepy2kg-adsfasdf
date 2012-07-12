@@ -223,7 +223,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 birthType = bdf.getRegister().getBirthType();
                 bdf.setParent(parent);
                 // Populate marriage information (if any)
-                if (bdf.getIdUKey() == 0) {
+                if (bdf.getIdUKey() == 0 && bdf.getMarriage().getDateOfMarriage() == null && bdf.getMarriage().getPlaceOfMarriage() == null) {
                     populateMarriageInfo(bdf);
                 }
                 break;
