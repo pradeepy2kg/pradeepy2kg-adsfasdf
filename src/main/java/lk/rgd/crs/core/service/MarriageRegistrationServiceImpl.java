@@ -696,6 +696,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             } else {
                 //adding non existing groom to PRS as semi verified
                 groom = getGroomForProcessToPRS(mr, civilStatus);
+                groom.setNic(groomPinOrNic);    // groomPinOrNic has a NIC value as it came here. If it was a PIN it will not come here.
                 groom.setStatus(Person.Status.SEMI_VERIFIED);
                 eCivil.addPerson(groom, user);
             }
@@ -710,6 +711,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             } else {
                 //adding non existing bride to PRS as semi verified
                 bride = getBrideForProcessToPRS(mr, civilStatus);
+                bride.setNic(bridePinOrNic);    // bridePinOrNic has a NIC value as it came here. If it was a PIN it will not come here.
                 bride.setStatus(Person.Status.SEMI_VERIFIED);
                 eCivil.addPerson(bride, user);
             }
