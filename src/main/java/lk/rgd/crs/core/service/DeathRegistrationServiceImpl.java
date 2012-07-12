@@ -318,8 +318,9 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             person = ecivil.findPersonByPIN(pin, user);
         } catch (NumberFormatException ignore) {
             for (Person p : ecivil.findPersonsByNIC(pinOrNic, user)) {
-                if (person == null && Person.LifeStatus.ALIVE == p.getLifeStatus()
-                    && Person.Status.VERIFIED == p.getStatus()) {
+                // As there can be more than 1 record for NIC, it will compare the names also.
+                if (person == null && Person.LifeStatus.ALIVE == p.getLifeStatus() && (Person.Status.VERIFIED == p.getStatus() || Person.Status.SEMI_VERIFIED == p.getStatus())
+                    && dr.getDeathPerson().getDeathPersonNameInEnglish().equals(p.getFullNameInEnglishLanguage())) {
                     person = p;
                     // TODO have check this again have to check state is DEAD then give exception
                 } else {
