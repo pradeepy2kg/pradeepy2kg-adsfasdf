@@ -11,6 +11,7 @@ import lk.rgd.common.api.domain.*;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.MarriedStatusUtil;
 import lk.rgd.common.util.NameFormatUtil;
+import lk.rgd.common.util.PinAndNicUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.AssignmentDAO;
@@ -1011,17 +1012,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         if (bdf.getParent() != null) {
             if (bdf.getParent().getFatherNICorPIN() != null) {
                 String PINOrNIC = bdf.getParent().getFatherNICorPIN();
-                Person father = new Person();
+                Person father = null;
                 marriage = new MarriageInfo();
-                switch (PINOrNIC.length()) {
-                    case 10:    // NIC, There can be multiple records for a single NIC.
-//                        father = ecivilService.findPersonsByNIC(PINOrNIC, user);
-                        break;
-                    case 12:    // PIN, There is only 1 record for a PIN.
-                        father = ecivilService.findPersonByPIN(Long.parseLong(PINOrNIC), user);
-                        break;
+                if(PinAndNicUtils.isValidPIN(PINOrNIC)){
+                    // PIN, There is only 1 record for a PIN.
+                    father = ecivilService.findPersonByPIN(Long.parseLong(PINOrNIC), user);
                 }
-                if (father.getLastMarriage() != null && father.getLastMarriage().getDateOfMarriage() != null && father.getLastMarriage().getPlaceOfMarriage() != null) {
+                if (father != null && father.getLastMarriage() != null && father.getLastMarriage().getDateOfMarriage() != null && father.getLastMarriage().getPlaceOfMarriage() != null) {
                     marriage.setDateOfMarriage(father.getLastMarriage().getDateOfMarriage());
                     marriage.setPlaceOfMarriage(father.getLastMarriage().getPlaceOfMarriage());
                     logger.debug("Set marriage date {} and place of marriage {}", marriage.getDateOfMarriage(), marriage.getPlaceOfMarriage());
@@ -1029,17 +1026,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.setMarriage(marriage);
             }else if(bdf.getParent().getMotherNICorPIN() != null){
                 String PINOrNIC = bdf.getParent().getMotherNICorPIN();
-                Person mother = new Person();
+                Person mother = null;
                 marriage = new MarriageInfo();
-                switch (PINOrNIC.length()) {
-                    case 10:    // NIC, There can be multiple records for a single NIC.
-//                        mother = ecivilService.findPersonsByNIC(PINOrNIC, user);
-                        break;
-                    case 12:    // PIN, There is only 1 record for a PIN.
-                        mother = ecivilService.findPersonByPIN(Long.parseLong(PINOrNIC), user);
-                        break;
+                if(PinAndNicUtils.isValidPIN(PINOrNIC)){
+                    // PIN, There is only 1 record for a PIN.
+                    mother = ecivilService.findPersonByPIN(Long.parseLong(PINOrNIC), user);
                 }
-                if (mother.getLastMarriage() != null && mother.getLastMarriage().getDateOfMarriage() != null && mother.getLastMarriage().getPlaceOfMarriage() != null) {
+                if (mother != null && mother.getLastMarriage() != null && mother.getLastMarriage().getDateOfMarriage() != null && mother.getLastMarriage().getPlaceOfMarriage() != null) {
                     marriage.setDateOfMarriage(mother.getLastMarriage().getDateOfMarriage());
                     marriage.setPlaceOfMarriage(mother.getLastMarriage().getPlaceOfMarriage());
                     logger.debug("Set marriage date {} and place of marriage {}", marriage.getDateOfMarriage(), marriage.getPlaceOfMarriage());
