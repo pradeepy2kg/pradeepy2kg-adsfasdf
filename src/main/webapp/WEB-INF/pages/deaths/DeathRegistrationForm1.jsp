@@ -26,7 +26,18 @@
 </s:elseif>
 <s:hidden id="pageType" value="%{pageType}"/>
 <script type="text/javascript">
-
+   $(function(){
+       $('#clearWomanInfo').val($('#clear').val());
+       $('#clearWomanInfo').bind('click',function(){
+           $('#pregnantAtTimeOfDeathYestrue').attr('checked', false);
+           $('#pregnantAtTimeOfDeathNofalse').attr('checked', false);
+           $('#givenABirthWithInPreviouse6WeeksYestrue').attr('checked', false);
+           $('#givenABirthWithInPreviouse6WeeksNofalse').attr('checked', false);
+           $('#anAbortionTakenPlaceYestrue').attr('checked', false);
+           $('#anAbortionTakenPlaceNofalse').attr('checked', false);
+           $('#days_before_abortion_or_birth').val('');
+       });
+   });
 
 $(function () {
     $("#timePicker").cantipi({size:140, roundto:5});
@@ -1134,6 +1145,7 @@ function maxLengthCalculate(id, max, divId) {
     මියගියේ වයස අවු. 49ට අඩු කාන්තාවක් නම් පමණක් මෙම කොටස සම්පුර්ණ කල යුතුය
     <br>இறந்த நபர் 49வயதிற்கு குறைந்த பெண்ணாயிருந்தால் மடடும் இப்பகுதி பூரணப்படுத்தப்படல்வேண்டும்
     <br>Fill this section only If the departed is a woman below 49 years
+    <input type="button" id="clearWomanInfo" value="clear" style="float: right; margin-bottom: 5px;"/>
 </div>
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin-bottom:10; margin-top:10;"
@@ -1156,11 +1168,11 @@ function maxLengthCalculate(id, max, divId) {
             Was she pregnant at time of death?
         </td>
         <td align="center">
-            <s:radio name="deathPerson.pregnantAtTimeOfDeath"
+            <s:radio id="pregnantAtTimeOfDeathYes" name="deathPerson.pregnantAtTimeOfDeath"
                      list="#@java.util.HashMap@{'true':''}"/>
         </td>
         <td align="center">
-            <s:radio name="deathPerson.pregnantAtTimeOfDeath"
+            <s:radio id="pregnantAtTimeOfDeathNo" name="deathPerson.pregnantAtTimeOfDeath"
                      list="#@java.util.HashMap@{'false':''}"/>
         </td>
     </tr>
@@ -1172,11 +1184,11 @@ function maxLengthCalculate(id, max, divId) {
             Has she given birth in the previous 6 weeks (42 days) ?
         </td>
         <td align="center">
-            <s:radio name="deathPerson.givenABirthWithInPreviouse6Weeks"
+            <s:radio id="givenABirthWithInPreviouse6WeeksYes" name="deathPerson.givenABirthWithInPreviouse6Weeks"
                      list="#@java.util.HashMap@{'true':''}"/>
         </td>
         <td align="center">
-            <s:radio name="deathPerson.givenABirthWithInPreviouse6Weeks"
+            <s:radio id="givenABirthWithInPreviouse6WeeksNo" name="deathPerson.givenABirthWithInPreviouse6Weeks"
                      list="#@java.util.HashMap@{'false':''}"/>
         </td>
     </tr>
@@ -1188,11 +1200,11 @@ function maxLengthCalculate(id, max, divId) {
             Has an abortion taken place?
         </td>
         <td align="center">
-            <s:radio name="deathPerson.anAbortionTakenPlace"
+            <s:radio id="anAbortionTakenPlaceYes" name="deathPerson.anAbortionTakenPlace"
                      list="#@java.util.HashMap@{'true':''}"/>
         </td>
         <td align="center">
-            <s:radio name="deathPerson.anAbortionTakenPlace"
+            <s:radio id="anAbortionTakenPlaceNo" name="deathPerson.anAbortionTakenPlace"
                      list="#@java.util.HashMap@{'false':''}"/>
         </td>
     </tr>
@@ -1259,4 +1271,6 @@ function maxLengthCalculate(id, max, divId) {
 <s:hidden id="selectDSDivision" value="%{getText('dsDivision.label')}"/>
 <s:hidden id="selectGNDivision" value="%{getText('gnDivisions.label')}"/>
 <s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
+
+<s:hidden id="clear" value="%{getText('clear.label')}"/>
 </div>
