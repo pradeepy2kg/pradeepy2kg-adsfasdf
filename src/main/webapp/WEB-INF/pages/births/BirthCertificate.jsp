@@ -357,7 +357,7 @@
 <col width="100px">
 <tbody>
 <tr height="70px">
-    <td>(5) අනන්‍යතා අංකය<br>தனிநபர்அடையாள எண் <br>Identification Number</td>
+    <td>(5) අනන්‍යතා අංකය<br>அடையாள எண்<br>Identification Number</td>
     <td align="center" style="font-size:14pt;"><s:label name="" value="%{#request.child.pin}"/></td>
     <td>(6) උපන් දිනය <br>பிறந்த திகதி<br>Date of Birth</td>
     <td>

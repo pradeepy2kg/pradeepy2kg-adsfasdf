@@ -183,7 +183,7 @@
         <td align="center" style="font-size:14pt;" colspan="3">
             <s:label>
                 ජනගහන ලේඛනයේ පුද්ගලයකු ලියාපදිංචි කිරීමේ සහතික පත්‍රය
-                <br> குடிமதிப்பீட்டு ஆவணத்தின் ஆட் பதிவிற்கான சான்றிதழ்
+                <br>குடிசன மதிப்பீட்டு ஆவணத்தின் ஆட் பதிவிற்கான சான்றிதழ்
                 <br>Certificate issued for the registration of a person in the Population Registry
             </s:label>
         </td>
