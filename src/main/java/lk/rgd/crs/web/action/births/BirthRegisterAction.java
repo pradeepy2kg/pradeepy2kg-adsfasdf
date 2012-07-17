@@ -955,7 +955,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         if (!addNewMode && (bdf.getRegister().getBirthDivision() == null ||
             bdf.getRegister().getBirthDivision().getBdDivisionUKey() != birthDivisionId)) {
             String checkString = String.valueOf(bdf.getRegister().getBdfSerialNo());
-            if ("1".equals(checkString.substring(4, 5))) {
+            if ("0".equals(checkString.substring(4, 5))) {
                 // Load ADR information as Notifying Officer.
                 List<User> adrList = userDAO.getUsersByRoleAndAssignedBDDSDivision(roleDAO.getRole(Role.ROLE_ADR), bdf.getRegister().getDsDivision(), user);
                 if (adrList != null && adrList.size() > 0) {
@@ -984,7 +984,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     bdf.setNotifyingAuthority(notifyingAuthority);
                     logger.debug("ADR info populated for ADR userID : {}", adr.getUserId());
                 }
-            } else if ("0".equals(checkString.substring(4, 5))) {
+            } else if ("1".equals(checkString.substring(4, 5))) {
                 // Load Registrar information as Notifying Officer.
                 // Registrar data populated to as Notifying authority considering the birthDivision
                 List<Assignment> registrarAssigns = assignmentDAO.getAllAssignmentsByBDorMRDivisionAndType(
