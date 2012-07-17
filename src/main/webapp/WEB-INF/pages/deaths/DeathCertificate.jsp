@@ -293,7 +293,7 @@
             <s:label name="" value="%{deathPersonDeathDivisionEn}" cssStyle="text-transform:uppercase;"/></td>
         <td>
             (4) මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
-            <br>நிறைவேற்றிய மாற்றங்கள்
+            <br>முதல் பதிவின் பின் நிறைவேற்றிய மாற்றங்கள்
             <br>Changes after first registration
         </td>
         <td>
@@ -420,7 +420,7 @@
 <tr>
     <td colspan="1">
         (9) මරණයේ ස්වභාවය
-        <br>மரணத்தின் வகை
+        <br>மரணத்தின் தன்மை
         <br>Type of Death
     </td>
 
