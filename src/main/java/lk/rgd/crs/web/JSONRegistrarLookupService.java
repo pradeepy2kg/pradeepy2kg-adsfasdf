@@ -1,5 +1,6 @@
 package lk.rgd.crs.web;
 
+import lk.rgd.common.util.PinAndNicUtils;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
@@ -67,9 +68,9 @@ public class JSONRegistrarLookupService extends HttpServlet {
 
         try {
             Registrar registrar = null;
-            if (pinOrNic.length() == 10) {
+            if (PinAndNicUtils.isValidNIC(pinOrNic)) {
                 registrar = registrarManager.getRegistrarByNIC(pinOrNic, user);
-            } else if (pinOrNic.length() == 12) {
+            } else if (PinAndNicUtils.isValidPIN(pinOrNic)) {
                 registrar = registrarManager.getRegistrarByPin(Long.parseLong(pinOrNic), user);
             }
             if (registrar != null) {

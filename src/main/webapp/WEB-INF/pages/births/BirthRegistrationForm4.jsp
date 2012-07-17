@@ -37,11 +37,11 @@
 
             $("textarea#notifyingAuthorityName").val('');
             $("textarea#notifyingAuthorityAddress").val('');
-            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
+            $.getJSON('/ecivil/crs/RegistrarLookupService', {pinOrNic:id1},
                     function(data1) {
                         if (data1 != null) {
                             $("textarea#notifyingAuthorityName").val(data1.fullNameInOfficialLanguage);
-                            $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
+                            $("textarea#notifyingAuthorityAddress").val(data1.address);
                         }
                     });
         });
