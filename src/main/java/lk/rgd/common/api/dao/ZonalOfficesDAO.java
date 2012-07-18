@@ -42,14 +42,6 @@ public interface ZonalOfficesDAO {
     public ZonalOffice getZonalOfficeByDistrict(District district);
 
     /**
-     * Returns the Zonal Office related to the given Court. (Court PK)
-     *
-     * @param court Selected Court.
-     * @return      Zonal Office related to the given Court.
-     */
-    public ZonalOffice getZonalOfficeByCourt(Court court);
-
-    /**
      * Returns the Name of the Zonal Office in the given Language.
      *
      * @param zonalOfficeUKey   Primary Key of the Zonal Office.

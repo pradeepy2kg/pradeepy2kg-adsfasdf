@@ -17,10 +17,6 @@ import java.util.Set;
     @NamedQuery(
         name = "getZonalOfficeByDistrict",
         query = "SELECT z FROM ZonalOffice z WHERE :district MEMBER OF z.districts"
-    ),
-    @NamedQuery(
-        name = "getZonalOfficeByCourt",
-        query = "SELECT z FROM ZonalOffice z WHERE :court MEMBER OF z.courts"
     )
 })
 public class ZonalOffice implements Serializable {
@@ -81,15 +77,6 @@ public class ZonalOffice implements Serializable {
         joinColumns = @JoinColumn(name = "zonalOfficeUKey"),
         inverseJoinColumns = @JoinColumn(name = "districtUKey"))
     private Set<District> districts;
-
-    /**
-     * Courts related to this Zonal Office.
-     */
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(schema = "COMMON", name = "ZONAL_OFFICE_COURTS",
-        joinColumns = @JoinColumn(name = "zonalOfficeUKey"),
-        inverseJoinColumns = @JoinColumn(name = "courtUKey"))
-    private Set<Court> courts;
 
     public int getZonalOfficeUKey() {
         return zonalOfficeUKey;
@@ -185,13 +172,5 @@ public class ZonalOffice implements Serializable {
 
     public void setDistricts(Set<District> districts) {
         this.districts = districts;
-    }
-
-    public Set<Court> getCourts() {
-        return courts;
-    }
-
-    public void setCourts(Set<Court> courts) {
-        this.courts = courts;
     }
 }
