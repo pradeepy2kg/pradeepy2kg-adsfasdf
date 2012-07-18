@@ -60,6 +60,8 @@ public class ErrorCodes {
     public static final int POSSIBLE_DUPLICATION_OF_BDF_SERIAL_NUMBER = 1011;
     public static final int UNABLE_TO_UPDATE_ADOPTION_ORDER = 1012;
 
+    // Non Existing Zonal Office.
+    public static final int INVALID_ZONAL_OFFICE = 1013;
 
     // error codes 2001 - 3000 indicate permission denied errors
     /**
