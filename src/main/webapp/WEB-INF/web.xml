@@ -31,6 +31,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>ZonalOfficeLookupService</servlet-name>
+        <servlet-class>lk.rgd.crs.web.JSONZonalOfficeLookupService</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>RegistrarLookupService</servlet-name>
         <servlet-class>lk.rgd.crs.web.JSONRegistrarLookupService</servlet-class>
     </servlet>
@@ -68,6 +73,11 @@
     <servlet-mapping>
         <servlet-name>DivisionLookupService</servlet-name>
         <url-pattern>/crs/DivisionLookupService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ZonalOfficeLookupService</servlet-name>
+        <url-pattern>/crs/ZonalOfficeLookupService</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
