@@ -103,7 +103,7 @@
             </table>
         </fieldset>
     </div>
-    <table class="adoption-reg-form-header-table">
+    <table class="adoption-reg-form-header-table" width="99%">
         <tr>
             <td align="center" style="font-size:15pt">
                 <img src="<s:url value="/images/official-logo.png" />" alt=""><br>
@@ -115,7 +115,7 @@
 
             </td>
         </tr>
-        <tr style="text-align:right;font-size:10pt">
+        <tr style="text-align:right;font-size:10pt;">
             <td><s:label><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
             </s:label></td>
         </tr>
@@ -150,7 +150,7 @@
         </tr>
     </table>
 
-    <table cellspacing="0" cellpadding="0" border="1" width="100%"
+    <table cellspacing="0" cellpadding="0" border="1" width="99%"
            style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
         <tr>
             <td width="330px" height="60px">
@@ -189,7 +189,7 @@
     </table>
 
 
-    <table class="adoption-reg-form-header-table">
+    <table class="adoption-reg-form-header-table" width="99%">
         <tr>
             <td align="left">
                 මෙම නියෝගය පහත සඳහන් අනුක්‍රමික අංකය යටතේ ලියාපදිංචි වී තිබේ:
@@ -199,7 +199,7 @@
         </tr>
     </table>
 
-    <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
+    <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" width="99%">
         <tr>
             <td height="60px" width="330px">
                 <label>
@@ -209,9 +209,7 @@
                 </label>
             </td>
             <td>
-
                 <s:label value="%{adoption.idUKey}"/>
-
             </td>
         </tr>
     </table>
@@ -235,7 +233,7 @@
             copy of the Certificate of Adoption. Send the completed form to the following address, along with a self
             addressed stamped envelope.
             <br><br>
-            <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
+            <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" width="99%">
                 <tr>
                     <td height="90px">
                         <label>
@@ -311,7 +309,7 @@
                 <li>Original Certificate of Birth of Child (if available)</li>
             </ol>
             <br>
-            <table id="zonal_office_address" class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
+            <table id="zonal_office_address" class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" width="99%">
                 <tr>
                     <td height="90px" width="33%">
                         <s:textarea id="siZonalOfficeAddress" value="%{siZonalOfficeAddress}" rows="4" disabled="true"
@@ -329,7 +327,7 @@
             </table>
         </li>
     </ol>
-    <table style="float:right;">
+    <table style="float:right;" width="99%">
         <tr>
             <td align="right">
                 <br><br><br> මෙයට විශ්වාසී
@@ -348,7 +346,7 @@
     </table>
 </div>
 
-<table class="adoption-reg-form-header-table">
+<table class="adoption-reg-form-header-table" width="99%">
     <tr>
         <td style="font-size:18px">
             රෙජිස්ට්‍රාර් ජෙනරාල් දෙපාර්තමේන්තුව / பதிவாளா் நாயகம் திணைக்களம்/Registrar General's Department
@@ -363,7 +361,7 @@
     </tr>
 
 </table>
-<table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" style="float:right;width:500px;">
+<table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" style="float:right;width:450px; margin-right: 10px;">
     <tr>
         <td height="40px" width="250px">
             <label>
@@ -372,7 +370,7 @@
                 <br>Serial number of the registration
             </label>
         </td>
-        <td width="250px">
+        <td width="200px">
 
             <s:label value="%{adoption.idUKey}"/>
 
@@ -388,7 +386,7 @@
 </table>
 
 
-<table border="1" width="100%" style="float:left;border:1px solid #000; border-collapse:collapse;">
+<table border="1" width="99%" style="float:left;border:1px solid #000; border-collapse:collapse;">
     <caption></caption>
     <col width="110px"/>
     <col width="110px"/>
@@ -468,7 +466,7 @@
 </table>
 
 
-<table border="1" width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+<table border="1" width="99%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <caption></caption>
     <col width="327px"/>
     <col/>
@@ -513,7 +511,7 @@
     </tr>
 </table>
 
-<table border="1" width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+<table border="1" width="99%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <caption></caption>
     <col width="327"/>
     <col/>
@@ -544,7 +542,7 @@
 </table>
 
 
-<table style="width:1030px; text-align:left;border:none; margin-top:15px;margin-bottom:15px;">
+<table style="width:1000px; text-align:left;border:none; margin-top:15px;margin-bottom:15px;">
     <tr>
         <td>
             මුද්දර ගාස්තු (එක පිටපතක් සඳහා රු. 25/- වටිනා මුද්දර අලවන්න)
@@ -554,7 +552,7 @@
     </tr>
 </table>
 
-<table border="1" width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+<table border="1" width="99%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <caption></caption>
     <col width="327"/>
     <col/>
