@@ -132,6 +132,7 @@
     <bean id="assignmentDAOImpl" class="lk.rgd.crs.core.dao.AssignmentDAOImpl"/>
     <bean id="birthAlterationDAOImpl" class="lk.rgd.crs.core.dao.BirthAlterationDAOImpl"/>
     <bean id="locationDAOImpl" class="lk.rgd.common.core.dao.LocationDAOImpl"/>
+    <bean id="zonalOfficeDAOImpl" class="lk.rgd.common.core.dao.ZonalOfficeDAOImpl"/>
     <bean id="userLocationDAOImpl" class="lk.rgd.common.core.dao.UserLocationDAOImpl"/>
     <bean id="deathAlterationDAOImpl" class="lk.rgd.crs.core.dao.DeathAlterationDAOImpl"/>
     <bean id="personCitizenshipDAOImpl" class="lk.rgd.prs.core.dao.PersonCitizenshipDAOImpl"/>
@@ -441,6 +442,7 @@
         <constructor-arg ref="countryDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
         <constructor-arg ref="courtDAOImpl"/>
+        <constructor-arg ref="zonalOfficeDAOImpl"/>
     </bean>
 
     <bean id="userManagmentAction" class="lk.rgd.crs.web.action.UserManagementAction">
