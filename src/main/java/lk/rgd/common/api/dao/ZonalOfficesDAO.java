@@ -5,6 +5,9 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.ZonalOffice;
 import lk.rgd.crs.api.domain.Court;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Duminda Dharmakeerthi
  */
@@ -58,4 +61,19 @@ public interface ZonalOfficesDAO {
      * @return                  Address of the Zonal Office in the given Language.
      */
     public String getZonalOfficeMailAddressByPK(int zonalOfficeUKey, String language);
+
+    /**
+     * Returns all the Active Zonal Offices
+     *
+     * @return List of active Zonal Offices.
+     */
+    public List<ZonalOffice> getAllActiveZonalOffices();
+
+    /**
+     * Returns a Map of Active Zonal Offices in the given language.
+     *
+     * @param language  Selected language.
+     * @return          Map of all Zonal Offices.
+     */
+    public Map<Integer, String> getActiveZonalOffices(String language);
 }

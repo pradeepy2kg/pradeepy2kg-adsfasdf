@@ -15,6 +15,10 @@
         td {
             font-size: 10pt;
         }
+
+        #zonal_office_list {
+            display: none;
+        }
     }
 
     #adoption-registration-form-outer .form-submit {
@@ -23,7 +27,33 @@
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+    }
+
+    $(function () {
+        var zonalOfficeId = $('#zonalOfficeId').val();
+        populateZonalOfficeAddress(zonalOfficeId);
+        $('#zonalOfficeId').bind('change', function () {
+            var zonalOfficeId = $('#zonalOfficeId').val();
+            populateZonalOfficeAddress(zonalOfficeId);
+        });
+    });
+
+    function populateZonalOfficeAddress(zonalOfficeId) {
+        /* Clear current Zonal Office Addresses. */
+        $('#siZonalOfficeAddress').val('');
+        $('#taZonalOfficeAddress').val('');
+        $('#enZonalOfficeAddress').val('');
+        $.getJSON('/ecivil/crs/ZonalOfficeLookupService', {zonalOfficeId:zonalOfficeId}, function (data) {
+            var siAddress = data.siAddress;
+            var taAddress = data.taAddress;
+            var enAddress = data.enAddress;
+            /* Set New Zonal Office Addresses. */
+            $('#siZonalOfficeAddress').val(siAddress);
+            $('#taZonalOfficeAddress').val(taAddress);
+            $('#enZonalOfficeAddress').val(enAddress);
+        });
+    }
 </script>
 
 <div class="form-submit">
@@ -61,253 +91,261 @@
 </div>
 <div id="adoption-registration-form-outer">
 <div id="page1" style="page-break-after:always;">
-<table class="adoption-reg-form-header-table">
-    <tr>
-        <td align="center" style="font-size:15pt">
-            <img src="<s:url value="/images/official-logo.png" />" alt=""><br>
-            <label>
-                රෙජිස්ට්‍රාර් ජෙනරාල් දෙපාර්තමේන්තුව
-                <br>பதிவாளா் நாயகம் திணைக்களம்
-                <br>Registrar General's Department
-            </label>
+    <div id="zonal_office_list">
+        <fieldset style="border:2px solid #c3dcee;">
+            <table>
+                <tr>
+                    <td><s:label value="%{getText('select_zonal_office.label')}"/></td>
+                    <td>
+                        <s:select list="zonalOfficeList" id="zonalOfficeId" name="zonalOfficeId"/>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <table class="adoption-reg-form-header-table">
+        <tr>
+            <td align="center" style="font-size:15pt">
+                <img src="<s:url value="/images/official-logo.png" />" alt=""><br>
+                <label>
+                    රෙජිස්ට්‍රාර් ජෙනරාල් දෙපාර්තමේන්තුව
+                    <br>பதிவாளா் நாயகம் திணைக்களம்
+                    <br>Registrar General's Department
+                </label>
 
-        </td>
-    </tr>
-    <tr style="text-align:right;font-size:10pt">
-        <td><s:label><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
-        </s:label></td>
-    </tr>
-    <tr height="50px" style="text-align:left;font-size:10pt">
-        <td><s:label value="%{adoption.applicantName}"/></td>
-    </tr>
-    <tr height="30px" style="text-align:left;font-size:10pt">
-        <td><s:label value="%{adoption.applicantAddress}"/></td>
-    </tr>
-    <tr>
-        <td align="left">
-            <br>මහත්මයාණෙනි / මහත්මියනි
-            <br>கனம் ஐயா/ அம்மணி
-            <br>Dear Sir / Madam
-        </td>
-    </tr>
-    <tr>
-        <td style="font-size:13pt;">
-            දරුකමට හදාගත් ළමයෙකුගේ උපත නැවත ලියාපදිංචි කිරීම
-            <br> மகவேற்புச் செய்யப்பட்ட பிள்ளையின் பிறப்பினை மீண்டும் பதிவு செய்தல்
-            <br>Re-registration of the birth of an Adopted Child
-        </td>
-    </tr>
-    <tr>
-        <td align="left">
-            <br>ළමයින් දරුකමට හදා ගැනීමේ ආඥා පනත (අධිකාරය 61) යටතේ පහත සඳහන් උසාවි නියෝගය මෙම කාර්යාලයට ලැබී ඇත.
-            <br>மகவேற்புக் கட்டளைச்சட்டத்தின் ( 16ஆம் அதிகாரம்) கீழ் குறிப்பிடப்பட்ட நீதிமன்ற கட்டளை
-            இக்காரியலயத்திற்கு கிடைக்கப்பெற்றது.
-            <br>Under section 61 of the Adoption of Children Ordinance, we have received the following Adoption
-            order.
-        </td>
-    </tr>
-</table>
+            </td>
+        </tr>
+        <tr style="text-align:right;font-size:10pt">
+            <td><s:label><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
+            </s:label></td>
+        </tr>
+        <tr height="50px" style="text-align:left;font-size:10pt">
+            <td><s:label value="%{adoption.applicantName}"/></td>
+        </tr>
+        <tr height="30px" style="text-align:left;font-size:10pt">
+            <td><s:label value="%{adoption.applicantAddress}"/></td>
+        </tr>
+        <tr>
+            <td align="left">
+                <br>මහත්මයාණෙනි / මහත්මියනි
+                <br>கனம் ஐயா/ அம்மணி
+                <br>Dear Sir / Madam
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:13pt;">
+                දරුකමට හදාගත් ළමයෙකුගේ උපත නැවත ලියාපදිංචි කිරීම
+                <br> மகவேற்புச் செய்யப்பட்ட பிள்ளையின் பிறப்பினை மீண்டும் பதிவு செய்தல்
+                <br>Re-registration of the birth of an Adopted Child
+            </td>
+        </tr>
+        <tr>
+            <td align="left">
+                <br>ළමයින් දරුකමට හදා ගැනීමේ ආඥා පනත (අධිකාරය 61) යටතේ පහත සඳහන් උසාවි නියෝගය මෙම කාර්යාලයට ලැබී ඇත.
+                <br>மகவேற்புக் கட்டளைச்சட்டத்தின் ( 16ஆம் அதிகாரம்) கீழ் குறிப்பிடப்பட்ட நீதிமன்ற கட்டளை
+                இக்காரியலயத்திற்கு கிடைக்கப்பெற்றது.
+                <br>Under section 61 of the Adoption of Children Ordinance, we have received the following Adoption
+                order.
+            </td>
+        </tr>
+    </table>
 
-<table cellspacing="0" cellpadding="0" border="1" width="100%"
-       style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
-    <tr>
-        <td width="330px" height="60px">
-            අධිකරණය
-            <br>நீதிமன்றம்
-            <br>Court
-        </td>
-        <td><s:label name="courtName"/></td>
-    </tr>
-    <tr>
-        <td height="60px">
-            නියෝගය නිකුත් කල දිනය
-            <br>கட்டளை வழங்கப்பட்ட திகதி
-            <br>Issued Date
-        </td>
-        <td><s:label name="" value="%{adoption.orderIssuedDate}"/>
-        </td>
-    </tr>
-    <tr>
-        <td height="60px">
-            නියෝග අංකය
-            <br>கட்டளை இலக்கம்
-            <br>Serial number
-        </td>
-        <td><s:label name="" value="%{adoption.courtOrderNumber}"/>
-    </tr>
-    <tr>
-        <td height="60px">
-            විනිසුරු නම
-            <br>நீதிபதியின் பெயா்
-            <br>Name of the Judge
-        </td>
-        <td colspan="4"><s:label name="" value="%{adoption.judgeName}"/>
-        </td>
-    </tr>
-</table>
+    <table cellspacing="0" cellpadding="0" border="1" width="100%"
+           style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+        <tr>
+            <td width="330px" height="60px">
+                අධිකරණය
+                <br>நீதிமன்றம்
+                <br>Court
+            </td>
+            <td><s:label name="courtName"/></td>
+        </tr>
+        <tr>
+            <td height="60px">
+                නියෝගය නිකුත් කල දිනය
+                <br>கட்டளை வழங்கப்பட்ட திகதி
+                <br>Issued Date
+            </td>
+            <td><s:label name="" value="%{adoption.orderIssuedDate}"/>
+            </td>
+        </tr>
+        <tr>
+            <td height="60px">
+                නියෝග අංකය
+                <br>கட்டளை இலக்கம்
+                <br>Serial number
+            </td>
+            <td><s:label name="" value="%{adoption.courtOrderNumber}"/>
+        </tr>
+        <tr>
+            <td height="60px">
+                විනිසුරු නම
+                <br>நீதிபதியின் பெயா்
+                <br>Name of the Judge
+            </td>
+            <td colspan="4"><s:label name="" value="%{adoption.judgeName}"/>
+            </td>
+        </tr>
+    </table>
 
 
-<table class="adoption-reg-form-header-table">
-    <tr>
-        <td align="left">
-            මෙම නියෝගය පහත සඳහන් අනුක්‍රමික අංකය යටතේ ලියාපදිංචි වී තිබේ:
-            <br>இக்கட்டளை கீழ் குறிப்பிட்ட தொடா் இலக்கத்தின் கீழ் பதியப்பட்டுள்ளது.
-            <br>This has been registered with the following serial number:
-        </td>
-    </tr>
-</table>
+    <table class="adoption-reg-form-header-table">
+        <tr>
+            <td align="left">
+                මෙම නියෝගය පහත සඳහන් අනුක්‍රමික අංකය යටතේ ලියාපදිංචි වී තිබේ:
+                <br>இக்கட்டளை கீழ் குறிப்பிட்ட தொடா் இலக்கத்தின் கீழ் பதியப்பட்டுள்ளது.
+                <br>This has been registered with the following serial number:
+            </td>
+        </tr>
+    </table>
 
-<table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
-    <tr>
-        <td height="60px" width="330px">
-            <label>
-                ලියාපදිංචි කිරීමේ අනුක්‍රමික අංකය
-                <br>பதிவு செய்தலின் தொடா் இலக்கம்
-                <br>Serial number of the registration
-            </label>
-        </td>
-        <td>
+    <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
+        <tr>
+            <td height="60px" width="330px">
+                <label>
+                    ලියාපදිංචි කිරීමේ අනුක්‍රමික අංකය
+                    <br>பதிவு செய்தலின் தொடா் இலக்கம்
+                    <br>Serial number of the registration
+                </label>
+            </td>
+            <td>
 
-            <s:label value="%{adoption.idUKey}"/>
+                <s:label value="%{adoption.idUKey}"/>
 
-        </td>
-    </tr>
-</table>
+            </td>
+        </tr>
+    </table>
 
-<ol>
-    <li style="font-size:13px">
-        <u style="font-size:15px">
-            ලියාපදිංචි දරු ලේඛනයේ සහතික පිටපතක් (දරු සහතිකය) ලබාගැනීම
-            <br>பதிவு செய்யப்பட்ட மகவேற்புப் பதிவேட்டின் பிரதியினை ( மகவேற்புச் சான்றிதழ்) பெற்றுக் கொள்ளல்
-            <br>Obtaining a copy of the Certificate of Adoption </u>
+    <ol>
+        <li style="font-size:13px">
+            <u style="font-size:15px">
+                ලියාපදිංචි දරු ලේඛනයේ සහතික පිටපතක් (දරු සහතිකය) ලබාගැනීම
+                <br>பதிவு செய்யப்பட்ட மகவேற்புப் பதிவேட்டின் பிரதியினை ( மகவேற்புச் சான்றிதழ்) பெற்றுக் கொள்ளல்
+                <br>Obtaining a copy of the Certificate of Adoption </u>
 
-        <br><br>මේ සමග ඒවා ඇති දරු සහතික ඉල්ලුම් පත්‍රය නිසි පරිදි සම්පුර්ණ කර රු 25/- ක් වටිනා වලංගු මුද්දර එහි අලවා
-        පහත සඳහන් ලිපිනයට එවන්න. ඔබගේ අයදුම්පත්‍රය සමග ඔබගේ නිවැරදි ලිපිනය සඳහන්, නියමිත තැපැල් ගාස්තු සඳහා
-        මුද්දර අලවන ලද දිග ලියුම් කවරයක් ද අමුණ එවන්න.
-        <br>இத்துடன் அனுப்பப்பட்டுள்ள மகவேற்புச் சான்றிதழ் விண்ணப்பப்படிவத்தினை உரியவாறு பூா்த்தி செய்து 25/-
-        ரூபா பெறுமதியான செல்லுப்படியாகும் முத்திரையினை அதில் ஒட்டி கீழ் குறிப்பிடப்பட்டுள்ள முகவரிக்கு
-        அனுப்பவும். தங்களது விண்ணப்பப்படிவத்துடன் தங்களது சரியான முகவரியினை குறிப்பிட்டு உரிய தபாற் கட்டணம்
-        சம்பந்தமான முத்திரையினை ஒட்டி நீண்ட தபாலுறையினை யும் இணைத்து அனுப்பவும்.
-        <br>Fill the attached application form including stamps to the value of Rs. 25/- to obtain a certified
-        copy of the Certificate of Adoption. Send the completed form to the following address, along with a self
-        addressed stamped envelope.
-        <br><br>
-        <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
-            <tr>
-                <td height="90px">
-                    <label>
-                        රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව ,
-                        <br>234 / A 3, ඩෙන්සිල් කොබ්බැකඩුව මාවත,
-                        <br>බත්තරමුල්ල
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        பதிவாளா் நாயகம் திணைக்களம்,
-                        <br>234/A3, டென்சில் கொப்பேகடுவ மாவத்தை,
-                        <br>பத்தரமுல்லை.
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        Registrar Generals Department
-                        <br>234 / A3, Denzil Kobbakaduwa Mawatha,
-                        <br>Battaramulla
-                    </label>
-                </td>
-            </tr>
-        </table>
-    </li>
+            <br><br>මේ සමග ඒවා ඇති දරු සහතික ඉල්ලුම් පත්‍රය නිසි පරිදි සම්පුර්ණ කර රු 25/- ක් වටිනා වලංගු මුද්දර එහි
+            අලවා
+            පහත සඳහන් ලිපිනයට එවන්න. ඔබගේ අයදුම්පත්‍රය සමග ඔබගේ නිවැරදි ලිපිනය සඳහන්, නියමිත තැපැල් ගාස්තු සඳහා
+            මුද්දර අලවන ලද දිග ලියුම් කවරයක් ද අමුණ එවන්න.
+            <br>இத்துடன் அனுப்பப்பட்டுள்ள மகவேற்புச் சான்றிதழ் விண்ணப்பப்படிவத்தினை உரியவாறு பூா்த்தி செய்து 25/-
+            ரூபா பெறுமதியான செல்லுப்படியாகும் முத்திரையினை அதில் ஒட்டி கீழ் குறிப்பிடப்பட்டுள்ள முகவரிக்கு
+            அனுப்பவும். தங்களது விண்ணப்பப்படிவத்துடன் தங்களது சரியான முகவரியினை குறிப்பிட்டு உரிய தபாற் கட்டணம்
+            சம்பந்தமான முத்திரையினை ஒட்டி நீண்ட தபாலுறையினை யும் இணைத்து அனுப்பவும்.
+            <br>Fill the attached application form including stamps to the value of Rs. 25/- to obtain a certified
+            copy of the Certificate of Adoption. Send the completed form to the following address, along with a self
+            addressed stamped envelope.
+            <br><br>
+            <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td height="90px">
+                        <label>
+                            රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව ,
+                            <br>234 / A 3, ඩෙන්සිල් කොබ්බැකඩුව මාවත,
+                            <br>බත්තරමුල්ල
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            பதிவாளா் நாயகம் திணைக்களம்,
+                            <br>234/A3, டென்சில் கொப்பேகடுவ மாவத்தை,
+                            <br>பத்தரமுல்லை.
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            Registrar Generals Department
+                            <br>234 / A3, Denzil Kobbakaduwa Mawatha,
+                            <br>Battaramulla
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        </li>
     </ol>
 </div>
 
 <div id="page2" style="page-break-after:always;">
-   <ol start="2">
-    <li style="font-size:13px">
-        <u style="font-size:15px">
-            දරුවා හදාගන්නා මව්පියන් දරුවාගේ ජනක මව්පියන් වශයෙන් ඇතුලත් කර දරුවාගේ උපත නැවත ලියාපදිංචි කිරීම
-            <br>மகவேற்பு செய்யும் பெற்றோர்களை பிள்ளையின் சொந்த பெற்றோராக உட்புகுத்துவதற்கு பிறப்பினை மீள பதிவு
-            செய்தல்
-            <br>Re-registration of the birth by including the particulars of adopted parents as the birth parents
+    <ol start="2">
+        <li style="font-size:13px">
+            <u style="font-size:15px">
+                දරුවා හදාගන්නා මව්පියන් දරුවාගේ ජනක මව්පියන් වශයෙන් ඇතුලත් කර දරුවාගේ උපත නැවත ලියාපදිංචි කිරීම
+                <br>மகவேற்பு செய்யும் பெற்றோர்களை பிள்ளையின் சொந்த பெற்றோராக உட்புகுத்துவதற்கு பிறப்பினை மீள பதிவு
+                செய்தல்
+                <br>Re-registration of the birth by including the particulars of adopted parents as the birth parents
+                <br>
+            </u><br>
+            ඉහත සඳහන් ආකාරයෙන් ලබාගත් දරු සහතිකයේ සඳහන් විවාහක අඹු සැමියන්ගේ නම්, මෙම දරුවාගේ ජනක මව්පියන් වශයෙන් ඇතුලත්
+            කර දරුවාගේ උපත නැවත ලියාපදිංචි කිරීම සඳහා මේ සමග ඒවා ඇති ප්‍රකාශ පත්‍රය නිසි පරිදි සම්පුඋර්ණ කර රු. 5/- ක්
+            වටින මුද්දරයක් මත, සමාදාන විනිශ්‍යකරවරයකු ඉදිරිපිට දී මව සහ පියාගේ යන දෙදෙනාගේම අත්සන් තබා, පහත සඳහන්
+            ලියවිලි වල පිටපත් සමග එවන්න.
+            <ol>
+                <li>ඉහත සඳහන් ආකාරයෙන් ලබාගත් දරු සහතිකය</li>
+                <li>ළමයා හදා වඩා ගන්නා මව්පියන්ගේ විවාහ සහතිකය</li>
+                <li>මව්පියන්ගේ උප්පැන්න සහතික</li>
+                <li>දරුවාගේ පැරණි උප්පැන සහතිකය (තිබේනම්)</li>
+            </ol>
             <br>
-        </u><br>
-        ඉහත සඳහන් ආකාරයෙන් ලබාගත් දරු සහතිකයේ සඳහන් විවාහක අඹු සැමියන්ගේ නම්, මෙම දරුවාගේ ජනක මව්පියන් වශයෙන් ඇතුලත්
-        කර දරුවාගේ උපත නැවත ලියාපදිංචි කිරීම සඳහා මේ සමග ඒවා ඇති ප්‍රකාශ පත්‍රය නිසි පරිදි සම්පුඋර්ණ කර රු. 5/- ක්
-        වටින මුද්දරයක් මත, සමාදාන විනිශ්‍යකරවරයකු ඉදිරිපිට දී මව සහ පියාගේ යන දෙදෙනාගේම අත්සන් තබා, පහත සඳහන්
-        ලියවිලි වල පිටපත් සමග එවන්න.
-        <ol>
-            <li>ඉහත සඳහන් ආකාරයෙන් ලබාගත් දරු සහතිකය</li>
-            <li>ළමයා හදා වඩා ගන්නා මව්පියන්ගේ විවාහ සහතිකය</li>
-            <li>මව්පියන්ගේ උප්පැන්න සහතික</li>
-            <li>දරුවාගේ පැරණි උප්පැන සහතිකය (තිබේනම්)</li>
-        </ol>
-        <br>
-        மேற்குறிப்பிடப்பட்ட வகையில் பெறப்பட்ட மகவேற்புச்சான்றிதழில் குறிப்பிடப்பட்ட கணவன் மனைவியினது பெயா் குறிப்பிட்ட
-        பிள்ளையின் சொந்த பெற்றோர் எனும் வகையில் உட்புகுத்தி பிள்ளையின் பிறப்பினை மீள பதிவு செய்வதற்காக இத்துடன்
-        அனுப்பப்பட்டுள்ள மகவேற்புச் சான்றிதழ் விண்ணப்பப்படிவத்தினை உரியவாறு பூா்த்தி செய்து 5/- ரூபா பெறுமதியான
-        முத்திரையின் மேல் சமாதான நீதவான் முன்னிலையில் தாய் மற்றும் தந்தை ஆகிய இருவரும் கையொப்பமிட்டு கீழ்
-        குறிப்பிடப்படும் ஆவணங்களின் பிரதிகளுடன் அனுப்பவும்.
-        <ol>
-            <li>மேற்குறிப்பிடப்பட்ட விதத்தில் பெறப்பட்ட மகவேற்புச் சான்றிதழ்</li>
-            <li>மகவேற்புச் செய்யும் பெற்றோரின் விவாகச் சான்றிதழ்.</li>
-            <li>பெற்றோரின் பிறப்புச் சான்றிதழ்.கள்.</li>
-            <li>பிள்ளையின் பழைய பிறப்புச் சான்றிதழ் (இருந்தால்)</li>
-        </ol>
-        <br>
-        Attach a copy of the Certificate of Adoption obtained as detailed above in Step #1, and fill the attached form
-        for the re-registration of the birth, and send it along to the following address. Both parents must sign the
-        application form in front of a Justice of Peace, attaching a stamp of Rs. 5/=. Include copies of the following
-        documents along with the application.
-        <ol>
-            <li>Certificate of Adoption</li>
-            <li>Certificate of Marriage of parents</li>
-            <li>Certificates of Birth of parents</li>
-            <li>Original Certificate of Birth of Child (if available)</li>
-        </ol>
-        <br>
-        <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
-            <tr>
-                <td height="90px">
-                    <label>
-                        රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව,
-                        <br>234 / A 3, ඩෙන්සිල් කොබ්බැකඩුව මාවත,
-                        <br>බත්තරමුල්ල
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        பதிவாளா் நாயகம் திணைக்களம்,
-                        <br>234/A3, டென்சில் கொப்பேகடுவ மாவத்தை,
-                        <br>பத்தரமுல்லை.
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        Registrar Generals Department
-                        <br>234 / A3, Denzil Kobbakaduwa Mawatha,
-                        <br>Battaramulla
-                    </label>
-                </td>
-            </tr>
-        </table>
-    </li>
-</ol>
-<table style="float:right;">
-    <tr>
-        <td align="right">
-<br><br><br> මෙයට විශ්වාසී
-    <br>தங்கள் விசுவாசமுள்ள
-    <br>Yours Faithfully        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <br><br><br>රේජිස්ට්‍රර් ජනරාල් වෙනුවට
+            மேற்குறிப்பிடப்பட்ட வகையில் பெறப்பட்ட மகவேற்புச்சான்றிதழில் குறிப்பிடப்பட்ட கணவன் மனைவியினது பெயா்
+            குறிப்பிட்ட
+            பிள்ளையின் சொந்த பெற்றோர் எனும் வகையில் உட்புகுத்தி பிள்ளையின் பிறப்பினை மீள பதிவு செய்வதற்காக இத்துடன்
+            அனுப்பப்பட்டுள்ள மகவேற்புச் சான்றிதழ் விண்ணப்பப்படிவத்தினை உரியவாறு பூா்த்தி செய்து 5/- ரூபா பெறுமதியான
+            முத்திரையின் மேல் சமாதான நீதவான் முன்னிலையில் தாய் மற்றும் தந்தை ஆகிய இருவரும் கையொப்பமிட்டு கீழ்
+            குறிப்பிடப்படும் ஆவணங்களின் பிரதிகளுடன் அனுப்பவும்.
+            <ol>
+                <li>மேற்குறிப்பிடப்பட்ட விதத்தில் பெறப்பட்ட மகவேற்புச் சான்றிதழ்</li>
+                <li>மகவேற்புச் செய்யும் பெற்றோரின் விவாகச் சான்றிதழ்.</li>
+                <li>பெற்றோரின் பிறப்புச் சான்றிதழ்.கள்.</li>
+                <li>பிள்ளையின் பழைய பிறப்புச் சான்றிதழ் (இருந்தால்)</li>
+            </ol>
+            <br>
+            Attach a copy of the Certificate of Adoption obtained as detailed above in Step #1, and fill the attached
+            form
+            for the re-registration of the birth, and send it along to the following address. Both parents must sign the
+            application form in front of a Justice of Peace, attaching a stamp of Rs. 5/=. Include copies of the
+            following
+            documents along with the application.
+            <ol>
+                <li>Certificate of Adoption</li>
+                <li>Certificate of Marriage of parents</li>
+                <li>Certificates of Birth of parents</li>
+                <li>Original Certificate of Birth of Child (if available)</li>
+            </ol>
+            <br>
+            <table id="zonal_office_address" class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td height="90px" width="33%">
+                        <s:textarea id="siZonalOfficeAddress" value="%{siZonalOfficeAddress}" rows="4" disabled="true"
+                                    cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt;"/>
+                    </td>
+                    <td width="33%">
+                        <s:textarea id="taZonalOfficeAddress" value="%{taZonalOfficeAddress}" rows="4" disabled="true"
+                                    cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt;"/>
+                    </td>
+                    <td>
+                        <s:textarea id="enZonalOfficeAddress" value="%{enZonalOfficeAddress}" rows="4" disabled="true"
+                                    cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt;"/>
+                    </td>
+                </tr>
+            </table>
+        </li>
+    </ol>
+    <table style="float:right;">
+        <tr>
+            <td align="right">
+                <br><br><br> මෙයට විශ්වාසී
+                <br>தங்கள் விசுவாசமுள்ள
+                <br>Yours Faithfully
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                <br><br><br>රෙජිස්ට්‍රාර් ජනරාල් වෙනුවට
                 <br> பதிவாளா் நாயகத்திற்கு பதிலாக
                 <br>For, Registrar General
-           </td>
-    </tr>
+            </td>
+        </tr>
 
-</table>
+    </table>
 </div>
 
 <table class="adoption-reg-form-header-table">

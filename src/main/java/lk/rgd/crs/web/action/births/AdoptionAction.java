@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.*;
 import lk.rgd.crs.api.domain.BDDivision;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -10,10 +11,6 @@ import java.util.Map;
 import java.util.Locale;
 import java.util.List;
 
-import lk.rgd.common.api.dao.DistrictDAO;
-import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.dao.CountryDAO;
-import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.util.GenderUtil;
@@ -46,6 +43,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private final CountryDAO countryDAO;
     private final CourtDAO courtDAO;
     private final AppParametersDAO appParametersDAO;
+    private final ZonalOfficesDAO zonalOfficesDAO;
     private final BirthRegistrationService birthRegistrationService;
 
     private AdoptionOrder adoption;
@@ -61,6 +59,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> allDSDivisionList;
     private Map<Integer, String> courtList;
     private Map<Integer, String> countryList;
+    private Map<Integer, String> zonalOfficeList;
     private List<AdoptionOrder> adoptionApprovalAndPrintList;
 
     private int birthDistrictId;
@@ -70,6 +69,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private int noOfRows;
     private int currentStatus;
     private int pageNo;
+    private int zonalOfficeId;
 
     private long idUKey;
     private long adoptionId;
@@ -96,10 +96,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String genderEn;
     private String genderSi;
     private String language;
+    private String siZonalOfficeAddress;
+    private String taZonalOfficeAddress;
+    private String enZonalOfficeAddress;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
         AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
-        BirthRegistrationService birthRegistrationService, CourtDAO courtDAO) {
+        BirthRegistrationService birthRegistrationService, CourtDAO courtDAO, ZonalOfficesDAO zonalOfficesDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -108,6 +111,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.appParametersDAO = appParametersDAO;
         this.birthRegistrationService = birthRegistrationService;
         this.courtDAO = courtDAO;
+        this.zonalOfficesDAO = zonalOfficesDAO;
     }
 
     public String initAdoptionRegistrationOrCancelPrintAdoptionNotice() {
@@ -314,6 +318,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
                 adoption.getLanguageToTransliterate());
+            zonalOfficeList = zonalOfficesDAO.getActiveZonalOffices(language);
+            int selectedZonalOfficeId = zonalOfficeList.keySet().iterator().next();
+            siZonalOfficeAddress = zonalOfficesDAO.getZonalOfficeMailAddressByPK(selectedZonalOfficeId, AppConstants.SINHALA);
+            taZonalOfficeAddress = zonalOfficesDAO.getZonalOfficeMailAddressByPK(selectedZonalOfficeId, AppConstants.TAMIL);
+            enZonalOfficeAddress = zonalOfficesDAO.getZonalOfficeMailAddressByPK(selectedZonalOfficeId, AppConstants.ENGLISH);
             return SUCCESS;
         }
     }
@@ -434,7 +443,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } else {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
-        logger.debug("marked as print succesfully adoption order idUKey : {}", idUKey);
+        logger.debug("marked as print successfully adoption order idUKey : {}", idUKey);
         return SUCCESS;
     }
 
@@ -1130,5 +1139,45 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setPlaceOfIssue(String placeOfIssue) {
         this.placeOfIssue = placeOfIssue;
+    }
+
+    public Map<Integer, String> getZonalOfficeList() {
+        return zonalOfficeList;
+    }
+
+    public void setZonalOfficeList(Map<Integer, String> zonalOfficeList) {
+        this.zonalOfficeList = zonalOfficeList;
+    }
+
+    public int getZonalOfficeId() {
+        return zonalOfficeId;
+    }
+
+    public void setZonalOfficeId(int zonalOfficeId) {
+        this.zonalOfficeId = zonalOfficeId;
+    }
+
+    public String getSiZonalOfficeAddress() {
+        return siZonalOfficeAddress;
+    }
+
+    public void setSiZonalOfficeAddress(String siZonalOfficeAddress) {
+        this.siZonalOfficeAddress = siZonalOfficeAddress;
+    }
+
+    public String getTaZonalOfficeAddress() {
+        return taZonalOfficeAddress;
+    }
+
+    public void setTaZonalOfficeAddress(String taZonalOfficeAddress) {
+        this.taZonalOfficeAddress = taZonalOfficeAddress;
+    }
+
+    public String getEnZonalOfficeAddress() {
+        return enZonalOfficeAddress;
+    }
+
+    public void setEnZonalOfficeAddress(String enZonalOfficeAddress) {
+        this.enZonalOfficeAddress = enZonalOfficeAddress;
     }
 }
