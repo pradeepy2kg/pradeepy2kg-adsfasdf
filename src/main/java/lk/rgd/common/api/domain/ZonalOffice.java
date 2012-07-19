@@ -17,6 +17,10 @@ import java.util.Set;
     @NamedQuery(
         name = "getZonalOfficeByDistrict",
         query = "SELECT z FROM ZonalOffice z WHERE :district MEMBER OF z.districts"
+    ),
+    @NamedQuery(
+        name = "getAllActiveZonalOffices",
+        query = "SELECT z FROM ZonalOffice z WHERE z.lifeCycleInfo.active = TRUE"
     )
 })
 public class ZonalOffice implements Serializable {
