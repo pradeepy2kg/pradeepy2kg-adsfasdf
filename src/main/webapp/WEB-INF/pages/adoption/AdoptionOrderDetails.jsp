@@ -142,7 +142,7 @@
                 </td>
                 <td rowspan="2" align="center"><s:label name="adoption.childBirthDate"/></td>
                 <td rowspan="2"><s:label name="adoption.orderIssuedDate"/><br>
-                    <s:label name="adoption.court.enCourtName"/>
+                    <s:label name="adoption.court.siCourtName"/>
                 </td>
                 <td style="border:none;"><s:label name=""/></td>
             </tr>
