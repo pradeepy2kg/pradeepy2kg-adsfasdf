@@ -474,7 +474,16 @@
         <put-attribute name="body" value="/WEB-INF/pages/adoption/NonEditableAdoptionRegistrationForm1.jsp"/>
         <put-attribute name="title" value="adoption_certificate.label"/>
     </definition>
-
+    <!--Adoption Order Start-->
+    <definition name="epr.adoptionOrderDetailsList" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionOrderDetailsList.jsp"/>
+        <put-attribute name="title" value="Adoption Order List"/>
+    </definition>
+    <definition name="epr.adoptionOrderDetails" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionOrderDetails.jsp"/>
+        <put-attribute name="title" value="Adoption Order Details"/>
+    </definition>
+    <!--End-->
     <definition name="epr.adoptionReRegistrationLookup" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionReRegistrationLookup.jsp"/>
         <put-attribute name="title" value="adoption_re_registration.label"/>
