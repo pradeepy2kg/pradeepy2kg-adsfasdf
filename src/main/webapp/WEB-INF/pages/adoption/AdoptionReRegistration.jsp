@@ -95,7 +95,7 @@
 <div id="adoption-page" class="form-submit">
     <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <s:a href="%{viewAdoptionOrderDetails}"><s:label value="Order Details"/></s:a>
+    <s:a href="%{viewAdoptionOrderDetails}"><s:label value="%{getText('order_details.label')}"/></s:a>
 </div>
 <div id="adoption-registration-form-outer">
 <div id="page1" style="page-break-after:always;">

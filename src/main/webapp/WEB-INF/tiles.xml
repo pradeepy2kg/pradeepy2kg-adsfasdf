@@ -477,11 +477,11 @@
     <!--Adoption Order Start-->
     <definition name="epr.adoptionOrderDetailsList" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionOrderDetailsList.jsp"/>
-        <put-attribute name="title" value="Adoption Order List"/>
+        <put-attribute name="title" value="adoption_order_list.label"/>
     </definition>
     <definition name="epr.adoptionOrderDetails" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionOrderDetails.jsp"/>
-        <put-attribute name="title" value="Adoption Order Details"/>
+        <put-attribute name="title" value="adoption_order_details.label"/>
     </definition>
     <!--End-->
     <definition name="epr.adoptionReRegistrationLookup" extends="epr.template">
