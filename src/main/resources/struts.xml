@@ -896,7 +896,24 @@
             <result type="tiles" name="success">epr.non_editable_adoptionCertificate</result>
             <result type="tiles" name="skip">epr.adoptionApprovalAndPrint</result>
         </action>
-
+        <!--Adoption Order Start-->
+        <action name="eprAdoptionOrderDetailsList" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionApprovalAndPrint">
+            <result type="tiles" name="success">epr.adoptionOrderDetailsList</result>
+        </action>
+        <action name="eprAdoptionOrderDetailsViewMode" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="eprAdoptionOrderDetailsViewMode">
+            <result type="tiles" name="success">epr.adoptionOrderDetails</result>
+        </action>
+        <action name="eprAdoptionOrderFilterByStatus" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="filterByStatus">
+            <result type="tiles" name="success">epr.adoptionOrderDetailsList</result>
+        </action>
+        <action name="eprAdoptionOrderBackToPreviousState" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionBackToPreviouseState">
+            <result type="tiles" name="success">epr.adoptionOrderDetailsList</result>
+        </action>
+        <!--End-->
         <action name="eprPrintAdoptionNotice" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="loadAdoptionNotice">
             <result type="tiles" name="success">epr.AdoptionReReg</result>

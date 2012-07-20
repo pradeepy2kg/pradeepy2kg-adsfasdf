@@ -297,6 +297,39 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     /**
+     *  view adoption order details
+     * @return
+     */
+    public String eprAdoptionOrderDetailsViewMode(){
+        logger.debug("initializing view mode for idUKey : {}", idUKey);
+        adoption = service.getById(idUKey, user);
+        if (adoption == null) {
+            addActionError(getText("er.invalid.Entry"));
+            populateApprovalAndPrintList();
+            return "skip";
+        }
+        // todo remove
+        // String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        if (adoption.getBirthDivisionId() > 0) {
+            birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
+            dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
+                adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
+            birthDistrictName = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
+                adoption.getBirthDivisionId()).getDistrict().getDistrictUKey(), language);
+        }
+        if (adoption.getApplicantCountryId() > 0) {
+            applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
+        }
+        if (adoption.getWifeCountryId() > 0) {
+            wifeCountryName = countryDAO.getNameByPK(adoption.getWifeCountryId(), language);
+        }
+        if (adoption.getCourt().getCourtId() > 0) {
+            courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtId(), language);
+        }
+        return SUCCESS;
+    }
+
+    /**
      * loading the AdoptionRegistration form
      *
      * @return

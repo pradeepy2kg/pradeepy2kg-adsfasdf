@@ -18,7 +18,7 @@
 
         #zonal_office_list {
             display: none;
-        }
+    }
     }
 
     #adoption-registration-form-outer .form-submit {
@@ -80,6 +80,13 @@
             <s:param name="pageNo" value="%{#request.pageNo}"/>
             <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         </s:url>
+        <s:url id="viewAdoptionOrderDetails" action="eprAdoptionOrderDetailsViewMode.do">
+            <s:param name="idUKey" value="idUKey"/>
+            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+        </s:url>
     </s:else>
 </div>
 <div class="form-submit">
@@ -87,14 +94,15 @@
 </div>
 <div id="adoption-page" class="form-submit">
     <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>
+    <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <s:a href="%{viewAdoptionOrderDetails}"><s:label value="Order Details"/></s:a>
 </div>
 <div id="adoption-registration-form-outer">
 <div id="page1" style="page-break-after:always;">
     <div id="zonal_office_list">
         <fieldset style="border:2px solid #c3dcee;">
             <table>
-                <tr>
+        <tr>
                     <td><s:label value="%{getText('select_zonal_office.label')}"/></td>
                     <td>
                         <s:select list="zonalOfficeList" id="zonalOfficeId" name="zonalOfficeId"/>
@@ -581,5 +589,6 @@
 </div>
 <div id="adoption-page" class="form-submit">
     <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>
+    <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <s:a href="%{viewAdoptionOrderDetails}"><s:label value="Order Details"/></s:a>
 </div>

@@ -326,6 +326,10 @@ public class Menu {
 
         // Adoption Registration for ADR
         adrAdoptionLink.putAll(deoAdoptionLink);
+        adrAdoptionLink.put("eprAdoptionOrderDetailsList.do", new Link(null, "/ecivil/adoption/", "eprAdoptionOrderDetailsList.do", Permission.EDIT_ADOPTION));
+        adrAdoptionLink.put("eprAdoptionOrderDetailsViewMode.do", new Link(null, "/ecivil/adoption/", "eprAdoptionOrderDetailsViewMode.do", Permission.EDIT_ADOPTION));
+        adrAdoptionLink.put("eprAdoptionOrderFilterByStatus.do", new Link(null, "/ecivil/adoption/", "eprAdoptionOrderFilterByStatus.do", Permission.EDIT_ADOPTION));
+        adrAdoptionLink.put("eprAdoptionOrderBackToPreviousState.do", new Link(null, "/ecivil/adoption/", "eprAdoptionOrderBackToPreviousState.do", Permission.EDIT_ADOPTION));
 
         //Adoption Registration for ARG
         argAdoptionLink.putAll(adrAdoptionLink);
