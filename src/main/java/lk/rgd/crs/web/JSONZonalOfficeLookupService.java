@@ -49,9 +49,9 @@ public class JSONZonalOfficeLookupService extends HttpServlet {
             logger.info("Zonal Office Id: {}", zonalOfficeId);
             ZonalOffice zonalOffice = zonalOfficesDAO.getZonalOffice(zonalOfficeId);
 
-            optionLists.put("siAddress", zonalOffice.getSiZonalOfficeMailAddress());
-            optionLists.put("taAddress", zonalOffice.getTaZonalOfficeMailAddress());
-            optionLists.put("enAddress", zonalOffice.getEnZonalOfficeMailAddress());
+            optionLists.put("siAddress", zonalOffice.getSiZonalOfficeName()+",\n"+ zonalOffice.getSiZonalOfficeMailAddress());
+            optionLists.put("taAddress", zonalOffice.getTaZonalOfficeName()+",\n"+ zonalOffice.getTaZonalOfficeMailAddress());
+            optionLists.put("enAddress", zonalOffice.getEnZonalOfficeName()+",\n"+ zonalOffice.getEnZonalOfficeMailAddress());
         }catch (Exception e){
             logger.error("Fatal Error : {}", e);
             return;
