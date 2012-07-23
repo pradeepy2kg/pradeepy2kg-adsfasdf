@@ -41,17 +41,17 @@
 
     function populateZonalOfficeAddress(zonalOfficeId) {
         /* Clear current Zonal Office Addresses. */
-        $('#siZonalOfficeAddress').val('');
-        $('#taZonalOfficeAddress').val('');
-        $('#enZonalOfficeAddress').val('');
+//        $('#siZonalOfficeAddress').val('');
+//        $('#taZonalOfficeAddress').val('');
+//        $('#enZonalOfficeAddress').val('');
         $.getJSON('/ecivil/crs/ZonalOfficeLookupService', {zonalOfficeId:zonalOfficeId}, function (data) {
             var siAddress = data.siAddress;
             var taAddress = data.taAddress;
             var enAddress = data.enAddress;
             /* Set New Zonal Office Addresses. */
-            $('#siZonalOfficeAddress').val(siAddress);
-            $('#taZonalOfficeAddress').val(taAddress);
-            $('#enZonalOfficeAddress').val(enAddress);
+            $('textarea#siZonalOfficeAddress').html('සහකාර රෙජිස්ට්‍රාර් ජනරාල්,\n'+siAddress);
+            $('textarea#taZonalOfficeAddress').html('Assistant Registrar General in ta,\n'+taAddress);
+            $('textarea#enZonalOfficeAddress').html('Assistant Registrar General,\n'+enAddress);
         });
     }
 </script>
@@ -200,9 +200,9 @@
     <table class="adoption-reg-form-header-table" width="99%">
         <tr>
             <td align="left">
-                මෙම නියෝගය පහත සඳහන් අනුක්‍රමික අංකය යටතේ ලියාපදිංචි වී තිබේ:
+                මෙම නියෝගය පහත සඳහන් සහතික පත්‍ර අංකය යටතේ ලියාපදිංචි වී තිබේ:
                 <br>இக்கட்டளை கீழ் குறிப்பிட்ட தொடா் இலக்கத்தின் கீழ் பதியப்பட்டுள்ளது.
-                <br>This has been registered with the following serial number:
+                <br>This has been registered with the following certificate number:
             </td>
         </tr>
     </table>
@@ -211,9 +211,9 @@
         <tr>
             <td height="60px" width="330px">
                 <label>
-                    ලියාපදිංචි කිරීමේ අනුක්‍රමික අංකය
-                    <br>பதிவு செய்தலின் தொடா் இலக்கம்
-                    <br>Serial number of the registration
+                    සහතික පත්‍රයේ අංකය
+                    <br>சான்றிதழ் இல
+                    <br>Certificate Number
                 </label>
             </td>
             <td>
@@ -245,21 +245,24 @@
                 <tr>
                     <td height="90px">
                         <label>
-                            රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව ,
+                            රෙජිස්ට්‍රාර් ජනරාල්,
+                            <br/>රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව ,
                             <br>234 / A 3, ඩෙන්සිල් කොබ්බැකඩුව මාවත,
                             <br>බත්තරමුල්ල
                         </label>
                     </td>
                     <td>
                         <label>
-                            பதிவாளா் நாயகம் திணைக்களம்,
+                            பதிவாளா் நாயகம்,
+                            <br/>பதிவாளா் நாயகம் திணைக்களம்,
                             <br>234/A3, டென்சில் கொப்பேகடுவ மாவத்தை,
                             <br>பத்தரமுல்லை.
                         </label>
                     </td>
                     <td>
                         <label>
-                            Registrar Generals Department
+                            Registrar General,
+                            <br/>Registrar Generals Department
                             <br>234 / A3, Denzil Kobbakaduwa Mawatha,
                             <br>Battaramulla
                         </label>
@@ -321,15 +324,15 @@
             <table id="zonal_office_address" class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" width="99%">
                 <tr>
                     <td height="90px" width="33%">
-                        <s:textarea id="siZonalOfficeAddress" value="%{siZonalOfficeAddress}" rows="4" disabled="true"
+                        <s:textarea id="siZonalOfficeAddress" rows="6" disabled="true"
                                     cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt;"/>
                     </td>
                     <td width="33%">
-                        <s:textarea id="taZonalOfficeAddress" value="%{taZonalOfficeAddress}" rows="4" disabled="true"
+                        <s:textarea id="taZonalOfficeAddress" rows="6" disabled="true"
                                     cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt;"/>
                     </td>
                     <td>
-                        <s:textarea id="enZonalOfficeAddress" value="%{enZonalOfficeAddress}" rows="4" disabled="true"
+                        <s:textarea id="enZonalOfficeAddress" rows="6" disabled="true"
                                     cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt;"/>
                     </td>
                 </tr>
@@ -370,26 +373,51 @@
     </tr>
 
 </table>
-<table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" style="float:right;width:450px; margin-right: 10px;">
+<table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" style="float:left;width:400px;">
     <tr>
-        <td height="40px" width="250px">
+        <td height="40px" width="215px">
             <label>
-                ලියාපදිංචි කිරීමේ අනුක්‍රමික අංකය
-                <br>பதிவு செய்தல் தொடா் இலக்கம்
-                <br>Serial number of the registration
+                සහතික පත්‍රයේ අංකය
+                <br>சான்றிதழ் இல
+                <br>Certificate Number
             </label>
         </td>
-        <td width="200px">
-
+        <td width="185px">
             <s:label value="%{adoption.idUKey}"/>
-
         </td>
+    </tr>
+</table>
+<table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" style="float:right;width:450px; margin-right: 10px;">
+    <tr>
+        <td height="40px" colspan="10">
+            කාර්යාල ප්‍රයෝජනය සඳහා පමණි.
+            <br/>அலுவலக பாவனைக்காக மட்டும்.
+            <br/>For office use only.
+        </td>
+    </tr>
+    <tr>
+        <td height="40px" width="200px">
+            <label>
+                අනුක්‍රමික අංකය
+                <br>தொடர் இலக்கம்
+                <br>Serial Number
+            </label>
+        </td>
+        <td width="24px"></td>
+        <td width="24px"></td>
+        <td width="24px"></td>
+        <td width="24px"></td>
+        <td width="24px"></td>
+        <td width="24px"></td>
+        <td width="24px"></td>
+        <td width="24px"></td>
+        <td width="24px"></td>
     </tr>
 </table>
 
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td style="font-size:16px">අයදුම් කරුගේ විස්තර / விண்ணப்பதாரியின் விபரங்கள்/ Applicants Details
+        <td style="font-size:16px">අයදුම්කරුගේ විස්තර / விண்ணப்பதாரியின் விபரங்கள்/ Applicants Details
         </td>
     </tr>
 </table>
@@ -397,14 +425,21 @@
 
 <table border="1" width="99%" style="float:left;border:1px solid #000; border-collapse:collapse;">
     <caption></caption>
+    <col width="285px"/>
+    <col width="125px"/>
     <col width="110px"/>
+    <col width="50px"/>
     <col width="110px"/>
+    <col width="50px"/>
     <col width="110px"/>
-    <col width="110px"/>
-    <col width="310px"/>
-    <col width="310px"/>
+    <col width="50px"/>
     <tbody>
     <tr>
+        <td colspan="2">
+            අයදුම් කරන්නේ කවුරුන් විසින්ද? ('X' ලකුණක් යොදා සටහන් කරන්න)
+            <br/>Who is applying in ta? (mark with a tick 'X' in ta)
+            <br/>Who is applying? (mark with a tick 'X')
+        </td>
         <td height="40px">
             පියා
             <br>தந்தை
@@ -418,51 +453,51 @@
         </td>
         <td></td>
         <td>
-            වෙනත් (කවුරුන්දැයි සටහන් කරන්න)
-            <br>வேறு (யார் என குறிப்பிடவும்)
-            <br>Other (Specify whom)
+            වෙනත්
+            <br>வேறு
+            <br>Other
         </td>
         <td></td>
     </tr>
     <tr>
-        <td colspan="3" height="40px">
+        <td colspan="1" height="40px">
             අනන්‍යතා අංකය
             <br>அடையாள எண்
             <br>Identification Number
         </td>
-        <td colspan="3"></td>
+        <td colspan="7"></td>
     </tr>
     <tr>
-        <td rowspan="3" colspan="3" height="120px">
-            නම
+        <td rowspan="3" colspan="1" height="120px">
+            අයදුම්කරුගේ නම
             <br>விண்ணப்பதாரியின் பெயா்
             <br>Name of the Applicant
         </td>
-        <td colspan="3"></td>
+        <td colspan="7"></td>
     </tr>
     <tr>
-        <td colspan="3"></td>
+        <td colspan="7"></td>
     </tr>
     <tr>
-        <td colspan="3"></td>
+        <td colspan="7"></td>
     </tr>
 
     <tr>
-        <td colspan="3" rowspan="4" height="160px">
+        <td colspan="1" rowspan="4" height="160px">
             ලිපිනය
             <br>முகவரி
             <br>Address
         </td>
-        <td colspan="3"></td>
+        <td colspan="7"></td>
     </tr>
     <tr>
-        <td colspan="3"></td>
+        <td colspan="7"></td>
     </tr>
     <tr>
-        <td colspan="3"></td>
+        <td colspan="7"></td>
     </tr>
     <tr>
-        <td colspan="3"></td>
+        <td colspan="7"></td>
     </tr>
     </tbody>
 </table>
