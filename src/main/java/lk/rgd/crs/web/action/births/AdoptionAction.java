@@ -353,9 +353,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 adoption.getLanguageToTransliterate());
             zonalOfficeList = zonalOfficesDAO.getActiveZonalOffices(language);
             int selectedZonalOfficeId = zonalOfficeList.keySet().iterator().next();
-            siZonalOfficeAddress = zonalOfficesDAO.getZonalOfficeMailAddressByPK(selectedZonalOfficeId, AppConstants.SINHALA);
-            taZonalOfficeAddress = zonalOfficesDAO.getZonalOfficeMailAddressByPK(selectedZonalOfficeId, AppConstants.TAMIL);
-            enZonalOfficeAddress = zonalOfficesDAO.getZonalOfficeMailAddressByPK(selectedZonalOfficeId, AppConstants.ENGLISH);
+            siZonalOfficeAddress = zonalOfficesDAO.getZonalOfficeNameByPK(selectedZonalOfficeId, AppConstants.SINHALA)+",\n"+zonalOfficesDAO.getZonalOfficeMailAddressByPK(selectedZonalOfficeId, AppConstants.SINHALA);
+            taZonalOfficeAddress = zonalOfficesDAO.getZonalOfficeNameByPK(selectedZonalOfficeId, AppConstants.TAMIL)+",\n"+zonalOfficesDAO.getZonalOfficeMailAddressByPK(selectedZonalOfficeId, AppConstants.TAMIL);
+            enZonalOfficeAddress = zonalOfficesDAO.getZonalOfficeNameByPK(selectedZonalOfficeId, AppConstants.ENGLISH)+",\n"+zonalOfficesDAO.getZonalOfficeMailAddressByPK(selectedZonalOfficeId, AppConstants.ENGLISH);
             return SUCCESS;
         }
     }
