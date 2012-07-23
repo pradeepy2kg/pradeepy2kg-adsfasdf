@@ -152,8 +152,7 @@
                 <br>ළමයින් දරුකමට හදා ගැනීමේ ආඥා පනත (අධිකාරය 61) යටතේ පහත සඳහන් උසාවි නියෝගය මෙම කාර්යාලයට ලැබී ඇත.
                 <br>மகவேற்புக் கட்டளைச்சட்டத்தின் ( 16ஆம் அதிகாரம்) கீழ் குறிப்பிடப்பட்ட நீதிமன்ற கட்டளை
                 இக்காரியலயத்திற்கு கிடைக்கப்பெற்றது.
-                <br>Under section 61 of the Adoption of Children Ordinance, we have received the following Adoption
-                order.
+                <br>The following Adoption Order received by this office under Adoption Ordinance (Chapter 61).
             </td>
         </tr>
     </table>
@@ -172,7 +171,7 @@
             <td height="60px">
                 නියෝගය නිකුත් කල දිනය
                 <br>கட்டளை வழங்கப்பட்ட திகதி
-                <br>Issued Date
+                <br>Date of issue
             </td>
             <td><s:label name="" value="%{adoption.orderIssuedDate}"/>
             </td>
@@ -202,7 +201,7 @@
             <td align="left">
                 මෙම නියෝගය පහත සඳහන් සහතික පත්‍ර අංකය යටතේ ලියාපදිංචි වී තිබේ:
                 <br>இக்கட்டளை கீழ் குறிப்பிட்ட தொடா் இலக்கத்தின் கீழ் பதியப்பட்டுள்ளது.
-                <br>This has been registered with the following certificate number:
+                <br>This order is registered under the following certificate number:
             </td>
         </tr>
     </table>
@@ -237,7 +236,7 @@
             ரூபா பெறுமதியான செல்லுப்படியாகும் முத்திரையினை அதில் ஒட்டி கீழ் குறிப்பிடப்பட்டுள்ள முகவரிக்கு
             அனுப்பவும். தங்களது விண்ணப்பப்படிவத்துடன் தங்களது சரியான முகவரியினை குறிப்பிட்டு உரிய தபாற் கட்டணம்
             சம்பந்தமான முத்திரையினை ஒட்டி நீண்ட தபாலுறையினை யும் இணைத்து அனுப்பவும்.
-            <br>Fill the attached application form including stamps to the value of Rs. 25/- to obtain a certified
+            <br>Fill the attached application form and affix stamps to the value of Rs. 25/- to obtain a certified
             copy of the Certificate of Adoption. Send the completed form to the following address, along with a self
             addressed stamped envelope.
             <br><br>
@@ -285,14 +284,14 @@
                 <br>
             </u><br>
             ඉහත සඳහන් ආකාරයෙන් ලබාගත් දරු සහතිකයේ සඳහන් විවාහක අඹු සැමියන්ගේ නම්, මෙම දරුවාගේ ජනක මව්පියන් වශයෙන් ඇතුලත්
-            කර දරුවාගේ උපත නැවත ලියාපදිංචි කිරීම සඳහා මේ සමග ඒවා ඇති ප්‍රකාශ පත්‍රය නිසි පරිදි සම්පුඋර්ණ කර රු. 5/- ක්
-            වටින මුද්දරයක් මත, සමාදාන විනිශ්‍යකරවරයකු ඉදිරිපිට දී මව සහ පියාගේ යන දෙදෙනාගේම අත්සන් තබා, පහත සඳහන්
+            කර දරුවාගේ උපත නැවත ලියාපදිංචි කිරීම සඳහා මේ සමග ඒවා ඇති ප්‍රකාශ පත්‍රය නිසි පරිදි සම්පූර්ණ කර රු. 5/- ක්
+            වටිනා මුද්දරයක් මත, සමාදාන විනිශ්චයකාරවරයකු ඉදිරිපිට දී මව සහ පියා යන දෙදෙනාගේම අත්සන් තබා, පහත සඳහන්
             ලියවිලි වල පිටපත් සමග එවන්න.
             <ol>
                 <li>ඉහත සඳහන් ආකාරයෙන් ලබාගත් දරු සහතිකය</li>
                 <li>ළමයා හදා වඩා ගන්නා මව්පියන්ගේ විවාහ සහතිකය</li>
                 <li>මව්පියන්ගේ උප්පැන්න සහතික</li>
-                <li>දරුවාගේ පැරණි උප්පැන සහතිකය (තිබේනම්)</li>
+                <li>දරුවාගේ පැරණි උප්පැන්න සහතිකය (තිබේනම්)</li>
             </ol>
             <br>
             மேற்குறிப்பிடப்பட்ட வகையில் பெறப்பட்ட மகவேற்புச்சான்றிதழில் குறிப்பிடப்பட்ட கணவன் மனைவியினது பெயா்
@@ -311,14 +310,14 @@
             Attach a copy of the Certificate of Adoption obtained as detailed above in Step #1, and fill the attached
             form
             for the re-registration of the birth, and send it along to the following address. Both parents must sign the
-            application form in front of a Justice of Peace, attaching a stamp of Rs. 5/=. Include copies of the
+            application form in presence of a Justice of Peace, affixed a stamp of Rs. 5/=. Include copies of the
             following
             documents along with the application.
             <ol>
                 <li>Certificate of Adoption</li>
                 <li>Certificate of Marriage of parents</li>
                 <li>Certificates of Birth of parents</li>
-                <li>Original Certificate of Birth of Child (if available)</li>
+                <li>Previous Certificate of Birth of Child (if available)</li>
             </ol>
             <br>
             <table id="zonal_office_address" class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" width="99%">
@@ -625,5 +624,5 @@
 <div id="adoption-page" class="form-submit">
     <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <s:a href="%{viewAdoptionOrderDetails}"><s:label value="Order Details"/></s:a>
+    <s:a href="%{viewAdoptionOrderDetails}"><s:label value="%{getText('order_details.label')}"/></s:a>
 </div>

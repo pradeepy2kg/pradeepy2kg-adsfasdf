@@ -96,9 +96,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String genderEn;
     private String genderSi;
     private String language;
-    private String siZonalOfficeAddress;
-    private String taZonalOfficeAddress;
-    private String enZonalOfficeAddress;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
         AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
@@ -352,10 +349,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
                 adoption.getLanguageToTransliterate());
             zonalOfficeList = zonalOfficesDAO.getActiveZonalOffices(language);
-            int selectedZonalOfficeId = zonalOfficeList.keySet().iterator().next();
-            siZonalOfficeAddress = zonalOfficesDAO.getZonalOfficeNameByPK(selectedZonalOfficeId, AppConstants.SINHALA)+",\n"+zonalOfficesDAO.getZonalOfficeMailAddressByPK(selectedZonalOfficeId, AppConstants.SINHALA);
-            taZonalOfficeAddress = zonalOfficesDAO.getZonalOfficeNameByPK(selectedZonalOfficeId, AppConstants.TAMIL)+",\n"+zonalOfficesDAO.getZonalOfficeMailAddressByPK(selectedZonalOfficeId, AppConstants.TAMIL);
-            enZonalOfficeAddress = zonalOfficesDAO.getZonalOfficeNameByPK(selectedZonalOfficeId, AppConstants.ENGLISH)+",\n"+zonalOfficesDAO.getZonalOfficeMailAddressByPK(selectedZonalOfficeId, AppConstants.ENGLISH);
             return SUCCESS;
         }
     }
@@ -1188,29 +1181,5 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setZonalOfficeId(int zonalOfficeId) {
         this.zonalOfficeId = zonalOfficeId;
-    }
-
-    public String getSiZonalOfficeAddress() {
-        return siZonalOfficeAddress;
-    }
-
-    public void setSiZonalOfficeAddress(String siZonalOfficeAddress) {
-        this.siZonalOfficeAddress = siZonalOfficeAddress;
-    }
-
-    public String getTaZonalOfficeAddress() {
-        return taZonalOfficeAddress;
-    }
-
-    public void setTaZonalOfficeAddress(String taZonalOfficeAddress) {
-        this.taZonalOfficeAddress = taZonalOfficeAddress;
-    }
-
-    public String getEnZonalOfficeAddress() {
-        return enZonalOfficeAddress;
-    }
-
-    public void setEnZonalOfficeAddress(String enZonalOfficeAddress) {
-        this.enZonalOfficeAddress = enZonalOfficeAddress;
     }
 }
