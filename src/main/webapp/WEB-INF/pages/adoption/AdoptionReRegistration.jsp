@@ -403,15 +403,15 @@
                 <br>Serial Number
             </label>
         </td>
-        <td width="24px"></td>
-        <td width="24px"></td>
-        <td width="24px"></td>
-        <td width="24px"></td>
-        <td width="24px"></td>
-        <td width="24px"></td>
-        <td width="24px"></td>
-        <td width="24px"></td>
-        <td width="24px"></td>
+        <td width="24px" height="40px" >&nbsp;</td>
+        <td width="24px" height="40px" >&nbsp;</td>
+        <td width="24px" height="40px" >&nbsp;</td>
+        <td width="24px" height="40px" >&nbsp;</td>
+        <td width="24px" height="40px" >&nbsp;</td>
+        <td width="24px" height="40px" >&nbsp;</td>
+        <td width="24px" height="40px" >&nbsp;</td>
+        <td width="24px" height="40px" >&nbsp;</td>
+        <td width="24px" height="40px" >&nbsp;</td>
     </tr>
 </table>
 
@@ -602,7 +602,7 @@
     <col/>
     <tbody>
     <tr>
-        <td height="40px" width="330px">
+        <td height="40px">
             දිනය
             <br>திகதி
             <br>Date
