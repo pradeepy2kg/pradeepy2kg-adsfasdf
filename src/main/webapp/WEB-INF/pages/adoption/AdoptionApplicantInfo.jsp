@@ -5,14 +5,14 @@
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script type="text/javascript">
 
-    $(function() {
-        $('img#adoption_applicant_lookup').bind('click', function(evt3) {
+    $(function () {
+        $('img#adoption_applicant_lookup').bind('click', function (evt3) {
             var id1 = $("input#certifcateApplicantPin").attr("value");
 
             $("textarea#certificateApplicantName").val('');
             $("textarea#certificateApplicantAddress").val('');
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                    function(data1) {
+                    function (data1) {
                         $("textarea#certificateApplicantName").val(data1.fullNameInOfficialLanguage);
                         $("textarea#certificateApplicantAddress").val(data1.lastAddress);
                     });
@@ -116,9 +116,9 @@
         <tr><s:actionerror cssStyle="color:red;"/></tr>
         <tr>
             <td>
-                අනුක්‍රමික අංකය <br>
-                serial number in ta <br>
-                serial number
+                සහතික පත්‍රයේ අංකය
+                <br>சான்றிதழ் இல
+                <br>Certificate Number
             </td>
             <td>
                 <s:textfield name="idUKey" id="idUKey" onkeypress="return isNumberKey(event)" maxLength="10"/>
@@ -252,11 +252,29 @@
 </table>
 <br>
 <br>
-<br>
 
 <s:form action="eprCaptureAdoptionApplicantInfo.do" onsubmit="javascript:return validate()">
     <s:hidden name="pageNo" value="1"/>
-    <table border="1" class="adoption-applicant" cellspacing="0" cellpadding="0"
+    <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0"
+           style="float:right;width:450px; margin-right: 10px;">
+        <tr>
+            <s:actionerror cssStyle="color:red;"/>
+        </tr>
+        <tr>
+            <td height="40px" width="160px">
+                <label>
+                    අනුක්‍රමික අංකය
+                    <br>தொடர் இலக்கம்
+                    <br>Serial Number
+                </label>
+            </td>
+            <td width="240px" height="40px">
+                <s:textfield name="adoptionSerialNo"/>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <table width="99%" border="1" class="adoption-applicant" cellspacing="0" cellpadding="0"
            style="border:1px solid #000; border-collapse:collapse;">
         <caption></caption>
         <col/>

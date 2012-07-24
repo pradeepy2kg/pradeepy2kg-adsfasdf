@@ -180,6 +180,14 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = false)
     private State status;
 
+    /**
+     * To track the order of capture information of the adoption from parents.
+     * Format: Year in 4 digits followed by a sequence number 00001- 99999.
+     * eg: Serial number of 125th record in year 2012 is 201200125
+     */
+    @Column(nullable = true)
+    private long adoptionSerialNo;
+
     public long getIdUKey() {
         return idUKey;
     }
@@ -466,5 +474,13 @@ public class AdoptionOrder implements Serializable {
 
     public void setChildPIN(String childPIN) {
         this.childPIN = childPIN;
+    }
+
+    public long getAdoptionSerialNo() {
+        return adoptionSerialNo;
+    }
+
+    public void setAdoptionSerialNo(long adoptionSerialNo) {
+        this.adoptionSerialNo = adoptionSerialNo;
     }
 }
