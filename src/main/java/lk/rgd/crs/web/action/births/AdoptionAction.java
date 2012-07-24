@@ -73,6 +73,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     private long idUKey;
     private long adoptionId;
+    private long adoptionSerialNo;
 
     private boolean allowEditAdoption;
     private boolean allowApproveAdoption;
@@ -490,6 +491,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
         paginationHandler(adoptionApprovalAndPrintList.size());
+        logger.debug("Adoptions : {}", adoptionApprovalAndPrintList.size());
         previousFlag = false;
         return SUCCESS;
     }
@@ -674,6 +676,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             adoption = (AdoptionOrder) session.get(WebConstants.SESSION_ADOPTION_ORDER);
             //cannot capture data if it is not approved
             if (adoption.getStatus().equals(AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
+                adoption.setAdoptionSerialNo(adoptionSerialNo);
                 adoption.setCertificateApplicantAddress(certificateApplicantAddress);
                 adoption.setCertificateApplicantName(certificateApplicantName);
                 adoption.setCertificateApplicantPINorNIC(certificateApplicantPINorNIC);
@@ -1181,5 +1184,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setZonalOfficeId(int zonalOfficeId) {
         this.zonalOfficeId = zonalOfficeId;
+    }
+
+    public long getAdoptionSerialNo() {
+        return adoptionSerialNo;
+    }
+
+    public void setAdoptionSerialNo(long adoptionSerialNo) {
+        this.adoptionSerialNo = adoptionSerialNo;
     }
 }
