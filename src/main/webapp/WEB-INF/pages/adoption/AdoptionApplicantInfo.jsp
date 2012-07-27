@@ -3,9 +3,11 @@
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+<script type="text/javascript" src='<s:url value="/js/common.js"/>'></script>
 <script type="text/javascript">
 
     $(function () {
+        $('#adoptionSerialNo').val(new Date().getFullYear());
         $('img#adoption_applicant_lookup').bind('click', function (evt3) {
             var id1 = $("input#certifcateApplicantPin").attr("value");
 
@@ -74,6 +76,14 @@
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error2');
         }
+
+        domObject = document.getElementById("adoptionSerialNo");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error7');
+        } else if ($('#adoptionSerialNo').val().length != 9) {
+            errormsg = errormsg + "\n" + document.getElementById('error8').value;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -107,7 +117,6 @@
             disableButton(false);
         }
     }
-
 </script>
 
 <div id="adoption-applicant-info-form-outer">
@@ -269,7 +278,8 @@
                 </label>
             </td>
             <td width="240px" height="40px">
-                <s:textfield name="adoptionSerialNo"/>
+                <s:textfield id="adoptionSerialNo" name="adoptionSerialNo" maxlength="9"
+                             onkeypress="return numbersOnly(event, true);"/>
             </td>
         </tr>
     </table>
@@ -387,6 +397,8 @@
     <s:hidden id="error4" value="%{getText('er.label.courtOrderNumber')}"/>
     <s:hidden id="error5" value="%{getText('p1.invalide.inputType')}"/>
     <s:hidden id="error6" value="%{getText('NIC.error.add.VX')}"/>
+    <s:hidden id="error7" value="%{getText('er.label.serialNo.required')}"/>
+    <s:hidden id="error8" value="%{getText('er.label.serialNo.format')}"/>
 
 </s:form>
 </div>
