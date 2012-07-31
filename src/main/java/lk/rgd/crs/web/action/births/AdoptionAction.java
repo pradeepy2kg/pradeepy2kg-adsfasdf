@@ -122,6 +122,15 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         //  populateBasicLists(language);         bug 2202
         //    populateAllDSDivisionList();
         long birthCertificateNo = 0;
+
+        if(service.isEntryNoExist(adoption.getAdoptionEntryNo(), user)){
+            addActionError(getText("er.label.used.adoption.entry.number"));
+            basicLists();
+            populate();
+            populateAllDSDivisionList();
+            return "invalidBirthCertificateNumber";
+        }
+
         //check applicant type
         if (adoption.isApplicantMother()) {
             //check wife details are already filled if so give action error

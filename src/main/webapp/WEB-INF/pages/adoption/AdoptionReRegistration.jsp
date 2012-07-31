@@ -324,15 +324,15 @@
                 <tr>
                     <td height="90px" width="33%">
                         <s:textarea id="siZonalOfficeAddress" rows="6" disabled="true"
-                                    cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt;"/>
+                                    cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt; text-transform: capitalize;"/>
                     </td>
                     <td width="33%">
                         <s:textarea id="taZonalOfficeAddress" rows="6" disabled="true"
-                                    cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt;"/>
+                                    cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt; text-transform: capitalize;"/>
                     </td>
                     <td>
                         <s:textarea id="enZonalOfficeAddress" rows="6" disabled="true"
-                                    cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt;"/>
+                                    cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt; text-transform: capitalize;"/>
                     </td>
                 </tr>
             </table>

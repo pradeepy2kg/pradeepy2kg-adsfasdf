@@ -124,8 +124,8 @@
                 </td>
             </tr>
             <tr valign="top">
-                <td rowspan="2"><s:label name="adoption.idUKey"/></td>
-                <td rowspan="2"><s:label name="adoption.orderIssuedDate"/></td>
+                <td rowspan="2"><s:label name="adoption.adoptionEntryNo"/></td>
+                <td rowspan="2"><s:label name="adoption.orderReceivedDate"/></td>
                 <td rowspan="2"><s:label name="adoption.childExistingName"/></td>
                 <td rowspan="2" align="center">
                     <s:if test="adoption.childGender == 0">

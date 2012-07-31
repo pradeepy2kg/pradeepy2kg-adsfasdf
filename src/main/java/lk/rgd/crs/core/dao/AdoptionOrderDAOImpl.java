@@ -120,4 +120,15 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
         q.setParameter("courtId", courtUKey);
         return (Long) q.getSingleResult();
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public boolean isEntryNoExist(long adoptionEntryNo) {
+        Query q = em.createNamedQuery("isEntryNoExist");
+        q.setParameter("adoptionEntryNo", adoptionEntryNo);
+        if (q.getResultList() != null && q.getResultList().size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
