@@ -132,4 +132,13 @@ public interface AdoptionOrderService {
      * @return matching records
      */
     public List<AdoptionOrder> getPaginatedListForAll(int pageNo, int noOfRows, User user);
+
+    /**
+     * Check whether a given entry no is already within the system.
+     *
+     * @param adoptionEntryNo   Entered Entry No
+     * @param user              User requesting to check the entry no
+     * @return  TRUE (If Entry No exists). FALSE otherwise.
+     */
+    public boolean isEntryNoExist(long adoptionEntryNo, User user);
 }

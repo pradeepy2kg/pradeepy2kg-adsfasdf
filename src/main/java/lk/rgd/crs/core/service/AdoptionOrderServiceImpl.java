@@ -216,6 +216,12 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public boolean isEntryNoExist(long adoptionEntryNo, User user) {
+        logger.debug("Look for Adoption Entry No: {} by {}", adoptionEntryNo, user.getUserId());
+        return adoptionOrderDAO.isEntryNoExist(adoptionEntryNo);
+    }
+
     private void setApprovalStatus(long idUKey, User user, AdoptionOrder.State state) {
         AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
         if (adoption.getStatus() == AdoptionOrder.State.DATA_ENTRY) {

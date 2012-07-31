@@ -25,7 +25,11 @@ import java.util.Date;
 
     @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption"),
     @NamedQuery(name = "count.adoption.court.usage", query = "SELECT COUNT(adoption) FROM AdoptionOrder adoption " +
-        "WHERE adoption.court.courtUKey = :courtId AND adoption.status <> 0")
+        "WHERE adoption.court.courtUKey = :courtId AND adoption.status <> 0"),
+    @NamedQuery(
+        name = "isEntryNoExist",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo"
+    )
 })
 
 public class AdoptionOrder implements Serializable {
@@ -187,6 +191,20 @@ public class AdoptionOrder implements Serializable {
      */
     @Column(nullable = true)
     private long adoptionSerialNo;
+
+    /**
+     * Entry number of the adoption. Mentioned in the Adoption Order Details.
+     */
+    @Column(nullable = false)
+    private long adoptionEntryNo;
+
+    public long getAdoptionEntryNo() {
+        return adoptionEntryNo;
+    }
+
+    public void setAdoptionEntryNo(long adoptionEntryNo) {
+        this.adoptionEntryNo = adoptionEntryNo;
+    }
 
     public long getIdUKey() {
         return idUKey;

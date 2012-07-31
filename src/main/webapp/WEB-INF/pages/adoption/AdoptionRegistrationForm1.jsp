@@ -5,6 +5,7 @@
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/common.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script>
@@ -196,6 +197,13 @@ function validate() {
         validatePINorNIC(domObject, "error12", "error19")
     }
 
+    domObject = document.getElementById('adoptionEntryNo');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById("error22").value;
+    }else if($('#adoptionEntryNo').val() <= 0){
+        errormsg = errormsg + "\n" + document.getElementById("error23").value;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -278,7 +286,15 @@ function enableSerialNumber(mode) {
 
 <table class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
     <tr>
-        <td width="330px">
+        <td>
+            සටහනේ අංකය<br>
+            பதிவு இலக்கம்<br>
+            Number of Entry
+        </td>
+        <td>
+            <s:textfield id="adoptionEntryNo" name="adoption.adoptionEntryNo" onkeypress="return numbersOnly(event, true);"/>
+        </td>
+        <td >
             නියෝගය ලැබුණු දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>கட்டளை பெறப்பட்ட திகதி
             <br>Received Date
@@ -290,49 +306,49 @@ function enableSerialNumber(mode) {
         </td>
     </tr>
     <tr>
-        <td>අධිකරණය
+        <td colspan="2">අධිකරණය
             <br>நீதிமன்றம்
             <br>Court
         </td>
-        <td><s:select list="courtList" name="courtId" cssStyle="margin-left:5px;width:300px;" value="%{courtId}"/>
+        <td colspan="2"><s:select list="courtList" name="courtId" cssStyle="margin-left:5px;width:300px;" value="%{courtId}"/>
     </tr>
     <tr>
-        <td>
+        <td colspan="2">
             නියෝගය නිකුත් කල දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>கட்டளை வழங்கப்பட்ட திகதி
             <br>Issued Date
         </td>
-        <td>
+        <td colspan="2">
             <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
             <s:textfield id="orderIssuedDatePicker" name="adoption.orderIssuedDate"
                          cssStyle="margin-left:5px;width:200px" maxLength="10"/>
         </td>
     </tr>
     <tr>
-        <td>
+        <td colspan="2">
             නියෝග අංකය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>கட்டளை இலக்கம்
             <br>Court order number
         </td>
-        <td>
+        <td colspan="2">
             <s:fielderror name="duplicateCourtOrderNumberError" cssStyle="color:red;font-size:10pt"/>
             <s:textfield name="adoption.courtOrderNumber" id="courtOrderNumber" cssStyle="margin-left:5px;"
                          maxLength="240"/>
         </td>
     </tr>
     <tr>
-        <td>
+        <td colspan="2">
             විනිසුරු නම
             <br>நீதிபதியின் பெயா்
             <br>Name of the Judge
         </td>
-        <td><s:textfield name="adoption.judgeName" id="judgeName" cssStyle="margin-left:5px;" maxLength="250"/></td>
+        <td colspan="2"><s:textfield name="adoption.judgeName" id="judgeName" cssStyle="margin-left:5px;" maxLength="250"/></td>
     </tr>
     <tr>
-        <td>සහතිකය නිකුත් කල යුතු භාෂාව <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி <br>Preferred
+        <td colspan="2">සහතිකය නිකුත් කල යුතු භාෂාව <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி <br>Preferred
             Language for
         </td>
-        <td style="text-align:left;" width="30px">
+        <td colspan="2" style="text-align:left;" width="30px">
             <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}"
                       name="adoption.languageToTransliterate"
                       cssStyle="width:200px; margin-left:5px;"></s:select>
@@ -756,5 +772,7 @@ function enableSerialNumber(mode) {
 <s:hidden id="error19" value="%{getText('er.label.wifePINorNIC')}"/>
 <s:hidden id="error20" value="%{getText('er.label.childPIN')}"/>
 <s:hidden id="error21" value="%{getText('NIC.error.add.VX')}"/>
+<s:hidden id="error22" value="%{getText('er.label.no.adoption.entry.number')}"/>
+<s:hidden id="error23" value="%{getText('er.label.invalid.adoption.entry.number')}"/>
 
 </div>

@@ -86,4 +86,12 @@ public interface AdoptionOrderDAO {
     public List<AdoptionOrder> getPaginatedListForAll(int pageNo, int noOfRows);
 
     public Long findCourtUsageInAdoptions(int courtUKey);
+
+    /**
+     * Check whether a given entry no is already within the system.
+     *
+     * @param adoptionEntryNo Entered Entry No
+     * @return  TRUE (If Entry No exists). FALSE otherwise.
+     */
+    public boolean isEntryNoExist(long adoptionEntryNo);
 }
