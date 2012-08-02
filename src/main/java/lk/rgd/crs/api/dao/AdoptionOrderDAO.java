@@ -94,4 +94,10 @@ public interface AdoptionOrderDAO {
      * @return  TRUE (If Entry No exists). FALSE otherwise.
      */
     public boolean isEntryNoExist(long adoptionEntryNo);
+
+    /**
+     * Returns the latest adoptionEntryNo
+     * @return Latest adoptionEntryNo
+     */
+    public Long getLastEntryNo();
 }

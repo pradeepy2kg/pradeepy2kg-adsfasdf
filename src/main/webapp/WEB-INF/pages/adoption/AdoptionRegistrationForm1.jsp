@@ -9,29 +9,29 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script>
-$(function() {
+$(function () {
     $("#receivedDatePicker").datepicker({
-        changeYear: true,
+        changeYear:true,
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
         endDate:'2020-12-31'
 
     });
 });
-$(function() {
+$(function () {
     $("#bdayDatePicker").datepicker({
-        changeYear: true,
+        changeYear:true,
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
         endDate:'2020-12-31',
-        onSelect: function() {
+        onSelect:function () {
             var bday = new Date(document.getElementById('bdayDatePicker').value);
             var today = new Date();
             var ageMonthBDay = bday.getMonth();
             var ageYearBDay = bday.getYear();
             var ageMonthTOday = today.getMonth();
             var ageYearTOday = today.getYear();
-            var ageMonth,ageYear = 0;
+            var ageMonth, ageYear = 0;
             if (ageMonthTOday >= ageMonthBDay) {
                 ageMonth = ageMonthTOday - ageMonthBDay;
                 ageYear = ageYearTOday - ageYearBDay;
@@ -46,9 +46,9 @@ $(function() {
     });
 });
 
-$(function() {
+$(function () {
     $("#orderIssuedDatePicker").datepicker({
-        changeYear: true,
+        changeYear:true,
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
         endDate:'2020-12-31'
@@ -56,11 +56,14 @@ $(function() {
 });
 
 
-$(function() {
-    $('select#birthDistrictId').bind('change', function(evt1) {
+$(function () {
+    if ($('#adoptionEntryNo').val() <= 0) {
+        $('#adoptionEntryNo').val('');
+    }
+    $('select#birthDistrictId').bind('change', function (evt1) {
         var id = $("select#birthDistrictId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:5},
-                function(data) {
+                function (data) {
                     var options1 = '';
                     var ds = data.dsDivisionList;
                     for (var i = 0; i < ds.length; i++) {
@@ -76,10 +79,10 @@ $(function() {
                 });
     });
 
-    $('select#dsDivisionId').bind('change', function(evt2) {
+    $('select#dsDivisionId').bind('change', function (evt2) {
         var id = $("select#dsDivisionId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                function(data) {
+                function (data) {
                     var options = '';
                     var bd = data.bdDivisionList;
                     for (var i = 0; i < bd.length; i++) {
@@ -89,26 +92,26 @@ $(function() {
                 });
     });
 
-    $(function() {
-        $('img#adoption_applicant_lookup').bind('click', function(evt3) {
+    $(function () {
+        $('img#adoption_applicant_lookup').bind('click', function (evt3) {
             var id1 = $("input#applicantPin").attr("value");
 
             $("textarea#applicantName").val('');
             $("textarea#applicantAddress").val('');
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                    function(data1) {
+                    function (data1) {
                         $("textarea#applicantName").val(data1.fullNameInOfficialLanguage);
                         $("textarea#applicantAddress").val(data1.lastAddress);
                     });
         });
     });
-    $(function() {
-        $('img#mother_lookup').bind('click', function(evt3) {
+    $(function () {
+        $('img#mother_lookup').bind('click', function (evt3) {
             var id1 = $("input#wifePINorNIC").attr("value");
 
             $("textarea#wifeName").val('');
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                    function(data1) {
+                    function (data1) {
                         $("textarea#wifeName").val(data1.fullNameInOfficialLanguage);
                     });
         });
@@ -200,7 +203,7 @@ function validate() {
     domObject = document.getElementById('adoptionEntryNo');
     if (isFieldEmpty(domObject)) {
         errormsg = errormsg + "\n" + document.getElementById("error22").value;
-    }else if($('#adoptionEntryNo').val() <= 0){
+    } else if ($('#adoptionEntryNo').val() <= 0) {
         errormsg = errormsg + "\n" + document.getElementById("error23").value;
     }
 
@@ -292,9 +295,10 @@ function enableSerialNumber(mode) {
             Number of Entry
         </td>
         <td>
-            <s:textfield id="adoptionEntryNo" name="adoption.adoptionEntryNo" onkeypress="return numbersOnly(event, true);"/>
+            <s:textfield id="adoptionEntryNo" name="adoption.adoptionEntryNo"
+                         onkeypress="return numbersOnly(event, true);"/>
         </td>
-        <td >
+        <td>
             නියෝගය ලැබුණු දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>கட்டளை பெறப்பட்ட திகதி
             <br>Received Date
@@ -310,7 +314,8 @@ function enableSerialNumber(mode) {
             <br>நீதிமன்றம்
             <br>Court
         </td>
-        <td colspan="2"><s:select list="courtList" name="courtId" cssStyle="margin-left:5px;width:300px;" value="%{courtId}"/>
+        <td colspan="2"><s:select list="courtList" name="courtId" cssStyle="margin-left:5px;width:300px;"
+                                  value="%{courtId}"/>
     </tr>
     <tr>
         <td colspan="2">
@@ -342,7 +347,8 @@ function enableSerialNumber(mode) {
             <br>நீதிபதியின் பெயா்
             <br>Name of the Judge
         </td>
-        <td colspan="2"><s:textfield name="adoption.judgeName" id="judgeName" cssStyle="margin-left:5px;" maxLength="250"/></td>
+        <td colspan="2"><s:textfield name="adoption.judgeName" id="judgeName" cssStyle="margin-left:5px;"
+                                     maxLength="250"/></td>
     </tr>
     <tr>
         <td colspan="2">සහතිකය නිකුත් කල යුතු භාෂාව <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி <br>Preferred
