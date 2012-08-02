@@ -222,6 +222,12 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         return adoptionOrderDAO.isEntryNoExist(adoptionEntryNo);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Long getLastEntryNo(User user) {
+        logger.debug("{} is requesting the latest adoptionEntryNo", user.getUserId());
+        return adoptionOrderDAO.getLastEntryNo();
+    }
+
     private void setApprovalStatus(long idUKey, User user, AdoptionOrder.State state) {
         AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
         if (adoption.getStatus() == AdoptionOrder.State.DATA_ENTRY) {

@@ -141,4 +141,12 @@ public interface AdoptionOrderService {
      * @return  TRUE (If Entry No exists). FALSE otherwise.
      */
     public boolean isEntryNoExist(long adoptionEntryNo, User user);
+
+    /**
+     * Returns the latest adoptionEntryNo
+     *
+     * @param user User requesting the adoptionEntryNo.
+     * @return Latest adoptionEntryNo
+     */
+    public Long getLastEntryNo(User user);
 }

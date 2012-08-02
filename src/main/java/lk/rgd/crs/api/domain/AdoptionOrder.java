@@ -29,6 +29,10 @@ import java.util.Date;
     @NamedQuery(
         name = "isEntryNoExist",
         query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo"
+    ),
+    @NamedQuery(
+        name = "getLastEntryNo",
+        query = "SELECT MAX(a.adoptionEntryNo) FROM AdoptionOrder a"
     )
 })
 

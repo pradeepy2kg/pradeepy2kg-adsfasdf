@@ -210,7 +210,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (idUKey == 0) {
             adoption = new AdoptionOrder();
         }
-
+        adoption.setAdoptionEntryNo(service.getLastEntryNo(user) + 1);
         populateBasicLists(language);
         populateAllDSDivisionList();
         return SUCCESS;

@@ -131,4 +131,14 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
             return false;
         }
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long getLastEntryNo() {
+        Query q = em.createNamedQuery("getLastEntryNo");
+        try {
+            return (Long) q.getSingleResult();
+        } catch (NoResultException e) {
+            return 0l;
+        }
+    }
 }
