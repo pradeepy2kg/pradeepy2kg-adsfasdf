@@ -54,8 +54,7 @@
     </div>
 </div>
 
-<table style=" width:
-100%; border:none; border-collapse:collapse; ">
+<table style=" width:99%; border:none; border-collapse:collapse;">
     <col width="200px">
     <col width="400px">
     <col width="200px">
@@ -67,7 +66,7 @@
                  style="display: block; text-align: center;" width="80" height="100">
         </td>
         <td>
-            <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse;">
+            <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse; margin-top: 10px;">
                 <tr height="60px">
                     <td>සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate Number</td>
                 </tr>
@@ -91,56 +90,55 @@
     </tbody>
 </table>
 
-<table border="1" width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+<table border="1" width="99%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+    <col width="250px">
+    <col width="250px">
+    <col width="110px">
     <col width="150px">
-    <col width="160px">
-    <col width="100px">
-    <col width="130px">
-    <col width="100px">
     <col>
     <tbody>
     <tr>
-        <td width="250px" height="80px" rowspan="2">
+        <td height="80px" rowspan="2">
             දරුකමට හදාගැනීමේ නියෝගය
             <br>மகவேற்புக் கட்டளை
             <br>Adoption Order
         </td>
-        <td width="250px">
+        <td>
             නිකුත් කල අධිකරණය
             <br>வழங்கிய நீதிமன்றம்
             <br>Court Issuing order
         </td>
-        <td colspan="5">
+        <td colspan="3">
             <s:label name="courtName" cssStyle="margin-left:10px;"/>
         </td>
     </tr>
     <tr>
-
-        <td width="150px">
+        <td>
             නියෝග දිනය <br>
             கட்டளை திகதி<br>
             Order Date
         </td>
-        <td width="250px" colspan="2">
+        <td>
             <s:label value="%{adoption.orderIssuedDate}"/>
             <br>
             <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
-
         <td>
             නියෝග අංකය <br>
             கட்டளை இலக்கம் <br>
             Order Number
         </td>
-        <td width="150px">
+        <td>
             <s:label value="%{adoption.courtOrderNumber}"/>
         </td>
     </tr>
-
     <tr>
-        <td height="120px" width="250px">නම <br>பெயர் <br>Name
+        <td height="120px">
+            නම
+            <br>பெயர்
+            <br>Name
         </td>
-        <td colspan="6" class="bc-name" style="font-size:12pt">
+        <td colspan="4" class="bc-name" style="font-size:12pt">
             <s:if test="#request.adoption.childNewName != null">
                 <s:label name="" value="%{adoption.childNewName}"/>
             </s:if>
@@ -149,7 +147,6 @@
             </s:else>
         </td>
     </tr>
-
     <tr>
         <%--<td height="80px" width="250px">පුද්ගල අනන්‍යතා අංකය <br>தனிநபர்அடையாள எண் <br>Person Identification Number--%>
         <%--(PIN)--%>
@@ -160,40 +157,28 @@
             <br>
             <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
-        <td width="150px">ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
+        <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
         </td>
-        <td width="150px" colspan="2">
+        <td>
             <s:label name="" value="%{genderSi}"/> <br>
             <s:label name="" value="%{genderEn}"/>
         </td>
     </tr>
-
-
     <tr>
-        <td height="120px" width="250px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
+        <td height="120px" >පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
         </td>
-        <td colspan="6" class="bc-name" style="font-size:12pt">
+        <td colspan="4" class="bc-name" style="font-size:12pt">
             <s:if test="#request.adoption.applicantMother==0">
                 <s:label name="" value="%{adoption.applicantName}"/>
             </s:if>
         </td>
     </tr>
-    <%--<tr>--%>
-    <%--<td height="70px" width="250px">පියාගේ සම්පුර්ණ නම
-தந்தையின்முழுப் பெயர்
-Father's Full Name
-    <%--</td>--%>
-    <%--<td colspan="5" width="250px">--%>
-    <%--<s:if test="#request.adoption.applicantMother==0">--%>
-    <%--<s:label name="" value="%{adoption.applicantPINorNIC}"/>--%>
-    <%--</s:if></td>--%>
-    <%--</tr>--%>
     <tr>
-        <td height="120px" width="250px"> මවගේ සම්පූර්ණ නම <br>
+        <td height="120px"> මවගේ සම්පූර්ණ නම <br>
             தாயின் முழுப் பெயர் <br>
             Mother's Full Name
         </td>
-        <td colspan="6" class="bc-name" style="font-size:12pt">
+        <td colspan="4" class="bc-name" style="font-size:12pt">
             <s:if test="#request.adoption.applicantMother==1">
                 <s:label name="" value="%{adoption.applicantName}"/>
             </s:if>
@@ -202,24 +187,10 @@ Father's Full Name
             </s:else>
         </td>
     </tr>
-    <%--<tr>--%>
-    <%--<td height="70px" width="250px">ම‌වගේ අනන්‍යතා අංකය
-தாயின்  அடையாள எண்
-Mother's Identification No.
-    <%--</td>--%>
-    <%--<td colspan="5">--%>
-    <%--<s:if test="#request.adoption.applicantMother==1">--%>
-    <%--<s:label name="" value="%{adoption.applicantPINorNIC}"/>--%>
-    <%--</s:if>--%>
-    <%--<s:else>--%>
-    <%--<s:label name="" value="%{adoption.wifePINorNIC}"/>--%>
-    <%--</s:else>--%>
-    <%--</td>--%>
-    <%--</tr>--%>
     </tbody>
 </table>
 
-<table border="1" width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+<table border="1" width="99%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <col width="250px">
     <col width="215px">
     <col width="120px">
@@ -287,7 +258,7 @@ Mother's Identification No.
 </table>
 
 <s:if test="#request.adoption.birthCertificateNumber>0 || #request.adoption.birthRegistrationSerial>0">
-    <table style="font-size:12pt;text-align:center;width:100%">
+    <table style="font-size:12pt;text-align:center;width:99%">
         <tr></tr>
         <tr>
             <td>දැනට උප්පැන්න සහතිකයක් ඇත්නම් එහි විස්තර <br/>
@@ -296,7 +267,7 @@ Mother's Identification No.
         </tr>
     </table>
 
-    <table border="1" width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+    <table border="1" width="99%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
         <tr>
             <td width="25%">දිස්ත්‍රික්ක <br/>
                 மாவட்டம் <br/>
@@ -331,7 +302,7 @@ Mother's Identification No.
         </tr>
     </table>
 </s:if>
-<table style="width:100%; border-left:none;font-size:10pt;text-align:center;margin-bottom:10px;">
+<table style="width:99%; border-left:none;font-size:10pt;text-align:center;margin-bottom:10px;">
     <tr>
         <td>
             (1941 අංක 24 දරන දරුකමට ගැනීම පිලිබඳ ආඥාපනතේ 11 වෙනි වගන්තිය යටතේ නිකුත් කරන ලදී)
@@ -345,7 +316,7 @@ Mother's Identification No.
 </div>
 <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
 
-<table border="0" cellspacing="0" width="100%">
+<table border="0" cellspacing="0" width="99%">
     <caption></caption>
     <col/>
     <col/>
