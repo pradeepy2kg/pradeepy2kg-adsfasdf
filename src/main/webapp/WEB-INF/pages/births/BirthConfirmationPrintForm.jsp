@@ -108,7 +108,7 @@
     </fieldset>
 </div>
 
-<table style="width:70%;float:left;">
+<table style="width:70%;float:left; margin-top: 5px;">
     <caption></caption>
     <col/>
     <col/>
@@ -121,7 +121,7 @@
     </tbody>
 </table>
 
-<table cellspacing="0" style="border: 1px solid #000000;height:60px;float:left;width:30%">
+<table cellspacing="0" style="border: 1px solid #000000;height:60px;float:left;width:29%; margin-top: 15px;">
     <caption></caption>
     <col/>
     <col/>
@@ -137,7 +137,7 @@
     </tbody>
 </table>
 
-<table style="width:100%;float:left;margin-bottom:20px">
+<table style="width:99%;float:left;margin-bottom:20px">
     <col/>
     <tbody>
     <tr>
@@ -152,7 +152,7 @@
     </tbody>
 </table>
 <br>
-<table border="0" style="margin-bottom:10px;width:100%;">
+<table border="0" style="margin-bottom:10px;width:99%;">
     <caption></caption>
     <col/>
     <tbody>
@@ -182,7 +182,7 @@
     </tbody>
 </table>
 
-<table class="table_con_page_01" width="100%" cellspacing="0">
+<table class="table_con_page_01" width="99%" cellspacing="0">
     <caption></caption>
     <col/>
     <col/>
@@ -223,7 +223,7 @@
     </tr>
     </tbody>
 </table>
-<table border="0" style="width:100%;margin-top:20px;">
+<table border="0" style="width:99%;margin-top:20px;">
     <col/>
     <tbody>
     <tr>
@@ -236,7 +236,7 @@
     </tbody>
 </table>
 
-<table class="table_con_page_01" width="100%" cellspacing="0">
+<table class="table_con_page_01" width="99%" cellspacing="0">
     <caption></caption>
     <col width="36px"/>
     <col width="240px"/>
@@ -357,9 +357,11 @@
     </tr>
     </tbody>
 </table>
+<br/>
 <div style="page-break-after:always;"></div>
-
-<table class="table_con_page_01" width="100%" cellspacing="0">
+<br/>
+<br/>
+<table class="table_con_page_01" width="99%" cellspacing="0">
     <caption></caption>
     <col width="36px"/>
     <col width="240px"/>
@@ -424,7 +426,7 @@
     </tbody>
 </table>
 
-<table border="0" style="width:100%;">
+<table border="0" style="width:99%;">
     <caption></caption>
     <col/>
     <tbody>
@@ -437,7 +439,7 @@
     </tbody>
 </table>
 
-<table class="table_con_page2_table" cellspacing="0" width="100%">
+<table class="table_con_page2_table" cellspacing="0" width="99%">
     <caption></caption>
     <col/>
     <col/>
@@ -478,7 +480,7 @@
     </tbody>
 </table>
 
-<table class="table_con_page2_table" cellspacing="0" width="100%">
+<table class="table_con_page2_table" cellspacing="0" width="99%">
     <caption></caption>
     <col/>
     <col/>
@@ -521,7 +523,7 @@
     </tbody>
 </table>
 
-<table class="table_con_page2_table" cellspacing="0" width="100%">
+<table class="table_con_page2_table" cellspacing="0" width="99%">
     <caption></caption>
     <col/>
     <col/>
@@ -559,9 +561,11 @@
     </tr>
     </tbody>
 </table>
+<br/>
 <div style="page-break-after:always;"></div>
+<br/>
 
-<table border="0" style="width:100%;">
+<table border="0" style="width:99%;">
     <caption></caption>
     <col/>
     <tbody>
@@ -575,7 +579,7 @@
 </table>
 
 <%--father full name in english --%>
-<table class="table_con_page2_table" cellspacing="0" width="100%">
+<table class="table_con_page2_table" cellspacing="0" width="99%">
     <caption></caption>
     <col/>
     <col/>
@@ -615,7 +619,7 @@
 </table>
 
 <%--mother full name in official language--%>
-<table class="table_con_page2_table" cellspacing="0" width="100%" style="margin-top:30px;">
+<table class="table_con_page2_table" cellspacing="0" width="99%" style="margin-top:30px;">
     <caption></caption>
     <col/>
     <col/>
@@ -654,7 +658,7 @@
 </table>
 
 <%--mother full name in english--%>
-<table class="table_con_page2_table" cellspacing="0" width="100%" style="margin-top:30px;">
+<table class="table_con_page2_table" cellspacing="0" width="99%" style="margin-top:30px;">
     <caption></caption>
     <col/>
     <col/>
@@ -691,10 +695,12 @@
     </tr>
     </tbody>
 </table>
+<br/>
 <div style="page-break-after:always;"></div>
+<br/>
 
 <div id="page3" style="margin-top:10px;">
-    <table border="0" style="width:100%;float:left;">
+    <table border="0" style="width:99%;float:left;">
         <caption></caption>
         <col/>
         <tbody>
@@ -710,7 +716,7 @@
         </tbody>
     </table>
 
-    <table class="table_con_page_03" cellspacing="0" style="float:left; margin-bottom:30px; width:100%">
+    <table class="table_con_page_03" cellspacing="0" style="float:left; margin-bottom:30px; width:99%">
         <caption></caption>
         <col/>
         <col width="250px"/>
@@ -812,7 +818,7 @@
     </tbody>
 </table>
 
-<table class="table_con_page_03" cellspacing="0" width="100%">
+<table class="table_con_page_03" cellspacing="0" width="99%">
     <caption></caption>
     <col/>
     <col/>
@@ -850,7 +856,7 @@
 <%--<hr style="border-style:dashed;align:left;width:100% ;margin-bottom:10px;margin-top:70px;">--%>
 
 <hr style="border-style:dashed;align:left;width:100% ;margin-bottom:20px;margin-top:100px;">
-<table border="0" cellspacing="0" width="100%">
+<table border="0" cellspacing="0" width="99%">
     <caption></caption>
     <col/>
     <col/>
