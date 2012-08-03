@@ -123,14 +123,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         //    populateAllDSDivisionList();
         long birthCertificateNo = 0;
 
-        if (service.isEntryNoExist(adoption.getAdoptionEntryNo(), user)) {
-            addActionError(getText("er.label.used.adoption.entry.number"));
-            basicLists();
-            populate();
-            populateAllDSDivisionList();
-            return "invalidBirthCertificateNumber";
-        }
-
         //check applicant type
         if (adoption.isApplicantMother()) {
             //check wife details are already filled if so give action error
@@ -163,6 +155,14 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             addActionMessage(getText("message.successfully.edited.adoption.order",
                 new String[]{adoption.getCourtOrderNumber()}));
         } else {
+            if (service.isEntryNoExist(adoption.getAdoptionEntryNo(), user)) {
+                addActionError(getText("er.label.used.adoption.entry.number"));
+                basicLists();
+                populate();
+                populateAllDSDivisionList();
+                return "invalidBirthCertificateNumber";
+            }
+
             birthCertificateNo = adoption.getBirthCertificateNumber();
             if (birthCertificateNo > 0) {
                 logger.info("checking the given birth Certificate for birth certificate number : {}", birthCertificateNo);
