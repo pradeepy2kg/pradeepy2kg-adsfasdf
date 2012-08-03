@@ -123,7 +123,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         //    populateAllDSDivisionList();
         long birthCertificateNo = 0;
 
-        if(service.isEntryNoExist(adoption.getAdoptionEntryNo(), user)){
+        if (service.isEntryNoExist(adoption.getAdoptionEntryNo(), user)) {
             addActionError(getText("er.label.used.adoption.entry.number"));
             basicLists();
             populate();
@@ -210,7 +210,10 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (idUKey == 0) {
             adoption = new AdoptionOrder();
         }
-        adoption.setAdoptionEntryNo(service.getLastEntryNo(user) + 1);
+        Long lastEntry = service.getLastEntryNo(user);
+        if (lastEntry != null) {
+            adoption.setAdoptionEntryNo(lastEntry + 1);
+        }
         populateBasicLists(language);
         populateAllDSDivisionList();
         return SUCCESS;
@@ -304,10 +307,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     *  view adoption order details
+     * view adoption order details
+     *
      * @return
      */
-    public String eprAdoptionOrderDetailsViewMode(){
+    public String eprAdoptionOrderDetailsViewMode() {
         logger.debug("initializing view mode for idUKey : {}", idUKey);
         adoption = service.getById(idUKey, user);
         if (adoption == null) {
@@ -467,8 +471,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         logger.debug("requested to mark adoption certificate as printed with idUKey : {} alreadyPrinted : {} ", idUKey, alreadyPrinted);
         try {
             service.setStatusToPrintedCertificate(idUKey, user);
-        }
-        catch (CRSRuntimeException e) {
+        } catch (CRSRuntimeException e) {
             logger.debug("invalide state for mark as print adoption order idUKey : {}", idUKey);
         }
         populate();

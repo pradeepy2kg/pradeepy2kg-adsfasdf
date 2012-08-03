@@ -137,7 +137,7 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
         Query q = em.createNamedQuery("getLastEntryNo");
         try {
             return (Long) q.getSingleResult();
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             return 0l;
         }
     }
