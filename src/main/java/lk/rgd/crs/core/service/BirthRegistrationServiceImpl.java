@@ -713,6 +713,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             //updating corresponding adoption order and clear any other existing registrations
             AdoptionOrder adoptionOrder = adoptionOrderService.getById(adoption.getRegister().getAdoptionUKey(), user);
             adoptionOrder.setStatus(AdoptionOrder.State.RE_REGISTERED);
+            adoptionOrder.setBirthCertificateNumber(adoption.getIdUKey());
+            adoptionOrder.setBirthRegistrationSerial(adoption.getRegister().getBdfSerialNo());
+            adoptionOrder.setBirthDivisionId(adoption.getRegister().getBirthDivision().getBdDivisionUKey());
             adoptionOrderService.updateAdoptionOrder(adoptionOrder, user);
             logger.debug("Approved adoption birth declaration record : {} Ignore warnings : {}", adoption.getIdUKey(), ignoreWarnings);
         } else {
