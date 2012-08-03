@@ -1,4 +1,5 @@
 -- Database: COMMON
+USE COMMON;
 
 -- ZONAL_OFFICES
 
