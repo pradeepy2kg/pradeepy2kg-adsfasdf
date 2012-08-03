@@ -6,6 +6,7 @@ import lk.rgd.Permission;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
@@ -342,12 +343,11 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             // mark currently married spouses as widowed
             for (Marriage m : person.getMarriages()) {
                 if (m.getState() == Marriage.State.MARRIED) {
-
-                    if (AppConstants.Gender.MALE.equals(person.getGender())) {
+                    if (AppConstants.Gender.MALE.ordinal() == person.getGender()) {
                         logger.debug("Marking person with PIN : {} as widowed", m.getBride().getPin());
                         m.getBride().setCivilStatus(Person.CivilStatus.WIDOWED);
                         ecivil.updatePerson(m.getBride(), user);
-                    } else {
+                    } else if(AppConstants.Gender.FEMALE.ordinal() == person.getGender()) {
                         logger.debug("Marking person with PIN : {} as widowed", m.getGroom().getPin());
                         m.getGroom().setCivilStatus(Person.CivilStatus.WIDOWED);
                         ecivil.updatePerson(m.getGroom(), user);
