@@ -131,16 +131,15 @@
             }
         }
         <%--commenting temporarily for QA performance testing script generation. uncomment soon after!! -- Ashoka--. --%>
-        <%--else {--%>
-            <%--/* alert('You\'re using ' + BrowserDetect.browser + ' ' +--%>
-             <%--BrowserDetect.version + ' on ' + BrowserDetect.OS + '\n But recommended web Browser is FireFox 3.6 or above \n Download the FireFox Web Browser From Here');--%>
-             <%--window.location = "/../downloads/Firefox_Setup_3.6.8.exe";*/--%>
-            <%--document.getElementById("login-table").style.display = 'none';--%>
-            <%--document.getElementById("web-browser").style.display = 'block';--%>
-            <%--document.getElementById("web-browser-lable-01").style.display = 'none';--%>
-            <%--document.getElementById("incorrectUsername").style.display = 'none';--%>
-
-        <%--}--%>
+        else {
+            /* alert('You\'re using ' + BrowserDetect.browser + ' ' +
+             BrowserDetect.version + ' on ' + BrowserDetect.OS + '\n But recommended web Browser is FireFox 3.6 or above \n Download the FireFox Web Browser From Here');
+             window.location = "/../downloads/Firefox_Setup_3.6.8.exe";*/
+            document.getElementById("login-table").style.display = 'none';
+            document.getElementById("web-browser").style.display = 'block';
+            document.getElementById("web-browser-lable-01").style.display = 'none';
+            document.getElementById("incorrectUsername").style.display = 'none';
+        }
     }
 
 
@@ -208,7 +207,7 @@
                              cssStyle="width:100%"/>
                 </div>
                 <div id="firefox-new">
-                    * Download The Recommended FireFox Web Browser <a href="/../downloads/Firefox_Setup_3.6.8.exe">from
+                    * Download The Recommended FireFox Web Browser <a href="http://www.mozilla.org/en-US/firefox/new/">from
                     here</a>
                 </div>
             </div>
