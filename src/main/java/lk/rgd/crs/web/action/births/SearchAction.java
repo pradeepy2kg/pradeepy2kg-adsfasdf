@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.User;
@@ -26,12 +27,14 @@ import java.util.Map;
  */
 public class SearchAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(SearchAction.class);
+    private static final String ROWS_PER_PAGE = "crs.certificate.search.record.limit";
 
     private final BirthRegistrationService service;
     private final CertificateSearchService certificateSearchService;
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
+    private final AppParametersDAO appParametersDAO;
 
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> districtList;
@@ -55,14 +58,19 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private String status;
     private String language;
     private int pageNo;
+    private int noOfRows;
+
+    private boolean nextFlag;
+    private boolean previousFlag;
 
     public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-                        BDDivisionDAO bdDivisionDAO, CertificateSearchService certificateSearchService) {
+        BDDivisionDAO bdDivisionDAO, CertificateSearchService certificateSearchService, AppParametersDAO appParametersDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.certificateSearchService = certificateSearchService;
+        this.appParametersDAO = appParametersDAO;
     }
 
     public String welcome() {
@@ -78,6 +86,12 @@ public class SearchAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+    public String searchRejectedBirthRecords() {
+        logger.debug("Listing rejected birth records by {}", user.getUserId());
+        searchResultList = service.getAllRejectedBirthsByUser(user);
+        return SUCCESS;
+    }
+
     /**
      * This method responsible for searching  Birth declaration based on serialNo, district and bdDivision. If serialNo
      * is set to  0 search is done based on the birthDivision
@@ -87,14 +101,14 @@ public class SearchAction extends ActionSupport implements SessionAware {
     public String searchBDFBySerialNumber() {
         if (logger.isDebugEnabled()) {
             logger.debug("attempt to search birth record by serial number :" + serialNo + "and birth division :" +
-                    birthDivisionId + " and ds division id :" + dsDivisionId);
+                birthDivisionId + " and ds division id :" + dsDivisionId);
         }
         try {
             if (serialNo != null) {
                 if (birthDivisionId != 0) {
                     //search by birth division and the serial number
                     bdf = service.getActiveRecordByBDDivisionAndSerialNo(
-                            bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
+                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
                 } else {
                     //search by ds division
                     searchResultList = service.getActiveRecordByDSDivisionAndSerialNumber(serialNo, dsDivisionId, user);
@@ -102,7 +116,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
                 if (bdf == null & (searchResultList != null && searchResultList.size() == 0)) {
                     if (logger.isDebugEnabled()) {
                         logger.debug("no result found for birth registration serial number :" + serialNo +
-                                " and birth division id :" + birthDistrictId + " and ds division id : " + dsDivisionId);
+                            " and birth division id :" + birthDistrictId + " and ds division id : " + dsDivisionId);
                     }
                     addActionMessage(getText("SearchBDF.error.NoResult.for.serial", new String[]{Long.toString(serialNo)}));
                 }
@@ -187,7 +201,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
                 // validate duplicate application number entering
                 boolean validNo = certificateSearchService.isValidCertificateSearchApplicationNo(
-                        certSearch.getCertificate().getDsDivision(), certSearch.getCertificate().getApplicationNo());
+                    certSearch.getCertificate().getDsDivision(), certSearch.getCertificate().getApplicationNo());
 
                 if (!validNo) {
                     addFieldError("duplicateApplicationNoError", getText("duplicateApplicationNo.label"));
@@ -206,7 +220,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
             } catch (CRSRuntimeException e) {
                 logger.error("inside birthCertificateSearch()", e);
                 addActionError(getText("CertSearch.error." + e.getErrorCode()) + "\n" + certSearch.getCertificate().getApplicationNo() +
-                        " , " + certSearch.getCertificate().getDsDivision().getDsDivisionUKey());
+                    " , " + certSearch.getCertificate().getDsDivision().getDsDivisionUKey());
             } catch (Exception e) {
                 logger.error("inside birthCertificateSearch()", e);
                 return ERROR;
@@ -369,5 +383,29 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
     public void setCertificateType(CertificateSearch.CertificateType certificateType) {
         this.certificateType = certificateType;
+    }
+
+    public int getNoOfRows() {
+        return noOfRows;
+    }
+
+    public void setNoOfRows(int noOfRows) {
+        this.noOfRows = noOfRows;
+    }
+
+    public boolean isNextFlag() {
+        return nextFlag;
+    }
+
+    public void setNextFlag(boolean nextFlag) {
+        this.nextFlag = nextFlag;
+    }
+
+    public boolean isPreviousFlag() {
+        return previousFlag;
+    }
+
+    public void setPreviousFlag(boolean previousFlag) {
+        this.previousFlag = previousFlag;
     }
 }

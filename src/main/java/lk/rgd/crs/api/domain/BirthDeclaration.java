@@ -137,6 +137,10 @@ import java.io.Serializable;
     @NamedQuery(
         name = "get.bc.by.createdUser.district",
         query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.lifeCycleInfo.createdUser =:user AND (bdf.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate) AND bdf.register.birthDivision.dsDivision.district.districtUKey = :districtId"
+    ),
+    @NamedQuery(
+        name = "getAllRejectedBirthsByUser",
+        query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.lifeCycleInfo.lastUpdatedUser =:user AND bdf.register.status = 7"
     )
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)

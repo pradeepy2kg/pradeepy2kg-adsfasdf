@@ -585,6 +585,12 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprBirthsRejectedSearch" class="lk.rgd.crs.web.action.births.SearchAction"
+                method="searchRejectedBirthRecords">
+            <result type="tiles" name="success">epr.BirthsRejectedSearch</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
         <action name="eprBirthRegistrationHome" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="initBirthRegistration">
             <result type="tiles" name="success">epr.birthRegistrationHome</result>

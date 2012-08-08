@@ -240,6 +240,11 @@
                 Birth Records Search
             </a>
         </li>
+        <li>
+            <a id="birth.rejectedSearch.label" href="/ecivil/births/eprBirthsRejectedSearch.do">
+                Rejected Birth Records
+            </a>
+        </li>
     </ul>
 </li>
 

@@ -1133,6 +1133,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                     ErrorCodes.PERMISSION_DENIED);
             }
             bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_REJECTED);
+            bdf.getRegister().setBdfSerialNo(changeSerialNo(bdf.getRegister().getBdfSerialNo()));
             bdf.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
             bdf.getLifeCycleInfo().setApprovalOrRejectUser(user);
 
@@ -1144,6 +1145,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             handleException("Cannot reject birth declaration / confirmation : " + bdf.getIdUKey() +
                 " Illegal state : " + currentState, ErrorCodes.INVALID_STATE_FOR_BDF_REJECTION);
         }
+    }
+
+    private Long changeSerialNo(Long serialNo) {
+        logger.debug("Attempt to change the serial : {} to {}", serialNo, (serialNo + 800000));
+        return (serialNo + 800000);
     }
 
     private void updatingAdoptionOrder(BirthDeclaration birthDeclaration, User user) {
@@ -1877,6 +1883,15 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         ValidationUtils.validateAccessToDSDivision(dsDivision, user);
         return birthDeclarationDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows,
             BirthDeclaration.State.DATA_ENTRY);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getAllRejectedBirthsByUser(User user) {
+        logger.debug("Loading all rejected birth records by {}", user.getUserId());
+        return birthDeclarationDAO.getAllRejectedBirthsByUser(user);
     }
 
     /**
