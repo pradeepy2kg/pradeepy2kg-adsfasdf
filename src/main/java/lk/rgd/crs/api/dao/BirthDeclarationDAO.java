@@ -401,5 +401,13 @@ public interface BirthDeclarationDAO {
     public Long findBDDivisionUsageInBirthRecords(int bdDivisionUKey);
 
     public Long findLocationUsageInBirthRecords(int locationUKey);
+
+    /**
+     * Returns all the rejected birth declarations by the given user.
+     *
+     * @param user Selected user
+     * @return  List of rejected birth records by the user
+     */
+    public List<BirthDeclaration> getAllRejectedBirthsByUser(User user);
 }
 

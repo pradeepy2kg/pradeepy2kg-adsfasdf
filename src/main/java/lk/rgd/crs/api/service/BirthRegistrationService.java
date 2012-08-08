@@ -484,6 +484,14 @@ public interface BirthRegistrationService {
     public List<BirthDeclaration> getDeclarationApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user);
 
     /**
+     * Returns all the rejected Birth Records by the selected user.
+     *
+     * @param user  Selected user
+     * @return List of rejected births by the user
+     */
+    public List<BirthDeclaration> getAllRejectedBirthsByUser(User user);
+
+    /**
      * * Returns a limited set of BirthDeclarations for which confirmation changes are not captured yet awaiting approval
      * by an ADR and based on given district id. Results are ordered on the descending confirmationProcessedTimestamp
      *

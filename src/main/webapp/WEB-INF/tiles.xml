@@ -198,6 +198,11 @@
         <put-attribute name="title" value="search.adnavced.title"/>
     </definition>
 
+    <definition name="epr.BirthsRejectedSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/RejectedBirthDeclarationList.jsp"/>
+        <put-attribute name="title" value="search.rejected.births.title"/>
+    </definition>
+
     <definition name="epr.certificateSearch" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/CertificateSearch.jsp"/>
         <put-attribute name="title" value="BirthCertificateSearch.title"/>

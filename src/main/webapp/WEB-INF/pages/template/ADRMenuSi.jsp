@@ -240,6 +240,11 @@
                 උපත් වාර්තා සෙවීම
             </a>
         </li>
+        <li>
+            <a id="birth.rejectedSearch.label" href="/ecivil/births/eprBirthsRejectedSearch.do">
+                Rejected Birth Records
+            </a>
+        </li>
     </ul>
 </li>
 

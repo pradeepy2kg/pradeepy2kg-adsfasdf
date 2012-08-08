@@ -425,6 +425,7 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="certificateSearchService"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
     <bean id="userPreferenceAction" class="lk.rgd.crs.web.action.UserPreferencesAction">
