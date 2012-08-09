@@ -245,6 +245,11 @@
                 பிறப்பு அறிக்கையினை தேடுதல்
             </a>
         </li>
+        <li>
+            <a id="birth.rejectedSearch.label" href="/ecivil/births/eprBirthsRejectedSearch.do">
+                Rejected Birth Records in ta
+            </a>
+        </li>
     </ul>
 </li>
 
