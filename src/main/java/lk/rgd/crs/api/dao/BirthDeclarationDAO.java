@@ -409,5 +409,22 @@ public interface BirthDeclarationDAO {
      * @return  List of rejected birth records by the user
      */
     public List<BirthDeclaration> getAllRejectedBirthsByUser(User user);
+
+    /**
+     * Returns all the rejected birth declarations by the given district
+     *
+     * @param district  Selected District
+     * @return          List of rejected births in the selected district
+     */
+    public List<BirthDeclaration> getAllRejectedBirthsByDistrict(District district);
+
+    /**
+     * Returns all the rejected Births by given D.S. Division
+     *
+     * @param dsDivision    Selected DSDivision
+     * @return              List of rejected births in the selected DSDivision
+     */
+    public List<BirthDeclaration> getAllRejectedBirthsByDSDivision(DSDivision dsDivision);
+
 }
 

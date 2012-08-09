@@ -1898,6 +1898,26 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getAllRejectedBirthsByDistrict(District district, User user) {
+        logger.debug("Loading rejected birth records in {} by {}", district.getEnDistrictName(), user.getUserId());
+//        ValidationUtils.validateAccessToBDDistrict(user, district);
+        return birthDeclarationDAO.getAllRejectedBirthsByDistrict(district);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getAllRejectedBirthsByDSDivision(DSDivision dsDivision, User user) {
+        logger.debug("Loading rejected birth records in {} by {}", dsDivision.getEnDivisionName(), user.getUserId());
+//        ValidationUtils.validateAccessToDSDivision(dsDivision, user);
+        return birthDeclarationDAO.getAllRejectedBirthsByDSDivision(dsDivision);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationApprovalPendingByDistrictId(District district, int pageNo, int noOfRows, User user) {
         ValidationUtils.validateAccessToBDDistrict(user, district);
         return birthDeclarationDAO.getPaginatedListForStateByDistrict(district, pageNo, noOfRows,

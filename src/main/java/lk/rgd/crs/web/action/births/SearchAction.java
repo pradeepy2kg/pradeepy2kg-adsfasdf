@@ -51,6 +51,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private int birthDistrictId;
     private int dsDivisionId;
     private int birthDivisionId;
+    private int districtId;
 
     private Long serialNo;
     private Long idUKey;
@@ -87,8 +88,17 @@ public class SearchAction extends ActionSupport implements SessionAware {
     }
 
     public String searchRejectedBirthRecords() {
-        logger.debug("Listing rejected birth records by {}", user.getUserId());
-        searchResultList = service.getAllRejectedBirthsByUser(user);
+        if(districtId > 0 && dsDivisionId == 0){
+//          /* District has selected. But, no DSDivision selected. */
+            searchResultList = service.getAllRejectedBirthsByDistrict(districtDAO.getDistrict(districtId), user);
+        }else if(districtId > 0 && dsDivisionId > 0){
+            /* Both District and DSDivision has selected */
+            searchResultList = service.getAllRejectedBirthsByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), user);
+        }else {
+            /* Nothing selected. (Initial access) */
+            searchResultList = service.getAllRejectedBirthsByUser(user);
+        }
+            populate();
         return SUCCESS;
     }
 
@@ -407,5 +417,13 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
     public void setPreviousFlag(boolean previousFlag) {
         this.previousFlag = previousFlag;
+    }
+
+    public int getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(int districtId) {
+        this.districtId = districtId;
     }
 }

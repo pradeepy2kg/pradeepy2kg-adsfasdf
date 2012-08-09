@@ -20,6 +20,23 @@
             "sPaginationType":"full_numbers"
         });
     });
+
+    $(function() {
+        $('select#districtId').bind('change', function(evt1) {
+            var id = $("select#districtId").attr("value");
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        options1 += '<option value="' + 0 + '">' +  <s:label value="%{getText('all.divisions.label')}"/>+ '</option>';
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
+
+                    });
+        });
+    });
 </script>
 <style type="text/css">
     #rejectedBirths-outer {
@@ -28,20 +45,21 @@
 </style>
 <div id="rejectedBirths-outer">
     <%--Uncomment if needed to filter the results using D.S. Division --%>
-    <%--<s:form action="eprBirthsRejectedSearch" method="POST" name="rejectedBirthSearch">
+    <s:form action="eprBirthsRejectedSearch" method="POST" name="rejectedBirthSearch">
         <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
             <legend><b><s:label value="%{getText('searchOption.label')}"/></b></legend>
             <table width="100%" cellpadding="5" cellspacing="0">
-                <col width="300px"/>
+                <col width="200px"/>
                 <col/>
                 <col width="300px"/>
                 <col/>
+                <col width="200px"/>
                 <tbody>
                 <tr>
                     <td><s:label name="district" value="%{getText('district.label')}"/></td>
                     <td>
-                        <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                                  value="birthDistrictId"
+                        <s:select id="districtId" name="districtId" list="districtList"
+                                  value="districtId"
                                   cssStyle="width:240px;"/>
                     </td>
                     <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
@@ -50,27 +68,14 @@
                                   headerValue="%{getText('all.divisions.label')}" headerKey="0"
                                   cssStyle="float:left;  width:240px;"/>
                     </td>
-                </tr>
-                <tr>
-                    <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
-                    <td>
-                        <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                                  list="bdDivisionList"
-                                  headerValue="%{getText('all.divisions.label')}" headerKey="0"
-                                  cssStyle=" width:240px;float:left;"/>
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td colspan="4" class="button" align="right">
+                    <td class="button" align="right">
                         <s:submit name="refresh" value="%{getText('bdfSearch.button')}"/>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </fieldset>
-    </s:form>--%>
+    </s:form>
 
     <table id="rejectedBirthsTable" width="100%" cellpadding="0" cellspacing="0" class="display">
         <thead>

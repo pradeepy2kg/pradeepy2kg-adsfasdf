@@ -141,6 +141,14 @@ import java.io.Serializable;
     @NamedQuery(
         name = "getAllRejectedBirthsByUser",
         query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.lifeCycleInfo.lastUpdatedUser =:user AND bdf.register.status = 7"
+    ),
+    @NamedQuery(
+        name = "getAllRejectedBirthsByDistrict",
+        query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.register.birthDivision.dsDivision.district = :district AND bdf.register.status = 7"
+    ),
+    @NamedQuery(
+        name = "getAllRejectedBirthsByDSDivision",
+        query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = 7"
     )
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
