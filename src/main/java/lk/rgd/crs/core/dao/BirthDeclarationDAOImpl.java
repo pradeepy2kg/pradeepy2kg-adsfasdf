@@ -503,4 +503,24 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         q.setParameter("user", user);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<BirthDeclaration> getAllRejectedBirthsByDistrict(District district) {
+        Query q = em.createNamedQuery("getAllRejectedBirthsByDistrict");
+        q.setParameter("district", district);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<BirthDeclaration> getAllRejectedBirthsByDSDivision(DSDivision dsDivision) {
+        Query q = em.createNamedQuery("getAllRejectedBirthsByDSDivision");
+        q.setParameter("dsDivision", dsDivision);
+        return q.getResultList();
+    }
 }

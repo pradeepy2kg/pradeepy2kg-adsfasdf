@@ -242,7 +242,7 @@
         </li>
         <li>
             <a id="birth.rejectedSearch.label" href="/ecivil/births/eprBirthsRejectedSearch.do">
-                Rejected Birth Records
+                ප්‍රතික්ෂේපිත උපත් වාර්තා
             </a>
         </li>
     </ul>

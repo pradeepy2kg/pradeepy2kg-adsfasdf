@@ -492,6 +492,24 @@ public interface BirthRegistrationService {
     public List<BirthDeclaration> getAllRejectedBirthsByUser(User user);
 
     /**
+     * Returns all the rejected Birth Records of the selected district.
+     *
+     * @param district  Selected District
+     * @param user      User requesting the transaction
+     * @return          List of rejected birth records of the selected district
+     */
+    public List<BirthDeclaration> getAllRejectedBirthsByDistrict(District district, User user);
+
+    /**
+     * Returns all the rejected birth records of the given DSDivision
+     *
+     * @param dsDivision    Selected DSDivision
+     * @param user          User requesting the transaction
+     * @return              List of rejected birth records of the selected DSDivision
+     */
+    public List<BirthDeclaration> getAllRejectedBirthsByDSDivision(DSDivision dsDivision, User user);
+
+    /**
      * * Returns a limited set of BirthDeclarations for which confirmation changes are not captured yet awaiting approval
      * by an ADR and based on given district id. Results are ordered on the descending confirmationProcessedTimestamp
      *
