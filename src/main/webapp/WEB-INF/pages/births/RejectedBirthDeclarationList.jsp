@@ -21,14 +21,14 @@
         });
     });
 
-    $(function() {
-        $('select#districtId').bind('change', function(evt1) {
+    $(function () {
+        $('select#districtId').bind('change', function (evt1) {
             var id = $("select#districtId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                    function(data) {
+                    function (data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
-                        options1 += '<option value="' + 0 + '">' +  <s:label value="%{getText('all.divisions.label')}"/>+ '</option>';
+                        options1 += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/>+'</option>';
                         for (var i = 0; i < ds.length; i++) {
                             options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                         }
@@ -64,9 +64,15 @@
                     </td>
                     <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
                     <td>
+                        <s:if test="#session.user_bean.role.roleId == 'ADR'">
+                            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                                      value="%{dsDivisionId}"
+                                      cssStyle="float:left;  width:240px;"/>
+                        </s:if><s:else>
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                                   headerValue="%{getText('all.divisions.label')}" headerKey="0"
                                   cssStyle="float:left;  width:240px;"/>
+                    </s:else>
                     </td>
                     <td class="button" align="right">
                         <s:submit name="refresh" value="%{getText('bdfSearch.button')}"/>
@@ -82,14 +88,14 @@
         <tr>
             <th width="30px" style="padding: 0 5px;">#</th>
             <th width="160px"><s:label value="%{getText('serial.label')}"/></th>
-            <th><s:label value="%{getText('name.label')}"/></th>
+            <th><s:label value="%{getText('child.name.label')}"/></th>
         </tr>
         </thead>
         <tbody>
         <s:iterator status="searchStatus" value="searchResultList" id="searchList">
             <tr>
-                <td align="right" style="padding: 0 5px;"><s:property value="#searchStatus.index + 1" /></td>
-                <td align="center"><s:property value="register.bdfSerialNo"/></td>
+                <td align="right" style="padding: 0 5px;"><s:property value="#searchStatus.index + 1"/></td>
+                <td align="center"><s:property value="register.bdfSerialNo - 800000"/></td>
                 <td>
                     <s:if test="child.childFullNameOfficialLang != null">
                         <%= NameFormatUtil.getDisplayName((String) request.getAttribute("child.childFullNameOfficialLang"), 40)%>
