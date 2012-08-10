@@ -85,6 +85,18 @@ import java.io.Serializable;
     @NamedQuery(
         name = "get.dr.by.createdUser.district",
         query = "SELECT dr FROM DeathRegister dr WHERE dr.lifeCycleInfo.createdUser =:user AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate) AND dr.death.deathDivision.dsDivision.district.districtUKey = :districtId"
+    ),
+    @NamedQuery(
+        name = "getAllRejectedDeathsByUser",
+        query = "SELECT dr FROM DeathRegister dr WHERE dr.lifeCycleInfo.lastUpdatedUser =:user AND dr.status = 2"
+    ),
+    @NamedQuery(
+        name = "getAllRejectedDeathsByDistrict",
+        query = "SELECT dr FROM DeathRegister dr WHERE dr.death.deathDivision.dsDivision.district =:district AND dr.status = 2"
+    ),
+    @NamedQuery(
+        name = "getAllRejectedDeathsByDSDivision",
+        query = "SELECT dr FROM DeathRegister dr WHERE dr.death.deathDivision.dsDivision =:dsDivision AND dr.status = 2"
     )
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)

@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.dao;
 
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.DeathRegister;
@@ -256,6 +257,30 @@ public interface DeathRegisterDAO {
     public Long findBDDivisionUsageInDeathRecords(int bdDivisionUKey);
 
     public Long findLocationUsageInDeathRecords(int locationUKey);
+
+    /**
+     * Returns all rejected death records by the given user
+     *
+     * @param user  Selected user
+     * @return      List of all rejected deaths
+     */
+    public List<DeathRegister> getAllRejectedDeathsByUser(User user);
+
+    /**
+     * Returns all the rejected death records within the given District
+     *
+     * @param district  Selected District
+     * @return          List of all rejected deaths within the selected District
+     */
+    public List<DeathRegister> getAllRejectedDeathsByDistrict(District district);
+
+    /**
+     * Returns all the rejected death records within the given DSDivision
+     *
+     * @param dsDivision    Selected DSDivision
+     * @return              List of rejected death records within the selected DSDivision
+     */
+    public List<DeathRegister> getAllRejectedDeathsByDSDivision(DSDivision dsDivision);
 }
 
 
