@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.service;
 
 import lk.rgd.common.api.domain.CommonStatistics;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
@@ -327,4 +328,30 @@ public interface DeathRegistrationService {
      * @return
      */
     public List<DeathRegister> getByDSDivisionAndStatusAndRegistrationDateRange(DSDivision dsDivision, Date startDate, Date endDate, DeathRegister.State state, User user);
+
+    /**
+     * Returns all rejected death records by the given user
+     *
+     * @param user  Selected user
+     * @return      List of all rejected deaths
+     */
+    public List<DeathRegister> getAllRejectedDeathsByUser(User user);
+
+    /**
+     * Returns all the rejected death records within the given District
+     *
+     * @param district  Selected District
+     * @param user      User request the transaction
+     * @return          List of all rejected deaths within the selected District
+     */
+    public List<DeathRegister> getAllRejectedDeathsByDistrict(District district, User user);
+
+    /**
+     * Returns all the rejected death records within the given DSDivision
+     *
+     * @param dsDivision    Selected DSDivision
+     * @param user          User requesting the transaction
+     * @return              List of rejected death records within the selected DSDivision
+     */
+    public List<DeathRegister> getAllRejectedDeathsByDSDivision(DSDivision dsDivision, User user);
 }

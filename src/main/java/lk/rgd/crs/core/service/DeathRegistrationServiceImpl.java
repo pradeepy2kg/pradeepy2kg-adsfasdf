@@ -289,6 +289,8 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
                 dr.getLifeCycleInfo().setCertificateGeneratedTimestamp(new Date());
                 dr.getLifeCycleInfo().setCertificateGeneratedUser(user);
                 registerDeathOnPRS(dr, user);
+            }else if(state == DeathRegister.State.REJECTED){
+                dr.getDeath().setDeathSerialNo(changeSerialNo(dr.getDeath().getDeathSerialNo()));
             }
 
         } else {
@@ -299,6 +301,11 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         dr.setCommnet(comment);
         //updating
         deathRegisterDAO.updateDeathRegistration(dr, user);
+    }
+
+    private Long changeSerialNo(Long serialNo) {
+        logger.debug("Attempt to change the serial : {} to {}", serialNo, (serialNo + 800000));
+        return (serialNo + 800000);
     }
 
     /**
@@ -721,5 +728,32 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         Date endDate, DeathRegister.State state, User user) {
         //TODO check user permission
         return deathRegisterDAO.getDeathRegisterByDivisionAndStatusAndDate(dsDivision, state, startDate, endDate);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getAllRejectedDeathsByUser(User user) {
+        logger.debug("Loading rejected death records by {}", user.getUserId());
+        return deathRegisterDAO.getAllRejectedDeathsByUser(user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getAllRejectedDeathsByDistrict(District district, User user) {
+        logger.debug("Loading rejected death records of district {} by {}", district.getEnDistrictName(), user.getUserId());
+        return deathRegisterDAO.getAllRejectedDeathsByDistrict(district);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getAllRejectedDeathsByDSDivision(DSDivision dsDivision, User user) {
+        logger.debug("Loading rejected death records of dsDivision {} by {}", dsDivision.getEnDivisionName(), user.getUserId());
+        return deathRegisterDAO.getAllRejectedDeathsByDSDivision(dsDivision);
     }
 }

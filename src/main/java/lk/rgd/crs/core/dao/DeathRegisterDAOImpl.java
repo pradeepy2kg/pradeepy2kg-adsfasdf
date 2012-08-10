@@ -1,6 +1,7 @@
 package lk.rgd.crs.core.dao;
 
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
@@ -323,5 +324,35 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
         Query q = em.createNamedQuery("count.death.location.usage");
         q.setParameter("locationId", locationUKey);
         return (Long) q.getSingleResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<DeathRegister> getAllRejectedDeathsByUser(User user) {
+        Query q = em.createNamedQuery("getAllRejectedDeathsByUser");
+        q.setParameter("user", user);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<DeathRegister> getAllRejectedDeathsByDistrict(District district) {
+        Query q = em.createNamedQuery("getAllRejectedDeathsByDistrict");
+        q.setParameter("district", district);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<DeathRegister> getAllRejectedDeathsByDSDivision(DSDivision dsDivision) {
+        Query q = em.createNamedQuery("getAllRejectedDeathsByDSDivision");
+        q.setParameter("dsDivision", dsDivision);
+        return q.getResultList();
     }
 }
