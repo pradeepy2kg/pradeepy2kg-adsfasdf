@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>birthconfirmationPrint</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">birthconfirmationPrint</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>deo-colombo-kaduwela</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>Password123</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>open</td>
+	<td>/ecivil/births/eprBirthRegistrationHome.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_confirmation_print.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='eprBirthConfirmationBulkPrint_']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[7]/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_confirmation.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>SerialNo</td>
+	<td>32</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>skipChangesCBox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>skipChangesCBox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>next</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-confirmation-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birth-confirmation-form3_confirmant_confirmantTypeFATHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>datePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>datePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>datePicker</td>
+	<td>2011-03-23</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-confirmation-form3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[1]/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>print_birthcertificate.label</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

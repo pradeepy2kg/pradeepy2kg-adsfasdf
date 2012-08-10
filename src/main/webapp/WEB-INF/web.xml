@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="person" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+    <display-name>eCivil Register</display-name>
+
+    <context-param>
+        <param-name>tilesDefinitions</param-name>
+        <param-value>../WEB-INF/tiles.xml</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+    </filter>
+
+    <servlet>
+        <servlet-name>PersonLookupService</servlet-name>
+        <servlet-class>lk.rgd.prs.web.JSONPersonLookupService</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DivisionLookupService</servlet-name>
+        <servlet-class>lk.rgd.crs.web.JSONDivisionLookupService</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ZonalOfficeLookupService</servlet-name>
+        <servlet-class>lk.rgd.crs.web.JSONZonalOfficeLookupService</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>RegistrarLookupService</servlet-name>
+        <servlet-class>lk.rgd.crs.web.JSONRegistrarLookupService</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>CertSignUserLookupService</servlet-name>
+        <servlet-class>lk.rgd.crs.web.JSONCertSignUserLookupService</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>lk.rgd.prs.web.BarCodeImageServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>StatisticsLookupService</servlet-name>
+        <servlet-class>lk.rgd.crs.web.JSONStatisticsLookupService</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>TransliterationService</servlet-name>
+        <servlet-class>lk.rgd.crs.web.JSONTransliterationService</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ScannedImage</servlet-name>
+        <servlet-class>lk.rgd.crs.web.MCImageServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PersonLookupService</servlet-name>
+        <url-pattern>/prs/PersonLookupService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DivisionLookupService</servlet-name>
+        <url-pattern>/crs/DivisionLookupService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ZonalOfficeLookupService</servlet-name>
+        <url-pattern>/crs/ZonalOfficeLookupService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>RegistrarLookupService</servlet-name>
+        <url-pattern>/crs/RegistrarLookupService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CertSignUserLookupService</servlet-name>
+        <url-pattern>/crs/CertSignUserLookupService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ImageServlet</servlet-name>
+        <url-pattern>/prs/ImageServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>StatisticsLookupService</servlet-name>
+        <url-pattern>/crs/StatisticsLookupService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>TransliterationService</servlet-name>
+        <url-pattern>/TransliterationService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ScannedImage</servlet-name>
+        <url-pattern>/crs/Image</url-pattern>
+    </servlet-mapping>
+
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- Tiles Startup Configuration -->
+    <servlet>
+        <servlet-name>tiles</servlet-name>
+        <servlet-class>org.apache.tiles.web.startup.TilesServlet</servlet-class>
+        <init-param>
+            <param-name>org.apache.tiles.impl.BasicTilesContainer.DEFINITIONS_CONFIG</param-name>
+            <param-value>/WEB-INF/tiles.xml,/org/apache/tiles/classpath-defs.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>org.apache.tiles.factory.TilesContainerFactory.MUTABLE</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>tiles-definitions</param-name>
+            <param-value>/WEB-INF/lib/tiles/base-tiles-def.xml</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <listener>
+        <listener-class>org.apache.tiles.web.startup.TilesListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>/WEB-INF/pages/login/login.jsp</welcome-file>
+    </welcome-file-list>
+
+</web-app>
