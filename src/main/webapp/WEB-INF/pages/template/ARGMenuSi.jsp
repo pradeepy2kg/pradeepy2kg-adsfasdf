@@ -250,6 +250,11 @@
                 ප්‍රතික්ෂේපිත උපත් වාර්තා
             </a>
         </li>
+        <li>
+            <a id="death.rejectedSearch.label" href="/ecivil/deaths/eprDeathsRejectedSearch.do">
+                ප්‍රතික්ෂේපිත මරණ වාර්තා
+            </a>
+        </li>
     </ul>
 </li>
 

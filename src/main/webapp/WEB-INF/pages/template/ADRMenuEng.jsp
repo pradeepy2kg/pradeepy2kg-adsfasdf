@@ -245,6 +245,11 @@
                 Rejected Birth Records
             </a>
         </li>
+        <li>
+            <a id="death.rejectedSearch.label" href="/ecivil/deaths/eprDeathsRejectedSearch.do">
+                Rejected Death Records
+            </a>
+        </li>
     </ul>
 </li>
 

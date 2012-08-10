@@ -203,6 +203,11 @@
         <put-attribute name="title" value="search.rejected.births.title"/>
     </definition>
 
+    <definition name="epr.DeathsRejectedSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/RejectedDeathDeclarationList.jsp"/>
+        <put-attribute name="title" value="search.rejected.deaths.title"/>
+    </definition>
+
     <definition name="epr.certificateSearch" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/CertificateSearch.jsp"/>
         <put-attribute name="title" value="BirthCertificateSearch.title"/>
