@@ -88,7 +88,7 @@
         <tr>
             <th width="30px" style="padding: 0 5px;">#</th>
             <th width="160px"><s:label value="%{getText('serial.label')}"/></th>
-            <th><s:label value="%{getText('child.name.label')}"/></th>
+            <th><s:label value="%{getText('death.person.name.label')}"/></th>
         </tr>
         </thead>
         <tbody>
