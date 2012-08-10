@@ -11,6 +11,7 @@ import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.CertificateSearch;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.CertificateSearchService;
+import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -88,17 +89,17 @@ public class SearchAction extends ActionSupport implements SessionAware {
     }
 
     public String searchRejectedBirthRecords() {
-        if(districtId > 0 && dsDivisionId == 0){
-//          /* District has selected. But, no DSDivision selected. */
+        if (districtId > 0 && dsDivisionId == 0) {
+            /* District has selected. But, no DSDivision selected. */
             searchResultList = service.getAllRejectedBirthsByDistrict(districtDAO.getDistrict(districtId), user);
-        }else if(districtId > 0 && dsDivisionId > 0){
+        } else if (districtId > 0 && dsDivisionId > 0) {
             /* Both District and DSDivision has selected */
             searchResultList = service.getAllRejectedBirthsByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), user);
-        }else {
+        } else {
             /* Nothing selected. (Initial access) */
             searchResultList = service.getAllRejectedBirthsByUser(user);
         }
-            populate();
+        populate();
         return SUCCESS;
     }
 
