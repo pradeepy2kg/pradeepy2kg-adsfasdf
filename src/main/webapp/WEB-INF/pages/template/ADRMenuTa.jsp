@@ -242,7 +242,12 @@
         </li>
         <li>
             <a id="birth.rejectedSearch.label" href="/ecivil/births/eprBirthsRejectedSearch.do">
-                Rejected Birth Records
+                Rejected Birth Records in ta
+            </a>
+        </li>
+        <li>
+            <a id="death.rejectedSearch.label" href="/ecivil/deaths/eprDeathsRejectedSearch.do">
+                Rejected Death Records in ta
             </a>
         </li>
     </ul>

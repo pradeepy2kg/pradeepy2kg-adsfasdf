@@ -230,6 +230,11 @@
                 Rejected Birth Records in ta
             </a>
         </li>
+        <li>
+            <a id="death.rejectedSearch.label" href="/ecivil/deaths/eprDeathsRejectedSearch.do">
+                Rejected Death Records in ta
+            </a>
+        </li>
     </ul>
 </li>
 
