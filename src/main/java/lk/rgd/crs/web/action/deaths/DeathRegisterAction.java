@@ -88,6 +88,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private List<UserWarning> warnings;
     private List<Integer> months;
     private List<Integer> days;
+    private List searchResultList;
 
     private int pageNo;
     private int noOfRows;
@@ -987,6 +988,27 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
+    public String searchRejectedDeathRecords(){
+        if(deathDistrictId > 0 && dsDivisionId == 0){
+            /* District has selected. But, no DSDivision selected. */
+            searchResultList = service.getAllRejectedDeathsByDistrict(districtDAO.getDistrict(deathDistrictId), user);
+        }else if(deathDistrictId > 0 && dsDivisionId > 0){
+            /* Both District and DSDivision has selected */
+            searchResultList = service.getAllRejectedDeathsByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), user);
+        }else {
+            /* Nothing selected. (Initial access) */
+            searchResultList = service.getAllRejectedDeathsByUser(user);
+        }
+        setDistrictList(districtDAO.getDistrictNames(language, user));
+        if (districtList != null && deathDistrictId == 0) {
+            deathDistrictId = districtList.keySet().iterator().next();
+        }
+        setDeathDistrictId(deathDistrictId);
+        //dsDivisions
+        this.dsDivisionList = dsDivisionDAO.getDSDivisionNames(deathDistrictId, language, user);
+        return SUCCESS;
+    }
+
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
     }
@@ -1711,5 +1733,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDeathSerialNo(long deathSerialNo) {
         this.deathSerialNo = deathSerialNo;
+    }
+
+    public List getSearchResultList() {
+        return searchResultList;
+    }
+
+    public void setSearchResultList(List searchResultList) {
+        this.searchResultList = searchResultList;
     }
 }
