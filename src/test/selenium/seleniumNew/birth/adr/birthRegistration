@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>birthRegistrationFull</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">birthRegistrationFull</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>adr-kalutara-panadura</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>open</td>
+	<td>/ecivil/births/eprBirthRegistrationHome.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_registration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNo</td>
+	<td>2011000001</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>submitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>submitDatePicker</td>
+	<td>2011-03-22</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birthDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birthDatePicker</td>
+	<td>2011-03-20</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birthDivisionId</td>
+	<td>label=7 : Maradana (Medical)</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirth</td>
+	<td>ආසිරි සාත්තු නිවාසය, බේරුවල&nbsp; </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirthEnglish</td>
+	<td>Asiri Sattu House, Beruwala</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childFullNameOfficialLang</td>
+	<td>උභය පානිනි ජයසිංහ<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childFullNameEnglish</td>
+	<td>ubaya panithi jayasinghe</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>genderList</td>
+	<td>label=Female</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childBirthWeight</td>
+	<td>1.3</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childRank</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>father_pinOrNic</td>
+	<td>752022100V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherFullName</td>
+	<td>රත්නායක මුදියන්සේලාගේ හිරන්ත ඹිෂධ<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherFullNameInEnglish</td>
+	<td>rathnayaka mudiyanselage hirantha oshada</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>fatherDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherDatePicker</td>
+	<td>1975-07-19</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherPlaceOfBirth</td>
+	<td>රාගම&nbsp;</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>fatherRaceId</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherFullName</td>
+	<td>ලංකේශ්වර චිතා ධර්මවතී<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>mother_pinOrNic</td>
+	<td>1989-11-20</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>motherDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherDatePicker</td>
+	<td>1989-11-20</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>mother_pinOrNic</td>
+	<td>898261416V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherFullNameInEnglish</td>
+	<td>lankeshwara chitha dharmawathi</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherAgeAtBirth</td>
+	<td>21</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherAddress</td>
+	<td>45/1 pinwaththa mawatha, beruwala<br /></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherRaceId</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherPlaceOfBirth</td>
+	<td>ragama</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherPlaceOfBirth</td>
+	<td>payagala</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherDistrictId</td>
+	<td>label=11 : Colombo</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='motherDistrictId']/option[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherDSDivisionId</td>
+	<td>label=3 : Colombo</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='motherDSDivisionId']/option[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>gnDivisionId</td>
+	<td>label=20 : Madampitiya</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>admitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>admitDatePicker</td>
+	<td>2011-03-12</td>
+</tr>
+
+<tr>
+	<td>type</td>
+	<td>birth-registration-form-2_parent_motherAdmissionNo</td>
+	<td>12</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherPhoneNo</td>
+	<td>0112756123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherEmail</td>
+	<td>asd@gmail.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfMarriage</td>
+	<td>payagala</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>marriageDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>marriageDatePicker</td>
+	<td>2009-01-02</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherNICorPIN</td>
+	<td>420111321V</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>grandFatherBirthYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherFullName</td>
+	<td>රත්නායක මුදියන්සේලාගේ වික්‍රමසිරි<br />rathnayaka Mudiyanselage wickramasiri</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherBirthPlace</td>
+	<td>ragama</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>greatGrandFatherFullName</td>
+	<td>හේරත් බණ්ඩාර මුදියන්සේලාගේ ජයසෝම බණ්ඩාරනායක<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherFullName</td>
+	<td>rathnayaka Mudiyanselage wickramasiri</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>greatGrandFatherBirthYear</td>
+	<td>1902</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>greatGrandFatherFullName</td>
+	<td>හේරත් බණ්ඩාර මුදියන්සේලාගේ ජයසෝම බණ්ඩාරනායක<br />herath bandara mudiyanselage jayasoma bandaranayaka</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>greatGrandFatherBirthPlace</td>
+	<td>mathale</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informantTypeFATHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantPhoneNo</td>
+	<td>0112912834</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantEmail</td>
+	<td>qwe@gmail.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informDatePicker</td>
+	<td>2011-03-21</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityPIN</td>
+	<td>705782148V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityName</td>
+	<td>payagala mudiyanselage alis nona</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityAddress</td>
+	<td>432 parana para, payagala</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>modifiedDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>modifiedDatePicker</td>
+	<td>2011-03-22</td>
+</tr>
+
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-4_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Go To Main</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

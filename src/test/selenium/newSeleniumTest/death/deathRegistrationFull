@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>deathRegistrationFull</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">deathRegistrationFull</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>adr-kalutara-panadura</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>open</td>
+	<td>/ecivil/deaths/eprInitDeathHome.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death_registration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathSerialNo</td>
+	<td>2011012341</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfRegistrationDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfRegistrationDatePicker</td>
+	<td>2011-03-23</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>deathDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathDatePicker</td>
+	<td>2011-03-22</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfDeath</td>
+	<td>රෝහල</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfDeathInEnglish</td>
+	<td>in hospital</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBurial</td>
+	<td>borella cemetry</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonNameOfficialLang</td>
+	<td>කමල්</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonNameInEnglish</td>
+	<td>kamal</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>skipjs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeFATHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantFullName</td>
+	<td>saman perera</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantAddress</td>
+	<td>no.17, nugegoda</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifying_authority_NICorPIN</td>
+	<td>845231547v</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityName</td>
+	<td>kasun</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityAddress</td>
+	<td>no. 4, delkada</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>submitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>submitDatePicker</td>
+	<td>2011-03-23</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death-registration-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='death-registration-details-footer']/div/a[1]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='death-registration-details-footer']/div/a[1]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprPrintDeathCertificate_2</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

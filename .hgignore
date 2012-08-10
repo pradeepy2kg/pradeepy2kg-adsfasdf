@@ -1,0 +1,12 @@
+target
+reports
+popreg.ipr
+popreg.iws
+popreg.iml
+ecivil.ipr
+ecivil.iws
+ecivil.iml
+derby.log
+epopulation.log
+pom.properties
+.idea

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>marriageNotice</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">marriageNotice</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>adr-kalutara-panadura</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>userPreference.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>user_preference_prefLanguage</td>
+	<td>label=English</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>user_preference_0</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>clickAndWait</td>
+	<td>link=MARRIAGE REGISTRATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>menu.marriage.notice</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>eprMarriageNoticeInit_noticeType</td>
+	<td>label=Male notice</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprMarriageNoticeInit_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprMarriageNoticeAdd_marriage_licenseCollectTypeMAIL_TO_FEMALE</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>serial_number</td>
+	<td>2011000041</td>
+</tr>
+
+<tr>
+	<td>click</td>
+	<td>submitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>submitDatePicker</td>
+	<td>2011-03-25</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>identification_male</td>
+	<td>752022100V</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>raceMaleId</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>date_of_birth_male</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>date_of_birth_male</td>
+	<td>1975-07-19</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>age_at_last_bd_male</td>
+	<td>35</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name_official_male</td>
+	<td>රත්නායක මුදියන්සේලාගේ හිරන්ත ඹිෂධ<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name_official_male</td>
+	<td>රත්නායක මුදියන්සේලාගේ හිරන්ත<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name_english_male</td>
+	<td>rathnayaka mudiyanselage hirantha</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address_male_official</td>
+	<td>45/1 පින්වත්ත මාවත, බේරුවල<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address_male_english</td>
+	<td>45</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address_male_official</td>
+	<td>45 පින්වත්ත මාවත, බේරුවල<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address_male_english</td>
+	<td>45 , pinwaththa mawatha , beruwala</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>rank_male_official</td>
+	<td>නොදනී</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>rank_male_english</td>
+	<td>farmer</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>father_pin_or_nic_male</td>
+	<td>420111321V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>father_full_name_male_official</td>
+	<td>රත්නායක මුදියන්සේලාගේ වික්‍රමසිරි<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>father_full_name_male_english</td>
+	<td>rathnayaka mudiyanselage wickramasiri</td>
+</tr>
+
+<tr>
+	<td>type</td>
+	<td>identification_male</td>
+	<td>197520215243</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprMarriageNoticeAdd_0</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

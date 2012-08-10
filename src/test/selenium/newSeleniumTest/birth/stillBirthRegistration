@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>stillBirthRegistration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">stillBirthRegistration</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>adr-kalutara-panadura</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>open</td>
+	<td>/ecivil/births/eprBirthRegistrationHome.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>still_birth_registration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNo</td>
+	<td>2011012347</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>submitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=22</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birthDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birthDatePicker</td>
+	<td>2011-03-20</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirth</td>
+	<td>රෝහලේදී</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirthEnglish</td>
+	<td>In hospital</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childRank</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>weeksPregnant</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherFullName</td>
+	<td>සමන් පෙරේරා</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherFullNameInEnglish</td>
+	<td>saman perera</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>father_pinOrNic</td>
+	<td>821511291V</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>fatherDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherDatePicker</td>
+	<td>1982-12-23</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherFullName</td>
+	<td>සමන්මලී</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherFullNameInEnglish</td>
+	<td>samanmalee</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>mother_pinOrNic</td>
+	<td>875968555V</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>motherDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherDatePicker</td>
+	<td>1987-03-01</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherAgeAtBirth</td>
+	<td>24</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informantTypeFATHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantName</td>
+	<td>saman perera</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantAddress</td>
+	<td>no.5, gampaha</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informDatePicker</td>
+	<td>2011-03-21</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityName</td>
+	<td>kasun</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityAddress</td>
+	<td>no.16, baththaramulla</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityPIN</td>
+	<td>845231547v</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>modifiedDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>modifiedDatePicker</td>
+	<td>2011-03-21</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-4_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[3]/label</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
