@@ -62,12 +62,15 @@
             errormsg = errormsg + "\n" + document.getElementById("error3").value;
         }
         domObject = document.getElementById("certifcateApplicantPin");
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", 'error0');
-        }
-        else {
+        if(!isFieldEmpty(domObject)){
             validatePINorNIC(domObject, 'error5', 'error0');
         }
+//        if (isFieldEmpty(domObject)) {
+//            isEmpty(domObject, "", 'error0');
+//        }
+//        else {
+//            validatePINorNIC(domObject, 'error5', 'error0');
+//        }
         domObject = document.getElementById("certificateApplicantName");
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error1');
@@ -342,8 +345,7 @@
         </tr>
         <tr>
             <td colspan="6">
-                අයදුම්කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<s:label value="*"
-                                                                                  cssStyle="color:red;font-size:10pt;"/>
+                අයදුම්කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය
                 <br>
                 தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்
                 <br>

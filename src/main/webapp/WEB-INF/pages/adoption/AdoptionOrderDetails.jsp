@@ -126,7 +126,7 @@
             <tr valign="top">
                 <td rowspan="2"><s:label name="adoption.adoptionEntryNo"/></td>
                 <td rowspan="2"><s:label name="adoption.orderReceivedDate"/></td>
-                <td rowspan="2"><s:label name="adoption.childExistingName"/></td>
+                <td rowspan="2"><s:label name="adoption.childNewName"/></td>
                 <td rowspan="2" align="center">
                     <s:if test="adoption.childGender == 0">
                         <s:label name="" value="%{getText('male.label')}"/>
@@ -137,11 +137,21 @@
                     <s:elseif test="adoption.childGender == 2">
                         <s:label name="" value="%{getText('unknown.label')}"/>
                     </s:elseif></td>
-                <td rowspan="2"><s:label name="adoption.applicantName"/><br>
-                    <s:label name="adoption.applicantAddress"/>
+                <td rowspan="2">
+                    <s:if test="adoption.applicantMother == true">
+                        <s:label name="adoption.applicantName"/><br/><br/>
+                        <s:label name="adoption.applicantAddress"/>
+                    </s:if>
+                    <s:else>
+                        <s:label name="adoption.applicantName"/><br/><br/>
+                        <s:label name="adoption.wifeName"/><br/><br/>
+                        <s:label name="adoption.applicantAddress"/>
+                    </s:else>
                 </td>
                 <td rowspan="2" align="center"><s:label name="adoption.childBirthDate"/></td>
-                <td rowspan="2"><s:label name="adoption.orderIssuedDate"/><br>
+                <td rowspan="2">
+                    <s:label name="adoption.courtOrderNumber"/><br><br>
+                    <s:label name="adoption.orderIssuedDate"/><br><br>
                     <s:label name="adoption.court.siCourtName"/>
                 </td>
                 <td style="border:none;"><s:label name=""/></td>
