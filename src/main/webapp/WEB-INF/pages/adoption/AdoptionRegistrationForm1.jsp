@@ -6,6 +6,7 @@
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/common.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/agecalculator.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script>
@@ -26,25 +27,27 @@ $(function () {
         endDate:'2020-12-31',
         onSelect:function () {
             var bday = new Date(document.getElementById('bdayDatePicker').value);
-            var today = new Date();
-            var ageMonthBDay = bday.getMonth();
-            var ageYearBDay = bday.getYear();
-            var ageMonthTOday = today.getMonth();
-            var ageYearTOday = today.getYear();
-            var ageMonth, ageYear = 0;
-            if (ageMonthTOday >= ageMonthBDay) {
-                ageMonth = ageMonthTOday - ageMonthBDay;
-                ageYear = ageYearTOday - ageYearBDay;
-            }
-            else if (ageYearTOday > ageYearBDay) {
-                ageMonth = (ageMonthTOday + 12) - ageMonthBDay;
-                ageYear = (ageYearTOday - 1) - ageYearBDay;
-            }
-            document.getElementById("childAgeYears").value = ageYear;
-            document.getElementById("childAgeMonths").value = ageMonth;
+            var age = calculateAge(bday, new Date());
+            document.getElementById("childAgeYears").value = age[0];
+            document.getElementById("childAgeMonths").value = age[1];
         }
     });
+
+    $('#bdayDatePicker').bind('change',function(){
+        var bday = new Date(document.getElementById('bdayDatePicker').value);
+        var age = calculateAge(bday, new Date());
+        document.getElementById("childAgeYears").value = age[0];
+        document.getElementById("childAgeMonths").value = age[1];
+    });
+
+    $('#bdayDatePicker').bind('click',function(){
+        var bday = new Date(document.getElementById('bdayDatePicker').value);
+        var age = calculateAge(bday, new Date());
+        document.getElementById("childAgeYears").value = age[0];
+        document.getElementById("childAgeMonths").value = age[1];
+    });
 });
+
 
 $(function () {
     $("#orderIssuedDatePicker").datepicker({
