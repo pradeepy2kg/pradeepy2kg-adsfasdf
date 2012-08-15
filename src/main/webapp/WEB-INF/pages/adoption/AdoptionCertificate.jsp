@@ -165,7 +165,7 @@
         </td>
     </tr>
     <tr>
-        <td height="120px" >පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
+        <td height="120px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
         </td>
         <td colspan="4" class="bc-name" style="font-size:12pt">
             <s:if test="#request.adoption.applicantMother==0">
@@ -185,6 +185,15 @@
             <s:else>
                 <s:label name="" value="%{adoption.wifeName}"/>
             </s:else>
+        </td>
+    </tr>
+    <tr>
+        <td height="120px">ලිපිනය<br>
+            முகவரி<br>
+            Address
+        </td>
+        <td colspan="4" style="font-size:12pt">
+            <s:label name="" value="%{adoption.applicantAddress}"/>
         </td>
     </tr>
     </tbody>

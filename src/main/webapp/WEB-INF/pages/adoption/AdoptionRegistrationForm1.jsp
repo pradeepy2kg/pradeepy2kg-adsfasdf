@@ -299,9 +299,9 @@ function enableSerialNumber(mode) {
                          onkeypress="return numbersOnly(event, true);"/>
         </td>
         <td>
-            නියෝගය ලැබුණු දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
-            <br>கட்டளை பெறப்பட்ட திகதி
-            <br>Received Date
+            සටහනේ දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            <br>பதிவு திகத
+            <br>Date of Entry
         </td>
         <td>
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
