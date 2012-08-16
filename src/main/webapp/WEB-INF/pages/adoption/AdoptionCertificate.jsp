@@ -98,6 +98,25 @@
     <col>
     <tbody>
     <tr>
+        <td>
+            සටහනේ අංකය<br>
+            பதிவு இலக்கம்<br>
+            Number of Entry
+        </td>
+        <td>
+            <s:label value="%{adoption.adoptionEntryNo}"/>
+        </td>
+        <td colspan="2">
+            සටහනේ දිනය
+            <br>பதிவு திகத
+            <br>Date of Entry
+        </td>
+        <td>
+            <s:label value="%{adoption.orderReceivedDate}"/><br>
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/>
+        </td>
+    </tr>
+    <tr>
         <td height="80px" rowspan="2">
             දරුකමට හදාගැනීමේ නියෝගය
             <br>மகவேற்புக் கட்டளை
@@ -167,9 +186,19 @@
     <tr>
         <td height="120px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
         </td>
-        <td colspan="4" class="bc-name" style="font-size:12pt">
+        <td colspan="2" class="bc-name" style="font-size:12pt">
             <s:if test="#request.adoption.applicantMother==0">
                 <s:label name="" value="%{adoption.applicantName}"/>
+            </s:if>
+        </td>
+        <td>
+            පියාගේ රැකියාව
+            <br>Occupation of Father in ta
+            <br>Occupation of Father
+        </td>
+        <td>
+            <s:if test="#request.adoption.applicantMother==0">
+                <s:label value="%{adoption.applicantOccupation}"/>
             </s:if>
         </td>
     </tr>
@@ -178,13 +207,21 @@
             தாயின் முழுப் பெயர் <br>
             Mother's Full Name
         </td>
-        <td colspan="4" class="bc-name" style="font-size:12pt">
+        <td colspan="2" class="bc-name" style="font-size:12pt">
             <s:if test="#request.adoption.applicantMother==1">
                 <s:label name="" value="%{adoption.applicantName}"/>
             </s:if>
             <s:else>
                 <s:label name="" value="%{adoption.wifeName}"/>
             </s:else>
+        </td>
+        <td>
+            මවගේ රැකියාව
+            <br>Occupation of Mother in ta
+            <br>Occupation of Mother
+        </td>
+        <td>
+            <s:label value="%{adoption.wifeOccupation}"/>
         </td>
     </tr>
     <tr>
