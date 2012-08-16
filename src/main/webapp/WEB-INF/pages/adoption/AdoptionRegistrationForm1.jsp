@@ -223,6 +223,7 @@ function disable(mode) {
     document.getElementById('wifeCountryId').disabled = mode;
     document.getElementById('wifePassport').disabled = mode;
     document.getElementById('wifeName').disabled = mode;
+    document.getElementById('wifeOccupation').disabled = mode;
 }
 //todo 
 function initPage() {
@@ -456,7 +457,6 @@ function enableSerialNumber(mode) {
         </td>
         <td colspan="4"><s:textarea id="applicantName" name="adoption.applicantName"/></td>
     </tr>
-
     <tr>
         <td>
             ලිපිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
@@ -465,6 +465,15 @@ function enableSerialNumber(mode) {
         </td>
         <td colspan="4"><s:textarea name="adoption.applicantAddress"
                                     id="applicantAddress"/></td>
+    </tr>
+    <tr>
+        <td>
+            රැකියාව
+            <br>Occupation in ta
+            <br>Occupation
+        </td>
+        <td colspan="4"><s:textarea name="adoption.applicantOccupation"
+                                    id="applicantOccupation"/></td>
     </tr>
     </tbody>
 </table>
@@ -531,6 +540,15 @@ function enableSerialNumber(mode) {
             <br>Name of Mother
         </td>
         <td colspan="4"><s:textarea name="adoption.wifeName" id="wifeName"/></td>
+    </tr>
+    <tr>
+        <td>
+            මවගේ රැකියාව
+            <br>Occupation of Mother in ta
+            <br>Occupation of Mother
+        </td>
+        <td colspan="4"><s:textarea name="adoption.wifeOccupation"
+                                    id="wifeOccupation"/></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">

@@ -112,6 +112,9 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = false)
     private String applicantAddress;
 
+    @Column(nullable = true)
+    private String applicantOccupation;
+
     @Column(nullable = true, length = 12)
     private String applicantPINorNIC;
 
@@ -126,6 +129,9 @@ public class AdoptionOrder implements Serializable {
 
     @Column(nullable = true)
     private String wifeName; // applies only if applicantMother is false (father)
+
+    @Column(nullable = true)
+    private String wifeOccupation;
 
     @Column(nullable = true, length = 12)
     private String wifePINorNIC;
@@ -504,5 +510,21 @@ public class AdoptionOrder implements Serializable {
 
     public void setAdoptionSerialNo(long adoptionSerialNo) {
         this.adoptionSerialNo = adoptionSerialNo;
+    }
+
+    public String getApplicantOccupation() {
+        return applicantOccupation;
+    }
+
+    public void setApplicantOccupation(String applicantOccupation) {
+        this.applicantOccupation = applicantOccupation;
+    }
+
+    public String getWifeOccupation() {
+        return wifeOccupation;
+    }
+
+    public void setWifeOccupation(String wifeOccupation) {
+        this.wifeOccupation = wifeOccupation;
     }
 }
