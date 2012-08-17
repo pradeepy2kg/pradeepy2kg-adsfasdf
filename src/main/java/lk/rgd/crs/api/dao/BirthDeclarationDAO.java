@@ -111,13 +111,14 @@ public interface BirthDeclarationDAO {
     public BirthDeclaration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo);
 
     /**
-     * Get the active record by Serial number
+     * Returns list of active records by Serial number
      *
      * @param serialNo Serial Number of the Birth Decleration
      * @param state    Status of the Birth Declaration
+     * @param dsDivision DSDivision of the user
      * @return the BDF marked as active, or null if it doesn't exist
      */
-    public BirthDeclaration getActiveRecordBySerialNo(long serialNo, BirthDeclaration.State state);
+    public List<BirthDeclaration> getActiveRecordsBySerialNoAndDSDivision(long serialNo, BirthDeclaration.State state, DSDivision dsDivision);
 
     /**
      * Returns a limited set of BirthDeclarations for a selected BD Division, selected range of registration dates in

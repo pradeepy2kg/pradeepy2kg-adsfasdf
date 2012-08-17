@@ -48,9 +48,9 @@ import java.io.Serializable;
         "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo " +
         "AND bdf.lifeCycleInfo.activeRecord IS TRUE"),
 
-    @NamedQuery(name = "findBirthDeclarationBySerialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
+    @NamedQuery(name = "getActiveRecordsBySerialNoAndDSDivision", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.bdfSerialNo = :bdfSerialNo " +
-        "AND bdf.register.status = :status " +
+        "AND bdf.register.status = :status AND bdf.register.birthDivision.dsDivision = :dsDivision " +
         "AND bdf.lifeCycleInfo.activeRecord IS TRUE"),
 
     @NamedQuery(name = "get.by.dateOfBirth_range.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
