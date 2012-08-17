@@ -180,12 +180,12 @@
 <thead>
 <tr>
     <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
-    <th width="650px"><s:label name="name" value="%{getText('name.label')}"/></th>
+    <th width="690px"><s:label name="name" value="%{getText('name.label')}"/></th>
     <th><s:label name="state" value="%{getText('state.label')}"/></th>
     <th width="20px"></th>
     <th width="20px"></th>
-    <th width="20px"></th>
-    <th width="20px"></th>
+    <%--<th width="20px"></th>--%>
+    <%--<th width="20px"></th>--%>
     <th width="20px"></th>
     <th width="20px"></th>
 </tr>
@@ -212,7 +212,7 @@
         <s:param name="editMode" value="true"/>
     </s:url>
 
-    <s:url id="approveSelected" action="eprApproveDeath.do">
+    <%--<s:url id="approveSelected" action="eprApproveDeath.do">
         <s:param name="idUKey" value="idUKey"/>
         <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -232,7 +232,7 @@
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
         <s:param name="reject" value="true"/>
         <s:param name="serialNumber" value="death.deathSerialNo"/>
-    </s:url>
+    </s:url>--%>
 
     <s:url id="deleteSelected" action="eprDeleteDeath.do">
         <s:param name="idUKey" value="idUKey"/>
@@ -255,7 +255,7 @@
                      border="none"/></s:a>
         </s:if>
     </td>
-    <td align="center">
+    <%--<td align="center">
         <s:if test="(!(session.user_bean.role.roleId.equals('DEO'))) && status.ordinal() == 0">
             <s:a href="%{approveSelected}"
                  title="%{getText('approveTooltip.label')}">
@@ -264,7 +264,7 @@
         </s:if>
     </td>
     <td align="center">
-            <%----%>
+            &lt;%&ndash;&ndash;%&gt;
         <s:if test="(!(session.user_bean.role.roleId.equals('DEO'))) && status.ordinal() == 0">
             <s:a href="%{rejectSelected}"
                  title="%{getText('rejectTooltip.label')}"><img id="rejectImage"
@@ -273,7 +273,7 @@
                                                                 height="25"
                                                                 border="none"/></s:a>
         </s:if>
-    </td>
+    </td>--%>
     <td align="center">
         <s:if test="status.ordinal() == 0">
             <s:a href="%{deleteSelected}"
@@ -310,8 +310,8 @@
     </s:url>
 
     <td></td>
-    <td></td>
-    <td></td>
+    <%--<td></td>--%>
+    <%--<td></td>--%>
     <td></td>
     <td align="center"><s:a href="%{viewSelected}"
                             title="%{getText('viewDeathRegistrationTooltip.label')}">
@@ -339,8 +339,8 @@
 
     <td></td>
     <td></td>
-    <td></td>
-    <td></td>
+    <%--<td></td>--%>
+    <%--<td></td>--%>
 
     <td align="center"><s:a href="%{viewSelected}"
                             title="%{getText('viewDeathRegistrationTooltip.label')}">
@@ -359,8 +359,8 @@
 
     <td></td>
     <td></td>
-    <td></td>
-    <td></td>
+    <%--<td></td>--%>
+    <%--<td></td>--%>
 
     <td align="center"><s:a href="%{viewSelected}"
                             title="%{getText('viewDeathRegistrationTooltip.label')}">
@@ -395,8 +395,8 @@
 
     <td></td>
     <td></td>
-    <td></td>
-    <td></td>
+    <%--<td></td>--%>
+    <%--<td></td>--%>
 
     <td align="center"><s:a href="%{viewSelected}"
                             title="%{getText('viewDeathRegistrationTooltip.label')}">
