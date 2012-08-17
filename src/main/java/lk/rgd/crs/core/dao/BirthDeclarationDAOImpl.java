@@ -144,15 +144,12 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public BirthDeclaration getActiveRecordBySerialNo(long bdfSerialNo, BirthDeclaration.State state) {
-        Query q = em.createNamedQuery("findBirthDeclarationBySerialNo");
+    public List<BirthDeclaration> getActiveRecordsBySerialNoAndDSDivision(long bdfSerialNo, BirthDeclaration.State state, DSDivision dsDivision) {
+        Query q = em.createNamedQuery("getActiveRecordsBySerialNoAndDSDivision");
         q.setParameter("status", state);
         q.setParameter("bdfSerialNo", bdfSerialNo);
-        try {
-            return (BirthDeclaration) q.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+        q.setParameter("dsDivision", dsDivision);
+        return q.getResultList();
     }
 
     /**

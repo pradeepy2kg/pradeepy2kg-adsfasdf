@@ -327,7 +327,7 @@ public interface BirthRegistrationService {
      * @param state    Status of the Birth Declaration
      * @return the active Birth Declaration record by serial Number
      */
-    public BirthDeclaration getActiveRecordBySerialNo(long serialNo, User user, BirthDeclaration.State state);
+    public List<BirthDeclaration> getActiveRecordsBySerialNoAndDSDivision(long serialNo, User user, BirthDeclaration.State state);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval

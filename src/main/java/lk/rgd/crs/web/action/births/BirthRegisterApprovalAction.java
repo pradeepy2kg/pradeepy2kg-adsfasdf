@@ -220,7 +220,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             if (bdfSerialNo > 0) {
                 if (birthDivisionId == 0) {
                     try {
-                        bdf = service.getActiveRecordBySerialNo(bdfSerialNo, user, BirthDeclaration.State.DATA_ENTRY);
+                        approvalPendingList = service.getActiveRecordsBySerialNoAndDSDivision(bdfSerialNo, user, BirthDeclaration.State.DATA_ENTRY);
                     } catch (Exception e) {
                         logger.error("Error in finding Birth Decleration by Serial Number");
                         logger.error(e.getMessage());
