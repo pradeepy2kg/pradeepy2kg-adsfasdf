@@ -79,7 +79,7 @@
                 </s:url>
                 <s:a href="%{printDC}"><s:label value="%{getText('printDC.label')}"/></s:a>
             </s:if>
-            <s:url id="home" action="eprInitDeathHome.do"></s:url>
+            <s:url id="home" action="eprDeathApprovalAndPrint.do"></s:url>
             <s:a href="%{home}"><s:label value="%{getText('goToMain_link.label')}"/></s:a>
         </div>
     </div>
