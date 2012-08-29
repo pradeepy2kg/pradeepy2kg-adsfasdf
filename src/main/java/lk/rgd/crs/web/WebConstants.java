@@ -91,4 +91,6 @@ public class WebConstants {
     public static final String TEXT_TRANSLATED = "translated";
 
     public static final int STAMP_CHARGES = 25;
+    // LocationUKey of the Head office.
+    public static final int HEAD_OFFICE_UKEY = 1;
 }
