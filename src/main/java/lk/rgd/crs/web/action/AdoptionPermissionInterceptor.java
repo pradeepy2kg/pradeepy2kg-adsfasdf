@@ -30,35 +30,19 @@ public class AdoptionPermissionInterceptor extends AbstractInterceptor {
             addActionError(invocation, "authenticate.required.message");
             return Action.LOGIN;
         }
-        Map<String, Map> map = (Map<String, Map>) session.get(WebConstants.SESSION_USER_MENUE_LIST);
 
         User user = (User) obj;
-        boolean found = false;
         boolean allow = false;
-        String cat = null;
-        int key = 0;
-        for (Map.Entry<String, Map> category : map.entrySet()) {
-            cat = category.getKey();
-            Map<Integer, Link> links = (Map<Integer, Link>) category.getValue();
-            Link link = links.get(actionName);
-            if (link != null) {
-                key = link.getPermissionKey();
-                found = true;
-                break;
-            }
-        }
 
         for (Location location : user.getActiveLocations()) {
             if (location.getLocationUKey() == WebConstants.HEAD_OFFICE_UKEY) {
                 allow = true;
             }
         }
-        if (allow && found && user.isAuthorized(key)) {
-            logger.debug("User Allowed. {} for {}", user.getUserId(), actionName);
-            session.put(WebConstants.SESSION_REQUEST_CONTEXT, cat);         // for the menu to expand
+        if (allow) {
             invocation.getInvocationContext().setSession(session);
         } else {
-            logger.debug("User not authorised to access : {} - {}", actionName, found);
+            logger.debug("User not authorised to access : {} - {}", actionName, allow);
             addActionError(invocation, "permission.notavailalbe.message");
             return Action.NONE;
         }
