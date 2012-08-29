@@ -19,9 +19,17 @@
             <interceptor name="exception" class="com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor"/>
             <interceptor name="security" class="lk.rgd.crs.web.action.SecurityInterceptor"/>
             <interceptor name="cacheControl" class="lk.rgd.crs.web.action.CacheControlInterceptor"/>
+            <interceptor name="adoptionPermission" class="lk.rgd.crs.web.action.AdoptionPermissionInterceptor"/>
             <interceptor-stack name="default">
                 <interceptor-ref name="exception"/>
                 <interceptor-ref name="security"/>
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="cacheControl"/>
+            </interceptor-stack>
+            <interceptor-stack name="adoption">
+                <interceptor-ref name="exception"/>
+                <interceptor-ref name="security"/>
+                <interceptor-ref name="adoptionPermission"/>
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="cacheControl"/>
             </interceptor-stack>
@@ -799,21 +807,24 @@
 
     <package name="adoption" namespace="/adoption" extends="NG">
 
-        <default-interceptor-ref name="default"/>
+        <default-interceptor-ref name="adoption"/>
         <action name="eprAdoptionRegistrationAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionDeclaration">
             <result type="tiles" name="success">epr.AdoptionReg</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionRegistrationHome" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="initAdoptionRegistrationOrCancelPrintAdoptionNotice">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="addOrEditAdoption">
             <result type="tiles" name="success">epr.adoptionSummary</result>
             <result type="tiles" name="invalidBirthCertificateNumber">epr.AdoptionReg</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionDirectApproval" class="lk.rgd.crs.web.action.births.AdoptionAction"
@@ -824,47 +835,56 @@
         <action name="eprMarkDirectlyAdoptionNoticeAsPrinted" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="markDirectlyAdoptionNoticeAsPrinted">
             <result type="tiles" name="success">epr.adoptionSummary</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="cancelPrintAdoptionNotice" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="initAdoptionRegistrationOrCancelPrintAdoptionNotice">
             <result type="tiles" name="success">epr.adoptionSummary</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionNoticeDirectPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="loadAdoptionNotice">
             <result type="tiles" name="success">epr.AdoptionReReg</result>
             <result type="tiles" name="skip">epr.error</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="initApplicantInfo">
             <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionProcessApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionApplicantInfo">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionCertificateRequest" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="issueCertifiedCopy">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionFind" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="populateAdoption">
             <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprCaptureAdoptionApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionApplicantInfo">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionReRegistration" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="reRegistrationInit">
             <result type="tiles" name="success">epr.adoptionReRegistrationLookup</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionReRegistrationFindEntry" class="lk.rgd.crs.web.action.births.AdoptionAction"
@@ -875,97 +895,116 @@
                 <param name="adoptionId">%{#request.idUKey}</param>
                 <param name="namespace">../births</param>
             </result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <!--approve and print list related-->
         <action name="eprAdoptionApprovalAndPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionApprovalAndPrint">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprApproveAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="approveAdoption">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprRejectAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="rejectAdoption">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprDeleteAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="deleteAdoption">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionEditMode" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionDeclarationEditMode">
             <result type="tiles" name="success">epr.AdoptionReg</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionViewMode" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionDeclarationViewMode">
             <result type="tiles" name="success">epr.non_editable_adoptionCertificate</result>
             <result type="tiles" name="skip">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
         <!--Adoption Order Start-->
         <action name="eprAdoptionOrderDetailsList" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionApprovalAndPrint">
             <result type="tiles" name="success">epr.adoptionOrderDetailsList</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
         <action name="eprAdoptionOrderDetailsViewMode" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="eprAdoptionOrderDetailsViewMode">
             <result type="tiles" name="success">epr.adoptionOrderDetails</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
         <action name="eprAdoptionOrderFilterByStatus" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="filterByStatus">
             <result type="tiles" name="success">epr.adoptionOrderDetailsList</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
         <action name="eprAdoptionOrderBackToPreviousState" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionBackToPreviouseState">
             <result type="tiles" name="success">epr.adoptionOrderDetailsList</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
         <!--End-->
         <action name="eprPrintAdoptionNotice" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="loadAdoptionNotice">
             <result type="tiles" name="success">epr.AdoptionReReg</result>
             <result type="tiles" name="skip">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprMarkAdoptionNoticeAsPrinted" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="markAdoptionNoticeAsPrinted">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprPrintAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="loadAdoptionCertificate">
             <result type="tiles" name="success">epr.adoptionCertificate</result>
             <result type="tiles" name="skip">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprMarkAdoptionCertificateAsPrinted" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="markAdoptionCertificateAsPrinted">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionNext" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="loadNextRecords">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionPrevious" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="loadPreviousRecords">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionFilterByStatus" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="filterByStatus">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
         <action name="eprAdoptionBackToPreviousState" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionBackToPreviouseState">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
     </package>
