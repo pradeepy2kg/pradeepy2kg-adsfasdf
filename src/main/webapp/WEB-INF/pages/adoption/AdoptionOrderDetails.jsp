@@ -139,16 +139,21 @@
                     </s:elseif></td>
                 <td rowspan="2">
                     <s:if test="adoption.applicantMother == true">
-                        <s:label name="adoption.applicantName"/><br/><br/>
+                        <s:label name="adoption.applicantName"/><br/>
+                        <s:label name="adoption.applicantOccupation"/><br/><br/>
                         <s:label name="adoption.applicantAddress"/>
                     </s:if>
                     <s:else>
-                        <s:label name="adoption.applicantName"/><br/><br/>
-                        <s:label name="adoption.wifeName"/><br/><br/>
+                        <s:label name="adoption.applicantName"/><br/>
+                        <s:label name="adoption.applicantOccupation"/><br/><br/>
+                        <s:label name="adoption.wifeName"/><br/>
+                        <s:label name="adoption.wifeOccupation"/><br/><br/>
                         <s:label name="adoption.applicantAddress"/>
                     </s:else>
                 </td>
-                <td rowspan="2" align="center"><s:label name="adoption.childBirthDate"/></td>
+                <td rowspan="2" align="center">
+                    <s:label name="adoption.childBirthDate"/>
+                </td>
                 <td rowspan="2">
                     <s:label name="adoption.courtOrderNumber"/><br><br>
                     <s:label name="adoption.orderIssuedDate"/><br><br>
