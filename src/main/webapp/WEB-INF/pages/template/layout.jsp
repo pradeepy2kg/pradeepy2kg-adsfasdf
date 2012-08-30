@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
     <link rel="stylesheet" type="text/css" media="print" href='<s:url value="/css/print.css"/>'/>
 
-    <style type="text/css">
+    <%--<style type="text/css">
         @font-face {
             font-family: Potha;
             src: url(POTHA0.eot);
@@ -36,8 +36,16 @@
             font-family: Latha;
             src: url(eot/LATHA0.eot);
         }
-    </style>
+    </style>--%>
 
+    <script type="text/javascript">
+        if (navigator.appVersion.indexOf("Win")!=-1){
+            document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/windowsFont.css\"/>");
+        }
+        else if(navigator.appVersion.indexOf("X11")!=-1){
+            document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/ubuntuFont.css\"/>");
+        }
+    </script>
 </head>
 <script type="text/javascript">
     function initPage() {
