@@ -10,3 +10,12 @@ derby.log
 epopulation.log
 pom.properties
 .idea
+src/main/webapp/css/font/ubuntu/Bhashitha/LBhashitaComplex.ttf
+src/main/webapp/css/font/ubuntu/Bhashitha/LBhashitaComplexBold.ttf
+src/main/webapp/css/font/ubuntu/Bhashitha/LBhashitaComplexSans.ttf
+src/main/webapp/css/font/ubuntu/Bhashitha/LBhashitaComplexSansBold.ttf
+src/main/webapp/css/font/windows/Bhashitha/Bhashitha2.ttf
+src/main/webapp/css/font/windows/Bhashitha/Bhashitha2Bold.ttf
+src/main/webapp/css/font/windows/Bhashitha/Bhashitha2Sans.ttf
+src/main/webapp/css/font/windows/Bhashitha/Bhashitha2SansBold.ttf
+
