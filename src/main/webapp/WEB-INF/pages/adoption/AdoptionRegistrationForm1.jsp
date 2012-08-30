@@ -304,7 +304,7 @@ function enableSerialNumber(mode) {
         </td>
         <td>
             සටහනේ දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
-            <br>பதிவு திகத
+            <br>பதிவு திகதி
             <br>Date of Entry
         </td>
         <td>
@@ -348,7 +348,7 @@ function enableSerialNumber(mode) {
     <tr>
         <td colspan="2">
             විනිසුරු නම
-            <br>நீதிபதியின் பெயா்
+            <br>நீதிபதியின் பெயர்
             <br>Name of the Judge
         </td>
         <td colspan="2"><s:textfield name="adoption.judgeName" id="judgeName" cssStyle="margin-left:5px;"
@@ -369,7 +369,7 @@ function enableSerialNumber(mode) {
     <tr>
         <td>
             අයදුම් කරුගේ විස්තර
-            <br>விண்ணப்பதரியின் விபரங்கள்
+            <br>விண்ணப்பதாரரின் விபரங்கள்
             <br>Applicants Details
         </td>
     </tr>
@@ -452,7 +452,7 @@ function enableSerialNumber(mode) {
     <tr>
         <td>
             අයදුම් කරුගේ නම <s:label value="*" cssStyle="color:red;font-size:10pt"/>
-            <br>விண்ணப்பதாரியின் பெயா்
+            <br>விண்ணப்பதாரரின் பெயர்
             <br>Name of the Applicant
         </td>
         <td colspan="4"><s:textarea id="applicantName" name="adoption.applicantName"/></td>
@@ -469,7 +469,7 @@ function enableSerialNumber(mode) {
     <tr>
         <td>
             රැකියාව
-            <br>Occupation in ta
+            <br>தொழில்
             <br>Occupation
         </td>
         <td colspan="4"><s:textarea name="adoption.applicantOccupation"
@@ -536,7 +536,7 @@ function enableSerialNumber(mode) {
     <tr>
         <td>
             මවගේ නම
-            <br>தாயின் பெயா்
+            <br>தாயின் பெயர்
             <br>Name of Mother
         </td>
         <td colspan="4"><s:textarea name="adoption.wifeName" id="wifeName"/></td>
@@ -544,7 +544,7 @@ function enableSerialNumber(mode) {
     <tr>
         <td>
             මවගේ රැකියාව
-            <br>Occupation of Mother in ta
+            <br>தாயின் தொழில்
             <br>Occupation of Mother
         </td>
         <td colspan="4"><s:textarea name="adoption.wifeOccupation"
@@ -628,8 +628,8 @@ function enableSerialNumber(mode) {
         <td>
             දැනට පවතින නම
             (නමක් දී ඇති නම්) <s:label value="*" cssStyle="color:blue;font-size:11pt"/>
-            <br>தற்போதைய பெயா்
-            (ஏற்கனவே பெயா் வழங்கப்பட்டிருந்தால்)
+            <br>தற்போதைய பெயர்
+           (ஏற்கனவே பெயர் குறிப்பிடப்பட்டிருந்தால் )
             <br>Existing Name
             (if already given)
         </td>
@@ -639,7 +639,7 @@ function enableSerialNumber(mode) {
     <tr>
         <td>
             ලබා දෙන නම රාජ්‍ය භාෂාවෙන් <s:label value="*" cssStyle="color:blue;font-size:11pt"/>
-            <br>புதிய பெயா் அரச கரும மொழியில்
+            <br>பெற்றுக்கொடுக்கப்படும் பெயர் அரச கரும மொழியில்
             <br>New name given in Official Language
         </td>
         <td colspan="4"><s:textarea name="adoption.childNewName" id="childNewName" cssStyle="margin-left:5px"/></td>
@@ -668,12 +668,13 @@ function enableSerialNumber(mode) {
     <tr>
         <td colspan="1">
             උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය
-            <br>பிறப்புச் சான்றிதழின் தொடா் இலக்கம்
+            <br>பிறப்புச் சான்றிதழின் தொடர் இலக்கம்
             <br>The serial number of the Birth Certificate
         </td>
         <td colspan="1">
             ඇත
             <br>
+                  உள்ளது 
             Available
         <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabe" name="available"
                                  onclick="enableCertificateNumber(false)" cssStyle="margin-left:14px"/></td>
@@ -709,6 +710,7 @@ function enableSerialNumber(mode) {
         </td>
         <td> ඇත
             <br>
+                  உள்ளது
             Available
         </td>
         <td><s:radio list="#@java.util.HashMap@{'false':''}" id="availableSlip" name="availableSlip"
@@ -754,7 +756,7 @@ function enableSerialNumber(mode) {
     <tr>
         <td colspan="1">
             අනුක්‍රමික අංකය
-            <br>தொடா் இலக்கம்
+            <br>தொடர் இலக்கம் 
             <br>Serial Number
         </td>
 

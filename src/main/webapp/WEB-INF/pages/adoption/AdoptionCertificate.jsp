@@ -82,7 +82,7 @@
         <td align="center" style="font-size:16pt">
             ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
             දරුකමට ගැනීම පිලිබඳ සහතිකය <br>
-            பு சான்றிதழ்﻿ <br>
+            மகவேற்புச் சான்றிதழ் ﻿ <br>
             CERTIFICATE OF ADOPTION
         </td>
         <td></td>
@@ -100,7 +100,7 @@
     <tr>
         <td>
             සටහනේ අංකය<br>
-            பதிவு இலக்கம்<br>
+            பதிவின் இலக்கம் <br>
             Number of Entry
         </td>
         <td>
@@ -108,7 +108,7 @@
         </td>
         <td colspan="2">
             සටහනේ දිනය
-            <br>பதிவு திகத
+            <br>பதிவு திகதி
             <br>Date of Entry
         </td>
         <td>
@@ -193,7 +193,7 @@
         </td>
         <td>
             පියාගේ රැකියාව
-            <br>Occupation of Father in ta
+            <br>தகப்பனின் தொழில்
             <br>Occupation of Father
         </td>
         <td>
@@ -217,7 +217,7 @@
         </td>
         <td>
             මවගේ රැකියාව
-            <br>Occupation of Mother in ta
+            <br>தாயின் தொழில் 
             <br>Occupation of Mother
         </td>
         <td>
@@ -284,7 +284,7 @@
                     <br>Registrar General's Department, Battaramulla</s:label>
             </s:if>
             <s:elseif test="lang==ta">
-                <s:label>பதிவாளா் நாயகம் திணைக்களம், பத்தரமுல்லை
+                <s:label>பதிவாளர் நாயகம் திணைக்களம் , பத்தரமுல்லை
                     <br>Registrar General's Department, Battaramulla</s:label>
 
             </s:elseif>
@@ -308,7 +308,8 @@
         <tr></tr>
         <tr>
             <td>දැනට උප්පැන්න සහතිකයක් ඇත්නම් එහි විස්තර <br/>
-                Birth Certificate information (if available)
+                தற்பொழுது பிறப்புச் சான்றிதழ் இருக்குமாயின் அதன் விபரம் (இருக்குமாயின்)
+                <br/>Birth Certificate information (if available)
             </td>
         </tr>
     </table>

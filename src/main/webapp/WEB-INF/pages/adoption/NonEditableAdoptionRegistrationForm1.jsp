@@ -31,6 +31,7 @@
 <table class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
     <tr>
         <td width="330px">නියෝගය ලැබුණු දිනය <br/>
+                கட்டளை கிடைக்கப்பெற்ற திகதி
             Received Date
         </td>
         <td style="text-align:left;"><s:label name="adoption.orderReceivedDate"
@@ -38,24 +39,28 @@
     </tr>
     <tr>
         <td>අධිකරණය<br/>
+                    நீதிமன்றம்
             Court
         </td>
         <td><s:label name="courtName" id="court"/></td>
     </tr>
     <tr>
         <td>නියෝගය නිකුත් කල දිනය <br/>
+             கட்டளை வழங்கப்பட்ட திகதி
             Issued Date
         </td>
         <td style="text-align:left;"><s:label value="%{#request.adoption.orderIssuedDate}"/></td>
     </tr>
     <tr>
         <td>නියෝග අංකය<br/>
+                   கட்டளை இலக்கம்
             Serial number
         </td>
         <td><s:label value="%{#request.adoption.courtOrderNumber}"/></td>
     </tr>
     <tr>
         <td>විනිසුරු නම <br/>
+              நீதிபதியின் பெயர்
             Name of the Judge
         </td>
         <td><s:label value="%{#request.adoption.judgeName}"/></td>
@@ -75,6 +80,7 @@
 <table class="adoption-reg-form-header-table">
     <tr>
         <td>අයදුම් කරුගේ විස්තර <br/>
+                  விண்ணப்பதாரரின் விபரங்கள்
             Applicants Details
         </td>
     </tr>
@@ -90,23 +96,26 @@
     <tbody>
     <tr>
         <td colspan="2">අයදුම් කරු <br/>
+               விண்ணப்பதாரர்
             Applicant
         </td>
         <s:if test="#request.adoption.applicantMother==0">
             <td colspan="3">පියා<br/>
+                    தகப்பன்
                 Father
             </td>
         </s:if>
         <s:else>
 
             <td colspan="3">මව <br/>
+                   தாய்
                 Mother
             </td>
         </s:else>
     </tr>
     <tr>
         <td colspan="2">අයදුම් කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br/>
-            தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
+            விண்ணப்பதாரரின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Applicant's PIN / NIC Number
         </td>
         <td colspan="3"><s:label value="%{#request.adoption.applicantPINorNIC}"/></td>
@@ -131,6 +140,7 @@
     </tr>
     <tr>
         <td>නම <br/>
+              விண்ணப்பதாரரின் பெயர்
             Name of the Applicant
         </td>
         <td colspan="4"><s:label value="%{#request.adoption.applicantName}"/></td>
@@ -138,6 +148,7 @@
 
     <tr>
         <td>ලිපිනය <br/>
+                 முகவரி
             Address
         </td>
         <td colspan="4"><s:label value="%{#request.adoption.applicantAddress}"/></td>
@@ -147,7 +158,7 @@
 <table class="adoption-reg-form-header-table">
     <tr>
         <td><br/>
-            අයදුම් කරු පියා නම් මවගේ විස්තර / If applicant is the father, Mother's details
+            අයදුම් කරු පියා නම් මවගේ විස්තර /விண்ணப்பதாரர் தந்தையாயின் தாயின் விபரங்கள் /  If applicant is the father, Mother's details
         </td>
     </tr>
 </table>
@@ -181,6 +192,7 @@
     </tr>
     <tr>
         <td> මවගේ නම <br/>
+                   தாயின் பெயர்
             Name of Mother
         </td>
         <td colspan="4"><s:label value="%{#request.adoption.wifeName}"/></td>
@@ -189,6 +201,7 @@
 <table class="adoption-reg-form-header-table">
     <tr>
         <td>ළමයාගේ විස්තර <br/>
+                  பிள்ளையின் விபரங்கள்
             Child's Information
         </td>
     </tr>
@@ -204,10 +217,12 @@
     <tbody>
     <tr>
         <td>උපන් දිනය<br/>
+              பிறந்த திகதி
             Date of Birth
         </td>
         <td colspan="2" style="text-align:left;"><s:label value="%{#request.adoption.childBirthDate}"/></td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br/>
+                    பால்
             Gender
         </td>
         <td>
@@ -223,13 +238,16 @@
     </tr>
     <tr>
         <td>වයස <br/>
+                   வயது
             Age
         </td>
         <td>අවුරුදු <br/>
+                        வருடங்கள்
             Years
         </td>
         <td><s:label value="%{#request.adoption.childAgeYears}"/></td>
         <td>මාස <br/>
+               மாதங்கள்
             Months
         </td>
         <td><s:label value="%{#request.adoption.childAgeMonths}"/></td>
@@ -237,6 +255,8 @@
     <tr>
         <td>දැනට පවතින නම <br/>
             (නමක් දී ඇති නම්) <br/>
+                தற்போதைய பெயர்
+                     (ஏற்கனவே பெயர் குறிப்பிடப்பட்டிருந்தால் )
             Existing Name <br/>
             (if already given)
         </td>
@@ -244,6 +264,7 @@
     </tr>
     <tr>
         <td>ලබා දෙන නම <br/>
+                பெற்றுக் கொடுக்கப்படும் பெயர்
             New name given
         </td>
         <td colspan="4"><s:label value="%{#request.adoption.childNewName}"/></td>
@@ -254,6 +275,7 @@
 <table class="adoption-reg-form-header-table">
     <tr>
         <td>උපත දැනටත් ලියාපදිංචි කර උප්පැන්න සහතිකයක් නිකුත් කර ඇතිනම් <br/>
+                  பிறப்பு ஏற்கனவே பதியப்பட்டு பிறப்புச் சான்றிதழ் வழங்கப்பட்டிருந்தால்
             If the birth is already registered, and a Birth Certificate issued
         </td>
     </tr>
@@ -263,6 +285,7 @@
 <table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="0">
     <tr>
         <td width="70%">උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය <br/>
+                  பிறப்புச் சான்றிதழின் தொடர் இலக்கம்
             The serial number of the Birth Certificate
         </td>
         <td width="30%">
@@ -272,7 +295,7 @@
 </table>
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>හෝ<br/>OR
+        <td>හෝ<br/> அல்லது OR
         </td>
     </tr>
 </table>
@@ -283,11 +306,13 @@
     <tbody>
     <tr>
         <td colspan="2" style="text-align:center;">උපත ලියපදින්ච්චි කිරීමේ රිසීට් පතේ සටහන් <br/>
+                 பிறப்பு பதிவு பற்றுச்சீட்டின் குறிப்பு
             Birth Registration acknowledgement slip
         </td>
     </tr>
     <tr>
         <td>දිස්ත්‍රික්කය <br/>
+             மாவட்டம்
             District
         </td>
         <td><s:label value="%{#request.birthDistrictName}"/>
@@ -295,6 +320,7 @@
     </tr>
     <tr>
         <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+                   பிரதேச செயலாளர் பிரிவு
             <br/>Divisional Secretary Division
         </td>
         <td>
@@ -303,6 +329,7 @@
     </tr>
     <tr>
         <td>ලියාපදිංචි කිරීමේ කොට්ටාශය <br/>
+                  பதிவுப் பிரிவு
             Registration Division
         </td>
         <td>
@@ -311,6 +338,7 @@
     </tr>
     <tr>
         <td>අනුක්‍රමික අංකය <br/>
+             தொடர் இலக்கம் 
             Serial Number
         </td>
         <td>

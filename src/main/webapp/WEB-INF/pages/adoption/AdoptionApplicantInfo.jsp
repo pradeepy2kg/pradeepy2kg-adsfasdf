@@ -155,14 +155,14 @@
        style="border:1px solid #000; border-collapse:collapse;">
     <tr>
         <td width="662px">නියෝගය ලැබුණු දිනය <br/>
-            Received Date in ta<br>
+            கட்டளை கிடைக்கப்பெற்ற திகதி <br>
             Received Date
         </td>
         <td style="text-align:center;" width="350px"><s:label value="%{#request.adoption.orderReceivedDate}"/></td>
     </tr>
     <tr>
         <td>අධිකරණය<br/>
-            Court in ta<br>
+            நீதிமன்றம் <br>
             Court
         </td>
         <td style="text-align:center;"><s:label name="courtName" id="court"/></td>
@@ -176,7 +176,7 @@
     </tr>
     <tr>
         <td>නියෝග අංකය<br/>
-            Court order number in ta<br>
+            கட்டளை வழங்கப்பட்ட திகதி <br>
             Court order number
         </td>
         <td style="text-align:center;"><s:label value="%{#request.adoption.courtOrderNumber}"
@@ -184,7 +184,7 @@
     </tr>
     <tr>
         <td>විනිසුරුගේ නම <br/>
-            Name of the Judge in ta<br>
+            நீதிபதியின் பெயர் <br>
             Name of the Judge
         </td>
         <td style="text-align: center;"><s:label value="%{#request.adoption.judgeName}" id="judgeName"
@@ -212,7 +212,7 @@
             <s:label value="%{#request.adoption.childBirthDate}"/>
         </td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br/>
-            Gender in ta<br>
+            பால் <br>
             Gender
         </td>
         <td>
@@ -229,16 +229,16 @@
     </tr>
     <tr>
         <td>වයස <br/>
-            Age in ta<br>
+            வயது <br>
             Age
         </td>
         <td>අවුරුදු <br/>
-            Years in ta<br>
+            வருடங்கள் <br>
             Years
         </td>
         <td><s:label value="%{#request.adoption.childAgeYears}" id="childAgeYears"/></td>
         <td>මාස <br/>
-            Months in ta<br>
+            மாதங்கள் <br>
             Months
         </td>
         <td><s:label value="%{#request.adoption.childAgeMonths}" id="childAgeMonths"/></td>
@@ -246,8 +246,8 @@
     <tr>
         <td>දැනට පවතින නම <br/>
             (නමක් දී ඇති නම්) <br/>
-            Existing Name in ta <br/>
-            (if already given) in ta
+           தற்போதைய பெயர்  <br/>
+            (பெயர் குறிப்பிடப்பட்டிருந்தால் )
             Existing Name <br/>
             (if already given)
         </td>
@@ -255,7 +255,7 @@
     </tr>
     <tr>
         <td>ලබා දෙන නම <br/>
-            New name given in ta<br>
+            பெற்றுக் கொடுக்கப்படும் பெயர் <br>
             New name given
         </td>
         <td colspan="4"><s:label value="%{#request.adoption.childNewName}" id="childNewName"/></td>
@@ -302,11 +302,11 @@
 
         <tr>
             <td colspan="2">අයදුම්කරු <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br/>
-                Applicant in ta<br>
+                விண்ணப்பதாரர் <br>
                 Applicant
             </td>
             <td>පියා   </br>
-                Father in ta<br>
+                தகப்பன் <br>
                 Father
             </td>
             <td><s:if test="#request.adoption.applicantMother==false">
@@ -320,7 +320,7 @@
                 </s:else>
             </td>
             <td>මව <br/>
-                Mother in ta<br>
+                தாய் <br>
                 Mother
             </td>
             <td><s:if test="#request.adoption.applicantMother==true">
@@ -335,7 +335,7 @@
                 </s:else>
             </td>
             <td>වෙනත් <br/>
-                Other in ta<br>
+                வேறு <br>
                 Other
             </td>
             <td>
@@ -347,7 +347,7 @@
             <td colspan="6">
                 අයදුම්කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය
                 <br>
-                தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்
+                தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்
                 <br>
                 Applicant's PIN / NIC Number
                 <br>
@@ -366,7 +366,7 @@
         <td colspan="2">
             අයදුම්කරුගේ නම<s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>
-            Name of the Applicant in ta<br>
+            விண்ணப்பதாரரின் பெயர் <br>
             Name of the Applicant
         </td>
         <td colspan="6">
@@ -378,7 +378,7 @@
             <td colspan="2">
                 ලිපිනය<s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                 <br>
-                Address in ta<br>
+                முகவரி <br>
                 Address
             </td>
             <td colspan="6">
