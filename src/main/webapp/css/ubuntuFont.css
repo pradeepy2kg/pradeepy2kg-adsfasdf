@@ -1,24 +1,24 @@
 @font-face {
     font-family: Bhashitha;
-    src: url(./font/ubuntu/Bhashitha/LBhashitaComplex.ttf);
+    src: url('./font/ubuntu/Bhashitha/LBhashitaComplex.ttf');
 }
 @font-face {
     font-family: BhashithaBold;
-    src: url(./font/ubuntu/Bhashitha/LBhashitaComplexBold.ttf);
+    src: url('./font/ubuntu/Bhashitha/LBhashitaComplexBold.ttf');
 }
 @font-face {
     font-family: BhashithaSans;
-    src: url(./font/ubuntu/Bhashitha/LBhashitaComplexSans.ttf);
+    src: url('./font/ubuntu/Bhashitha/LBhashitaComplexSans.ttf');
 }
 @font-face {
     font-family: BhashithaSansBold;
-    src: url(./font/ubuntu/Bhashitha/LBhashitaComplexSansbold.ttf);
+    src: url('./font/ubuntu/Bhashitha/LBhashitaComplexSansbold.ttf');
 }
 @font-face {
     font-family: SriTamil;
-    src: url(./font/ubuntu/SriTamil/SriTamR.ttf);
+    src: url('./font/ubuntu/SriTamil/SriTamR.ttf');
 }
 @font-face {
     font-family: SriTamilBold;
-    src: url(./font/ubuntu/SriTamil/SriTamB.ttf);
+    src: url('./font/ubuntu/SriTamil/SriTamB.ttf');
 }

@@ -2,7 +2,7 @@
 @media print {
     body {
         background-color: white !important;
-        font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold, sans-serif; /*font-size: 10pt;        */
+        font-family: Bhashitha, SriTamil, sans-serif; /*font-size: 10pt;        */
     }
 
     * {
