@@ -10,6 +10,13 @@ function printPage() {
         var uniqueName = new Date();
         var windowName = 'Print' + uniqueName.getTime();
         var printWindow = window.open(windowUrl, windowName, 'left=0,top=0,width=200px,height=200px');
+
+        if (navigator.appVersion.indexOf("Win") != -1) {
+            printWindow.document.write("<head><link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/windowsFont.css\"/>");
+        }
+        else if (navigator.appVersion.indexOf("X11") != -1) {
+            printWindow.document.write("<head><link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/ubuntuFont.css\"/>");
+        }
         printWindow.document.write("<head><link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/webform.css\"/>");
         printWindow.document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/style.css\"/>");
         printWindow.document.write("<script language=\"JavaScript\" src=\"/ecivil/js/print.js\"><\/script>");
