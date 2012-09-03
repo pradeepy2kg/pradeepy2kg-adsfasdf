@@ -13,27 +13,22 @@
 /* Common FONT-SIZES are defined here */
 .font-7 {
     font-size: 7pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
 }
 
 .font-8 {
     font-size: 8pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
 }
 
 .font-9 {
     font-size: 9pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
 }
 
 .font-10 {
     font-size: 10pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
 }
 
 .font-12 {
     font-size: 12pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
 }
 
 /*
@@ -1519,7 +1514,6 @@
     padding: 10px;
     background: #fff;
     font-size: 9pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
 }
 
 #alteration-print-letter-outer {
@@ -1528,24 +1522,20 @@
     padding: 10px;
     background: #fff;
     font-size: 9pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
 }
 
 #birth-certificate-outer table {
     font-size: 10pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
     margin-bottom: 10px;
 }
 
 #alteration-print-letter-outer table {
     font-size: 10pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
     margin-bottom: 10px;
 }
 
 #birth-certificate-outer p {
     font-size: 8pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
     text-align: center;
     margin-top: -3px;
     margin-bottom: 0;
@@ -1553,7 +1543,6 @@
 
 #alteration-print-letter-outer p {
     font-size: 8pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
     text-align: center;
     margin-top: -3px;
     margin-bottom: 0;
@@ -1561,7 +1550,6 @@
 
 .bc-name {
     font-size: 12pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
 }
 
 #birth-certificate-outer .table-with-border {
@@ -1583,18 +1571,15 @@
     padding: 10px;
     background: #fff;
     font-size: 9pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
 }
 
 #adoption-registration-form-outer table {
     font-size: 10pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
     margin-bottom: 10px;
 }
 
 #adoption-registration-form-outer p {
     font-size: 8pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
     text-align: center;
     margin-top: -3px;
     margin-bottom: 0;
@@ -1613,18 +1598,15 @@
     padding: 10px;
     background: #fff;
     font-size: 9pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
 }
 
 #adoption-certificate-form-outer table {
     font-size: 10pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
     margin-bottom: 10px;
 }
 
 #adoption-certificate-form-outer p {
     font-size: 8pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
     text-align: center;
     margin-top: -3px;
     margin-bottom: 0;
@@ -1643,18 +1625,15 @@
     padding: 10px;
     background: #fff;
     font-size: 9pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
 }
 
 #birth-confirmation-print-form-outer-page table {
     font-size: 10pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
     margin-bottom: 10px;
 }
 
 #birth-confirmation-print-form-outer-page p {
     font-size: 8pt;
-    font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold;
     text-align: center;
     margin-top: -3px;
     margin-bottom: 0;
