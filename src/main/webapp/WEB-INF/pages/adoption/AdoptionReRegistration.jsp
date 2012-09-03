@@ -207,16 +207,39 @@
     </table>
 
     <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" width="99%">
+        <col  width="330px"/>
+        <col  width="130px"/>
+        <col  width="330px"/>
+        <col/>
         <tr>
-            <td height="60px" width="330px">
+            <td height="60px">
                 <label>
                     සහතික පත්‍රයේ අංකය
                     <br>சான்றிதழ் இல
                     <br>Certificate Number
                 </label>
             </td>
-            <td>
+            <td colspan="3">
                 <s:label value="%{adoption.idUKey}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                සටහනේ අංකය<br>
+                பதிவின் இலக்கம் <br>
+                Number of Entry
+            </td>
+            <td>
+                <s:label value="%{adoption.adoptionEntryNo}"/>
+            </td>
+            <td>
+                සටහනේ දිනය
+                <br>பதிவு திகதி
+                <br>Date of Entry
+            </td>
+            <td>
+                <s:label value="%{adoption.orderReceivedDate}"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/>
             </td>
         </tr>
     </table>
@@ -434,6 +457,25 @@
     <col width="50px"/>
     <tbody>
     <tr>
+        <td>
+            සටහනේ අංකය<br>
+            பதிவின் இலக்கம் <br>
+            Number of Entry
+        </td>
+        <td colspan="2">
+            <s:label value="%{adoption.adoptionEntryNo}"/>
+        </td>
+        <td colspan="3">
+            සටහනේ දිනය
+            <br>பதிவு திகதி
+            <br>Date of Entry
+        </td>
+        <td colspan="2">
+            <s:label value="%{adoption.orderReceivedDate}"/><br>
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/>
+        </td>
+    </tr>
+    <tr>
         <td colspan="2">
             අයදුම් කරන්නේ කවුරුන් විසින්ද? ('X' ලකුණක් යොදා සටහන් කරන්න)
             <br/>யாரால் விண்ணப்பிக்கப்படுவது? ('X'அடையாளம் இடவும்)
@@ -586,12 +628,12 @@
 </table>
 
 
-<table style="width:1000px; text-align:left;border:none; margin-top:15px;margin-bottom:15px;">
+<table style="width:1000px; text-align:left;border:none; margin-top:15px;margin-bottom:125px;">
     <tr>
         <td>
             මුද්දර ගාස්තු (එක පිටපතක් සඳහා රු. 25/- වටිනා මුද්දර අලවන්න)
             <br>முத்திரை தீர்வை ( ஒரு பிரதிக்கு ரூ. 25/- பெறுமதியான முத்திரையினை ஒட்டவும்)
-            <br>Paste Stamps (Rs. 25/- per copy)
+            <br>Stamp fee (affix Rs 25/= stamps per copy).
         </td>
     </tr>
 </table>

@@ -294,7 +294,7 @@ function enableSerialNumber(mode) {
 <table class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
     <tr>
         <td>
-            සටහනේ අංකය<br>
+            සටහනේ අංකය<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             பதிவு இலக்கம்<br>
             Number of Entry
         </td>
