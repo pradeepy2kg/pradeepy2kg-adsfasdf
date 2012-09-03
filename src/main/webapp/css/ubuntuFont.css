@@ -22,3 +22,19 @@
     font-family: SriTamilBold;
     src: url('./font/ubuntu/SriTamil/SriTamB.ttf');
 }
+
+/*  Define Fonts for Ubuntu Platform.
+    BhashitaComplex:Bhashitha font in the local machine.
+    Bhashitha:      Bhashitha font from the server.
+    Sri Tamil:      Sri Tamil font in the local machine.
+    SriTamil:       Sri Tamil font from the server.
+*/
+body{
+    font-family: BhashitaComplex, Bhashitha, Sri Tamil, SriTamil;
+}
+
+@media print {
+    body{
+        font-family: BhashitaComplex, Bhashitha, Sri Tamil, SriTamil;
+    }
+}

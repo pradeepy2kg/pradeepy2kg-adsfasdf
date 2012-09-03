@@ -16,7 +16,6 @@
 <style type="text/css">
     .jqplot-target {
         color: #666666;
-        font-family: Bhashitha, BhashithaBold, BhashithaSans, BhashithaSansBold, SriTamil, SriTamilBold, sans-serif;
         font-size: 1em;
     }
 
