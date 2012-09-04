@@ -116,7 +116,7 @@
             <td align="center" style="font-size:15pt">
                 <img src="<s:url value="/images/official-logo.png" />" alt=""><br>
                 <label>
-                    රෙජිස්ට්‍රාර් ජෙනරාල් දෙපාර්තමේන්තුව
+                    රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව
                     <br>பதிவாளர் நாயகம் திணைக்களம் 
                     <br>Registrar General's Department
                 </label>
@@ -149,7 +149,7 @@
         </tr>
         <tr>
             <td align="left">
-                <br>ළමයින් දරුකමට හදා ගැනීමේ ආඥා පනත (අධිකාරය 61) යටතේ පහත සඳහන් උසාවි නියෝගය මෙම කාර්යාලයට ලැබී ඇත.
+                <br>ළමයින් දරුකමට හදා ගැනීමේ ආඥා පනත (61 අධිකාරය) යටතේ පහත සඳහන් උසාවි නියෝගය මෙම කාර්යාලයට ලැබී ඇත.
                 <br>மகவேற்புக் கட்டளைச்சட்டத்தின் ( 16ஆம் அதிகாரம்) கீழ் குறிப்பிடப்பட்ட நீதிமன்ற கட்டளை
                 இக்காரியலயத்திற்கு கிடைக்கப்பெற்றது.
                 <br>The following Adoption Order received by this office under Adoption Ordinance (Chapter 61).
@@ -186,7 +186,7 @@
         </tr>
         <tr>
             <td height="60px">
-                විනිසුරු නම
+                විනිසුරුගේ නම
                 <br>நீதிபதியின் பெயர்
                 <br>Name of the Judge
             </td>
@@ -238,8 +238,7 @@
                 <br>Date of Entry
             </td>
             <td>
-                <s:label value="%{adoption.orderReceivedDate}"/><br>
-                <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/>
+                <s:label value="%{adoption.orderReceivedDate}"/>
             </td>
         </tr>
     </table>
@@ -379,11 +378,15 @@
 
     </table>
 </div>
-
+<br/>
+<br/>
+<br/>
 <table class="adoption-reg-form-header-table" width="99%">
     <tr>
         <td style="font-size:18px">
-            රෙජිස්ට්‍රාර් ජෙනරාල් දෙපාර්තමේන්තුව / பதிவாளர் நாயகம் திணைக்களம் ்/Registrar General's Department
+            රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව
+            <br/>பதிவாளர் நாயகம் திணைக்களம்
+            <br/>Registrar General's Department
         </td>
     </tr>
     <tr>
@@ -471,8 +474,7 @@
             <br>Date of Entry
         </td>
         <td colspan="2">
-            <s:label value="%{adoption.orderReceivedDate}"/><br>
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/>
+            <s:label value="%{adoption.orderReceivedDate}"/>
         </td>
     </tr>
     <tr>

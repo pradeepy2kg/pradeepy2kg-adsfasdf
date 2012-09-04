@@ -1,3 +1,5 @@
+<%@ page import="lk.rgd.common.util.GenderUtil" %>
+<%@ page import="lk.rgd.crs.api.domain.AdoptionOrder" %>
 <%--
   @author Supun Nimesh Karunathilaka
 --%>
@@ -103,7 +105,7 @@
                     Sex of Adopted Child
                 </td>
                 <td>
-                    දරුකමට හදාගන්නා අයගේ හෝ අයවළුන්ගේ නම සහ වාසගම, ලිපිනය සහ රක්ෂාව<br>
+                    දරුකමට හදාගන්නා අයගේ හෝ අයවළුන්ගේ නම සහ වාසගම, ලිපිනය සහ රැකියාව<br>
                     மகவேற்றவர் அல்லது மகவேற்றவர்களின் முழுப்பெயர், முகவரி மற்றும் தொழில்<br>
                     Name and Surname, Address and Occupation of Adopter or Adopters
                 </td>
@@ -128,15 +130,20 @@
                 <td rowspan="2"><s:label name="adoption.orderReceivedDate"/></td>
                 <td rowspan="2"><s:label name="adoption.childNewName"/></td>
                 <td rowspan="2" align="center">
-                    <s:if test="adoption.childGender == 0">
-                        <s:label name="" value="%{getText('male.label')}"/>
-                    </s:if>
-                    <s:elseif test="adoption.childGender == 1">
-                        <s:label name="" value="%{getText('female.label')}"/>
-                    </s:elseif>
-                    <s:elseif test="adoption.childGender == 2">
-                        <s:label name="" value="%{getText('unknown.label')}"/>
-                    </s:elseif></td>
+                    <%--<s:if test="adoption.childGender == 0">--%>
+                        <%--<s:label name="" value="%{getText('male.label')}"/>--%>
+                    <%--</s:if>--%>
+                    <%--<s:elseif test="adoption.childGender == 1">--%>
+                        <%--<s:label name="" value="%{getText('female.label')}"/>--%>
+                    <%--</s:elseif>--%>
+                    <%--<s:elseif test="adoption.childGender == 2">--%>
+                        <%--<s:label name="" value="%{getText('unknown.label')}"/>--%>
+                    <%--</s:elseif>--%>
+                    <label>
+                        <%  AdoptionOrder a = (AdoptionOrder)request.getAttribute("adoption");
+                            out.print(GenderUtil.getGender(a.getChildGender(), a.getLanguageToTransliterate()));%>
+                    </label>
+                </td>
                 <td rowspan="2">
                     <s:if test="adoption.applicantMother == true">
                         <s:label name="adoption.applicantName"/><br/>
@@ -170,10 +177,10 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="8" align="center">වෙනස්කිරීම්/திருத்தங்கள்/AMENDMENTS</td>
+                <td colspan="8" align="center">වෙනස් කිරීම්/திருத்தங்கள்/AMENDMENTS</td>
             </tr>
             <tr>
-                <td height="115px"><br/></td>
+                <td height="145px"><br/></td>
                 <td><br/></td>
                 <td><br/></td>
                 <td><br/></td>
