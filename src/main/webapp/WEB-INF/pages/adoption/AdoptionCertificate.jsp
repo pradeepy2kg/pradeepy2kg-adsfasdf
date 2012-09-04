@@ -112,8 +112,7 @@
             <br>Date of Entry
         </td>
         <td>
-            <s:label value="%{adoption.orderReceivedDate}"/><br>
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/>
+            <s:label value="%{adoption.orderReceivedDate}"/>
         </td>
     </tr>
     <tr>
@@ -139,8 +138,6 @@
         </td>
         <td>
             <s:label value="%{adoption.orderIssuedDate}"/>
-            <br>
-            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
         <td>
             නියෝග අංකය <br>
@@ -173,8 +170,6 @@
         <%--<td width="250px"><s:label name="" value="%{adoption.childPIN}"/></td>--%>
         <td>උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth
         <td colspan="2"><s:label name="" value="%{adoption.childBirthDate}"/>
-            <br>
-            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
         </td>
@@ -258,8 +253,6 @@
             <br/> Date of Registration
         </td>
         <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectTimestamp}"/>
-            <br>
-            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
     </tr>
     <tr>
@@ -296,8 +289,6 @@
             <br/>Date of Issue
         </td>
         <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.lastUpdatedTimestamp}"/>
-            <br>
-            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
     </tr>
     </tbody>
