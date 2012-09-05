@@ -44,6 +44,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
     static {
         entityClasses.add(AppParameter.class);
         entityClasses.add(Country.class);
+        entityClasses.add(Province.class);
         entityClasses.add(District.class);
         entityClasses.add(BDDivision.class);
         entityClasses.add(DSDivision.class);
