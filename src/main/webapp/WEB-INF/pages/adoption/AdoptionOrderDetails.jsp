@@ -80,11 +80,11 @@
             </tr>
         </table>
         <table id="adoption-order-details" class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
-            <col width="50px"/>
+            <col width="60px"/>
             <col width="70px"/>
-            <col width="160px"/>
+            <col width="140px"/>
             <col width="50px"/>
-            <col width="290px"/>
+            <col width="300px"/>
             <col width="70px"/>
             <col width="130px"/>
             <col width="180px"/>
