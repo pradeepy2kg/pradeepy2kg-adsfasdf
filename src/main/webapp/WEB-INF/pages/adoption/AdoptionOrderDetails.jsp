@@ -66,24 +66,29 @@
         }
     }
 </script>
-<div id="adoption-registration-form-outer">
-    <div class="form-submit">
-        <s:submit type="button" value="%{getText('print.button')}" onclick="printAdoptionOrderPage()"/>
-    </div>
-    <br><br><br><br>
+<div id="adoption-registration-form-outer" style="float: left;">
+    <br/>
     <s:form action="eprAdoptionOrderBackToPreviousState" name="" id="" method="POST">
         <table style="width:100%; border:none; border-collapse:collapse;">
             <tr>
-                <td colspan="8" align="right">ලි. ප. කි. ආ. 138 / Registration B 138</td>
+                <td colspan="8" align="right" class="font-9">ලි. ප. කි. ආ. 138 / Registration B 138</td>
             </tr>
             <tr>
-                <td colspan="8" align="left">දරුකමට හදාගැනීමේ නියෝගයේ සඳහන් අන්දමට සටහන් කරන්න / Enter details as stated
+                <td colspan="8" align="left" class="font-9">දරුකමට හදාගැනීමේ නියෝගයේ සඳහන් අන්දමට සටහන් කරන්න / Enter details as stated
                     in Adoption Order/ மகவேற்புக்கட்டளையில் உள்ளதன் பிரகாரம் நிரப்புக.
                 </td>
             </tr>
         </table>
         <table id="adoption-order-details" class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
-            <tr valign="top" align="center">
+            <col width="50px"/>
+            <col width="70px"/>
+            <col width="160px"/>
+            <col width="50px"/>
+            <col width="290px"/>
+            <col width="70px"/>
+            <col width="130px"/>
+            <col width="180px"/>
+            <tr valign="top" align="center" class="font-7">
                 <td>
                     සටහනේ අංකය<br>
                     பதிவு இலக்கம்<br>
@@ -125,20 +130,11 @@
                     Signature of officer authorized by Registrar-General to certify the entry
                 </td>
             </tr>
-            <tr valign="top">
+            <tr valign="top" class="font-9">
                 <td rowspan="2"><s:label name="adoption.adoptionEntryNo"/></td>
                 <td rowspan="2"><s:label name="adoption.orderReceivedDate"/></td>
                 <td rowspan="2"><s:label name="adoption.childNewName"/></td>
                 <td rowspan="2" align="center">
-                    <%--<s:if test="adoption.childGender == 0">--%>
-                        <%--<s:label name="" value="%{getText('male.label')}"/>--%>
-                    <%--</s:if>--%>
-                    <%--<s:elseif test="adoption.childGender == 1">--%>
-                        <%--<s:label name="" value="%{getText('female.label')}"/>--%>
-                    <%--</s:elseif>--%>
-                    <%--<s:elseif test="adoption.childGender == 2">--%>
-                        <%--<s:label name="" value="%{getText('unknown.label')}"/>--%>
-                    <%--</s:elseif>--%>
                     <label>
                         <%  AdoptionOrder a = (AdoptionOrder)request.getAttribute("adoption");
                             out.print(GenderUtil.getGender(a.getChildGender(), a.getLanguageToTransliterate()));%>
@@ -148,39 +144,41 @@
                     <s:if test="adoption.applicantMother == true">
                         <s:label name="adoption.applicantName"/><br/>
                         <s:label name="adoption.applicantOccupation"/><br/><br/>
-                        <s:label name="adoption.applicantAddress"/>
+                        <s:textarea value="%{adoption.applicantAddress}" cssStyle="margin: 0; resize: none; color: #000; border: none;" rows="4" disabled="true" />
                     </s:if>
                     <s:else>
                         <s:label name="adoption.applicantName"/><br/>
                         <s:label name="adoption.applicantOccupation"/><br/><br/>
                         <s:label name="adoption.wifeName"/><br/>
                         <s:label name="adoption.wifeOccupation"/><br/><br/>
-                        <s:label name="adoption.applicantAddress"/>
+                        <s:textarea value="%{adoption.applicantAddress}" cssStyle="margin: 0; resize: none; color: #000; border: none; " rows="4" disabled="true" />
                     </s:else>
                 </td>
                 <td rowspan="2" align="center">
                     <s:label name="adoption.childBirthDate"/>
                 </td>
                 <td rowspan="2">
-                    <s:label name="adoption.courtOrderNumber"/><br><br>
                     <s:label name="adoption.orderIssuedDate"/><br><br>
-                    <s:label name="adoption.court.siCourtName"/>
+                    <s:label name="adoption.court.siCourtName"/><br><br>
+                    <s:label name="adoption.courtOrderNumber"/>
                 </td>
-                <td style="border:none;"><s:label name=""/></td>
+                <td style="border-bottom:none;">
+                    <s:textarea rows="18" disabled="true" cssStyle="margin: 0; resize: none; width: 100px; border: none;"/>
+                </td>
             </tr>
-            <tr style="height:250px">
-                <td align="center"><br><br><br><br><br><br><br><br><br><br>
-                    ....................................... <br/>
+            <tr>
+                <td align="center" class="font-9"><br>
+                    ........................................... <br/>
                     සහකාර රෙජිස්ට්‍රාර් ජනරාල්.<br>
                     உதவி பதிவாளர் நாயகம்.<br>
                     Assistant Registrar-General.
                 </td>
             </tr>
-            <tr>
+            <tr class="font-7">
                 <td colspan="8" align="center">වෙනස් කිරීම්/திருத்தங்கள்/AMENDMENTS</td>
             </tr>
             <tr>
-                <td height="145px"><br/></td>
+                <td height="135px"><br/></td>
                 <td><br/></td>
                 <td><br/></td>
                 <td><br/></td>
@@ -191,17 +189,8 @@
             </tr>
 
         </table>
-        <%--<div cl="controls">
-            <div class="form-submit">
-                <s:submit type="button" value="%{getText('print.button')}" onclick="printAdoptionOrderPage()"/>
-            </div>
-        </div>
-        <div class="button" align="right">
-            <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
-            <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-            <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
-            <s:hidden name="pageNo" value="%{#request.pageNo}"/>
-            <s:submit value="%{getText('back.label')}" cssStyle="margin-top:10px;"/>
-        </div>--%>
     </s:form>
+    <div class="form-submit" style="margin: 10px 0 15px;">
+        <s:submit type="button" value="%{getText('print.button')}" onclick="printAdoptionOrderPage()"/>
+    </div>
 </div>
