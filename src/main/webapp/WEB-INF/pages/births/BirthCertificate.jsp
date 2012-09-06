@@ -945,13 +945,13 @@
         <td width="10%">&nbsp;</td>
         <td width="30%">
             <s:label name="informant.informantName" cssStyle="width:600px;font-size:14pt;"/><br/>
-            <s:label name="informant.informantAddress" cssStyle="width:600px;font-size:14pt;"/>
+            <s:textarea name="informant.informantAddress" cssStyle="resize: none; color: #000; border: none; width: 300px; font-size:14pt;" rows="4" disabled="true"/>
         </td>
     </tr>
     <tr>
         <td height="50px" width="30%">
             <s:textarea id="retAddress" value="%{returnAddress}" disabled="true" rows="5"
-                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:14pt;background:transparent;border:none;"/>
+                        cssStyle="margin-top:10px;text-transform:none;width:350px;resize:none;font-size:14pt;background:transparent;border:none;"/>
         </td>
         <td width="10%">&nbsp;</td>
         <td width="30%">
