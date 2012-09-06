@@ -62,7 +62,7 @@
             errormsg = errormsg + "\n" + document.getElementById("error3").value;
         }
         domObject = document.getElementById("certifcateApplicantPin");
-        if(!isFieldEmpty(domObject)){
+        if (!isFieldEmpty(domObject)) {
             validatePINorNIC(domObject, 'error5', 'error0');
         }
 //        if (isFieldEmpty(domObject)) {
@@ -246,7 +246,7 @@
     <tr>
         <td>දැනට පවතින නම <br/>
             (නමක් දී ඇති නම්) <br/>
-           தற்போதைய பெயர்  <br/>
+            தற்போதைய பெயர் <br/>
             (பெயர் குறிப்பிடப்பட்டிருந்தால் )
             Existing Name <br/>
             (if already given)

@@ -1,5 +1,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="lk.rgd.common.util.DateTimeUtils" %>
+<%@ page import="lk.rgd.crs.api.domain.AdoptionOrder" %>
+<%@ page import="lk.rgd.common.util.GenderUtil" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
@@ -131,7 +133,7 @@
             <td><s:label value="%{adoption.applicantName}"/> මයා/ මිය</td>
         </tr>
         <tr height="30px" style="text-align:left;font-size:10pt">
-            <td><s:textarea value="%{adoption.applicantAddress}" cssStyle="resize: none; color: #000; border: none; width: 100%;" rows="4" disabled="true" /></td>
+            <td><s:textarea value="%{adoption.applicantAddress}" cssStyle="resize: none; color: #000; background: #fff; border: none; width: 100%;" rows="4" disabled="true" /></td>
         </tr>
         <tr>
             <td align="left">
@@ -584,7 +586,12 @@
             <br>பால்
             <br>Gender
         </td>
-        <td width="250px"><s:label name="" value="%{genderSi}"/></td>
+        <td width="250px">
+            <label>
+                <%  AdoptionOrder a = (AdoptionOrder)request.getAttribute("adoption");
+                    out.print(GenderUtil.getGender(a.getChildGender(), a.getLanguageToTransliterate()));%>
+            </label>
+        </td>
     </tr>
     </tbody>
 </table>
