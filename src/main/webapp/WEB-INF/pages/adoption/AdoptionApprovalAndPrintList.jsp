@@ -101,7 +101,8 @@
               <th><s:label name="delete" value="%{getText('printCertificete.label')}"/></th>
               <th><s:label name="delete" value="%{getText('ReRegistration.label')}"/></th>--%>
 
-                <th width="100px"><s:label name="serial" value="%{getText('adoption_serial.label')}"/></th>
+                <th width="80px"><s:label name="serial" value="%{getText('adoption_serial.label')}"/></th>
+                <th width="100px"><s:label name="serial" value="%{getText('entry_no.label')}"/></th>
                 <th width="800px"><s:label name="name" value="%{getText('name.label')}"/></th>
                 <th></th>
                 <th></th>
@@ -166,13 +167,14 @@
                 </s:url>
                 <tr>
                     <td><s:property value="idUKey"/></td>
-                    <s:if test="childExistingName!=null">
-                        <td><s:property value="getChildExistingNameToLength(30)"/></td>
+                    <td><s:property value="adoptionEntryNo"/></td>
+                    <s:if test="childNewName!=null">
+                        <td><s:property value="getChildNewNameToLength(30)"/></td>
 
                     </s:if>
-                    <s:else>
-                        <td><s:property value="getChildNewNameToLength(30)"/></td>
-                    </s:else>
+                    <s:elseif test="childExistingName!=null">
+                        <td><s:property value="getChildExistingNameToLength(30)"/></td>
+                    </s:elseif>
                     <td align="center">
                         <s:if test="%{allowEditAdoption && status.ordinal()==0 }">
                             <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
