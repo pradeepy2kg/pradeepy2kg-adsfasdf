@@ -42,8 +42,8 @@
         // set margins.
         jsPrintSetup.setOption('marginTop', 0);
         jsPrintSetup.setOption('marginBottom', 0);
-        jsPrintSetup.setOption('marginLeft', 10);
-        jsPrintSetup.setOption('marginRight', 0);
+        jsPrintSetup.setOption('marginLeft', 19);
+        jsPrintSetup.setOption('marginRight', 1);
 
         // set page header
         jsPrintSetup.setOption('headerStrLeft', '');
@@ -82,9 +82,9 @@
         <table id="adoption-order-details" class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
             <col width="60px"/>
             <col width="70px"/>
-            <col width="140px"/>
+            <col width="120px"/>
             <col width="50px"/>
-            <col width="300px"/>
+            <col width="280px"/>
             <col width="70px"/>
             <col width="130px"/>
             <col width="180px"/>
@@ -144,14 +144,14 @@
                     <s:if test="adoption.applicantMother == true">
                         <s:label name="adoption.applicantName"/><br/>
                         <s:label name="adoption.applicantOccupation"/><br/><br/>
-                        <s:textarea value="%{adoption.applicantAddress}" cssStyle="margin: 0; resize: none; color: #000; border: none;" rows="4" disabled="true" />
+                        <s:textarea value="%{adoption.applicantAddress}" cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none;" rows="4" disabled="true" />
                     </s:if>
                     <s:else>
                         <s:label name="adoption.applicantName"/><br/>
                         <s:label name="adoption.applicantOccupation"/><br/><br/>
                         <s:label name="adoption.wifeName"/><br/>
                         <s:label name="adoption.wifeOccupation"/><br/><br/>
-                        <s:textarea value="%{adoption.applicantAddress}" cssStyle="margin: 0; resize: none; color: #000; border: none; " rows="4" disabled="true" />
+                        <s:textarea value="%{adoption.applicantAddress}" cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; " rows="4" disabled="true" />
                     </s:else>
                 </td>
                 <td rowspan="2" align="center">
@@ -163,7 +163,7 @@
                     <s:label name="adoption.courtOrderNumber"/>
                 </td>
                 <td style="border-bottom:none;">
-                    <s:textarea rows="18" disabled="true" cssStyle="margin: 0; resize: none; width: 100px; border: none;"/>
+                    <s:textarea rows="18" disabled="true" cssStyle="margin: 0; resize: none; background: #fff; width: 100px; border: none;"/>
                 </td>
             </tr>
             <tr>
