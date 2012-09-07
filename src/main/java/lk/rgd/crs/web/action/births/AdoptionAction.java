@@ -155,6 +155,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 }
             }
             populateAdoptionObjectForEdit(adoption, existingOrder);
+            if(birthProvinceUKey > 0){
+                logger.debug("Province {}", birthProvinceUKey);
+                adoption.setBirthProvinceUKey(birthProvinceUKey);
+                adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(birthProvinceUKey).getZonalOffice());
+            }else{
+                adoption.setNoticingZonalOffice(adoption.getCourt().getProvince().getZonalOffice());
+            }
             service.updateAdoptionOrder(adoption, user);
             addActionMessage(getText("message.successfully.edited.adoption.order",
                 new String[]{adoption.getCourtOrderNumber()}));
@@ -178,6 +185,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 }
             }
             try {
+                if(birthProvinceUKey > 0){
+                    adoption.setBirthProvinceUKey(birthProvinceUKey);
+                    adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(birthProvinceUKey).getZonalOffice());
+                }else{
+                    adoption.setNoticingZonalOffice(adoption.getCourt().getProvince().getZonalOffice());
+                }
+                logger.debug("Adding Adoption {} by {}", adoption.getAdoptionEntryNo(), user.getUserId());
                 service.addAdoptionOrder(adoption, user);
             } catch (CRSRuntimeException e) {
                 basicLists();
@@ -261,7 +275,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             //get bd divisions for edit list
             bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
 
+        }else {
+            birthDivisionId = 0;
+            dsDivisionId = 0;
         }
+        // TODO refactor
+        if(adoption.getBirthProvinceUKey() != 0){
+            birthProvinceUKey = adoption.getBirthProvinceUKey();
+        }
+        if(adoption.getBirthDistrictId() != 0){
+            birthDistrictId = adoption.getBirthDistrictId();
+        }
+        if(adoption.getNoticingZonalOffice() != null){
+            zonalOfficeId = adoption.getNoticingZonalOffice().getZonalOfficeUKey();
+        }
+
         //populate court
         courtId = adoption.getCourt().getCourtUKey();
         return SUCCESS;
@@ -367,6 +395,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
                 adoption.getLanguageToTransliterate());
             zonalOfficeList = zonalOfficesDAO.getActiveZonalOffices(language);
+            zonalOfficeId = adoption.getNoticingZonalOffice().getZonalOfficeUKey();
             return SUCCESS;
         }
     }
