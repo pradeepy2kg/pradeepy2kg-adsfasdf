@@ -37,6 +37,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private static final String ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE = "crs.br_approval_rows_per_page";
 
     private final AdoptionOrderService service;
+    private final ProvinceDAO provinceDAO;
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
@@ -53,6 +54,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private AdoptionOrder.State state;
     private AdoptionOrder.ApplicantType certificateApplicantType;
 
+    private Map<Integer, String> provinceList;
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
@@ -62,6 +64,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> zonalOfficeList;
     private List<AdoptionOrder> adoptionApprovalAndPrintList;
 
+    private int birthProvinceUKey;
     private int birthDistrictId;
     private int birthDivisionId;
     private int courtId;
@@ -100,7 +103,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
         AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
-        BirthRegistrationService birthRegistrationService, CourtDAO courtDAO, ZonalOfficesDAO zonalOfficesDAO) {
+        BirthRegistrationService birthRegistrationService, CourtDAO courtDAO, ZonalOfficesDAO zonalOfficesDAO, ProvinceDAO provinceDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -110,6 +113,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.birthRegistrationService = birthRegistrationService;
         this.courtDAO = courtDAO;
         this.zonalOfficesDAO = zonalOfficesDAO;
+        this.provinceDAO = provinceDAO;
     }
 
     public String initAdoptionRegistrationOrCancelPrintAdoptionNotice() {
@@ -160,7 +164,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 basicLists();
                 populate();
                 populateAllDSDivisionList();
-                return "invalidBirthCertificateNumber";
+                return "invalidEntryNo";
             }
 
             birthCertificateNo = adoption.getBirthCertificateNumber();
@@ -762,6 +766,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     private void populateBasicLists(String language) {
         countryList = countryDAO.getCountries(language);
+        provinceList = provinceDAO.getActiveProvinces(language);
         districtList = districtDAO.getAllDistrictNames(language, user);
         courtList = (courtDAO.getCourtNames(language));
     }
@@ -1204,5 +1209,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setAdoptionSerialNo(long adoptionSerialNo) {
         this.adoptionSerialNo = adoptionSerialNo;
+    }
+
+    public Map<Integer, String> getProvinceList() {
+        return provinceList;
+    }
+
+    public void setProvinceList(Map<Integer, String> provinceList) {
+        this.provinceList = provinceList;
+    }
+
+    public int getBirthProvinceUKey() {
+        return birthProvinceUKey;
+    }
+
+    public void setBirthProvinceUKey(int birthProvinceUKey) {
+        this.birthProvinceUKey = birthProvinceUKey;
     }
 }

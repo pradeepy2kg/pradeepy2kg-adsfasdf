@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.ZonalOffice;
 import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.*;
@@ -171,6 +172,12 @@ public class AdoptionOrder implements Serializable {
     private long birthRegistrationSerial; // if BC number not given
 
     @Column(nullable = true)
+    private int birthProvinceUKey;   // if BC number not given
+
+    @Column(nullable = true)
+    private int birthDistrictId; // if BC number not given
+    
+    @Column(nullable = true)
     private int birthDivisionId; // if BC number not given
 
     @Column(nullable = true)
@@ -207,6 +214,10 @@ public class AdoptionOrder implements Serializable {
      */
     @Column(nullable = false)
     private long adoptionEntryNo;
+
+    @ManyToOne
+    @JoinColumn(nullable = false, updatable = false)
+    private ZonalOffice noticingZonalOffice;
 
     public long getAdoptionEntryNo() {
         return adoptionEntryNo;
@@ -526,5 +537,29 @@ public class AdoptionOrder implements Serializable {
 
     public void setWifeOccupation(String wifeOccupation) {
         this.wifeOccupation = wifeOccupation;
+    }
+
+    public ZonalOffice getNoticingZonalOffice() {
+        return noticingZonalOffice;
+    }
+
+    public void setNoticingZonalOffice(ZonalOffice noticingZonalOffice) {
+        this.noticingZonalOffice = noticingZonalOffice;
+    }
+
+    public int getBirthProvinceUKey() {
+        return birthProvinceUKey;
+    }
+
+    public void setBirthProvinceUKey(int birthProvinceUKey) {
+        this.birthProvinceUKey = birthProvinceUKey;
+    }
+
+    public int getBirthDistrictId() {
+        return birthDistrictId;
+    }
+
+    public void setBirthDistrictId(int birthDistrictId) {
+        this.birthDistrictId = birthDistrictId;
     }
 }

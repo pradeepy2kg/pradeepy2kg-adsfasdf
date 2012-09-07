@@ -111,6 +111,7 @@
 
     <!--DAO Beans - These allow access to the lower levels of the application data-->
     <bean id="appParametersDAOImpl" class="lk.rgd.common.core.dao.AppParametersDAOImpl"/>
+    <bean id="provinceDAOImpl" class="lk.rgd.common.core.dao.ProvinceDAOImpl"/>
     <bean id="districtDAOImpl" class="lk.rgd.common.core.dao.DistrictDAOImpl"/>
     <bean id="dsDivisionDAOImpl" class="lk.rgd.common.core.dao.DSDivisionDAOImpl"/>
     <bean id="countryDAOImpl" class="lk.rgd.common.core.dao.CountryDAOImpl"/>
@@ -437,6 +438,7 @@
     <bean id="adoptionOrderAction" class="lk.rgd.crs.web.action.births.AdoptionAction">
         <constructor-arg ref="manageBirthService"/>
         <constructor-arg ref="adoptionOrderService"/>
+        <constructor-arg ref="provinceDAOImpl"/>
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>

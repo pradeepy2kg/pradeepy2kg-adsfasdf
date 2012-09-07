@@ -67,13 +67,13 @@ $(function () {
         var id = $("select#birthDistrictId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:5},
                 function (data) {
-                    var options1 = '';
+                    var options1 = '<option value="0">' + $('#select').val() + '</option>';
                     var ds = data.dsDivisionList;
                     for (var i = 0; i < ds.length; i++) {
                         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                     }
                     $("select#dsDivisionId").html(options1);
-                    var options2 = '';
+                    var options2 = '<option value="0">' + $('#select').val() + '</option>';
                     var bd = data.bdDivisionList;
                     for (var j = 0; j < bd.length; j++) {
                         options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
@@ -244,6 +244,7 @@ function initPage() {
         domObject.value = null;
     }
     document.getElementById('birthCertificateNumber').disabled = true;
+    document.getElementById('birthProvinceUKey').disabled = true;
     document.getElementById('birthDistrictId').disabled = true;
     document.getElementById('dsDivisionId').disabled = true;
     document.getElementById('birthDivisionId').disabled = true;
@@ -256,6 +257,7 @@ function enableCertificateNumber(mode) {
 }
 
 function enableSerialNumber(mode) {
+    document.getElementById('birthProvinceUKey').disabled = mode;
     document.getElementById('birthDistrictId').disabled = mode;
     document.getElementById('dsDivisionId').disabled = mode;
     document.getElementById('birthDivisionId').disabled = mode;
@@ -721,6 +723,17 @@ function enableSerialNumber(mode) {
     </tr>
     <tr>
         <td colspan="1">
+            පළාත
+            <br>Province in ta
+            <br>Province
+        </td>
+        <td colspan="5"><s:select id="birthProvinceUKey" name="birthProvinceUKey" list="provinceList"
+                                  value="%{birthProvinceUKey}"
+                                  cssStyle="width:280px;margin-left:5px;"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1">
             දිස්ත්‍රික්කය
             <br>மாவட்டம்
             <br>District
@@ -778,6 +791,7 @@ function enableSerialNumber(mode) {
     <s:submit value="%{getText('adoption.submit')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
+<s:hidden id="select" value="%{getText('select.label')}"/>
 <s:hidden id="error0" value="%{getText('er.label.receivedDate')}"/>
 <s:hidden id="error2" value="%{getText('er.label.orderIssuedDate')}"/>
 <s:hidden id="error3" value="%{getText('er.label.courtOrderNumber')}"/>
