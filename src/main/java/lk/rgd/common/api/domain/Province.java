@@ -31,10 +31,6 @@ public class Province implements Serializable {
     @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String taProvinceName;
 
-    /**
-     * A District maybe marked as inactive if one is split into two, or amalgamated to create a new one
-     * The UI will only show Districts that are currently active for every data entry form
-     */
     @Column(name = "active", columnDefinition = "smallint not null default 1")
     private boolean active;
 
@@ -80,5 +76,13 @@ public class Province implements Serializable {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public ZonalOffice getZonalOffice() {
+        return zonalOffice;
+    }
+
+    public void setZonalOffice(ZonalOffice zonalOffice) {
+        this.zonalOffice = zonalOffice;
     }
 }
