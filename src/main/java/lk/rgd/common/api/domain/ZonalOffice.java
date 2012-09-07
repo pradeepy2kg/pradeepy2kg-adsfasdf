@@ -20,7 +20,7 @@ import java.util.Set;
     ),
     @NamedQuery(
         name = "getAllActiveZonalOffices",
-        query = "SELECT z FROM ZonalOffice z WHERE z.lifeCycleInfo.active = TRUE"
+        query = "SELECT z FROM ZonalOffice z WHERE z.active = TRUE"
     )
 })
 public class ZonalOffice implements Serializable {
@@ -32,8 +32,8 @@ public class ZonalOffice implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int zonalOfficeUKey;
 
-    @Embedded
-    private BaseLifeCycleInfo lifeCycleInfo = new BaseLifeCycleInfo();
+    @Column(name = "active", columnDefinition = "smallint not null default 1")
+    private boolean active;
 
     /**
      * Name of the Zonal office in major 3 languages.
@@ -88,14 +88,6 @@ public class ZonalOffice implements Serializable {
 
     public void setZonalOfficeUKey(int zonalOfficeUKey) {
         this.zonalOfficeUKey = zonalOfficeUKey;
-    }
-
-    public BaseLifeCycleInfo getLifeCycleInfo() {
-        return lifeCycleInfo;
-    }
-
-    public void setLifeCycleInfo(BaseLifeCycleInfo lifeCycleInfo) {
-        this.lifeCycleInfo = lifeCycleInfo;
     }
 
     public String getSiZonalOfficeName() {
@@ -176,5 +168,13 @@ public class ZonalOffice implements Serializable {
 
     public void setDistricts(Set<District> districts) {
         this.districts = districts;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
