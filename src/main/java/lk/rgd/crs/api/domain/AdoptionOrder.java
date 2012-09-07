@@ -216,7 +216,7 @@ public class AdoptionOrder implements Serializable {
     private long adoptionEntryNo;
 
     @ManyToOne
-    @JoinColumn(nullable = false, updatable = false)
+    @JoinColumn(name = "noticingZonalOffice", nullable = false)
     private ZonalOffice noticingZonalOffice;
 
     public long getAdoptionEntryNo() {

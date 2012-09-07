@@ -33,14 +33,14 @@ $(function () {
         }
     });
 
-    $('#bdayDatePicker').bind('change',function(){
+    $('#bdayDatePicker').bind('change', function () {
         var bday = new Date(document.getElementById('bdayDatePicker').value);
         var age = calculateAge(bday, new Date());
         document.getElementById("childAgeYears").value = age[0];
         document.getElementById("childAgeMonths").value = age[1];
     });
 
-    $('#bdayDatePicker').bind('click',function(){
+    $('#bdayDatePicker').bind('click', function () {
         var bday = new Date(document.getElementById('bdayDatePicker').value);
         var age = calculateAge(bday, new Date());
         document.getElementById("childAgeYears").value = age[0];
@@ -631,7 +631,7 @@ function enableSerialNumber(mode) {
             දැනට පවතින නම
             (නමක් දී ඇති නම්) <s:label value="*" cssStyle="color:blue;font-size:11pt"/>
             <br>தற்போதைய பெயர்
-           (ஏற்கனவே பெயர் குறிப்பிடப்பட்டிருந்தால் )
+            (ஏற்கனவே பெயர் குறிப்பிடப்பட்டிருந்தால் )
             <br>Existing Name
             (if already given)
         </td>
@@ -676,7 +676,7 @@ function enableSerialNumber(mode) {
         <td colspan="1">
             ඇත
             <br>
-                  உள்ளது 
+            உள்ளது
             Available
         <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabe" name="available"
                                  onclick="enableCertificateNumber(false)" cssStyle="margin-left:14px"/></td>
@@ -712,7 +712,7 @@ function enableSerialNumber(mode) {
         </td>
         <td> ඇත
             <br>
-                  உள்ளது
+            உள்ளது
             Available
         </td>
         <td><s:radio list="#@java.util.HashMap@{'false':''}" id="availableSlip" name="availableSlip"
@@ -739,7 +739,7 @@ function enableSerialNumber(mode) {
             <br>District
         </td>
         <td colspan="5"><s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                                  value="%{birthDistrictId}"
+                                  value="%{birthDistrictId}" headerKey="0" headerValue="%{getText('select.label')}"
                                   cssStyle="width:280px;margin-left:5px;"/>
         </td>
     </tr>
@@ -751,6 +751,7 @@ function enableSerialNumber(mode) {
         </td>
         <td colspan="5">
             <s:select id="dsDivisionId" name="dsDivisionId" list="allDSDivisionList" value="%{dsDivisionId}"
+                      headerKey="0" headerValue="%{getText('select.label')}"
                       cssStyle="float:left;  width:280px;;margin-left:5px;"/>
         </td>
     </tr>
@@ -761,7 +762,8 @@ function enableSerialNumber(mode) {
             <br>Registration Division
         </td>
         <td colspan="5">
-            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" headerKey="0"
+                      headerValue="%{getText('select.label')}"
                       list="bdDivisionList"
                       cssStyle=" width:280px;float:left;;margin-left:5px;"/>
         </td>
@@ -769,7 +771,7 @@ function enableSerialNumber(mode) {
     <tr>
         <td colspan="1">
             අනුක්‍රමික අංකය
-            <br>தொடர் இலக்கம் 
+            <br>தொடர் இலக்கம்
             <br>Serial Number
         </td>
 

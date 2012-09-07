@@ -35,17 +35,9 @@
     $(function () {
         var zonalOfficeId = $('#zonalOfficeId').val();
         populateZonalOfficeAddress(zonalOfficeId);
-        $('#zonalOfficeId').bind('change', function () {
-            var zonalOfficeId = $('#zonalOfficeId').val();
-            populateZonalOfficeAddress(zonalOfficeId);
-        });
     });
 
     function populateZonalOfficeAddress(zonalOfficeId) {
-        /* Clear current Zonal Office Addresses. */
-//        $('#siZonalOfficeAddress').val('');
-//        $('#taZonalOfficeAddress').val('');
-//        $('#enZonalOfficeAddress').val('');
         $.getJSON('/ecivil/crs/ZonalOfficeLookupService', {zonalOfficeId:zonalOfficeId}, function (data) {
             var siAddress = data.siAddress;
             var taAddress = data.taAddress;
@@ -101,7 +93,7 @@
 </div>
 <div id="adoption-registration-form-outer">
 <div id="page1" style="page-break-after:always;">
-    <div id="zonal_office_list">
+    <%--<div id="zonal_office_list">
         <fieldset style="border:2px solid #c3dcee;">
             <table>
         <tr>
@@ -112,7 +104,8 @@
                 </tr>
             </table>
         </fieldset>
-    </div>
+    </div>--%>
+    <br/>
     <table class="adoption-reg-form-header-table" width="99%">
         <tr>
             <td align="center" style="font-size:15pt">
@@ -690,3 +683,4 @@
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
     <s:a href="%{viewAdoptionOrderDetails}"><s:label value="%{getText('order_details.label')}"/></s:a>
 </div>
+<s:hidden id="zonalOfficeId" name="zonalOfficeId"/>
