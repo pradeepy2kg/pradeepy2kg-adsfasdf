@@ -57,7 +57,7 @@ public class ProvinceDAOImpl extends BaseDAO implements ProvinceDAO {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public Map<Integer, String> getActiveProvinces(String language) {
-        Query q = em.createNamedQuery("getActiveProvinces");
+        Query q = em.createNamedQuery("getAllActiveProvinces");
         List<Province> results = q.getResultList();
 
         if (AppConstants.SINHALA.equals(language)) {
