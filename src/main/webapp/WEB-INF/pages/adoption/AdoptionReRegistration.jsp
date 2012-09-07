@@ -317,7 +317,11 @@
                 <li>මව්පියන්ගේ උප්පැන්න සහතික</li>
                 <li>දරුවාගේ පැරණි උප්පැන්න සහතිකය (තිබේනම්)/ රෝහලේ උපත් විස්තරය</li>
             </ol>
-            <br>
+            <strong>﻿සැ.යු:-</strong>
+            දරු නියෝගය ගරු අධිකරණයෙන් නිකුත් කර ඇත්තේ විවාහක දෙමාපියන් වෙත නම් එම දරු නියෝගය පදනම් කර ගෙන නව දෙමාපියන් ජනක මව්පියන් ලෙස ඇතුලත් කරමින් දරු උපත නැවත ලියාපදිංචි කිරීමට 1977 අංක 06 දරණ දරුකමට හදා ගැනීමේ සංශෝධිත පනතින් ප්‍රතිපාදන සැලසී ඇත.<br/>
+            එසේ වුවද දරු නියෝගය ලැබී ඇත්තේ එක් පුද්ගලයකු වෙත පමණක් නම් දරු උපත නැවත ලියාපදිංචි කිරීමට ප්‍රතිපාදන සැලසී නොමැත.
+            <br/>
+            <br/>
             மேற்குறிப்பிடப்பட்ட வகையில் பெறப்பட்ட மகவேற்புச்சான்றிதழில் குறிப்பிடப்பட்ட கணவன் மனைவியினது பெயர்
             குறிப்பிட்ட
             பிள்ளையின் சொந்த பெற்றோர் எனும் வகையில் உட்புகுத்தி பிள்ளையின் பிறப்பினை மீள பதிவு செய்வதற்காக இத்துடன்
@@ -330,7 +334,11 @@
                 <li>பெற்றோரின் பிறப்புச் சான்றிதழ்கள்.</li>
                 <li>பிள்ளையின் பழைய பிறப்புச் சான்றிதழ் (இருந்தால்)</li>
             </ol>
-            <br>
+            <strong>குறிப்பு:-</strong>
+            மகவேற்புக் கட்டளை நீதிமன்றத்தினால் வழங்கப்பட்டிருப்பது திருமணமான பெற்றோர்களுக்காயின் அம் மகவேற்புக்கட்டளையினை அடிப்படையாகக் கொண்டு புதிய பெற்றோர்களை தத்துப் பெற்றோராக உட்புகுத்துவதன் மூலம் பிள்ளையின் பிறப்பினை மீள பதிவு செய்துக்கொள்வதற்கு 1977 ஆம் ஆண்டின் 06 ஆம் இலக்க மகவேற்பு திருத்தச் சட்டத்தில் ஏற்பாடுகள் செய்யப்பட்டுள்ளது.<br/>
+            எவ்வாறாயினும் மகவேற்புக் கட்டளை கிடைக்கப்பெற்றது ஒரு நபருக்கு மட்டுமாயின் பிள்ளையின் பிறப்பை மீள பதிவு செய்துக்கொள்வதற்கு ஏற்பாடுகள் செய்யப்படவில்லை.
+            <br/>
+            <br/>
             Attach a copy of the Certificate of Adoption obtained as detailed above in Step #1, and fill the attached
             form
             for the re-registration of the birth, and send it along to the following address. Both parents must sign the
@@ -343,7 +351,11 @@
                 <li>Certificates of Birth of parents</li>
                 <li>Previous Certificate of Birth of Child (if available)</li>
             </ol>
-            <br>
+            <strong>N.B:-</strong>
+            In case of the adoption order issued to the married parents, there is provision to register their child birth in amended adoption act No 06 in 1977.<br/>
+            Even though Adoption order issued to only an individual person, there is no provision to registered the child birth.
+            <br/>
+            <br/>
             <table id="zonal_office_address" class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" width="99%">
                 <tr>
                     <td height="90px" width="33%">
