@@ -6,7 +6,6 @@ import lk.rgd.common.api.dao.ZonalOfficesDAO;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.ZonalOffice;
-import lk.rgd.crs.api.domain.Court;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +23,6 @@ public class ZonalOfficeDAOImpl extends BaseDAO implements ZonalOfficesDAO {
      */
     @Transactional(propagation = Propagation.MANDATORY)
     public void addZonalOffice(ZonalOffice zonalOffice, User admin) {
-        zonalOffice.getLifeCycleInfo().setCreatedUser(admin);
-        zonalOffice.getLifeCycleInfo().setCreatedTimestamp(new Date());
-        zonalOffice.getLifeCycleInfo().setLastUpdatedUser(admin);
-        zonalOffice.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         em.persist(zonalOffice);
     }
 
@@ -36,8 +31,6 @@ public class ZonalOfficeDAOImpl extends BaseDAO implements ZonalOfficesDAO {
      */
     @Transactional(propagation = Propagation.MANDATORY)
     public void updateZonalOffice(ZonalOffice zonalOffice, User admin) {
-        zonalOffice.getLifeCycleInfo().setLastUpdatedUser(admin);
-        zonalOffice.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         em.merge(zonalOffice);
     }
 
