@@ -53,6 +53,10 @@ public class District implements Serializable {
     @Column(name = "active", columnDefinition = "smallint not null default 1")
     private boolean active;
 
+    @ManyToOne
+    @JoinColumn(name = "provinceUKey", nullable = false, updatable = false)
+    private Province province;
+
     public District() {
     }
 
@@ -129,5 +133,13 @@ public class District implements Serializable {
     @Override
     public int hashCode() {
         return districtUKey;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
     }
 }
