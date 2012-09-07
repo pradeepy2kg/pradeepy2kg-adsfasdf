@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.Province;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -43,6 +44,10 @@ public class Court implements Serializable {
     private String enCourtName;
     @Column(nullable = false, length = 60)
     private String taCourtName;
+
+    @ManyToOne
+    @JoinColumn(name = "provinceUKey", nullable = false, updatable = false)
+    private Province province;
 
     public int getCourtUKey() {
         return courtUKey;
@@ -109,5 +114,13 @@ public class Court implements Serializable {
     @Override
     public int hashCode() {
         return courtUKey;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
     }
 }
