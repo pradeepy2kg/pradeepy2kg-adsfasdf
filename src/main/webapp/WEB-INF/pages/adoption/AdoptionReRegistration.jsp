@@ -44,7 +44,7 @@
             var enAddress = data.enAddress;
             /* Set New Zonal Office Addresses. */
             $('textarea#siZonalOfficeAddress').html('සහකාර රෙජිස්ට්‍රාර් ජනරාල්,\n'+siAddress);
-            $('textarea#taZonalOfficeAddress').html('Assistant Registrar General in ta,\n'+taAddress);
+            $('textarea#taZonalOfficeAddress').html('உதவி பதிவாளர் நாயகம்,\n'+taAddress);
             $('textarea#enZonalOfficeAddress').html('Assistant Registrar General,\n'+enAddress);
         });
     }
