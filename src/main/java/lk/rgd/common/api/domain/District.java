@@ -21,7 +21,11 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "findAllDistricts", query = "SELECT d FROM District d"),
 
-        @NamedQuery(name = "get.district.by.code", query = "SELECT d FROM District d " + "WHERE d.districtId =:districtId")
+        @NamedQuery(name = "get.district.by.code", query = "SELECT d FROM District d " + "WHERE d.districtId =:districtId"),
+    @NamedQuery(
+        name = "getDistrictsByProvince",
+        query = "SELECT d FROM District d WHERE d.province.provinceUKey = :provinceUKey"
+    )
 })
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class District implements Serializable {

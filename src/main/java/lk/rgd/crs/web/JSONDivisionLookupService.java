@@ -198,6 +198,9 @@ public class JSONDivisionLookupService extends HttpServlet {
             } else if ("18".equals(mode)) {
                 List gn = getGNDivisions(lang, divisionId, user);
                 optionLists.put("gnDivisionList", gn);
+            }else if ("19".equals(mode)){
+                List districts = getDistrictsByProvince(lang, divisionId, user);
+                optionLists.put("districtList", districts);
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);
@@ -220,6 +223,11 @@ public class JSONDivisionLookupService extends HttpServlet {
         out.flush();
     }
 
+    private List getDistrictsByProvince(String language, int provinceUKey, User user){
+        Map<Integer, String> districtList = districtDAO.getDistrictNamesByProvince(language, provinceUKey, user);
+        logger.debug("Loaded District list size: {}", districtList.size());
+        return getList(districtList);
+    }
     //TODO : tobe removed
 
     private List getBDDivisions(String language, int dsDivisionId, User user) {

@@ -29,6 +29,24 @@ public interface DistrictDAO {
     public Map<Integer, String> getAllDistrictNames(String language, User user);
 
     /**
+     * Returns List of Districts belong to the given province
+     *
+     * @param provinceUKey  provinceUKey of the selected Province
+     * @param user          User requesting the transaction
+     * @return  List of Districts within the selected Province.
+     */
+    public List<District> getDistrictsByProvince(int provinceUKey, User user);
+
+    /**
+     * Returns a map of districts within a given province
+     *
+     * @param language      Selected language
+     * @param provinceUKey provinceUKey of the selected province
+     * @return map of districts with in the province
+     */
+    public Map<Integer, String> getDistrictNamesByProvince(String language, int provinceUKey, User user);
+
+    /**
      * Return the name of the district in the selected language
      *
      * @param districtUKey the district unique key

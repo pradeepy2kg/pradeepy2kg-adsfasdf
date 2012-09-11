@@ -34,9 +34,9 @@ $(function () {
     });
 });
 
-$(function(){
+$(function () {
     $('#clearInfo').val($('#clear').val());
-    $('#clearInfo').bind('click',function(){
+    $('#clearInfo').bind('click', function () {
         $('#availableNewCerttrue').attr('checked', false);
         $('#availableNewCertfalse').attr('checked', false);
         $('#birthCertificateNumber').attr('value', ' ');
@@ -98,36 +98,17 @@ $(function () {
     if ($('#adoptionEntryNo').val() <= 0) {
         $('#adoptionEntryNo').val('');
     }
-    $('select#birthDistrictId').bind('change', function (evt1) {
-        var id = $("select#birthDistrictId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:5},
-                function (data) {
-                    var options1 = '<option value="0">' + $('#select').val() + '</option>';
-                    var ds = data.dsDivisionList;
-                    for (var i = 0; i < ds.length; i++) {
-                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                    }
-                    $("select#dsDivisionId").html(options1);
-                    var options2 = '<option value="0">' + $('#select').val() + '</option>';
-                    var bd = data.bdDivisionList;
-                    for (var j = 0; j < bd.length; j++) {
-                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                    }
-                    $("select#birthDivisionId").html(options2);
-                });
-    });
 
-    $('select#dsDivisionId').bind('change', function (evt2) {
-        var id = $("select#dsDivisionId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                function (data) {
-                    var options = '';
-                    var bd = data.bdDivisionList;
-                    for (var i = 0; i < bd.length; i++) {
-                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                    }
-                    $("select#birthDivisionId").html(options);
-                });
+    $('select#birthProvinceUKey').bind('change', function (evt1) {
+        var id = $('#birthProvinceUKey').val();
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:19}, function (data) {
+            var options = '<option value="0">' + $('#select').val() + '</option>';
+            var districts = data.districtList;
+            for (var i = 0; i < districts.length; i++) {
+                options += '<option value="' + districts[i].optionValue + '">' + districts[i].optionDisplay + '</option>';
+            }
+            $("select#birthDistrictId").html(options);
+        });
     });
 
     $(function () {
@@ -722,7 +703,8 @@ function enableSerialNumber(mode) {
             Available
         </td>
         <td>
-            <s:radio list="#@java.util.HashMap@{'true':''}" onclick="enableCertificateNumber(false)" id="availableNewCert" name="availableNewCert"/>
+            <s:radio list="#@java.util.HashMap@{'true':''}" onclick="enableCertificateNumber(false)"
+                     id="availableNewCert" name="availableNewCert"/>
         </td>
         <td>
             නැත <br>
@@ -730,7 +712,8 @@ function enableSerialNumber(mode) {
             Un-available
         </td>
         <td>
-            <s:radio list="#@java.util.HashMap@{'false':''}" onclick="enableSerialNumber(false)" id="availableNewCert" name="availableNewCert"/>
+            <s:radio list="#@java.util.HashMap@{'false':''}" onclick="enableSerialNumber(false)" id="availableNewCert"
+                     name="availableNewCert"/>
         </td>
     </tr>
     <tr>
@@ -750,7 +733,8 @@ function enableSerialNumber(mode) {
             Identification Number
         </td>
         <td colspan="4">
-            <s:textfield name="adoption.oldBirthSLIN" id="oldBirthSLIN" maxLength="12" onkeypress="return numbersOnly(event, true);"/>
+            <s:textfield name="adoption.oldBirthSLIN" id="oldBirthSLIN" maxLength="12"
+                         onkeypress="return numbersOnly(event, true);"/>
         </td>
     </tr>
     <tr>
