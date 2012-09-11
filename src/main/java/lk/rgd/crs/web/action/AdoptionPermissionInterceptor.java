@@ -44,7 +44,6 @@ public class AdoptionPermissionInterceptor extends AbstractInterceptor {
 
         if (allow) {
             invocation.getInvocationContext().setSession(session);
-            logger.debug("Action: {}", actionName);
         } else {
             logger.debug("User not authorised to access : {} - {}", actionName, allow);
             addActionError(invocation, "permission.notavailalbe.message");

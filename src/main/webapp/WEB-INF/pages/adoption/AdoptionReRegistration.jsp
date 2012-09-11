@@ -42,10 +42,11 @@
             var siAddress = data.siAddress;
             var taAddress = data.taAddress;
             var enAddress = data.enAddress;
+            var telephone = data.telephone;
             /* Set New Zonal Office Addresses. */
-            $('textarea#siZonalOfficeAddress').html('සහකාර රෙජිස්ට්‍රාර් ජනරාල්,\n'+siAddress);
-            $('textarea#taZonalOfficeAddress').html('உதவி பதிவாளர் நாயகம்,\n'+taAddress);
-            $('textarea#enZonalOfficeAddress').html('Assistant Registrar General,\n'+enAddress);
+            $('textarea#siZonalOfficeAddress').html('සහකාර රෙජිස්ට්‍රාර් ජනරාල්,\n'+siAddress + '\nදුරකථන අංක: '+ telephone);
+            $('textarea#taZonalOfficeAddress').html('உதவி பதிவாளர் நாயகம்,\n'+taAddress + '\nTelephone Numbers in ta: '+ telephone);
+            $('textarea#enZonalOfficeAddress').html('Assistant Registrar General,\n'+enAddress + '\nTelephone Numbers: '+ telephone);
         });
     }
 </script>
@@ -265,6 +266,7 @@
                             <br/>රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව ,
                             <br>234 / A 3, ඩෙන්සිල් කොබ්බැකඩුව මාවත,
                             <br>බත්තරමුල්ල
+                            <br/>දුරකථන අංක: 2889488/89
                         </label>
                     </td>
                     <td>
@@ -273,6 +275,7 @@
                             <br/>பதிவாளர் நாயகம் திணைக்களம்
                             <br>234/A3, டென்சில் கொப்பேகடுவ மாவத்தை,
                             <br>பத்தரமுல்லை.
+                            <br/>Telephone Numbers in ta: 2889488/89
                         </label>
                     </td>
                     <td>
@@ -281,6 +284,7 @@
                             <br/>Registrar Generals Department
                             <br>234 / A3, Denzil Kobbakaduwa Mawatha,
                             <br>Battaramulla
+                            <br/>Telephone Numbers: 2889488/89
                         </label>
                     </td>
                 </tr>
@@ -352,15 +356,15 @@
             <table id="zonal_office_address" class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" width="99%">
                 <tr>
                     <td height="90px" width="33%">
-                        <s:textarea id="siZonalOfficeAddress" rows="6" disabled="true"
+                        <s:textarea id="siZonalOfficeAddress" rows="7" disabled="true"
                                     cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt; text-transform: capitalize;"/>
                     </td>
                     <td width="33%">
-                        <s:textarea id="taZonalOfficeAddress" rows="6" disabled="true"
+                        <s:textarea id="taZonalOfficeAddress" rows="7" disabled="true"
                                     cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt; text-transform: capitalize;"/>
                     </td>
                     <td>
-                        <s:textarea id="enZonalOfficeAddress" rows="6" disabled="true"
+                        <s:textarea id="enZonalOfficeAddress" rows="7" disabled="true"
                                     cssStyle="color: #000; background: none; border: none; resize: none; font-size: 10pt; text-transform: capitalize;"/>
                     </td>
                 </tr>
