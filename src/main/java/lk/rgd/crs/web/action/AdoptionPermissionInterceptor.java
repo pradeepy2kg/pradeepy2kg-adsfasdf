@@ -37,8 +37,14 @@ public class AdoptionPermissionInterceptor extends AbstractInterceptor {
                 allow = true;
             }
         }
+
+        if(actionName.equals("eprAdoptionReRegistration.do") || actionName.equals("eprAdoptionReRegistrationFindEntry.do")){
+            allow = true;
+        }
+
         if (allow) {
             invocation.getInvocationContext().setSession(session);
+            logger.debug("Action: {}", actionName);
         } else {
             logger.debug("User not authorised to access : {} - {}", actionName, allow);
             addActionError(invocation, "permission.notavailalbe.message");
