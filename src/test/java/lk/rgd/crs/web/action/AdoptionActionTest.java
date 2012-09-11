@@ -7,7 +7,9 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.api.dao.ZonalOfficesDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.ZonalOffice;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
@@ -37,6 +39,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
     protected final static AdoptionOrderDAO adoptionOrderDAO = (AdoptionOrderDAO) ctx.getBean("adoptionOrderDAOImpl", AdoptionOrderDAO.class);
     protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
     protected final static CourtDAO courtDAO = (CourtDAO) ctx.getBean("courtDAOImpl", CourtDAO.class);
+    protected final static ZonalOfficesDAO zonalOfficeDAO = (ZonalOfficesDAO) ctx.getBean("zonalOfficeDAOImpl", ZonalOfficesDAO.class);
 
 
     public static Test suite() {
@@ -110,6 +113,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("adoption.wifePassport", "456535355");
         request.setParameter("birthDistrictId", "1");
         request.setParameter("birthDivisionId", "1");
+        request.setParameter("adoption.adoptionEntryNo", "1");
         request.setParameter("dojo.adoption.childBirthDate", "2009-08-03");
         request.setParameter("dojo.adoption.orderIssuedDate", "2010-08-17");
         request.setParameter("dojo.adoption.orderReceivedDate", "2010-08-10");
@@ -161,6 +165,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("adoption.wifePassport", "456535355");
         request.setParameter("birthDistrictId", "1");
         request.setParameter("birthDivisionId", "1");
+        request.setParameter("adoption.adoptionEntryNo", "1");
         request.setParameter("dojo.adoption.childBirthDate", "2009-08-03");
         request.setParameter("dojo.adoption.orderIssuedDate", "2010-08-17");
         request.setParameter("dojo.adoption.orderReceivedDate", "2010-08-10");
@@ -365,6 +370,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
             adoption.setChildAgeYears(10);
             adoption.setChildGender(0);
             adoption.setLanguageToTransliterate("si");
+            adoption.setNoticingZonalOffice(zonalOfficeDAO.getZonalOffice(1));
             adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
             x.add(adoption);
         }
