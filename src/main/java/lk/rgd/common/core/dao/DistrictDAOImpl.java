@@ -40,6 +40,40 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     /**
      * @inheritDoc
      */
+    public List<District> getDistrictsByProvince(int provinceUKey, User user) {
+        Query q = em.createNamedQuery("getDistrictsByProvince");
+        q.setParameter("provinceUKey", provinceUKey);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public Map<Integer, String> getDistrictNamesByProvince(String language, int provinceUKey, User user) {
+        Map<Integer, String> districts = new TreeMap<Integer, String>();
+        List<District> districtList = getDistrictsByProvince(provinceUKey, user);
+        if(districtList!= null && districtList.size() > 0){
+            if(AppConstants.SINHALA.equals(language)){
+                for(District d: districtList){
+                    districts.put(d.getDistrictUKey(), d.getSiDistrictName());
+                }
+            }else if(AppConstants.TAMIL.equals(language)){
+                for(District d: districtList){
+                    districts.put(d.getDistrictUKey(), d.getTaDistrictName());
+                }
+            }else if(AppConstants.ENGLISH.equals(language)){
+                for(District d: districtList){
+                    districts.put(d.getDistrictUKey(), d.getEnDistrictName());
+                }
+            }
+            return districts;
+        }
+        return getAllDistrictNames(language, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public Map<Integer, String> getDistrictNames(String language, User user) {
 
         Map<Integer, String> result = null;
