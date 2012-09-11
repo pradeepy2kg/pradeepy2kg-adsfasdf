@@ -156,8 +156,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             }
             populateAdoptionObjectForEdit(adoption, existingOrder);
             if(birthProvinceUKey > 0){
-                logger.debug("Province {}", birthProvinceUKey);
                 adoption.setBirthProvinceUKey(birthProvinceUKey);
+                adoption.setBirthDistrictId(birthDistrictId);
                 adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(birthProvinceUKey).getZonalOffice());
             }else{
                 adoption.setNoticingZonalOffice(adoption.getCourt().getProvince().getZonalOffice());
@@ -187,6 +187,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             try {
                 if(birthProvinceUKey > 0){
                     adoption.setBirthProvinceUKey(birthProvinceUKey);
+                    adoption.setBirthDistrictId(birthDistrictId);
                     adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(birthProvinceUKey).getZonalOffice());
                 }else{
                     adoption.setNoticingZonalOffice(adoption.getCourt().getProvince().getZonalOffice());
@@ -214,8 +215,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         adoption.setLifeCycleInfo(existingOrder.getLifeCycleInfo());
         adoption.setBirthCertificateNumber((adoption.getBirthCertificateNumber() == 0) ?
             adoption.getBirthCertificateNumber() : existingOrder.getBirthCertificateNumber());
-        adoption.setBirthRegistrationSerial((adoption.getBirthRegistrationSerial() == 0) ?
-            adoption.getBirthRegistrationSerial() : existingOrder.getBirthRegistrationSerial());
         if (birthDivisionId == 0) {
             adoption.setBirthDivisionId(existingOrder.getBirthDivisionId());
         }
