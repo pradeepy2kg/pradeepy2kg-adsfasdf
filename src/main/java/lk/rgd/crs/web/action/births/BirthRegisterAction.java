@@ -579,7 +579,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
         bdf = new BirthDeclaration();
         bdf.getRegister().setBirthType(birthType);
-        bdf.getRegister().setAdoptionUKey(adoptionId);
 
         // population fields in adoption order to birth declaration
         bdf.getRegister().setAdoptionUKey(ao.getIdUKey());
@@ -593,21 +592,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 addActionError(getText("adoption_invalid_birth_certificate_number.label"));
                 return ERROR;
             }
-        } else {
-            long existSerial = ao.getBirthRegistrationSerial();
-            int existBDivisionId = ao.getBirthDivisionId();
-
-            if (existSerial != 0 && existBDivisionId != 0) {
-                existingBDF = service.getActiveRecordByBDDivisionAndSerialNo(
-                    bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
-            } else {
-                addActionError(getText("adoption_invalid_BDivision_or_serialNo.label"));
-            }
         }
+
         logger.debug("Existing birth declaration IDUKey : {}", existBDUKey);
         if (existingBDF != null) {
             oldBDInfo = new OldBDInfo();
             populateOldBD(oldBDInfo, existingBDF);
+            session.put(WebConstants.SESSION_OLD_BD_FOR_ADOPTION, oldBDInfo);
+        } else {
+            oldBDInfo = new OldBDInfo();
+            if (ao.getBirthDistrictId() != 0) {
+                oldBDInfo.setDistrictName(districtDAO.getNameByPK(ao.getBirthDistrictId(), language));
+            }
+            oldBDInfo.setDsDivisionName(ao.getOldBirthDSName());
+            oldBDInfo.setBdDivisionName(ao.getOldBirthRegistrationDivisionName());
             session.put(WebConstants.SESSION_OLD_BD_FOR_ADOPTION, oldBDInfo);
         }
 
@@ -1014,7 +1012,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 String PINOrNIC = bdf.getParent().getFatherNICorPIN();
                 Person father = null;
                 marriage = new MarriageInfo();
-                if(PinAndNicUtils.isValidPIN(PINOrNIC)){
+                if (PinAndNicUtils.isValidPIN(PINOrNIC)) {
                     // PIN, There is only 1 record for a PIN.
                     father = ecivilService.findPersonByPIN(Long.parseLong(PINOrNIC), user);
                 }
@@ -1024,11 +1022,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     logger.debug("Set marriage date {} and place of marriage {}", marriage.getDateOfMarriage(), marriage.getPlaceOfMarriage());
                 }
                 bdf.setMarriage(marriage);
-            }else if(bdf.getParent().getMotherNICorPIN() != null){
+            } else if (bdf.getParent().getMotherNICorPIN() != null) {
                 String PINOrNIC = bdf.getParent().getMotherNICorPIN();
                 Person mother = null;
                 marriage = new MarriageInfo();
-                if(PinAndNicUtils.isValidPIN(PINOrNIC)){
+                if (PinAndNicUtils.isValidPIN(PINOrNIC)) {
                     // PIN, There is only 1 record for a PIN.
                     mother = ecivilService.findPersonByPIN(Long.parseLong(PINOrNIC), user);
                 }

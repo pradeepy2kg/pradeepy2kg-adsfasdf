@@ -169,9 +169,6 @@ public class AdoptionOrder implements Serializable {
     private long birthCertificateNumber; // idukey, not the serial of old birth certificate issued before adoption
 
     @Column(nullable = true)
-    private long birthRegistrationSerial; // if BC number not given
-
-    @Column(nullable = true)
     private int birthProvinceUKey;   // if BC number not given
 
     @Column(nullable = true)
@@ -179,6 +176,19 @@ public class AdoptionOrder implements Serializable {
     
     @Column(nullable = true)
     private int birthDivisionId; // if BC number not given
+
+    @Column(nullable = true)
+    private String oldBirthDSName;
+
+    @Column(nullable = true)
+    private String oldBirthRegistrationDivisionName;
+    
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
+    private Date oldBirthRegistrationDate;
+
+    @Column(nullable = true)
+    private Long oldBirthSLIN;
 
     @Column(nullable = true)
     private long newBirthCertificateNumber; // idUKey of new birth registration after adoption 
@@ -419,14 +429,6 @@ public class AdoptionOrder implements Serializable {
         this.birthCertificateNumber = birthCertificateNumber;
     }
 
-    public long getBirthRegistrationSerial() {
-        return birthRegistrationSerial;
-    }
-
-    public void setBirthRegistrationSerial(long birthRegistrationSerial) {
-        this.birthRegistrationSerial = birthRegistrationSerial;
-    }
-
     public boolean isApplicantMother() {
         return applicantMother;
     }
@@ -561,5 +563,37 @@ public class AdoptionOrder implements Serializable {
 
     public void setBirthDistrictId(int birthDistrictId) {
         this.birthDistrictId = birthDistrictId;
+    }
+
+    public String getOldBirthDSName() {
+        return oldBirthDSName;
+    }
+
+    public void setOldBirthDSName(String oldBirthDSName) {
+        this.oldBirthDSName = oldBirthDSName;
+    }
+
+    public String getOldBirthRegistrationDivisionName() {
+        return oldBirthRegistrationDivisionName;
+    }
+
+    public void setOldBirthRegistrationDivisionName(String oldBirthRegistrationDivisionName) {
+        this.oldBirthRegistrationDivisionName = oldBirthRegistrationDivisionName;
+    }
+
+    public Date getOldBirthRegistrationDate() {
+        return oldBirthRegistrationDate;
+    }
+
+    public void setOldBirthRegistrationDate(Date oldBirthRegistrationDate) {
+        this.oldBirthRegistrationDate = oldBirthRegistrationDate;
+    }
+
+    public long getOldBirthSLIN() {
+        return oldBirthSLIN;
+    }
+
+    public void setOldBirthSLIN(long oldBirthSLIN) {
+        this.oldBirthSLIN = oldBirthSLIN;
     }
 }

@@ -11,6 +11,13 @@
 
 <script>
 $(function () {
+    document.getElementById('birthCertificateNumber').disabled = true;
+    document.getElementById('oldBirthSLIN').disabled = true;
+    document.getElementById('birthProvinceUKey').disabled = true;
+    document.getElementById('birthDistrictId').disabled = true;
+    document.getElementById('oldBirthDSName').disabled = true;
+    document.getElementById('oldBirthRegistrationDivisionName').disabled = true;
+    document.getElementById('oldBirthRegistrationDate').disabled = true;
     $("#receivedDatePicker").datepicker({
         changeYear:true,
         dateFormat:'yy-mm-dd',
@@ -18,7 +25,35 @@ $(function () {
         endDate:'2020-12-31'
 
     });
+    $("#oldBirthRegistrationDate").datepicker({
+        changeYear:true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+
+    });
 });
+
+$(function(){
+    $('#clearInfo').val($('#clear').val());
+    $('#clearInfo').bind('click',function(){
+        $('#availableNewCerttrue').attr('checked', false);
+        $('#availableNewCertfalse').attr('checked', false);
+        $('#birthCertificateNumber').attr('value', ' ');
+        $('#oldBirthSLIN').attr('value', ' ');
+        $('#oldBirthDSName').attr('value', ' ');
+        $('#oldBirthRegistrationDivisionName').attr('value', ' ');
+        $('#oldBirthRegistrationDate').attr('value', ' ');
+        document.getElementById('birthCertificateNumber').disabled = true;
+        document.getElementById('oldBirthSLIN').disabled = true;
+        document.getElementById('birthProvinceUKey').disabled = true;
+        document.getElementById('birthDistrictId').disabled = true;
+        document.getElementById('oldBirthDSName').disabled = true;
+        document.getElementById('oldBirthRegistrationDivisionName').disabled = true;
+        document.getElementById('oldBirthRegistrationDate').disabled = true;
+    });
+});
+
 $(function () {
     $("#bdayDatePicker").datepicker({
         changeYear:true,
@@ -177,10 +212,10 @@ function validate() {
     if (!isFieldEmpty(domObject)) {
         isDate(domObject.value, 'error12', 'error14');
     }
-    domObject = document.getElementById("birthRegistrationSrialNum");
-    if (!isFieldEmpty(domObject)) {
-        isNumeric(domObject.value, 'error12', 'error15');
-    }
+//    domObject = document.getElementById("birthRegistrationSrialNum");
+//    if (!isFieldEmpty(domObject)) {
+//        isNumeric(domObject.value, 'error12', 'error15');
+//    }
     domObject = document.getElementById("birthCertificateNumber");
     if (!isFieldEmpty(domObject)) {
         isNumeric(domObject.value, 'error12', 'error16');
@@ -254,14 +289,22 @@ function initPage() {
 
 function enableCertificateNumber(mode) {
     document.getElementById('birthCertificateNumber').disabled = mode;
+    document.getElementById('oldBirthSLIN').disabled = mode;
+    document.getElementById('birthProvinceUKey').disabled = !mode;
+    document.getElementById('birthDistrictId').disabled = !mode;
+    document.getElementById('oldBirthDSName').disabled = !mode;
+    document.getElementById('oldBirthRegistrationDivisionName').disabled = !mode;
+    document.getElementById('oldBirthRegistrationDate').disabled = !mode;
 }
 
 function enableSerialNumber(mode) {
+    document.getElementById('birthCertificateNumber').disabled = !mode;
     document.getElementById('birthProvinceUKey').disabled = mode;
     document.getElementById('birthDistrictId').disabled = mode;
-    document.getElementById('dsDivisionId').disabled = mode;
-    document.getElementById('birthDivisionId').disabled = mode;
-    document.getElementById('birthRegistrationSrialNum').disabled = mode;
+    document.getElementById('oldBirthDSName').disabled = mode;
+    document.getElementById('oldBirthRegistrationDivisionName').disabled = mode;
+    document.getElementById('oldBirthRegistrationDate').disabled = mode;
+    document.getElementById('oldBirthSLIN').disabled = mode;
 }
 </script>
 
@@ -651,75 +694,64 @@ function enableSerialNumber(mode) {
 
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>
+        <td colspan="3">
             උපත දැනටත් ලියාපදිංචි කර උප්පැන්න සහතිකයක් නිකුත් කර ඇතිනම්
             <br>பிறப்பு பதியப்பட்டு பிறப்புச் சான்றிதழ் வழங்கப்பட்டிருந்தால்
             <br>If the birth is already registered, and a Birth Certificate issued
+            <input type="button" id="clearInfo" value="clear" style="float: right; margin-bottom: 5px;"/>
         </td>
     </tr>
 </table>
-
 
 <table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="0">
-    <col width="320px"/>
-    <col width="100px"/>
-    <col width="50px">
-    <col width="100px"/>
-    <col width="50px">
     <col/>
+    <col width="140px"/>
+    <col width="60px">
+    <col width="140px"/>
+    <col width="60px">
     <tr>
-        <td colspan="1">
-            උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය
-            <br>பிறப்புச் சான்றிதழின் தொடர் இலக்கம்
-            <br>The serial number of the Birth Certificate
+        <td>
+            උපත දැනටමත් දත්ත පද්ධතියට ඇතුළත් කර ඇතිද?<br/>
+            Is Birth already registered in the system? in ta<br/>
+            Is Birth already registered in the system?
         </td>
-        <td colspan="1">
+        <td>
             ඇත
             <br>
-            உள்ளது
-            Available
-        <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabe" name="available"
-                                 onclick="enableCertificateNumber(false)" cssStyle="margin-left:14px"/></td>
-
-        </td>
-        <td colspan="1">නැත <br>Un-available</td>
-        <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabe" name="available"
-                                 onclick="enableCertificateNumber(true);" cssStyle="margin-left:14px"/></td>
-        </td>
-        <td colspan="1"><s:textfield name="adoption.birthCertificateNumber" id="birthCertificateNumber"
-                                     maxLength="10"/></td>
-    </tr>
-</table>
-<table class="adoption-reg-form-header-table">
-    <tr>
-        <td>හෝ
-            / அல்லது
-            / OR
-        </td>
-    </tr>
-</table>
-
-<table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="2">
-    <caption></caption>
-    <col width="320px"/>
-    <col/>
-    <tbody>
-    <tr>
-        <td colspan="2">
-            උපත ලියාපදිංචි කිරීමේ රිසීට් පතේ සටහන්
-            <br>பிறப்பு பதிவிற்கான பற்றுச்சீட்டின் குறிப்பு
-            <br>Birth Registration acknowledgment slip
-        </td>
-        <td> ඇත
-            <br>
-            உள்ளது
+            உள்ளது<br/>
             Available
         </td>
-        <td><s:radio list="#@java.util.HashMap@{'false':''}" id="availableSlip" name="availableSlip"
-                     onclick="enableSerialNumber(false)" cssStyle="margin-left:100px"/></td>
-        <td>නැත <br>Un-available</td>
-        <td><s:radio list="#@java.util.HashMap@{'false':''}" id="availabeSlip" name="availableSlip"
-                     onclick="enableSerialNumber(true)" cssStyle="margin-left:100px"/></td>
+        <td>
+            <s:radio list="#@java.util.HashMap@{'true':''}" onclick="enableCertificateNumber(false)" id="availableNewCert" name="availableNewCert"/>
+        </td>
+        <td>
+            නැත <br>
+            Un-available in ta<br/>
+            Un-available
+        </td>
+        <td>
+            <s:radio list="#@java.util.HashMap@{'false':''}" onclick="enableSerialNumber(false)" id="availableNewCert" name="availableNewCert"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            උප්පැන්න සහතිකයේ අංකය<br/>
+            Birth Certificate Number in ta<br/>
+            Birth Certificate Number
+        </td>
+        <td colspan="4">
+            <s:textfield name="adoption.birthCertificateNumber" id="birthCertificateNumber" maxLength="10"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            අනන්‍යතා අංකය <br/>
+            அடையாள எண் <br/>
+            Identification Number
+        </td>
+        <td colspan="4">
+            <s:textfield name="adoption.oldBirthSLIN" id="oldBirthSLIN" maxLength="12" onkeypress="return numbersOnly(event, true);"/>
+        </td>
     </tr>
     <tr>
         <td colspan="1">
@@ -727,7 +759,7 @@ function enableSerialNumber(mode) {
             <br>Province in ta
             <br>Province
         </td>
-        <td colspan="5"><s:select id="birthProvinceUKey" name="birthProvinceUKey" list="provinceList"
+        <td colspan="4"><s:select id="birthProvinceUKey" name="birthProvinceUKey" list="provinceList"
                                   value="%{birthProvinceUKey}"
                                   cssStyle="width:280px;margin-left:5px;"/>
         </td>
@@ -738,7 +770,7 @@ function enableSerialNumber(mode) {
             <br>மாவட்டம்
             <br>District
         </td>
-        <td colspan="5"><s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+        <td colspan="4"><s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
                                   value="%{birthDistrictId}" headerKey="0" headerValue="%{getText('select.label')}"
                                   cssStyle="width:280px;margin-left:5px;"/>
         </td>
@@ -749,10 +781,8 @@ function enableSerialNumber(mode) {
             <br/>பிரதேச செயளாளர் பிரிவு
             <br/>Divisional Secretary Division
         </td>
-        <td colspan="5">
-            <s:select id="dsDivisionId" name="dsDivisionId" list="allDSDivisionList" value="%{dsDivisionId}"
-                      headerKey="0" headerValue="%{getText('select.label')}"
-                      cssStyle="float:left;  width:280px;;margin-left:5px;"/>
+        <td colspan="4">
+            <s:textfield id="oldBirthDSName" name="adoption.oldBirthDSName"/>
         </td>
     </tr>
     <tr>
@@ -761,26 +791,20 @@ function enableSerialNumber(mode) {
             <br>பதிவுப்பிரிவு
             <br>Registration Division
         </td>
-        <td colspan="5">
-            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" headerKey="0"
-                      headerValue="%{getText('select.label')}"
-                      list="bdDivisionList"
-                      cssStyle=" width:280px;float:left;;margin-left:5px;"/>
+        <td colspan="4">
+            <s:textfield id="oldBirthRegistrationDivisionName" name="adoption.oldBirthRegistrationDivisionName"/>
         </td>
     </tr>
     <tr>
-        <td colspan="1">
-            අනුක්‍රමික අංකය
-            <br>தொடர் இலக்கம்
-            <br>Serial Number
+        <td>
+            ලියාපදිංචි කළ දිනය<br/>
+            Registration Date in ta<br/>
+            Registration Date
         </td>
-
-        <td colspan="5">
-            <s:textfield name="adoption.birthRegistrationSerial" id="birthRegistrationSrialNum"
-                         cssStyle="width:273px;margin-left:5px" maxLength="10"/>
+        <td colspan="4">
+            <s:textfield id="oldBirthRegistrationDate" name="adoption.oldBirthRegistrationDate"/>
         </td>
     </tr>
-    </tbody>
 </table>
 
 <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
@@ -820,4 +844,5 @@ function enableSerialNumber(mode) {
 <s:hidden id="error22" value="%{getText('er.label.no.adoption.entry.number')}"/>
 <s:hidden id="error23" value="%{getText('er.label.invalid.adoption.entry.number')}"/>
 
+<s:hidden id="clear" value="%{getText('clear.label')}"/>
 </div>
