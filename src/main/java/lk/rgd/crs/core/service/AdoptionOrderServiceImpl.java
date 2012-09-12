@@ -166,9 +166,23 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void setStatusToPrintedNotice(long adoptionId, User user) {
+    public void setStatusToPrintedAdoptionOrderDetails(long adoptionId, User user) {
         AdoptionOrder adoption = getById(adoptionId, user);
         if (adoption.getStatus() != AdoptionOrder.State.APPROVED) {
+            handleException("Cannot change status to adoption order details printed, " + adoption.getIdUKey() +
+                " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+        adoption.setStatus(AdoptionOrder.State.ORDER_DETAILS_PRINTED);
+        adoptionOrderDAO.updateAdoptionOrder(adoption, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void setStatusToPrintedNotice(long adoptionId, User user) {
+        AdoptionOrder adoption = getById(adoptionId, user);
+        if (adoption.getStatus() != AdoptionOrder.State.ORDER_DETAILS_PRINTED) {
             handleException("Cannot change status to notice letter printed, " + adoption.getIdUKey() +
                 " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }

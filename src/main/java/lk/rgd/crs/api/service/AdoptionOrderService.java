@@ -95,6 +95,8 @@ public interface AdoptionOrderService {
      */
     public void setApplicantInfo(AdoptionOrder adoption, User user);
 
+    public void setStatusToPrintedAdoptionOrderDetails(long adoptionId, User user);
+    
     /**
      * set the status to NOTICE_LETTER_PRINTED, which is 2. pre condition : Status has to be on 1 (APPROVED)
      *

@@ -49,27 +49,31 @@ public class AdoptionOrder implements Serializable {
          */
         APPROVED,
         /**
-         * 2 - An  Adoption which is printed for parent confirmation
+         * 2 - An Adoption Order Details were printed.
+         */
+        ORDER_DETAILS_PRINTED,
+        /**
+         * 3 - An  Adoption which is printed for parent confirmation
          */
         NOTICE_LETTER_PRINTED,
         /**
-         * 3 - An Adoption rejected by the ARG
+         * 4 - An Adoption rejected by the ARG
          */
         REJECTED,
         /**
-         * 4 - A certificate is requested
+         * 5 - A certificate is requested
          */
         CERTIFICATE_ISSUE_REQUEST_CAPTURED,
         /**
-         * 5 - A certificate is requested
+         * 6 - A certificate is requested
          */
         ADOPTION_CERTIFICATE_PRINTED,
         /**
-         * 6 - requesting an adoption re registration
+         * 7 - requesting an adoption re registration
          */
         RE_REGISTRATION_REQUESTED,
         /**
-         * 7 - re registered
+         * 8 - re registered
          */
         RE_REGISTERED
     }

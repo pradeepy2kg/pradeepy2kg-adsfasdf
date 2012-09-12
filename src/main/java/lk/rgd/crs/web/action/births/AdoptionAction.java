@@ -383,7 +383,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             populateApprovalAndPrintList();
             return "skip";
         }
-        if (!(adoption.getStatus() == AdoptionOrder.State.APPROVED || adoption.getStatus() == AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
+        if (!(adoption.getStatus() == AdoptionOrder.State.APPROVED || adoption.getStatus() == AdoptionOrder.State.ORDER_DETAILS_PRINTED || adoption.getStatus() == AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
             addActionError(getText("adoption.not.permited.operation"));
             logger.debug("Current state of adoption order : {}", adoption.getStatus());
             return ERROR;
@@ -400,6 +400,20 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     /**
+     * marks requested AdoptionOrder as its Adoption Order Details as printed.
+     *
+     * @return
+     */
+    public String eprMarkAdoptionOrderDetailsAsPrinted() {
+        logger.debug("requested to mark Adoption Order Details as printed for idUKey : {} ", idUKey);
+        adoption = service.getById(idUKey, user);
+        if (adoption != null && adoption.getStatus() == AdoptionOrder.State.APPROVED) {
+            service.setStatusToPrintedAdoptionOrderDetails(idUKey, user);
+        }
+        return eprAdoptionOrderDetailsViewMode();
+    }
+
+    /**
      * marks requested AdoptionOrder as its Adoption notice
      * as printed then loads the adoption list page where it
      * started to print the adoption Notice
@@ -409,7 +423,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String markAdoptionNoticeAsPrinted() {
         logger.debug("requested to mark Adoption Notice as printed for idUKey : {} ", idUKey);
         adoption = service.getById(idUKey, user);
-        if (adoption != null && adoption.getStatus() == AdoptionOrder.State.APPROVED) {
+        if (adoption != null && adoption.getStatus() == AdoptionOrder.State.ORDER_DETAILS_PRINTED) {
             service.setStatusToPrintedNotice(idUKey, user);
         }
         populate();
@@ -778,7 +792,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
 
             } else {
-                if (adoption.getStatus().equals(AdoptionOrder.State.APPROVED)) {
+                if (adoption.getStatus().equals(AdoptionOrder.State.APPROVED) || adoption.getStatus().equals(AdoptionOrder.State.ORDER_DETAILS_PRINTED)) {
                     addActionError(getText("er.label.notice.not.printed.cannot_capture_data"));
                 }
                 adoption = null;
@@ -1108,15 +1122,18 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 this.state = AdoptionOrder.State.APPROVED;
                 break;
             case 3:
-                this.state = AdoptionOrder.State.NOTICE_LETTER_PRINTED;
+                this.state = AdoptionOrder.State.ORDER_DETAILS_PRINTED;
                 break;
             case 4:
-                this.state = AdoptionOrder.State.REJECTED;
+                this.state = AdoptionOrder.State.NOTICE_LETTER_PRINTED;
                 break;
             case 5:
-                this.state = AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED;
+                this.state = AdoptionOrder.State.REJECTED;
                 break;
             case 6:
+                this.state = AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED;
+                break;
+            case 7:
                 this.state = AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED;
                 //speacial case 0 all status
         }

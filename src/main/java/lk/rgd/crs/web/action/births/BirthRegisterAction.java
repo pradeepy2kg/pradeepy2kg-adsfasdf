@@ -610,7 +610,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
 
         bdf.getChild().setDateOfBirth(ao.getChildBirthDate());
-        bdf.getChild().setChildFullNameOfficialLang(ao.getChildNewName() != null ? ao.getChildNewName() : ao.getChildExistingName());
         bdf.getChild().setChildGender(ao.getChildGender());
 
         if (ao.isApplicantMother()) {

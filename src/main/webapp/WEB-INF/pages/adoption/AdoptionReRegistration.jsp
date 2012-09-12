@@ -20,7 +20,7 @@
 
         #zonal_office_list {
             display: none;
-    }
+        }
     }
 
     #adoption-registration-form-outer .form-submit {
@@ -44,9 +44,9 @@
             var enAddress = data.enAddress;
             var telephone = data.telephone;
             /* Set New Zonal Office Addresses. */
-            $('textarea#siZonalOfficeAddress').html('සහකාර රෙජිස්ට්‍රාර් ජනරාල්,\n'+siAddress + '\nදුරකථන අංක: '+ telephone);
-            $('textarea#taZonalOfficeAddress').html('உதவி பதிவாளர் நாயகம்,\n'+taAddress + '\nTelephone Numbers in ta: '+ telephone);
-            $('textarea#enZonalOfficeAddress').html('Assistant Registrar General,\n'+enAddress + '\nTelephone Numbers: '+ telephone);
+            $('textarea#siZonalOfficeAddress').html('සහකාර රෙජිස්ට්‍රාර් ජනරාල්,\n' + siAddress + '\nදුරකථන අංක: ' + telephone);
+            $('textarea#taZonalOfficeAddress').html('உதவி பதிவாளர் நாயகம்,\n' + taAddress + '\nTelephone Numbers in ta: ' + telephone);
+            $('textarea#enZonalOfficeAddress').html('Assistant Registrar General,\n' + enAddress + '\nTelephone Numbers: ' + telephone);
         });
     }
 </script>
@@ -84,28 +84,18 @@
         </s:url>
     </s:else>
 </div>
-<div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-</div>
 <div id="adoption-page" class="form-submit">
-    <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <s:a href="%{viewAdoptionOrderDetails}"><s:label value="%{getText('order_details.label')}"/></s:a>
+    <s:if test="adoption.status.ordinal() >= 2">
+        <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <s:a href="#" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+    </s:if>
+    <s:if test="adoption.status.ordinal() < 3">
+        <s:a href="%{viewAdoptionOrderDetails}"><s:label value="%{getText('order_details.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+    </s:if>
+    <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>
 </div>
 <div id="adoption-registration-form-outer">
 <div id="page1" style="page-break-after:always;">
-    <%--<div id="zonal_office_list">
-        <fieldset style="border:2px solid #c3dcee;">
-            <table>
-        <tr>
-                    <td><s:label value="%{getText('select_zonal_office.label')}"/></td>
-                    <td>
-                        <s:select list="zonalOfficeList" id="zonalOfficeId" name="zonalOfficeId"/>
-                    </td>
-                </tr>
-            </table>
-        </fieldset>
-    </div>--%>
     <br/>
     <table class="adoption-reg-form-header-table" width="99%">
         <tr>
@@ -113,7 +103,7 @@
                 <img src="<s:url value="/images/official-logo.png" />" alt=""><br>
                 <label>
                     රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව
-                    <br>பதிவாளர் நாயகம் திணைக்களம் 
+                    <br>பதிவாளர் நாயகம் திணைக்களம்
                     <br>Registrar General's Department
                 </label>
 
@@ -127,7 +117,9 @@
             <td><s:label value="%{adoption.applicantName}"/> මයා/ මිය</td>
         </tr>
         <tr height="30px" style="text-align:left;font-size:10pt">
-            <td><s:textarea value="%{adoption.applicantAddress}" cssStyle="resize: none; color: #000; background: #fff; border: none; width: 100%;" rows="4" disabled="true" /></td>
+            <td><s:textarea value="%{adoption.applicantAddress}"
+                            cssStyle="resize: none; color: #000; background: #fff; border: none; width: 100%;" rows="4"
+                            disabled="true"/></td>
         </tr>
         <tr>
             <td align="left">
@@ -196,16 +188,16 @@
         <tr>
             <td align="left">
                 මෙම නියෝගය පහත සඳහන් සහතික පත්‍ර අංකය යටතේ ලියාපදිංචි වී තිබේ:
-                <br>இக்கட்டளை கீழ் குறிப்பிட்ட தொடர்  இலக்கத்தின் கீழ் பதியப்பட்டுள்ளது.
+                <br>இக்கட்டளை கீழ் குறிப்பிட்ட தொடர் இலக்கத்தின் கீழ் பதியப்பட்டுள்ளது.
                 <br>This order is registered under the following certificate number:
             </td>
         </tr>
     </table>
 
     <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" width="99%">
-        <col  width="330px"/>
-        <col  width="130px"/>
-        <col  width="330px"/>
+        <col width="330px"/>
+        <col width="130px"/>
+        <col width="330px"/>
         <col/>
         <tr>
             <td height="60px">
@@ -271,7 +263,7 @@
                     </td>
                     <td>
                         <label>
-                            பதிவாளர்  நாயகம்
+                            பதிவாளர் நாயகம்
                             <br/>பதிவாளர் நாயகம் திணைக்களம்
                             <br>234/A3, டென்சில் கொப்பேகடுவ மாவத்தை,
                             <br>பத்தரமுல்லை.
@@ -305,7 +297,8 @@
                 <br>
             </u><br>
             ඉහත සඳහන් ආකාරයෙන් ලබාගත් දරු සහතිකයේ සඳහන් විවාහක අඹු සැමියන්ගේ නම්, මෙම දරුවාගේ ජනක මව්පියන් වශයෙන් ඇතුලත්
-            කර දරුවාගේ උපත නැවත ලියාපදිංචි කිරීම සඳහා මේ සමග ඒවා ඇති ලි. ප. අ. 149 දරණ ප්‍රකාශ පත්‍රය නිසි පරිදි සම්පූර්ණ කර රු. 5/- ක්
+            කර දරුවාගේ උපත නැවත ලියාපදිංචි කිරීම සඳහා මේ සමග ඒවා ඇති ලි. ප. අ. 149 දරණ ප්‍රකාශ පත්‍රය නිසි පරිදි
+            සම්පූර්ණ කර රු. 5/- ක්
             වටිනා මුද්දරයක් මත, සමාදාන විනිශ්චයකාරවරයකු ඉදිරිපිට දී මව සහ පියා යන දෙදෙනාගේම අත්සන් තබා, පහත සඳහන්
             ලියවිලි සමග එවන්න
             <ol>
@@ -315,8 +308,11 @@
                 <li>දරුවාගේ පැරණි උප්පැන්න සහතිකය (තිබේනම්)/ රෝහලේ උපත් විස්තරය</li>
             </ol>
             <strong>﻿සැ.යු:-</strong>
-            දරු නියෝගය ගරු අධිකරණයෙන් නිකුත් කර ඇත්තේ විවාහක දෙමාපියන් වෙත නම් එම දරු නියෝගය පදනම් කර ගෙන නව දෙමාපියන් ජනක මව්පියන් ලෙස ඇතුලත් කරමින් දරු උපත නැවත ලියාපදිංචි කිරීමට 1977 අංක 06 දරණ දරුකමට හදා ගැනීමේ සංශෝධිත පනතින් ප්‍රතිපාදන සැලසී ඇත.<br/>
-            එසේ වුවද දරු නියෝගය ලැබී ඇත්තේ එක් පුද්ගලයකු වෙත පමණක් නම් දරු උපත නැවත ලියාපදිංචි කිරීමට ප්‍රතිපාදන සැලසී නොමැත.
+            දරු නියෝගය ගරු අධිකරණයෙන් නිකුත් කර ඇත්තේ විවාහක දෙමාපියන් වෙත නම් එම දරු නියෝගය පදනම් කර ගෙන නව දෙමාපියන්
+            ජනක මව්පියන් ලෙස ඇතුලත් කරමින් දරු උපත නැවත ලියාපදිංචි කිරීමට 1977 අංක 06 දරණ දරුකමට හදා ගැනීමේ සංශෝධිත
+            පනතින් ප්‍රතිපාදන සැලසී ඇත.<br/>
+            එසේ වුවද දරු නියෝගය ලැබී ඇත්තේ එක් පුද්ගලයකු වෙත පමණක් නම් දරු උපත නැවත ලියාපදිංචි කිරීමට ප්‍රතිපාදන සැලසී
+            නොමැත.
             <br/>
             <br/>
             மேற்குறிப்பிடப்பட்ட வகையில் பெறப்பட்ட மகவேற்புச்சான்றிதழில் குறிப்பிடப்பட்ட கணவன் மனைவியினது பெயர்
@@ -332,8 +328,12 @@
                 <li>பிள்ளையின் பழைய பிறப்புச் சான்றிதழ் (இருந்தால்)</li>
             </ol>
             <strong>குறிப்பு:-</strong>
-            மகவேற்புக் கட்டளை நீதிமன்றத்தினால் வழங்கப்பட்டிருப்பது திருமணமான பெற்றோர்களுக்காயின் அம் மகவேற்புக்கட்டளையினை அடிப்படையாகக் கொண்டு புதிய பெற்றோர்களை தத்துப் பெற்றோராக உட்புகுத்துவதன் மூலம் பிள்ளையின் பிறப்பினை மீள பதிவு செய்துக்கொள்வதற்கு 1977 ஆம் ஆண்டின் 06 ஆம் இலக்க மகவேற்பு திருத்தச் சட்டத்தில் ஏற்பாடுகள் செய்யப்பட்டுள்ளது.<br/>
-            எவ்வாறாயினும் மகவேற்புக் கட்டளை கிடைக்கப்பெற்றது ஒரு நபருக்கு மட்டுமாயின் பிள்ளையின் பிறப்பை மீள பதிவு செய்துக்கொள்வதற்கு ஏற்பாடுகள் செய்யப்படவில்லை.
+            மகவேற்புக் கட்டளை நீதிமன்றத்தினால் வழங்கப்பட்டிருப்பது திருமணமான பெற்றோர்களுக்காயின் அம்
+            மகவேற்புக்கட்டளையினை அடிப்படையாகக் கொண்டு புதிய பெற்றோர்களை தத்துப் பெற்றோராக உட்புகுத்துவதன் மூலம்
+            பிள்ளையின் பிறப்பினை மீள பதிவு செய்துக்கொள்வதற்கு 1977 ஆம் ஆண்டின் 06 ஆம் இலக்க மகவேற்பு திருத்தச்
+            சட்டத்தில் ஏற்பாடுகள் செய்யப்பட்டுள்ளது.<br/>
+            எவ்வாறாயினும் மகவேற்புக் கட்டளை கிடைக்கப்பெற்றது ஒரு நபருக்கு மட்டுமாயின் பிள்ளையின் பிறப்பை மீள பதிவு
+            செய்துக்கொள்வதற்கு ஏற்பாடுகள் செய்யப்படவில்லை.
             <br/>
             <br/>
             Attach a copy of the Certificate of Adoption obtained as detailed above in Step #1, and fill the attached
@@ -349,11 +349,14 @@
                 <li>Previous Certificate of Birth of Child (if available)</li>
             </ol>
             <strong>N.B:-</strong>
-            In case of the adoption order issued to the married parents, there is provision to register their child birth in amended adoption act No 06 in 1977.<br/>
-            Even though Adoption order issued to only an individual person, there is no provision to registered the child birth.
+            In case of the adoption order issued to the married parents, there is provision to register their child
+            birth in amended adoption act No 06 in 1977.<br/>
+            Even though Adoption order issued to only an individual person, there is no provision to registered the
+            child birth.
             <br/>
             <br/>
-            <table id="zonal_office_address" class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" width="99%">
+            <table id="zonal_office_address" class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0"
+                   width="99%">
                 <tr>
                     <td height="90px" width="33%">
                         <s:textarea id="siZonalOfficeAddress" rows="7" disabled="true"
@@ -382,7 +385,7 @@
         <tr>
             <td align="right">
                 <br><br><br>රෙජිස්ට්‍රාර් ජනරාල් වෙනුවට
-                <br> பதிவாளர் நாயகத்திற்கு பதிலாக 
+                <br> பதிவாளர் நாயகத்திற்கு பதிலாக
                 <br>For, Registrar General
             </td>
         </tr>
@@ -423,7 +426,8 @@
         </td>
     </tr>
 </table>
-<table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" style="float:right;width:450px; margin-right: 10px;">
+<table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0"
+       style="float:right;width:450px; margin-right: 10px;">
     <tr>
         <td height="40px" colspan="10">
             කාර්යාල ප්‍රයෝජනය සඳහා පමණි.
@@ -439,15 +443,15 @@
                 <br>Serial Number
             </label>
         </td>
-        <td width="24px" height="40px" >&nbsp;</td>
-        <td width="24px" height="40px" >&nbsp;</td>
-        <td width="24px" height="40px" >&nbsp;</td>
-        <td width="24px" height="40px" >&nbsp;</td>
-        <td width="24px" height="40px" >&nbsp;</td>
-        <td width="24px" height="40px" >&nbsp;</td>
-        <td width="24px" height="40px" >&nbsp;</td>
-        <td width="24px" height="40px" >&nbsp;</td>
-        <td width="24px" height="40px" >&nbsp;</td>
+        <td width="24px" height="40px">&nbsp;</td>
+        <td width="24px" height="40px">&nbsp;</td>
+        <td width="24px" height="40px">&nbsp;</td>
+        <td width="24px" height="40px">&nbsp;</td>
+        <td width="24px" height="40px">&nbsp;</td>
+        <td width="24px" height="40px">&nbsp;</td>
+        <td width="24px" height="40px">&nbsp;</td>
+        <td width="24px" height="40px">&nbsp;</td>
+        <td width="24px" height="40px">&nbsp;</td>
     </tr>
 </table>
 
@@ -597,7 +601,7 @@
         </td>
         <td width="250px">
             <label>
-                <%  AdoptionOrder a = (AdoptionOrder)request.getAttribute("adoption");
+                <% AdoptionOrder a = (AdoptionOrder) request.getAttribute("adoption");
                     out.print(GenderUtil.getGender(a.getChildGender(), a.getLanguageToTransliterate()));%>
             </label>
         </td>
@@ -609,7 +613,7 @@
     <tr>
         <td style="font-size:16px">
             අධිකරණ නියෝගය පිලිබඳ විස්තර<br/>
-                  நீதிமன்ற கட்டளை சம்பந்தமான விபரங்கள்
+            நீதிமன்ற கட்டளை சம்பந்தமான விபரங்கள்
             Information about the Adoption Order
         </td>
     </tr>

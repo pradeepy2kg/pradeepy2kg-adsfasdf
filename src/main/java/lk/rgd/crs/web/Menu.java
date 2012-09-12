@@ -315,6 +315,7 @@ public class Menu {
         deoAdoptionLink.put("eprDeleteAdoption.do", new Link(null, "/ecivil/adoption/", "eprDeleteAdoption.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionEditMode.do", new Link(null, "/ecivil/adoption/", "eprAdoptionEditMode.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprPrintAdoptionNotice.do", new Link(null, "/ecivil/adoption/", "eprPrintAdoptionNotice.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprMarkAdoptionOrderDetailsAsPrinted.do", new Link(null, "/ecivil/adoption/", "eprMarkAdoptionOrderDetailsAsPrinted.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprMarkAdoptionNoticeAsPrinted.do", new Link(null, "/ecivil/adoption/", "eprMarkAdoptionNoticeAsPrinted.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprPrintAdoptionCertificate.do", new Link(null, "/ecivil/adoption/", "eprPrintAdoptionCertificate.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprMarkAdoptionCertificateAsPrinted.do", new Link(null, "/ecivil/adoption/", "eprMarkAdoptionCertificateAsPrinted.do", Permission.EDIT_ADOPTION));

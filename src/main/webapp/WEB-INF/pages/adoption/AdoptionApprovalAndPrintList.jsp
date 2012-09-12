@@ -70,8 +70,8 @@
         <tr>
             <td><s:label value="%{getText('select.status.label')}"/></td>
             <td>
-                <s:select list="#@java.util.HashMap@{'1':getText('data.entry'),'2':getText('Approved.label'),'3':getText('notice.printed.label'),
-        '4':getText('rejected.label'),'5':getText('certificate.issual.request.captured.label'),'6':getText('adoption.certificate.printed.label')}"
+                <s:select list="#@java.util.HashMap@{'1':getText('data.entry'),'2':getText('Approved.label'),'3':getText('order.details.printed.label'),'4':getText('notice.printed.label'),
+        '5':getText('rejected.label'),'6':getText('certificate.issual.request.captured.label'),'7':getText('adoption.certificate.printed.label')}"
                           name="currentStatus" value="%{#request.currentStatus}" headerKey="0"
                           headerValue="%{getText('select.status.label')}"
                           cssStyle="width:250px; margin-left:5px;"/></td>
@@ -218,15 +218,15 @@
                         </s:a>
                     </td>
                     <td align="center">
-                        <s:if test=" (status.ordinal() ==2 ||status.ordinal() ==1)  && allowEditAdoption">
-                            <s:if test="status.ordinal() ==2">
+                        <s:if test=" (status.ordinal() ==3 ||status.ordinal() ==2 ||status.ordinal() ==1)  && allowEditAdoption">
+                            <s:if test="status.ordinal() ==3">
                                 <s:a href="%{cetificatePrintUrl}"
                                      title="%{getText('reprintAdoptionRegistrationTooltip.label')}">
                                     <img id="printImage" src="<s:url value='/images/print_icon.gif'/>"
                                          border="none" width="25" height="25"/>
                                 </s:a>
                             </s:if>
-                            <s:elseif test="status.ordinal() ==1">
+                            <s:elseif test="status.ordinal() ==1 || status.ordinal() == 2">
                                 <s:a href="%{cetificatePrintUrl}"
                                      title="%{getText('printAdoptionRegistrationTooltip.label')}">
                                     <img id="printImage" src="<s:url value='/images/print_icon.gif'/>"
@@ -244,8 +244,8 @@
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                         </s:url>
-                        <s:if test="status.ordinal() >3 && allowEditAdoption">
-                            <s:if test="status.ordinal() ==5">
+                        <s:if test="status.ordinal() >4 && allowEditAdoption">
+                            <s:if test="status.ordinal() ==6">
                                 <s:a href="%{cetificatePrintUrl}"
                                      title="%{getText('reprintAdoptionCertificateToolTip.label')}">
                                     <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
@@ -266,7 +266,7 @@
                         <s:url id="reRegisterBirthUrl" action="../births/eprAdoptionBirthRegistrationInit.do">
                             <s:param name="adoptionId" value="idUKey"/>
                         </s:url>
-                        <s:if test="status.ordinal() ==5 && allowEditAdoption">
+                        <s:if test="status.ordinal() ==6 && allowEditAdoption">
                             <s:a href="%{reRegisterBirthUrl}" title="%{getText('AdoptionReRegistrationTooltip.label')}">
                                 <img src="<s:url value='/images/add_page.png'/>" border="none" width="25" height="25"/>
                             </s:a>
