@@ -196,8 +196,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 service.addAdoptionOrder(adoption, user);
             } catch (CRSRuntimeException e) {
                 basicLists();
-                addFieldError("duplicateCourtOrderNumberError", getText("er.court.order.number.not.unique"));
-                logger.error("error with adding adoption order :: court order number :{}", adoption.getCourtOrderNumber());
+//                addFieldError("duplicateCourtOrderNumberError", getText("er.court.order.number.not.unique"));
+//                logger.error("error with adding adoption order :: court order number :{}", adoption.getCourtOrderNumber());
                 return "invalidBirthCertificateNumber";
             }
             logger.debug("added an adoption successfully with idUKey : {}", adoption.getIdUKey());
