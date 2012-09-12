@@ -146,6 +146,9 @@
                     <s:label name="adoption.applicantOccupation"/><br/><br/>
                     <s:textarea value="%{adoption.applicantAddress}"
                                 cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none;"
+                                rows="4" disabled="true"/><br/>
+                    <s:textarea value="%{adoption.applicantSecondAddress}"
+                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none;"
                                 rows="4" disabled="true"/>
                 </s:if>
                 <s:else>
@@ -155,7 +158,10 @@
                     <s:label name="adoption.wifeOccupation"/><br/><br/>
                     <s:textarea value="%{adoption.applicantAddress}"
                                 cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; "
-                                rows="4" disabled="true"/>
+                                rows="5" disabled="true"/>
+                    <s:textarea value="%{adoption.applicantSecondAddress}"
+                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none;"
+                                rows="5" disabled="true"/>
                 </s:else>
             </td>
             <td rowspan="2" align="center">

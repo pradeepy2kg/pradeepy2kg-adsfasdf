@@ -118,6 +118,9 @@ public class AdoptionOrder implements Serializable {
     private String applicantAddress;
 
     @Column(nullable = true)
+    private String applicantSecondAddress;
+
+    @Column(nullable = true)
     private String applicantOccupation;
 
     @Column(nullable = true, length = 12)
@@ -599,5 +602,13 @@ public class AdoptionOrder implements Serializable {
 
     public void setOldBirthSLIN(long oldBirthSLIN) {
         this.oldBirthSLIN = oldBirthSLIN;
+    }
+
+    public String getApplicantSecondAddress() {
+        return applicantSecondAddress;
+    }
+
+    public void setApplicantSecondAddress(String applicantSecondAddress) {
+        this.applicantSecondAddress = applicantSecondAddress;
     }
 }
