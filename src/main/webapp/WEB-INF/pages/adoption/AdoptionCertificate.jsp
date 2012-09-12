@@ -225,7 +225,8 @@
             Address
         </td>
         <td colspan="4" style="font-size:12pt">
-            <s:label name="" value="%{adoption.applicantAddress}"/>
+            <s:label name="" value="%{adoption.applicantAddress}"/><br/><br/>
+            <s:label name="" value="%{adoption.applicantSecondAddress}"/>
         </td>
     </tr>
     </tbody>

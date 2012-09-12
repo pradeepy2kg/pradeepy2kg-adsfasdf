@@ -18,6 +18,12 @@ $(function () {
     document.getElementById('oldBirthDSName').disabled = true;
     document.getElementById('oldBirthRegistrationDivisionName').disabled = true;
     document.getElementById('oldBirthRegistrationDate').disabled = true;
+    if($('#oldBirthSLIN').val() != ''){
+        enableCertificateNumber(false);
+    }else if($('#oldBirthSLIN').val() != '' || $('#oldBirthSLIN').val() != '' || $('#oldBirthSLIN').val() != '' || $('#oldBirthSLIN').val() != '' || $('#oldBirthSLIN').val() != ''){
+        enableSerialNumber(false);
+    }
+
     $("#receivedDatePicker").datepicker({
         changeYear:true,
         dateFormat:'yy-mm-dd',
@@ -485,12 +491,21 @@ function enableSerialNumber(mode) {
     </tr>
     <tr>
         <td>
-            ලිපිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
-            <br>முகவரி
-            <br>Address
+            ලිපිනය 1<s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            <br>முகவரி 1
+            <br>Address 1
         </td>
         <td colspan="4"><s:textarea name="adoption.applicantAddress"
                                     id="applicantAddress"/></td>
+    </tr>
+    <tr>
+        <td>
+            ලිපිනය 2
+            <br>முகவரி 2
+            <br>Address 2
+        </td>
+        <td colspan="4"><s:textarea name="adoption.applicantSecondAddress"
+                                    id="applicantSecondAddress"/></td>
     </tr>
     <tr>
         <td>

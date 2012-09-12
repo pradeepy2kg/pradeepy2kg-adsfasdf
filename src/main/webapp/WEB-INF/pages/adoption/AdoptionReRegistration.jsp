@@ -89,7 +89,7 @@
         <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
         <s:a href="#" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
     </s:if>
-    <s:if test="adoption.status.ordinal() < 3">
+    <s:if test="adoption.status.ordinal() < 4">
         <s:a href="%{viewAdoptionOrderDetails}"><s:label value="%{getText('order_details.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
     </s:if>
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>
@@ -118,7 +118,7 @@
         </tr>
         <tr height="30px" style="text-align:left;font-size:10pt">
             <td><s:textarea value="%{adoption.applicantAddress}"
-                            cssStyle="resize: none; color: #000; background: #fff; border: none; width: 100%;" rows="4"
+                            cssStyle="resize: none; color: #000; background: #fff; border: none; width: 100%;" rows="5"
                             disabled="true"/></td>
         </tr>
         <tr>
