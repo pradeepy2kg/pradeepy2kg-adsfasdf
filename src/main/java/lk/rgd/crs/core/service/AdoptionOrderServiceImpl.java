@@ -67,15 +67,15 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addAdoptionOrder(AdoptionOrder adoption, User user) {
-
         logger.debug("Adding an adoption order for court order : {}", adoption.getCourtOrderNumber());
         businessValidations(adoption);
 
-        AdoptionOrder adopt = getByCourtAndCourtOrderNumber(0 /* TODO FIX ME */, adoption.getCourtOrderNumber(), user);
+        // Comment as there can be more than one adoption registrations for the same court order.
+        /*AdoptionOrder adopt = getByCourtAndCourtOrderNumber(adoption.getCourt().getCourtUKey(), adoption.getCourtOrderNumber(), user);
         if (adopt != null) {
             handleException("can not add adoption order " + adoption.getIdUKey() +
                 " Court Order number already exists : " + adoption.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
-        }
+        }*/
 
         adoptionOrderDAO.addAdoptionOrder(adoption, user);
         logger.debug("Added adoption order for court order : {}", adoption.getCourtOrderNumber());
