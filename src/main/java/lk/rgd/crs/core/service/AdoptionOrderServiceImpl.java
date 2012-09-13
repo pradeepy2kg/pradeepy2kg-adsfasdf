@@ -247,10 +247,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         logger.debug("Search Adoption - Entry No: {} \t Court Order No: {}", adoptionEntryNo, courtOrderNumber);
         List<AdoptionOrder> searchResults = new ArrayList<AdoptionOrder>();
         if (adoptionEntryNo != null && adoptionEntryNo > 0 && courtOrderNumber != null && !courtOrderNumber.isEmpty()) {
-            AdoptionOrder adoptionOrder = adoptionOrderDAO.getAdoptionByEntryNumberAndCourtOrderNumber(adoptionEntryNo, courtOrderNumber);
-            if (adoptionOrder != null) {
-                searchResults.add(adoptionOrder);
-            }
+            searchResults = adoptionOrderDAO.getAdoptionByEntryNumberAndCourtOrderNumber(adoptionEntryNo, courtOrderNumber);
         } else if (adoptionEntryNo != null && adoptionEntryNo > 0) {
             AdoptionOrder adoptionOrder = adoptionOrderDAO.getAdoptionByEntryNumber(adoptionEntryNo);
             if (adoptionOrder != null) {
