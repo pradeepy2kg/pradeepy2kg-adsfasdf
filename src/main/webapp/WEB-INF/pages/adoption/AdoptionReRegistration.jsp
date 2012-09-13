@@ -683,12 +683,14 @@
 </table>
 <br><br><br><br><br>
 </div>
-<div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-</div>
 <div id="adoption-page" class="form-submit">
-    <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <s:a href="%{viewAdoptionOrderDetails}"><s:label value="%{getText('order_details.label')}"/></s:a>
+    <s:if test="adoption.status.ordinal() >= 2">
+        <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <s:a href="#" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+    </s:if>
+    <s:if test="adoption.status.ordinal() < 4">
+        <s:a href="%{viewAdoptionOrderDetails}"><s:label value="%{getText('order_details.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+    </s:if>
+    <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>
 </div>
 <s:hidden id="zonalOfficeId" name="zonalOfficeId"/>
