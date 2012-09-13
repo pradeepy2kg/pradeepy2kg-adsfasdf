@@ -820,6 +820,12 @@
             <result type="tiles" name="none">epr.error</result>
         </action>
 
+        <action name="eprSearchAdoptionRecord" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="searchAdoptionRecords">
+            <result type="tiles" name="success">epr.adoptionSearch</result>
+            <result type="tiles" name="none">epr.error</result>
+        </action>
+
         <action name="eprAdoptionAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="addOrEditAdoption">
             <result type="tiles" name="success">epr.adoptionSummary</result>
