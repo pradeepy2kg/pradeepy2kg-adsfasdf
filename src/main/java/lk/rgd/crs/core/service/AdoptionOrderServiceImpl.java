@@ -242,6 +242,24 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         return adoptionOrderDAO.getLastEntryNo();
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<AdoptionOrder> searchAdoptionOrder(Long adoptionEntryNo, String courtOrderNumber) {
+        logger.debug("Search Adoption - Entry No: {} \t Court Order No: {}", adoptionEntryNo, courtOrderNumber);
+        List<AdoptionOrder> searchResults = new ArrayList<AdoptionOrder>();
+        if (adoptionEntryNo != null && adoptionEntryNo > 0 && courtOrderNumber != null && !courtOrderNumber.isEmpty()) {
+            searchResults.add(adoptionOrderDAO.getAdoptionByEntryNumberAndCourtOrderNumber(adoptionEntryNo, courtOrderNumber));
+        } else if (adoptionEntryNo != null && adoptionEntryNo > 0) {
+            searchResults.add(adoptionOrderDAO.getAdoptionByEntryNumber(adoptionEntryNo));
+        } else if (courtOrderNumber != null && !courtOrderNumber.isEmpty()) {
+            searchResults = adoptionOrderDAO.getAdoptionsByCourtOrderNumber(courtOrderNumber);
+        }
+        if (searchResults != null && searchResults.size() > 0) {
+            return searchResults;
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
     private void setApprovalStatus(long idUKey, User user, AdoptionOrder.State state) {
         AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
         if (adoption.getStatus() == AdoptionOrder.State.DATA_ENTRY) {

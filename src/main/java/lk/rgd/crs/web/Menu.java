@@ -325,6 +325,7 @@ public class Menu {
         deoAdoptionLink.put("eprAdoptionBackToPreviousState.do", new Link(null, "/ecivil/adoption/", "eprAdoptionBackToPreviousState.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprCaptureAdoptionApplicantInfo.do", new Link(null, "/ecivil/adoption/", "eprCaptureAdoptionApplicantInfo.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionReRegistrationFindEntry.do", new Link(null, "/ecivil/adoption/", "eprAdoptionReRegistrationFindEntry.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprSearchAdoptionRecord.do", new Link(null, "/ecivil/adoption/", "eprSearchAdoptionRecord.do", Permission.EDIT_ADOPTION));
         //deoAdoptionLink.put(Permission.PAGE_ADOPTION_BDF_HOME, new Link(null, "/ecivil/births/", "eprAdoptionRegistrationHome.do"));
 
         // Adoption Registration for ADR

@@ -151,4 +151,13 @@ public interface AdoptionOrderService {
      * @return Latest adoptionEntryNo
      */
     public Long getLastEntryNo(User user);
+
+    /**
+     * Returns a List of adoption records matches the given parameters
+     *
+     * @param adoptionEntryNo   Selected Adoption Entry Number
+     * @param courtOrderNumber  Selected Court Order Number
+     * @return List of adoption records match the given parameters.
+     */
+    public List<AdoptionOrder> searchAdoptionOrder(Long adoptionEntryNo, String courtOrderNumber);
 }

@@ -7,6 +7,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Locale;
 import java.util.List;
@@ -63,6 +64,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> countryList;
     private Map<Integer, String> zonalOfficeList;
     private List<AdoptionOrder> adoptionApprovalAndPrintList;
+    private List<AdoptionOrder> searchResults;
 
     private int birthProvinceUKey;
     private int birthDistrictId;
@@ -77,6 +79,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private long idUKey;
     private long adoptionId;
     private long adoptionSerialNo;
+    private Long adoptionEntryNo;
 
     private boolean allowEditAdoption;
     private boolean allowApproveAdoption;
@@ -206,6 +209,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             addActionMessage(getText("message.add.successfully.adoption", new String[]{adoption.getCourtOrderNumber()}));
         }
 
+        return SUCCESS;
+    }
+
+    public String searchAdoptionRecords(){
+        searchResults = service.searchAdoptionOrder(adoptionEntryNo, courtOrderNo);
+        adoptionEntryNo = null;
+        courtOrderNo = null;
         return SUCCESS;
     }
 
@@ -1270,5 +1280,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setBirthProvinceUKey(int birthProvinceUKey) {
         this.birthProvinceUKey = birthProvinceUKey;
+    }
+
+    public Long getAdoptionEntryNo() {
+        return adoptionEntryNo;
+    }
+
+    public void setAdoptionEntryNo(Long adoptionEntryNo) {
+        this.adoptionEntryNo = adoptionEntryNo;
+    }
+
+    public List<AdoptionOrder> getSearchResults() {
+        return searchResults;
+    }
+
+    public void setSearchResults(List<AdoptionOrder> searchResults) {
+        this.searchResults = searchResults;
     }
 }

@@ -34,6 +34,18 @@ import java.util.Date;
     @NamedQuery(
         name = "getLastEntryNo",
         query = "SELECT MAX(a.adoptionEntryNo) FROM AdoptionOrder a"
+    ),
+    @NamedQuery(
+        name = "getAdoptionsByCourtOrderNumber",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.courtOrderNumber = :courtOrderNumber"
+    ),
+    @NamedQuery(
+        name = "getAdoptionByEntryNumber",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo"
+    ),
+    @NamedQuery(
+        name = "getAdoptionByEntryNumberAndCourtOrderNumber",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo AND a.courtOrderNumber = :courtOrderNumber"
     )
 })
 
@@ -224,23 +236,23 @@ public class AdoptionOrder implements Serializable {
      * eg: Serial number of 125th record in year 2012 is 201200125
      */
     @Column(nullable = true)
-    private long adoptionSerialNo;
+    private Long adoptionSerialNo;
 
     /**
      * Entry number of the adoption. Mentioned in the Adoption Order Details.
      */
     @Column(nullable = false)
-    private long adoptionEntryNo;
+    private Long adoptionEntryNo;
 
     @ManyToOne
     @JoinColumn(name = "noticingZonalOffice", nullable = false)
     private ZonalOffice noticingZonalOffice;
 
-    public long getAdoptionEntryNo() {
+    public Long getAdoptionEntryNo() {
         return adoptionEntryNo;
     }
 
-    public void setAdoptionEntryNo(long adoptionEntryNo) {
+    public void setAdoptionEntryNo(Long adoptionEntryNo) {
         this.adoptionEntryNo = adoptionEntryNo;
     }
 
@@ -524,11 +536,11 @@ public class AdoptionOrder implements Serializable {
         this.childPIN = childPIN;
     }
 
-    public long getAdoptionSerialNo() {
+    public Long getAdoptionSerialNo() {
         return adoptionSerialNo;
     }
 
-    public void setAdoptionSerialNo(long adoptionSerialNo) {
+    public void setAdoptionSerialNo(Long adoptionSerialNo) {
         this.adoptionSerialNo = adoptionSerialNo;
     }
 
