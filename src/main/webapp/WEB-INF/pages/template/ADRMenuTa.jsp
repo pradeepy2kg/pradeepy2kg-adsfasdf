@@ -122,6 +122,11 @@
                 (4) மகவேற்பின் இரண்டாம் பதிவு
             </a>
         </li>
+        <li>
+            <a id="search_adoption_records.label" href="/ecivil/adoption/eprSearchAdoptionRecord.do">
+                (5) Search Adoption Records in ta
+            </a>
+        </li>
     </ul>
 </li>
 
