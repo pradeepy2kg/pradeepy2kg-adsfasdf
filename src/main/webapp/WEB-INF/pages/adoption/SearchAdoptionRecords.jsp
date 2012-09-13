@@ -65,6 +65,7 @@
                 <th width="80px">#</th>
                 <th width="120px"><s:label value="%{getText('entry_no.label')}"/></th>
                 <th><s:label value="%{getText('name.label')}"/></th>
+                <th width="150px"><s:label value="%{getText('court.order.no.label')}"/></th>
                 <th width="60px"><s:label value="%{getText('view.label')}"/></th>
             </tr>
             </thead>
@@ -84,6 +85,9 @@
                         <s:elseif test="childExistingName!=null">
                             <s:property value="getChildExistingNameToLength(30)"/>
                         </s:elseif>
+                    </td>
+                    <td>
+                        <s:property value="courtOrderNumber"/>
                     </td>
                     <td align="center">
                         <s:url id="viewSelected" action="eprAdoptionViewMode.do">
