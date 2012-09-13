@@ -127,6 +127,11 @@
                 (4) Adoption Reregistration
             </a>
         </li>
+        <li>
+            <a id="search_adoption_records.label" href="/ecivil/adoption/eprSearchAdoptionRecord.do">
+                (5) Search Adoption Records
+            </a>
+        </li>
     </ul>
 </li>
 
