@@ -118,11 +118,10 @@ public interface AdoptionOrderDAO {
     public AdoptionOrder getAdoptionByEntryNumber(Long adoptionEntryNo);
 
     /**
-     * Returns an adoption record which is registered with the given entry number and court order number.
+     * Returns a list of adoption records where the court order is given by the selected court.
      *
-     * @param adoptionEntryNo   Selected entry number
-     * @param courtOrderNumber  Selected court order number
-     * @return  An adoption record which has the given adoption entry number and the given court order number
+     * @param courtUKey  CourtUKey of the selected court
+     * @return List of adoptions from the selected court
      */
-    public List<AdoptionOrder> getAdoptionByEntryNumberAndCourtOrderNumber(Long adoptionEntryNo, String courtOrderNumber);
+    public List<AdoptionOrder> getAdoptionsByCourt(int courtUKey);
 }

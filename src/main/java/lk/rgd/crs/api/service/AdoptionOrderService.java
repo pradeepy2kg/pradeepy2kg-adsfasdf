@@ -157,7 +157,8 @@ public interface AdoptionOrderService {
      *
      * @param adoptionEntryNo   Selected Adoption Entry Number
      * @param courtOrderNumber  Selected Court Order Number
+     * @param courtUKey         CourtUKey of the selected court
      * @return List of adoption records match the given parameters.
      */
-    public List<AdoptionOrder> searchAdoptionOrder(Long adoptionEntryNo, String courtOrderNumber);
+    public List<AdoptionOrder> searchAdoptionOrder(Long adoptionEntryNo, String courtOrderNumber, int courtUKey);
 }

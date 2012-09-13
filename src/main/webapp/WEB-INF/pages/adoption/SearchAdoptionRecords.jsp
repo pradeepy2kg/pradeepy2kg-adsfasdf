@@ -49,7 +49,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3"></td>
+                    <td>
+                        <s:label value="%{getText('court.label')}"/>
+                    </td>
+                    <td>
+                        <s:select list="courtList" name="courtId" headerKey="0" headerValue="%{getText('select.label')}"/>
+                    </td>
+                    <td></td>
                     <td class="form-submit" align="right">
                         <s:submit value="%{getText('search.adoption.label')}" cssStyle="float: right;"/>
                     </td>

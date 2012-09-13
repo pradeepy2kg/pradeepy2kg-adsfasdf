@@ -44,8 +44,8 @@ import java.util.Date;
         query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo"
     ),
     @NamedQuery(
-        name = "getAdoptionByEntryNumberAndCourtOrderNumber",
-        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo OR a.courtOrderNumber LIKE :courtOrderNumber"
+        name = "getAdoptionsByCourt",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.court.courtUKey = :courtUKey"
     )
 })
 

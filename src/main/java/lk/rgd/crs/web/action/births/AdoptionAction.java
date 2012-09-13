@@ -213,9 +213,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String searchAdoptionRecords(){
-        searchResults = service.searchAdoptionOrder(adoptionEntryNo, courtOrderNo);
+        searchResults = service.searchAdoptionOrder(adoptionEntryNo, courtOrderNo, courtId);
         adoptionEntryNo = null;
         courtOrderNo = null;
+        courtId = 0;
+        populateBasicLists(user.getPrefLanguage());
         return SUCCESS;
     }
 

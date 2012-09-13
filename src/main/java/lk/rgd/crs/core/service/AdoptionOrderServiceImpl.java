@@ -243,19 +243,22 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<AdoptionOrder> searchAdoptionOrder(Long adoptionEntryNo, String courtOrderNumber) {
+    public List<AdoptionOrder> searchAdoptionOrder(Long adoptionEntryNo, String courtOrderNumber, int courtUKey) {
         logger.debug("Search Adoption - Entry No: {} \t Court Order No: {}", adoptionEntryNo, courtOrderNumber);
         List<AdoptionOrder> searchResults = new ArrayList<AdoptionOrder>();
-        if (adoptionEntryNo != null && adoptionEntryNo > 0 && courtOrderNumber != null && !courtOrderNumber.isEmpty()) {
-            searchResults = adoptionOrderDAO.getAdoptionByEntryNumberAndCourtOrderNumber(adoptionEntryNo, courtOrderNumber);
-        } else if (adoptionEntryNo != null && adoptionEntryNo > 0) {
+        if (adoptionEntryNo != null && adoptionEntryNo > 0) {
             AdoptionOrder adoptionOrder = adoptionOrderDAO.getAdoptionByEntryNumber(adoptionEntryNo);
             if (adoptionOrder != null) {
                 searchResults.add(adoptionOrder);
             }
-        } else if (courtOrderNumber != null && !courtOrderNumber.isEmpty()) {
-            searchResults = adoptionOrderDAO.getAdoptionsByCourtOrderNumber(courtOrderNumber);
         }
+        if (courtOrderNumber != null && !courtOrderNumber.isEmpty()) {
+            searchResults.addAll(adoptionOrderDAO.getAdoptionsByCourtOrderNumber(courtOrderNumber));
+        }
+        if(courtUKey > 0){
+            searchResults.addAll(adoptionOrderDAO.getAdoptionsByCourt(courtUKey));
+        }
+
         if (searchResults != null && searchResults.size() > 0) {
             return searchResults;
         } else {
