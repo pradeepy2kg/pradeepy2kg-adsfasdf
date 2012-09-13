@@ -258,7 +258,7 @@
                             <br/>රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව ,
                             <br>234 / A 3, ඩෙන්සිල් කොබ්බැකඩුව මාවත,
                             <br>බත්තරමුල්ල
-                            <br/>දුරකථන අංක: 2889488/89
+                            <br/>දුරකථන අංක: 0112889488/89
                         </label>
                     </td>
                     <td>
@@ -267,7 +267,7 @@
                             <br/>பதிவாளர் நாயகம் திணைக்களம்
                             <br>234/A3, டென்சில் கொப்பேகடுவ மாவத்தை,
                             <br>பத்தரமுல்லை.
-                            <br/>Telephone Numbers in ta: 2889488/89
+                            <br/>Telephone Numbers in ta: 0112889488/89
                         </label>
                     </td>
                     <td>
@@ -276,7 +276,7 @@
                             <br/>Registrar Generals Department
                             <br>234 / A3, Denzil Kobbakaduwa Mawatha,
                             <br>Battaramulla
-                            <br/>Telephone Numbers: 2889488/89
+                            <br/>Telephone Numbers: 0112889488/89
                         </label>
                     </td>
                 </tr>
