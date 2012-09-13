@@ -169,7 +169,13 @@
             </td>
             <td rowspan="2">
                 <s:label name="adoption.orderIssuedDate"/><br><br>
-                <s:label name="adoption.court.siCourtName"/><br><br>
+                <s:if test="adoption.languageToTransliterate == \"si\"">
+                    <s:label name="adoption.court.siCourtName"/><br><br>
+                </s:if><s:elseif test="adoption.languageToTransliterate == \"en\"">
+                <s:label name="adoption.court.enCourtName"/><br><br>
+            </s:elseif><s:elseif test="adoption.languageToTransliterate == \"ta\"">
+                <s:label name="adoption.court.taCourtName"/><br><br>
+            </s:elseif>
                 <s:label name="adoption.courtOrderNumber"/>
             </td>
             <td style="border-bottom:none;">
@@ -218,7 +224,8 @@
             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
         </s:url>
         <s:a href="%{markAsPrint}" cssStyle=" margin-left: 10px;"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <s:a href="#" onclick="printAdoptionOrderPage()" cssStyle=" margin-left: 10px;"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <s:a href="#" onclick="printAdoptionOrderPage()" cssStyle=" margin-left: 10px;"><s:label
+                value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
         <s:a href="%{cetificatePrintUrl}"><s:label value="%{getText('notice.letter')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
         <%--<s:submit type="button" value="%{getText('print.button')}" onclick="printAdoptionOrderPage()"/>--%>
     </div>
