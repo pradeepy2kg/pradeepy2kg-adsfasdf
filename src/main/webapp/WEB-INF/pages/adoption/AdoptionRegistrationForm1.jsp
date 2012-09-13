@@ -391,7 +391,7 @@ function enableSerialNumber(mode) {
             Language for
         </td>
         <td colspan="2" style="text-align:left;" width="30px">
-            <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}"
+            <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்', 'en':'English'}"
                       name="adoption.languageToTransliterate"
                       cssStyle="width:200px; margin-left:5px;"></s:select>
         </td>
