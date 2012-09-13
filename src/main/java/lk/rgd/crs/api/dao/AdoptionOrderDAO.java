@@ -124,5 +124,5 @@ public interface AdoptionOrderDAO {
      * @param courtOrderNumber  Selected court order number
      * @return  An adoption record which has the given adoption entry number and the given court order number
      */
-    public AdoptionOrder getAdoptionByEntryNumberAndCourtOrderNumber(Long adoptionEntryNo, String courtOrderNumber);
+    public List<AdoptionOrder> getAdoptionByEntryNumberAndCourtOrderNumber(Long adoptionEntryNo, String courtOrderNumber);
 }
