@@ -371,6 +371,7 @@
     <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
     <s:submit value="%{getText('back.label')}" cssStyle="margin-top:10px;"/>
+    <s:submit action="eprSearchAdoptionRecord" value="%{getText('another_search.label')}"/>
 </div>
 </s:form>
 

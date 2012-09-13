@@ -85,7 +85,16 @@
                             <s:property value="getChildExistingNameToLength(30)"/>
                         </s:elseif>
                     </td>
-                    <td></td>
+                    <td align="center">
+                        <s:url id="viewSelected" action="eprAdoptionViewMode.do">
+                            <s:param name="idUKey" value="idUKey"/>
+                        </s:url>
+
+                        <s:a href="%{viewSelected}" title="%{getText('viewAdoptionRegistrationTooltip.label')}">
+                            <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                                 border="none"/>
+                        </s:a>
+                    </td>
                 </tr>
             </s:iterator>
             </tbody>
