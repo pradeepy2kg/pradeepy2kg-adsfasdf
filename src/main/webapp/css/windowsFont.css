@@ -1,39 +1,9 @@
-@font-face {
-    font-family: Bhashitha;
-    src: url('./font/windows/Bhashitha/Bhashitha2.ttf');
-}
-@font-face {
-    font-family: BhashithaBold;
-    src: url('./font/windows/Bhashitha/Bhashitha2Bold.ttf');
-}
-@font-face {
-    font-family: BhashithaSans;
-    src: url('./font/windows/Bhashitha/Bhashitha2Sans.ttf');
-}
-@font-face {
-    font-family: BhashithaSansBold;
-    src: url('./font/windows/Bhashitha/Bhashitha2SansBold.ttf');
-}
-@font-face {
-    font-family: SriTamil;
-    src: url('./font/windows/SriTamil/SriTamR.ttf');
-}
-@font-face {
-    font-family: SriTamilBold;
-    src: url('./font/windows/SriTamil/SriTamB.ttf');
-}
-/*  Define Fonts for Ubuntu Platform.
-    Bhashitha2: Bhashitha font in the local machine.
-    Bhashitha:  Bhashitha font from the server.
-    Sri Tamil:  Sri Tamil font in the local machine.
-    SriTamil:   Sri Tamil font from the server.
-*/
 body{
-    font-family: Bhashitha2, Bhashitha, Sri Tamil, SriTamil;
+    font-family: Bhashitha2, Sri Tamil;
 }
 
 @media print{
     body{
-        font-family: Bhashitha2, Bhashitha, Sri Tamil, SriTamil;
+        font-family: Bhashitha2, Sri Tamil;
     }
 }
