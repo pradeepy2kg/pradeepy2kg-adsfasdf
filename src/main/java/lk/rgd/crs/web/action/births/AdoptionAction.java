@@ -225,8 +225,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 //populating by default disabled fields other wise data already entered to them getting lost due to method use
 //  to edit adoption
         adoption.setLifeCycleInfo(existingOrder.getLifeCycleInfo());
-        adoption.setBirthCertificateNumber((adoption.getBirthCertificateNumber() == 0) ?
-            adoption.getBirthCertificateNumber() : existingOrder.getBirthCertificateNumber());
         if (birthDivisionId == 0) {
             adoption.setBirthDivisionId(existingOrder.getBirthDivisionId());
         }

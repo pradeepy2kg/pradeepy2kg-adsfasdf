@@ -18,10 +18,12 @@ $(function () {
     document.getElementById('oldBirthDSName').disabled = true;
     document.getElementById('oldBirthRegistrationDivisionName').disabled = true;
     document.getElementById('oldBirthRegistrationDate').disabled = true;
-    if($('#oldBirthSLIN').val() != ''){
+    if ($('#birthCertificateNumber').val() > 0) {
+        $('#availableNewCerttrue').checked = true;
         enableCertificateNumber(false);
-    }else if($('#oldBirthSLIN').val() != '' || $('#oldBirthSLIN').val() != '' || $('#oldBirthSLIN').val() != '' || $('#oldBirthSLIN').val() != '' || $('#oldBirthSLIN').val() != ''){
-        enableSerialNumber(false);
+    } else if ($('#birthProvinceUKey').val() > 0 || $('#birthDistrictId').val() > 0 || $('#oldBirthDSName').val() != '' || $('#oldBirthRegistrationDivisionName').val() != '' || $('#oldBirthRegistrationDate').val() != '') {
+        $('#availableNewCertfalse').checked = true;
+        enableCertificateInfo(false);
     }
 
     $("#receivedDatePicker").datepicker({
@@ -284,7 +286,7 @@ function enableCertificateNumber(mode) {
     document.getElementById('oldBirthRegistrationDate').disabled = !mode;
 }
 
-function enableSerialNumber(mode) {
+function enableCertificateInfo(mode) {
     document.getElementById('birthCertificateNumber').disabled = !mode;
     document.getElementById('birthProvinceUKey').disabled = mode;
     document.getElementById('birthDistrictId').disabled = mode;
@@ -727,7 +729,8 @@ function enableSerialNumber(mode) {
             Un-available
         </td>
         <td>
-            <s:radio list="#@java.util.HashMap@{'false':''}" onclick="enableSerialNumber(false)" id="availableNewCert"
+            <s:radio list="#@java.util.HashMap@{'false':''}" onclick="enableCertificateInfo(false)"
+                     id="availableNewCert"
                      name="availableNewCert"/>
         </td>
     </tr>
