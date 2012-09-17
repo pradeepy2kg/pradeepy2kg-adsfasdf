@@ -762,7 +762,7 @@ function enableCertificateInfo(mode) {
             <br>Province
         </td>
         <td colspan="4"><s:select id="birthProvinceUKey" name="birthProvinceUKey" list="provinceList"
-                                  value="%{birthProvinceUKey}"
+                                  value="%{birthProvinceUKey}" headerKey="0" headerValue="%{getText('select.label')}"
                                   cssStyle="width:280px;margin-left:5px;"/>
         </td>
     </tr>
