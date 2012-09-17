@@ -243,6 +243,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         }
         populateBasicLists(language);
         populateAllDSDivisionList();
+        birthProvinceUKey = 0;
+        birthDistrictId = 0;
         return SUCCESS;
     }
 
