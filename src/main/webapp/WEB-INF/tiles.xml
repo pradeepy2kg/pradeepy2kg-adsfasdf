@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+    <definition name="epr.template" template="/WEB-INF/pages/template/layout.jsp">
+        <put-attribute name="header" value="/WEB-INF/pages/template/header.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/pages/template/menu.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/pages/login/login.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/pages/template/footer.jsp"/>
+        <put-attribute name="title-text" value=""/>
+        <put-attribute name="help" value=""/>
+    </definition>
+
+    <definition name="epr.welcome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/Welcome.jsp"/>
+        <put-attribute name="title" value="home.title"/>
+    </definition>
+
+    <definition name="epr.home" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/StatHome.jsp"/>
+        <put-attribute name="title" value="statistics.label"/>
+    </definition>
+
+    <definition name="epr.adminHome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/home.jsp"/>
+        <put-attribute name="title" value="home.title"/>
+    </definition>
+
+    <definition name="epr.success" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/success.jsp"/>
+        <put-attribute name="title" value=""/>
+    </definition>
+
+    <definition name="epr.adrhome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/ADRHomePage.jsp"/>
+        <put-attribute name="title" value="home.title"/>
+    </definition>
+
+    <definition name="epr.arghome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/ARGCustomStatistics.jsp"/>
+        <put-attribute name="title" value="home.title"/>
+    </definition>
+
+    <definition name="epr.rghome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/RGCustomStatistics.jsp"/>
+        <put-attribute name="title" value="home.title"/>
+    </definition>
+
+    <definition name="epr.drhome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/DRCustomStatistics.jsp"/>
+        <put-attribute name="title" value="home.title"/>
+    </definition>
+
+    <definition name="epr.deohome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/DataEntryHome.jsp"/>
+        <put-attribute name="title" value="home.title"/>
+    </definition>
+    <definition name="epr.error" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/error.jsp"/>
+        <put-attribute name="title" value="error.title"/>
+    </definition>
+
+
+    <definition name="epr.rgdError" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/RGDerror.jsp"/>
+        <put-attribute name="title" value="RGDerror.title"/>
+    </definition>
+
+    <!--  Birth Registration Tiles -->
+    <definition name="epr.BirthCertificatePrint" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthCertificatePrint.jsp"/>
+        <put-attribute name="title" value="BirthCertificatePrint.title"/>
+    </definition>
+
+    <definition name="epr.birthRegistration_form1" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationForm1.jsp"/>
+        <put-attribute name="title" value="form1.title"/>
+        <put-attribute name="help" value="../help/birth-help.jsp#BirthRegisterForm1"/>
+    </definition>
+
+    <definition name="epr.birthRegistration_form2" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationForm2.jsp"/>
+        <put-attribute name="title" value="form2.title"/>
+        <put-attribute name="help" value="../help/birth-help.jsp#BirthRegisterForm2"/>
+    </definition>
+
+    <definition name="epr.birthRegistration_form3" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationForm3.jsp"/>
+        <put-attribute name="title" value="form3.title"/>
+        <put-attribute name="help" value="../help/birth-help.jsp#BirthRegisterForm3"/>
+    </definition>
+
+    <definition name="epr.birthRegistration_form4" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationForm4.jsp"/>
+        <put-attribute name="title" value="form4.title"/>
+        <put-attribute name="help" value="../help/birth-help.jsp#BirthRegisterForm4"/>
+    </definition>
+
+    <definition name="epr.non_editable_birthRegistration_form1" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/NonEditableBirthRegistrationForm1.jsp"/>
+        <put-attribute name="title" value="none.edit.form1.title"/>
+    </definition>
+
+    <definition name="epr.non_editable_birthRegistration_form2" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/NonEditableBirthRegistrationForm2.jsp"/>
+        <put-attribute name="title" value="form2.title"/>
+    </definition>
+
+    <definition name="epr.non_editable_birthRegistration_form3" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/NonEditableBirthRegistrationForm3.jsp"/>
+        <put-attribute name="title" value="form3.title"/>
+    </definition>
+
+    <definition name="epr.non_editable_birthRegistration_form4" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/NonEditableBirthRegistrationForm4.jsp"/>
+        <put-attribute name="title" value="form4.title"/>
+    </definition>
+
+    <definition name="epr.birthRegistration_details" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationFormDetails.jsp"/>
+        <put-attribute name="title" value="BirthRegistrationDetails.title"/>
+    </definition>
+
+    <definition name="epr.birthConfirmation_form1" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthConfirmationForm1.jsp"/>
+        <put-attribute name="title" value="BirthConfirmationForm1.title"/>
+    </definition>
+
+    <definition name="epr.birthRegistration_success" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthDeclarationSuccess.jsp"/>
+        <put-attribute name="title" value="BirthConfirmationForm1.title"/>
+    </definition>
+
+    <definition name="epr.birthConfirmation_form2" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthConfirmationForm2.jsp"/>
+        <put-attribute name="title" value="BirthConfirmationForm2.title"/>
+    </definition>
+
+    <definition name="epr.birthConfirmation_form3" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthConfirmationForm3.jsp"/>
+        <put-attribute name="title" value="BirthConfirmationForm3.title"/>
+    </definition>
+
+    <definition name="epr.birthConfirmation_details" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthConfirmationFormDetails.jsp"/>
+        <put-attribute name="title" value="BirthConfirmationDetails.title"/>
+    </definition>
+
+    <definition name="epr.birthConfirmationPrint_form" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthConfirmationPrintForm.jsp"/>
+        <put-attribute name="title" value="BirthConfirmationPrintForm.title"/>
+    </definition>
+
+    <definition name="epr.birthCertificate_form" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthCertificate.jsp"/>
+        <put-attribute name="title" value="BirthCertificate.title"/>
+    </definition>
+
+    <definition name="epr.birthRegisterApproval" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegisterApproval.jsp"/>
+        <put-attribute name="title" value="BirthRegisterApproval.title"/>
+    </definition>
+
+    <definition name="epr.birthRegisterBelatedApproval" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegisterBelatedApproval.jsp"/>
+        <put-attribute name="title" value="BirthRegisterBelatedApproval.title"/>
+    </definition>
+
+    <definition name="epr.approvalWorning" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthDeclarationApprovalWarning.jsp"/>
+        <put-attribute name="title" value="BirthRegisterApprovalWarning.title"/>
+    </definition>
+
+    <definition name="epr.approveBelatedWarning" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthDeclarationBelatedApprovalWarning.jsp"/>
+        <put-attribute name="title" value="BirthRegisterApprovalWarning.title"/>
+    </definition>
+
+    <definition name="epr.confirmationApprovalWorning" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthConfirmationApprovalWarning.jsp"/>
+        <put-attribute name="title" value="BirthRegisterApprovalWarning.title"/>
+    </definition>
+
+    <definition name="epr.birthConfirmationPrint" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthConfirmPrint.jsp"/>
+        <put-attribute name="title" value="BirthConfirmPrint.title"/>
+    </definition>
+
+    <definition name="epr.BDFSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/SearchBDF.jsp"/>
+        <put-attribute name="title" value="search.title"/>
+    </definition>
+
+    <definition name="epr.BirthsAdvancedSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthsAdvancedSearch.jsp"/>
+        <put-attribute name="title" value="search.adnavced.title"/>
+    </definition>
+
+    <definition name="epr.BirthsRejectedSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/RejectedBirthDeclarationList.jsp"/>
+        <put-attribute name="title" value="search.rejected.births.title"/>
+    </definition>
+
+    <definition name="epr.DeathsRejectedSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/RejectedDeathDeclarationList.jsp"/>
+        <put-attribute name="title" value="search.rejected.deaths.title"/>
+    </definition>
+
+    <definition name="epr.certificateSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/CertificateSearch.jsp"/>
+        <put-attribute name="title" value="BirthCertificateSearch.title"/>
+    </definition>
+
+    <definition name="epr.certificateSearchResult" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/CertificateSearchResult.jsp"/>
+        <put-attribute name="title" value="BirthCertificateSearch.title"/>
+    </definition>
+
+    <definition name="epr.birthRegisterReject" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthDeclarationReject.jsp"/>
+        <put-attribute name="title" value="reject.title"/>
+    </definition>
+
+    <definition name="epr.birthRegisterBelatedReject" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthDeclarationBelatedReject.jsp"/>
+        <put-attribute name="title" value="reject.title"/>
+    </definition>
+
+    <definition name="epr.BirthConfirmationApproval" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthConfirmationApproval.jsp"/>
+        <put-attribute name="title" value="BirthConfirmationApproval.title"/>
+    </definition>
+
+    <definition name="epr.birthRegistrationHome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationHome.jsp"/>
+        <put-attribute name="title" value="birth_registration.label1"/>
+        <put-attribute name="help" value="../help/birth-help.jsp#BirthProcess"/>
+    </definition>
+
+    <definition name="epr.stillBirth" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/stillBirth.jsp"/>
+        <put-attribute name="title" value="still_birth_registration.label"/>
+    </definition>
+
+    <definition name="epr.birthAlteration" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlteration.jsp"/>
+        <put-attribute name="title" value="birth_alteration.title"/>
+    </definition>
+    <definition name="epr.birthAlterationResult" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationResult.jsp"/>
+        <put-attribute name="title" value="birth_alteration_result.title"/>
+    </definition>
+
+    <definition name="epr.rejectBirthAlterationComment" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationRejectGetComment.jsp"/>
+        <put-attribute name="title" value="birth_alteration_reject_comment.title"/>
+    </definition>
+
+    <definition name="epr.birthAlterationPendingApproval" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationApprovalList.jsp"/>
+        <put-attribute name="title" value="birth_alteration_pending_approval.label"/>
+    </definition>
+    <definition name="epr.birthAlterationApproval" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationApproval.jsp"/>
+        <put-attribute name="title" value="birth_alteration_pending_approval.label"/>
+    </definition>
+    <definition name="epr.birthAlterationHome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationHome.jsp"/>
+        <put-attribute name="title" value="birth_alteration_home.title"/>
+    </definition>
+    <definition name="epr.printBirthAlterationNotice" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationNotice.jsp"/>
+        <put-attribute name="title" value="birth_alteration_notice_Print.title"/>
+    </definition>
+    <definition name="epr.birthAlterationHistory" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationHistory.jsp"/>
+        <put-attribute name="title" value="birth_alteration_notice_Print.title"/>
+    </definition>
+
+    <definition name="epr.selectBirthCertificateForAlteration" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationSelectType.jsp"/>
+        <put-attribute name="title" value="birth_alteration_type.title"/>
+    </definition>
+
+    <!--death alteration related tiles-->
+    <definition name="epr.deathAlterationSearchHome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlterationSearch.jsp"/>
+        <put-attribute name="title" value="death.alteration.search.title"/>
+    </definition>
+
+    <definition name="epr.deathAlterationCapture" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlteration.jsp"/>
+        <put-attribute name="title" value="death.alteration.capture.title"/>
+    </definition>
+
+    <definition name="epr.deathAlterationApprovalHome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlterationApprovalList.jsp"/>
+        <put-attribute name="title" value="death.alteration.approval.list.title"/>
+    </definition>
+
+    <definition name="epr.deathAlterationResult" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlterationResult.jsp"/>
+        <put-attribute name="title" value="death.alteration.results.title"/>
+    </definition>
+
+
+    <definition name="epr.deathAlterationRejectGetComment" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlterationRejectComment.jsp"/>
+        <put-attribute name="title" value="death.alteration.reject.comment"/>
+    </definition>
+
+    <definition name="epr.deathAlterationPrintLetter" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlterationConfirmationLetter.jsp"/>
+        <put-attribute name="title" value="death.alteration.print.letter"/>
+    </definition>
+
+    <!-- Death Registration Tiles -->
+
+    <definition name="epr.deathHome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathHome.jsp"/>
+        <put-attribute name="title" value="death_home.title"/>
+    </definition>
+
+    <definition name="epr.deathDeclaration_form1" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathRegistrationForm1.jsp"/>
+        <put-attribute name="title" value="death_declaration_form1.title"/>
+    </definition>
+
+    <definition name="epr.deathDeclaration_form2" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathRegistrationForm2.jsp"/>
+        <put-attribute name="title" value="death_declaration_form2.title"/>
+    </definition>
+
+    <definition name="epr.deathDeclaration_details" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathRegistrationDetails.jsp"/>
+        <put-attribute name="title" value="death_declaration_details.title"/>
+    </definition>
+
+    <definition name="epr.non_editable_deathDeclaration_form1" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/NonEditableDeathRegistrationForm1.jsp"/>
+        <put-attribute name="title" value="death_declaration_form1.title"/>
+    </definition>
+
+    <definition name="epr.non_editable_deathDeclaration_form2" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/NonEditableDeathRegistrationForm2.jsp"/>
+        <put-attribute name="title" value="death_declaration_form2.title"/>
+    </definition>
+
+    <definition name="epr.lateDeathDeclaration" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/LateDeclarationOfDeath.jsp"/>
+        <put-attribute name="title" value="late_death_declaration.title"/>
+    </definition>
+
+    <definition name="epr.deathCertificate" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathCertificate.jsp"/>
+        <put-attribute name="title" value="death_certificate.title"/>
+    </definition>
+
+    <definition name="epr.deathApproveAndPrint" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathApprovalAndPrintList.jsp"/>
+        <put-attribute name="title" value="title.death_approve_print_list.label"/>
+    </definition>
+
+    <definition name="epr.deathRejectGetComment" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathDeclarationReject.jsp"/>
+        <put-attribute name="title" value="death_reject_get_comment.label"/>
+    </definition>
+
+    <!--  User Management Tiles -->
+    <definition name="epr.UserManagementResultPage" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/UserManagementResultPage.jsp"/>
+        <put-attribute name="title" value="User Management Result Page"/>
+    </definition>
+    <definition name="epr.creatUser" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/CreateUser.jsp"/>
+        <put-attribute name="title" value="create_edit_user.title"/>
+    </definition>
+
+    <definition name="epr.viewUsers" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/viewUsers.jsp"/>
+        <put-attribute name="title" value="search_users.title"/>
+    </definition>
+
+    <definition name="epr.addEditDivisions" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/AddEditDivisions.jsp"/>
+        <put-attribute name="title" value="add_divisions.title"/>
+    </definition>
+
+    <definition name="epr.ReArrangeDivisions" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/RearrangeDivisions.jsp"/>
+        <put-attribute name="title" value="Re-arrange Divisions"/>
+    </definition>
+
+    <!--registrars management tiles-->
+    <definition name="epr.registrarsManagementList" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/ManageRegistrars.jsp"/>
+        <put-attribute name="title" value="registrars.managment.title"/>
+    </definition>
+
+    <definition name="epr.registrarsView" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/AddEditRegistrars.jsp"/>
+        <put-attribute name="title" value="registrars.veiw.title"/>
+    </definition>
+
+    <definition name="epr.addRegistrar" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/AddRegistrar.jsp"/>
+        <put-attribute name="title" value="registrars.veiw.title"/>
+    </definition>
+
+    <definition name="epr.findRegistrar" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/RegistrarSearchHome.jsp"/>
+        <put-attribute name="title" value="search.registrar"/>
+    </definition>
+
+    <definition name="epr.addAssignment" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/AddAssignment.jsp"/>
+        <put-attribute name="title" value="assignment.add.title"/>
+    </definition>
+
+    <definition name="epr.eventManagement" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/EventsViewer.jsp"/>
+        <put-attribute name="title" value="event.management.title"/>
+    </definition>
+
+    <definition name="epr.debugManegement" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/DebugDetails.jsp"/>
+        <put-attribute name="title" value="event.debugDetails.title"/>
+    </definition>
+
+    <definition name="epr.indexRecords" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/IndexRecords.jsp"/>
+        <put-attribute name="title" value="Index Records"/>
+    </definition>
+
+    <definition name="epr.generateReports" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/GenerateReports.jsp"/>
+        <put-attribute name="title" value="report.title"/>
+    </definition>
+
+    <!--  User Preferences Tiles -->
+    <definition name="epr.UserPreferences" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/preferences/UserPreferences.jsp"/>
+        <put-attribute name="title" value="UserPreferences.title"/>
+    </definition>
+
+    <definition name="epr.passwordChange" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/preferences/PasswordChange.jsp"/>
+        <put-attribute name="title" value="changePassword.title"/>
+    </definition>
+
+    <!-- Adoption Registration Tiles-->
+    <definition name="epr.AdoptionReg" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionRegistrationForm1.jsp"/>
+        <put-attribute name="title" value="adoption_reg_page01.title"/>
+    </definition>
+    <definition name="epr.AdoptionReReg" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionReRegistration.jsp"/>
+        <put-attribute name="title" value="adoption_re_reg.title"/>
+    </definition>
+    <definition name="epr.adoptionRegistrationHome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionRegistrationHomePage.jsp"/>
+        <put-attribute name="title" value="adoption_registration_home.label"/>
+    </definition>
+    <definition name="epr.adoptionApprovalAndPrint" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionApprovalAndPrintList.jsp"/>
+        <put-attribute name="title" value="adoption_approval_and_print_registration.label"/>
+    </definition>
+    <definition name="epr.adoptionSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/SearchAdoptionRecords.jsp"/>
+        <put-attribute name="title" value="search_adoption_records.label"/>
+    </definition>
+    <definition name="epr.adoptionSummary" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionResult.jsp"/>
+        <put-attribute name="title" value="adoption_summary.label"/>
+    </definition>
+    <definition name="epr.adoptionApplicantInfo" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionApplicantInfo.jsp"/>
+        <put-attribute name="title" value="adoption_applicant_info.label"/>
+    </definition>
+    <definition name="epr.adoptionCertificate" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionCertificate.jsp"/>
+        <put-attribute name="title" value="adoption_certificate.label"/>
+    </definition>
+
+    <definition name="epr.non_editable_adoptionCertificate" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/NonEditableAdoptionRegistrationForm1.jsp"/>
+        <put-attribute name="title" value="adoption_certificate.label"/>
+    </definition>
+    <!--Adoption Order Start-->
+    <definition name="epr.adoptionOrderDetailsList" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionOrderDetailsList.jsp"/>
+        <put-attribute name="title" value="adoption_order_list.label"/>
+    </definition>
+    <definition name="epr.adoptionOrderDetails" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionOrderDetails.jsp"/>
+        <put-attribute name="title" value="adoption_order_details.label"/>
+    </definition>
+    <!--End-->
+    <definition name="epr.adoptionReRegistrationLookup" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionReRegistrationLookup.jsp"/>
+        <put-attribute name="title" value="adoption_re_registration.label"/>
+    </definition>
+    <definition name="epr.assignedUserLocation" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/AssignedUserLocation.jsp"/>
+        <put-attribute name="title" value="assigned user location"/>
+    </definition>
+
+    <!--Population Registry Tiles-->
+    <definition name="epr.PRSAdvancedSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PRSAdvancedSearch.jsp"/>
+        <put-attribute name="title" value="search.title.prs"/>
+    </definition>
+
+    <definition name="epr.existingPersonRegistration" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/ExistingPersonRegistrationForm.jsp"/>
+        <put-attribute name="title" value="person_registration.title"/>
+    </definition>
+
+    <definition name="epr.personDetails" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonDetails.jsp"/>
+        <put-attribute name="title" value="person_details.title"/>
+    </definition>
+
+    <definition name="epr.personRegisterDetails" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonRegisterDetails.jsp"/>
+        <put-attribute name="title" value="person_register_details.title"/>
+    </definition>
+
+    <definition name="epr.PRSCertificate" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PRSCertificate.jsp"/>
+        <put-attribute name="title" value="prs_certificate.title"/>
+    </definition>
+
+    <definition name="epr.PersonApproval" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonApprovalList.jsp"/>
+        <put-attribute name="title" value="person_approval.title"/>
+    </definition>
+
+    <definition name="epr.personRejection" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonRejectDelete.jsp"/>
+        <put-attribute name="title" value="person_rejection.title"/>
+    </definition>
+
+    <definition name="epr.personDeletion" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonRejectDelete.jsp"/>
+        <put-attribute name="title" value="person_deletion.title"/>
+    </definition>
+
+    <definition name="epr.personApproveWarning" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonApprovalWarnings.jsp"/>
+        <put-attribute name="title" value="person_approval_warning.title"/>
+    </definition>
+
+    <definition name="epr.editPersonDetails" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonDetailUpdateForm.jsp"/>
+        <put-attribute name="title" value="person_detail_update.title"/>
+    </definition>
+
+    <!--marriages related tiles definitions-->
+    <definition name="epr.marriageNoticeInit" extends="epr.template">
+        <description>
+            marriage notice jsp page
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageNotice.jsp"/>
+        <put-attribute name="title" value="title.marriage.notice"/>
+    </definition>
+
+    <definition name="epr.marriageNoticeResults" extends="epr.template">
+        <description>
+            marriage notice results jsp page
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageNoticeResults.jsp"/>
+        <put-attribute name="title" value="title.marriage.notice.results"/>
+    </definition>
+
+    <definition name="epr.marriageNoticeSearchHome" extends="epr.template">
+        <description>
+            marriage notice search jsp page
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageNoticeSearch.jsp"/>
+        <put-attribute name="title" value="title.marriage.notice.search"/>
+    </definition>
+
+    <definition name="epr.marriageRegistration" extends="epr.template">
+        <description>
+            marriage registration
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageRegistration.jsp"/>
+        <put-attribute name="title" value="title.marriage.registration"/>
+    </definition>
+
+    <definition name="epr.marriageCertificate" extends="epr.template">
+        <description>
+            marriage certificate
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageCertificate.jsp"/>
+        <put-attribute name="title" value="title.marriage.certificate"/>
+    </definition>
+
+    <definition name="epr.marriageNoticeTypeSelect" extends="epr.template">
+        <description>
+            select marriage notice type
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/SelectMarriageNoticeType.jsp"/>
+        <put-attribute name="title" value="title.marriage.notice.type.select"/>
+    </definition>
+
+    <definition name="epr.marriageRegisterSearchInit" extends="epr.template">
+        <description>
+            marriage register search jsp page
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageRegisterSearch.jsp"/>
+        <put-attribute name="title" value="title.marriage.register.search"/>
+    </definition>
+
+    <definition name="epr.marriageRegisterWarnings" extends="epr.template">
+        <description>
+            warnings list page after approve marriage register with warnings
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageRegisterWarnings.jsp"/>
+        <put-attribute name="title" value="title.marriage.register.warnings"/>
+    </definition>
+
+    <definition name="epr.marriageRegistrationSuccess" extends="epr.template">
+        <description>
+            success page for marriage registration
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageRegistrationResults.jsp"/>
+        <put-attribute name="title" value="title.marriage.registration.results"/>
+    </definition>
+
+    <definition name="epr.marriageLicenseSearchInit" extends="epr.template">
+        <description>
+            marriage license search jsp page
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageLicenseSearch.jsp"/>
+        <put-attribute name="title" value="title.marriagelicense.search"/>
+    </definition>
+
+    <definition name="epr.marriageExtract" extends="epr.template">
+        <description>
+            Extract of Marriage Register
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageExtract.jsp"/>
+        <put-attribute name="title" value="title.marriageregister.extract"/>
+    </definition>
+
+    <definition name="epr.divorceExtract" extends="epr.template">
+        <description>
+            Extract of Divorce Register
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/DivorceExtract.jsp"/>
+        <put-attribute name="title" value="title.divorceregister.extract"/>
+    </definition>
+
+    <definition name="epr.marriageNoticeWarn" extends="epr.template">
+        <description>
+            Extract of Marriage Register
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageNoticeWarnings.jsp"/>
+        <put-attribute name="title" value="title.marriage.notice.warnings"/>
+    </definition>
+
+    <definition name="epr.marriageNoticeReject" extends="epr.template">
+        <description>get comment page for rejecting marriage notice</description>
+        <put-attribute name="title" value="title.give.comment"/>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageNoticeRejectGetComment.jsp"/>
+    </definition>
+
+    <definition name="epr.licenseToMarriage" extends="epr.template">
+        <description>
+            print license for marriage
+        </description>
+        <put-attribute name="title" value="title.license.marriage"/>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/LicenseToMarriage.jsp"/>
+    </definition>
+
+    <definition name="epr.printScannedMarriageCertificate" extends="epr.template">
+        <description>
+            print scanned marriage certificate
+        </description>
+        <put-attribute name="title" value="title.marriage.scannedmarriagecertprint"/>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/ScannedMarriageCertificate.jsp"/>
+    </definition>
+    <definition name="epr.marriageRegistraionNoticeHome" extends="epr.template">
+        <description>
+            simple home page for both marriage and notice registrations
+        </description>
+        <put-attribute name="title" value="title.marriage.home"/>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageRegistrationHome.jsp"/>
+    </definition>
+
+</tiles-definitions>

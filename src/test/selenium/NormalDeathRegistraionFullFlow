@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head profile="http://selenium-ide.openqa.org/profiles/test-case">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="selenium.base" href=""/>
+        <title>normalDeathST</title>
+    </head>
+    <body>
+        <table cellpadding="1" cellspacing="1" border="1">
+            <thead>
+                <tr>
+                    <td rowspan="1" colspan="3">normalDeathST</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>clickAndWait</td>
+                    <td>logout-button</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>eprLogin_userName</td>
+                    <td>rg</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>eprLogin_password</td>
+                    <td>password</td>
+                </tr>
+                <tr>
+                    <td>clickAndWait</td>
+                    <td>eprLogin_0</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>clickAndWait</td>
+                    <td>//div[@id='xmain-menu']/ul/li[2]/a/label</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>open</td>
+                    <td>/ecivil/deaths/eprInitDeathDeclaration.do</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>deathSerialNo</td>
+                    <td>2010012236</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>dateOfRegistrationDatePicker</td>
+                    <td>2010-09-01</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>link=1</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>death-registration-form-1_deathTypeNORMAL</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>deathDatePicker</td>
+                    <td>2010-08-20</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>//div[@id='ui-datepicker-div']/div/a[1]/span</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>link=4</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>placeOfDeath</td>
+                    <td>කොළඹ මහ රෝහල</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>placeOfDeathInEnglish</td>
+                    <td>colombo genaral hospital</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>death-registration-form-1_death_causeOfDeathEstablishedtrue</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>death-registration-form-1_death_infantLessThan30Daysfalse</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>death-registration-form-1_death_causeOfDeath</td>
+                    <td>අමාසයේ පිලිකාවක්</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>death-registration-form-1_death_icdCodeOfCause</td>
+                    <td>cancer ICD</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>placeOfBurial</td>
+                    <td>බත්තරමුල්ල අදාහනාගාරය</td>
+                </tr>
+                <tr>
+                    <td>select</td>
+                    <td>death-registration-form-1_death_preferredLanguage</td>
+                    <td>label=සිංහල</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>deathPerson_PINorNIC</td>
+                    <td>1234564567</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>deathPersonAge</td>
+                    <td>56</td>
+                </tr>
+                <tr>
+                    <td>select</td>
+                    <td>deathPersonGender</td>
+                    <td>label=Male</td>
+                </tr>
+                <tr>
+                    <td>select</td>
+                    <td>deathPersonRace</td>
+                    <td>label=1 : Sinhalese</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>deathPersonNameOfficialLang</td>
+                    <td>අංගම්මන රන්පන්හිද සමරදිවකර මුදියන්සේලාගෙ බණ්ඩාර අංගම්මන</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>deathPersonNameInEnglish</td>
+                    <td>angammana ranpanhida samaradiwakara mudiyanselage bandara angammana</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>deathPersonPermanentAddress</td>
+                    <td>56 මරදාන පාර බොරැල්ල</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>deathPersonFather_PINorNIC</td>
+                    <td>530232026V</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>deathPersonFatherFullName</td>
+                    <td>අංගම්මන රන්පන්හිද චාර්ලිස් අප්පුහාම්</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>deathPersonMother_PINorNIC</td>
+                    <td>530232026V</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>deathPersonMotherFullName</td>
+                    <td>සමරකෝං මුදියන්සෙලාගේ දෝන කූසුමාවතී පොඩිමැනිකේ</td>
+                </tr>
+                <tr>
+                    <td>clickAndWait</td>
+                    <td>death-registration-form-1_0</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>declarantTypeFATHER</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>declarantAddress</td>
+                    <td>56 මරදාන පාර බොරැල්ල</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>declarantPhone</td>
+                    <td>4567891235</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>declarantEMail</td>
+                    <td>donakatarina@yahoo.com</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>declarantDatePicker</td>
+                    <td>2010-09-01</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>link=1</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>notifying_authority_NICorPIN</td>
+                    <td>530232026V</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>notifyingAuthorityName</td>
+                    <td>ලෝගේස්වරන් යුවන් ශන්කර්</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>notifyingAuthorityAddress</td>
+                    <td>54 මොදර මට්ටක්කුලිය</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>submitDatePicker</td>
+                    <td>2010-09-01</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>link=1</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>clickAndWait</td>
+                    <td>death-registration-form-2_0</td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </body>
+</html>

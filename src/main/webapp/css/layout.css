@@ -1,0 +1,218 @@
+/* Style for the Layout */
+
+/* Basic layout */
+html {
+    background: url(../images/body-bg1.png) repeat;
+}
+
+body {
+    font-size: 9pt;
+}
+
+#wrapper {
+    width: 1250px;
+    margin: auto;
+}
+
+#layout-header {
+    width: 1250px;
+    height: 151px;
+}
+
+#layout-body {
+    width: 100%;
+    margin-top: 2px;
+}
+
+#body-sidebar {
+    width: 198px;
+    float: left;
+    background: url("../images/login-form-bg.png") repeat;
+}
+
+#body-content {
+    width: 1050px;
+    margin-left: 200px;
+    min-height: 590px;
+}
+
+#body-content-title {
+    background: url(../images/title-bg-1.png) repeat-x;
+    text-align: center;
+    text-transform: capitalize;
+    line-height: 25px;
+    font-size: 11pt;
+    padding: 3px 0;
+}
+
+#page-help {
+    float:left;
+}
+
+#layout-footer {
+    width: 100%;
+    height: 30px;
+    float: left;
+    margin-top: 2px;
+    font-size: 10pt;
+    background: url(../images/title-bg-1.png) repeat-x;
+}
+
+#user-language {
+    float: right;
+    margin-top: 120px;
+    margin-right: 10px;
+}
+
+#logout-button {
+    float: right;
+    text-transform: capitalize;
+    margin: 10px 5px 5px 0;
+}
+
+#logout-button:hover {
+    color: darkred;
+}
+
+/* Styles for the Login Page */
+#login-form {
+    width: 40%;
+    height:160px;
+    margin: 16% auto;
+    float: none;
+    padding: 5px;
+    background: url(../images/login-form-bg.png) repeat;
+}
+
+#login-form #login-form-title {
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    background: lightgoldenrodyellow url(../images/login-title-bg.png);
+    font-size: 11pt;
+    text-transform: capitalize;
+    line-height: 30px;
+    margin-top: -5px;
+    margin-left: -5px;
+    padding-left: 10px;
+    color: #3c3c3c;
+}
+
+#login-form #login-form-body {
+    margin-top: 5px;
+    height: auto;
+    padding: 10px;
+}
+
+#login-form #login-form-body label {
+    width: 45%;
+    margin-right: 5px;
+    float: left;
+    margin-bottom: 5px;
+    height: 25px;
+    font-size: 10pt;
+    color: #3c3c3c;
+}
+
+#login-form #login-form-body input {
+    width: 45%;
+    float: right;
+    margin-bottom: 5px;
+
+}
+
+#login-form #login-form-body div {
+    width: 100%;
+}
+
+#login-form #login-form-body div input {
+    float: right;
+    text-transform: capitalize;
+    width: 111px;
+    margin: 10px 0 10px 5px;
+    background: url(../images/button_bg_hover_1.png) no-repeat;
+    height: 30px;
+    border: none;
+}
+
+#login-form #login-form-body div input:hover {
+    color: darkred;
+    background: url(../images/button_bg_hover_2.png) no-repeat;
+}
+
+.login-table {
+    width: 100%;
+}
+
+.login-table td {
+    width: 50%
+}
+
+.login-table input {
+    width: 100%
+}
+
+/* Styles for the Main-Menu */
+
+#main-menu a {
+    display: list-item;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+
+.menu, .menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.menu {
+    width: 198px;
+}
+
+.menu li {
+    margin-bottom: 1px;
+}
+
+.menu a {
+    border: none;
+    font-size: 9pt;
+    color: saddlebrown;
+    text-transform: capitalize;
+    text-decoration: none;
+    padding: 2px 5px;
+    line-height: 20px;
+    background: url(../images/title-bg.png) repeat;
+    text-decoration: none;
+}
+
+.menu a:hover,
+    .menu a:focus,
+    .menu a:active {
+    color: black;
+    border-left: 5px solid #9933ff;
+}
+
+.menu ul li {
+    padding-left: 5px;
+}
+
+.menu ul a {
+    background: url(../images/menu-2.png) repeat;
+    color: saddlebrown;
+    border-bottom: 1px inset saddlebrown;
+}
+
+.hidden {
+    display: none;
+}
+
+#home-page-outer {
+    padding: 10px;
+    text-align: center;
+}
+
+#home-page-outer img {
+    margin: auto;
+    clear: both;
+}
