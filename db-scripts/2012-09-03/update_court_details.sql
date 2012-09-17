@@ -60,14 +60,14 @@ INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey
 INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(47,'District Court of Thisssamaharama','තිස්සමහාරාම දිසා අධිකරණය','திஸ்சமஹாராமை மாவட்ட நீதிமன்றம்', 3);
 
 -- Courts in Northern Province
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(48,'District Court of Jaffna','Jaffna දිසා අධිකරණය','Jaffna', 4);
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(49,'District Court of Mallakam','Mallakam දිසා අධිකරණය','Mallakam', 4);
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(50,'District Court of Kayts','Kayts දිසා අධිකරණය','Kayts', 4);
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(51,'District Court of Chavakachcheri','Chavakachcheri දිසා අධිකරණය','Chavakachcheri', 4);
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(52,'District Court of Point Pedro','Point Pedro දිසා අධිකරණය','Point Pedro', 4);
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(53,'District Court of Mannar','Mannar දිසා අධිකරණය','Mannar', 4);
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(54,'District Court of Vavuniya','Vavuniya දිසා අධිකරණය','Vavuniya', 4);
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(55,'District Court of Killinochchi','Killinochchi දිසා අධිකරණය','Killinochchi', 4);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(48,'District Court of Jaffna','යාපනය දිසා අධිකරණය','யாழ்ப்பாணம்  மாவட்ட நீதிமன்றம்', 4);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(49,'District Court of Mallakam','මලක්කම් දිසා අධිකරණය','மல்லாகம்  மாவட்ட நீதிமன்றம்', 4);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(50,'District Court of Kayts','කයිට්ස් දිසා අධිකරණය','ஊர்க்காவற்றுறை  மாவட்ட நீதிமன்றம்', 4);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(51,'District Court of Chavakachcheri','චාවකච්චේරි දිසා අධිකරණය','சாவகச்சேரி  மாவட்ட நீதிமன்றம்', 4);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(52,'District Court of Point Pedro','පේදුරු තුඩුව දිසා අධිකරණය','பருத்தித்துறை  மாவட்ட நீதிமன்றம்', 4);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(53,'District Court of Mannar','මන්නාරම දිසා අධිකරණය','மன்னார்  மாவட்ட நீதிமன்றம்', 4);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(54,'District Court of Vavuniya','වව්නියාව දිසා අධිකරණය','வவுனியா  மாவட்ட நீதிமன்றம்', 4);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(55,'District Court of Killinochchi','කිලිනොච්චිය දිසා අධිකරණය','கிளிநொச்சி  மாவட்ட நீதிமன்றம்', 4);
 
 -- Courts in Eastern Province
 INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(56,'District Court of Ampara','අම්පාර දිසා අධිකරණය','அம்பாறை மாவட்ட நீதிமன்றம்', 5);
@@ -76,11 +76,11 @@ INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey
 INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(59,'District Court of Kalmunai','කල්මුණේ දිසා අධිකරණය','கல்முனை மாவட்ட நீதிமன்றம்', 5);
 INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(60,'District Court of Akkaraipattu','අක්කරපත්තු දිසා අධිකරණය','அக்கரைப்பற்று மாவட்ட நீதிமன்றம்', 5);
 INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(61,'District Court of Pothuvil','පොතුවිල් දිසා අධිකරණය','பொத்துவில் மாவட்ட நீதிமன்றம்', 5);
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(62,'District Court of Batticoloa','Batticoloa දිසා අධිකරණය','Batticoloa', 5);
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(63,'District Court of Valachchenei','Valachchenei දිසා අධිකරණය','Valachchenei', 5);
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(64,'District Court of Trincomalee','Trincomalee දිසා අධිකරණය','Trincomalee', 5);
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(65,'District Court of Mutur','Mutur දිසා අධිකරණය','Mutur', 5);
-INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(66,'District Court of Kantale','Kantale දිසා අධිකරණය','Kantale', 5);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(62,'District Court of Batticoloa','මඩකලපුව දිසා අධිකරණය','மட்டகளப்பு  மாவட்ட நீதிமன்றம்', 5);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(63,'District Court of Valachchenei','වාලච්චේනෙ දිසා අධිකරණය','வாழைச்சேனை  மாவட்ட நீதிமன்றம்', 5);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(64,'District Court of Trincomalee','ත්‍රිකුණාමලය දිසා අධිකරණය','திருகோணமலை  மாவட்ட நீதிமன்றம்', 5);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(65,'District Court of Mutur','මුතූර් දිසා අධිකරණය','மூதூர்  மாவட்ட நீதிமன்றம்', 5);
+INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(66,'District Court of Kantale','කන්තලේ දිසා අධිකරණය','கந்தளை  மாவட்ட நீதிமன்றம்', 5);
 
 -- Courts in North-Western Province
 INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(67,'District Court of Kurunegla','කුරුණෑගල දිසා අධිකරණය','குருநாகலை மாவட்ட நீதிமன்றம்', 6);
