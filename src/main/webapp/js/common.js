@@ -19,3 +19,23 @@ function numbersOnly(e, decimal) {
     else
         return false;
 }
+
+function limitLines(obj, e) {
+    var keynum;
+    var address = getLineNumber(obj);
+    if(e.which) {
+        keynum = e.which;
+    }
+
+    if(keynum == 13) {
+        if(address == obj.rows) {
+            return false;
+        }else{
+            address++;
+        }
+    }
+}
+
+function getLineNumber(textarea) {
+    return textarea.value.substr(0, textarea.selectionStart).split("\n").length;
+}

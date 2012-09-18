@@ -21,7 +21,13 @@
         });
     });
 
-    function setApplicantInfo(pin, name, address, fatherAddress, wifeName, wifePin) {
+    function setApplicantInfo() {
+        var pin = $('#pin').val();
+        var name = $('#name').val();
+        var address = $('#address').val();
+        var wifePin = $('#wifePin').val();
+        var wifeName = $('#wifeName').val();
+
         var applicantPin = document.getElementById("certifcateApplicantPin").value = "";
         var applicantName = document.getElementById("certificateApplicantName").value = "";
         var applicantAddress = document.getElementById("certificateApplicantAddress").value = "";
@@ -35,7 +41,7 @@
         if (domObject1.checked) {
             var applicantPin = document.getElementById("certifcateApplicantPin").value = wifePin;
             var applicantName = document.getElementById("certificateApplicantName").value = wifeName;
-            var applicantAddress = document.getElementById("certificateApplicantAddress").value = fatherAddress;
+            var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
         }
     }
 
@@ -241,7 +247,7 @@
             (නමක් දී ඇති නම්) <br/>
             தற்போதைய பெயர் <br/>
             (பெயர் குறிப்பிடப்பட்டிருந்தால் )
-            Existing Name <br/>
+            <br/>Existing Name
             (if already given)
         </td>
         <td colspan="4"><s:label value="%{#request.adoption.childExistingName}" id="childExistingName"/></td>
@@ -305,11 +311,11 @@
             <td><s:if test="#request.adoption.applicantMother==false">
                 <s:radio name="certificateApplicantType" id="certificateApplicantType"
                          list="#@java.util.HashMap@{'FATHER':''}"
-                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}','','','');"/>
+                         onchange="setApplicantInfo();"/>
             </s:if>
                 <s:else><s:radio name="certificateApplicantType" id="certificateApplicantType"
                                  list="#@java.util.HashMap@{'FATHER':''}"
-                                 onchange="setApplicantInfo('','','','','','');"/>
+                                 onchange="setApplicantInfo();"/>
                 </s:else>
             </td>
             <td>මව <br/>
@@ -319,12 +325,12 @@
             <td><s:if test="#request.adoption.applicantMother==true">
                 <s:radio name="certificateApplicantType" id="certificateApplicantType"
                          list="#@java.util.HashMap@{'MOTHER':''}"
-                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}','','','');"/>
+                         onchange="setApplicantInfo();"/>
             </s:if>
                 <s:else>
                     <s:radio name="certificateApplicantType" id="certificateApplicantType"
                              list="#@java.util.HashMap@{'MOTHER':''}"
-                             onchange="setApplicantInfo('','','','%{#request.adoption.applicantAddress}','%{#request.adoption.wifeName}','%{#request.adoption.wifePINorNIC}');"/>
+                             onchange="setApplicantInfo();"/>
                 </s:else>
             </td>
             <td>වෙනත් <br/>
@@ -333,7 +339,7 @@
             </td>
             <td>
                 <s:radio name="certificateApplicantType" id="certificateApplicantType"
-                         list="#@java.util.HashMap@{'OTHER':''}" onchange="setApplicantInfo('','','','','','');"/>
+                         list="#@java.util.HashMap@{'OTHER':''}" onchange="setApplicantInfo();"/>
             </td>
         </tr>
         <tr>
@@ -375,7 +381,7 @@
                 Address
             </td>
             <td colspan="6">
-                <s:textarea id="certificateApplicantAddress" name="certificateApplicantAddress"
+                <s:textarea id="certificateApplicantAddress" name="certificateApplicantAddress" cols="50" rows="4" onkeydown="return limitLines(this, event);"
                             cssStyle="width:98.2%;"/>
             </td>
         </tr>
@@ -395,5 +401,11 @@
     <s:hidden id="error7" value="%{getText('er.label.serialNo.required')}"/>
     <s:hidden id="error8" value="%{getText('er.label.serialNo.format')}"/>
 
+<%-- Values to auto populate applicant info --%>
+    <s:hidden id="pin" name="adoption.applicantPINorNIC"/>
+    <s:hidden id="name" name="adoption.applicantName"/>
+    <s:hidden id="address" name="adoption.applicantAddress"/>
+    <s:hidden id="wifeName" name="adoption.wifeName"/>
+    <s:hidden id="wifePin" name="adoption.wifePINorNIC"/>
 </s:form>
 </div>
