@@ -295,6 +295,30 @@ function enableCertificateInfo(mode) {
     document.getElementById('oldBirthRegistrationDate').disabled = mode;
     document.getElementById('oldBirthSLIN').disabled = mode;
 }
+
+var keynum, address1 = 1, address2 = 1;
+function limitLines(obj, e) {
+    if(e.which) {
+        keynum = e.which;
+    }
+
+    if(keynum == 13) {
+        if(obj.id == "applicantAddress"){
+            if(address1 == obj.rows) {
+                return false;
+            }else{
+                address1++;
+            }
+        }else if(obj.id == "applicantSecondAddress"){
+            if(address2 == obj.rows) {
+                return false;
+            }else{
+                address2++;
+            }
+        }
+    }
+}
+
 </script>
 
 
@@ -497,7 +521,7 @@ function enableCertificateInfo(mode) {
             <br>முகவரி 1
             <br>Address 1
         </td>
-        <td colspan="4"><s:textarea name="adoption.applicantAddress"
+        <td colspan="4"><s:textarea name="adoption.applicantAddress" cols="50" rows="4" onkeydown="return limitLines(this, event);"
                                     id="applicantAddress"/></td>
     </tr>
     <tr>
@@ -506,7 +530,7 @@ function enableCertificateInfo(mode) {
             <br>முகவரி 2
             <br>Address 2
         </td>
-        <td colspan="4"><s:textarea name="adoption.applicantSecondAddress"
+        <td colspan="4"><s:textarea name="adoption.applicantSecondAddress" cols="50" rows="4" onkeydown="return limitLines(this, event);"
                                     id="applicantSecondAddress"/></td>
     </tr>
     <tr>
