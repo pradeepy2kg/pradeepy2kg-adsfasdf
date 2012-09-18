@@ -296,29 +296,6 @@ function enableCertificateInfo(mode) {
     document.getElementById('oldBirthSLIN').disabled = mode;
 }
 
-var keynum, address1 = 1, address2 = 1;
-function limitLines(obj, e) {
-    if(e.which) {
-        keynum = e.which;
-    }
-
-    if(keynum == 13) {
-        if(obj.id == "applicantAddress"){
-            if(address1 == obj.rows) {
-                return false;
-            }else{
-                address1++;
-            }
-        }else if(obj.id == "applicantSecondAddress"){
-            if(address2 == obj.rows) {
-                return false;
-            }else{
-                address2++;
-            }
-        }
-    }
-}
-
 </script>
 
 
