@@ -22,7 +22,6 @@
     });
 
     function setApplicantInfo(pin, name, address, fatherAddress, wifeName, wifePin) {
-
         var applicantPin = document.getElementById("certifcateApplicantPin").value = "";
         var applicantName = document.getElementById("certificateApplicantName").value = "";
         var applicantAddress = document.getElementById("certificateApplicantAddress").value = "";
@@ -34,15 +33,9 @@
         }
         domObject1 = document.getElementsByName("certificateApplicantType")[1];
         if (domObject1.checked) {
-            if (pin != "" && name != "" && address != "") {
-                var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
-                var applicantName = document.getElementById("certificateApplicantName").value = name;
-                var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
-            }
-            else {
-                var applicantPin = document.getElementById("certifcateApplicantPin").value = wifePin;
-                var applicantName = document.getElementById("certificateApplicantName").value = wifeName;
-            }
+            var applicantPin = document.getElementById("certifcateApplicantPin").value = wifePin;
+            var applicantName = document.getElementById("certificateApplicantName").value = wifeName;
+            var applicantAddress = document.getElementById("certificateApplicantAddress").value = fatherAddress;
         }
     }
 
