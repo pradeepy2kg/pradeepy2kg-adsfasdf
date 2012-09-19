@@ -1,6 +1,7 @@
 package lk.rgd.common.core.dao;
 
 import lk.rgd.AppConstants;
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.ProvinceDAO;
 import lk.rgd.common.api.domain.Province;
 import lk.rgd.common.api.domain.User;
@@ -74,5 +75,23 @@ public class ProvinceDAOImpl extends BaseDAO implements ProvinceDAO {
             }
         }
         return provinces;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public String getNameByPK(int provinceUKey, String language) {
+        Province province = getProvinceByUKey(provinceUKey);
+        if (AppConstants.SINHALA.equals(language)) {
+            return province.getSiProvinceName();
+        } else if (AppConstants.TAMIL.equals(language)) {
+            return province.getTaProvinceName();
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            return province.getEnProvinceName();
+        }else {
+            handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
+        }
+        return AppConstants.EMPTY_STRING;
     }
 }

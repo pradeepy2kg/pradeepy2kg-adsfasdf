@@ -96,6 +96,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String courtName;
     private String wifeCountryName;
     private String birthDistrictName;
+    private String birthProvinceName;
     private String certificateApplicantAddress;
     private String certificateApplicantPINorNIC;
     private String certificateApplicantName;
@@ -327,8 +328,14 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             populateApprovalAndPrintList();
             return "skip";
         }
-        // todo remove
-        // String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+
+        if(adoption.getBirthProvinceUKey() > 0){
+            birthProvinceName = provinceDAO.getNameByPK(adoption.getBirthProvinceUKey(), language);
+        }
+        if(adoption.getBirthDistrictId() > 0){
+            birthDistrictName = districtDAO.getNameByPK(adoption.getBirthDistrictId(), language);
+        }
+
         if (adoption.getBirthDivisionId() > 0) {
             birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
             dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
@@ -1298,5 +1305,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setSearchResults(List<AdoptionOrder> searchResults) {
         this.searchResults = searchResults;
+    }
+
+    public String getBirthProvinceName() {
+        return birthProvinceName;
+    }
+
+    public void setBirthProvinceName(String birthProvinceName) {
+        this.birthProvinceName = birthProvinceName;
     }
 }

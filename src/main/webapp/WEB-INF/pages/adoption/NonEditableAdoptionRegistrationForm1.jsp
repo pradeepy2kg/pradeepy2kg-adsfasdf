@@ -159,13 +159,29 @@
         </td>
         <td colspan="4"><s:label value="%{#request.adoption.applicantName}"/></td>
     </tr>
-
     <tr>
-        <td>ලිපිනය <br/>
-            முகவரி<br/>
-            Address
+        <td>
+            ලිපිනය 1
+            <br>முகவரி 1
+            <br>Address 1
         </td>
         <td colspan="4"><s:label value="%{#request.adoption.applicantAddress}"/></td>
+    </tr>
+    <tr>
+        <td>
+            ලිපිනය 2
+            <br>முகவரி 2
+            <br>Address 2
+        </td>
+        <td colspan="4"><s:label value="%{#request.adoption.applicantSecondAddress}"/></td>
+    </tr>
+    <tr>
+        <td>
+            රැකියාව
+            <br>தொழில்
+            <br>Occupation
+        </td>
+        <td colspan="4"><s:label value="%{#request.adoption.applicantOccupation}"/></td>
     </tr>
     </tbody>
 </table>
@@ -211,6 +227,14 @@
             Name of Mother
         </td>
         <td colspan="4"><s:label value="%{#request.adoption.wifeName}"/></td>
+    </tr>
+    <tr>
+        <td>
+            මවගේ රැකියාව
+            <br>தாயின் தொழில்
+            <br>Occupation of Mother
+        </td>
+        <td colspan="4"><s:label value="%{#request.adoption.wifeOccupation}"/></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
@@ -296,70 +320,77 @@
     </tr>
 </table>
 
-
-<table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="0">
-    <tr>
-        <td width="70%">උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය <br/>
-            பிறப்புச் சான்றிதழின் தொடர் இலக்கம்<br/>
-            The serial number of the Birth Certificate
-        </td>
-        <td width="30%">
-            <s:if test="#request.adoption.birthCertificateNumber!=0"><s:label
-                    value="%{#request.adoption.birthCertificateNumber}" cssStyle="width:85%;"/></s:if></td>
-    </tr>
-</table>
-<table class="adoption-reg-form-header-table">
-    <tr>
-        <td>හෝ<br/> அல்லது <br/>OR
-        </td>
-    </tr>
-</table>
 <table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="0">
     <caption></caption>
     <col width="330px"/>
     <col width="700px"/>
     <tbody>
     <tr>
-        <td colspan="2" style="text-align:center;">උපත ලියපදින්ච්චි කිරීමේ රිසීට් පතේ සටහන් <br/>
-            பிறப்பு பதிவு பற்றுச்சீட்டின் குறிப்பு<br/>
-            Birth Registration acknowledgement slip
+        <td>
+            උප්පැන්න සහතිකයේ අංකය<br/>
+            Birth Certificate Number in ta<br/>
+            Birth Certificate Number
+        </td>
+        <td colspan="4">
+            <s:if test="#request.adoption.birthCertificateNumber!=0">
+                <s:label value="%{#request.adoption.birthCertificateNumber}"/>
+            </s:if>
         </td>
     </tr>
     <tr>
-        <td>දිස්ත්‍රික්කය <br/>
-            மாவட்டம்<br/>
-            District
+        <td>
+            අනන්‍යතා අංකය <br/>
+            அடையாள எண் <br/>
+            Identification Number
         </td>
-        <td><s:label value="%{#request.birthDistrictName}"/>
+        <td colspan="4">
+            <s:label value="%{#request.adoption.oldBirthSLIN}"/>
         </td>
     </tr>
     <tr>
-        <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-            பிரதேச செயலாளர் பிரிவு<br/>
+        <td colspan="1">
+            පළාත
+            <br>Province in ta
+            <br>Province
+        </td>
+        <td colspan="4"><s:label value="%{#request.birthProvinceName}"/></td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            දිස්ත්‍රික්කය
+            <br>மாவட்டம்
+            <br>District
+        </td>
+        <td colspan="4"><s:label value="%{#request.birthDistrictName}"/></td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+            <br/>பிரதேச செயளாளர் பிரிவு
             <br/>Divisional Secretary Division
         </td>
-        <td>
-            <s:label value="%{#request.dsDivisionName}" cssStyle="float:left;  width:240px;"/>
+        <td colspan="4">
+            <s:label value="%{#request.adoption.oldBirthDSName}"/>
         </td>
     </tr>
     <tr>
-        <td>ලියාපදිංචි කිරීමේ කොට්ටාශය <br/>
-            பதிவுப் பிரிவு<br/>
-            Registration Division
+        <td colspan="1">
+            ලියාපදිංචි කිරීමේ කොට්ටාශය
+            <br>பதிவுப்பிரிவு
+            <br>Registration Division
         </td>
-        <td>
-            <s:label value="%{#request.birthDivisionName}" cssStyle=" width:240px;float:left;"/>
+        <td colspan="4">
+            <s:label value="%{#request.adoption.oldBirthRegistrationDivisionName}"/>
         </td>
     </tr>
     <tr>
-        <td>අනුක්‍රමික අංකය <br/>
-            தொடர் இலக்கம்<br/>
-            Serial Number
-        </td>
         <td>
-            <s:if test="#request.adoption.birthRegistrationSerial !=0">
-                <s:label value="%{#request.adoption.birthRegistrationSerial}" cssStyle="width:200px"/>
-            </s:if>
+            ලියාපදිංචි කළ දිනය<br/>
+            Registration Date in ta<br/>
+            Registration Date
+        </td>
+        <td colspan="4">
+            <s:label value="%{#request.adoption.oldBirthRegistrationDate}"/>
         </td>
     </tr>
     </tbody>
