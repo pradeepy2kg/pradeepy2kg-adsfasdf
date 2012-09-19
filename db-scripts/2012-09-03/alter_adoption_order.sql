@@ -13,6 +13,7 @@ ALTER TABLE ADOPTION_ORDER ADD COLUMN applicantSecondAddress varchar(255) DEFAUL
 
 -- Remove Birth Serial number
 ALTER TABLE ADOPTION_ORDER DROP COLUMN birthRegistrationSerial;
+ALTER TABLE ADOPTION_ORDER DROP COLUMN birthDivisionId;
 
 -- Add Foreign Key
 ALTER TABLE ADOPTION_ORDER ADD CONSTRAINT `FK_AdoptionOrder_ZonalOffice_noticingZonalOffice` FOREIGN KEY (`noticingZonalOffice`) REFERENCES `COMMON`.`ZONAL_OFFICES` (`zonalOfficeUKey`);
