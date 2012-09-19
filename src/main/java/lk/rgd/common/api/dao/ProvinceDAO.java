@@ -49,4 +49,13 @@ public interface ProvinceDAO {
      * @return          Map of Provinces in the selected language
      */
     public Map<Integer, String> getActiveProvinces(String language);
+
+    /**
+     * Returns the Name of the province in the given language
+     *
+     * @param provinceUKey ProvinceUKey of the selected province
+     * @param language      Selected language
+     * @return  Name of the province in the given language
+     */
+    public String getNameByPK(int provinceUKey, String language);
 }
