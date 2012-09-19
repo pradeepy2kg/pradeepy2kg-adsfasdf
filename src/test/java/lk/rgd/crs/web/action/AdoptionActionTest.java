@@ -94,7 +94,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("adoption.applicantName", "Rathnasiri Banda");
         request.setParameter("adoption.applicantPINorNIC", "654425588V");
         request.setParameter("adoption.applicantPassport", "456456456");
-        request.setParameter("adoption.birthCertificateSerial", "000002");
+//        request.setParameter("adoption.birthCertificateSerial", "000002");
         request.setParameter("adoption.childAgeMonths", "2");
         request.setParameter("adoption.childAgeYears", "1");
         request.setParameter("adoption.childBirthDate", "2009-08-03T00:00:00+05:30");
@@ -112,7 +112,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("adoption.wifePINorNIC", "689789789V");
         request.setParameter("adoption.wifePassport", "456535355");
         request.setParameter("birthDistrictId", "1");
-        request.setParameter("birthDivisionId", "1");
+//        request.setParameter("birthDivisionId", "1");
         request.setParameter("adoption.adoptionEntryNo", "1");
         request.setParameter("dojo.adoption.childBirthDate", "2009-08-03");
         request.setParameter("dojo.adoption.orderIssuedDate", "2010-08-17");
@@ -146,7 +146,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("adoption.applicantName", "Rathnasiri Banda");
         request.setParameter("adoption.applicantPINorNIC", "654425588V");
         request.setParameter("adoption.applicantPassport", "456456456");
-        request.setParameter("adoption.birthCertificateSerial", "000002");
+//        request.setParameter("adoption.birthCertificateSerial", "000002");
         request.setParameter("adoption.childAgeMonths", "2");
         request.setParameter("adoption.childAgeYears", "1");
         request.setParameter("adoption.childBirthDate", "2009-08-03T00:00:00+05:30");
@@ -164,7 +164,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("adoption.wifePINorNIC", "689789789V");
         request.setParameter("adoption.wifePassport", "456535355");
         request.setParameter("birthDistrictId", "1");
-        request.setParameter("birthDivisionId", "1");
+//        request.setParameter("birthDivisionId", "1");
         request.setParameter("adoption.adoptionEntryNo", "1");
         request.setParameter("dojo.adoption.childBirthDate", "2009-08-03");
         request.setParameter("dojo.adoption.orderIssuedDate", "2010-08-17");
@@ -375,6 +375,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
             adoption.setChildNewName("child new name" + i);
             adoption.setChildAgeYears(10);
             adoption.setChildGender(0);
+            adoption.setAdoptionEntryNo(1l);
             adoption.setLanguageToTransliterate("si");
             adoption.setNoticingZonalOffice(zonalOfficeDAO.getZonalOffice(1));
             adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);

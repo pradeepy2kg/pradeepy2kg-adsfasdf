@@ -192,9 +192,6 @@ public class AdoptionOrder implements Serializable {
 
     @Column(nullable = true)
     private int birthDistrictId; // if BC number not given
-    
-    @Column(nullable = true)
-    private int birthDivisionId; // if BC number not given
 
     @Column(nullable = true)
     private String oldBirthDSName;
@@ -454,14 +451,6 @@ public class AdoptionOrder implements Serializable {
 
     public void setApplicantMother(boolean applicantMother) {
         this.applicantMother = applicantMother;
-    }
-
-    public int getBirthDivisionId() {
-        return birthDivisionId;
-    }
-
-    public void setBirthDivisionId(int birthDivisionId) {
-        this.birthDivisionId = birthDivisionId;
     }
 
     public long getNewBirthCertificateNumber() {
