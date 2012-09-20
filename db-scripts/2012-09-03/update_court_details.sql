@@ -5,6 +5,12 @@ USE CRS;
 /* We can clear court details as they do not have relationship with other tables yet. (As Adoption is not LIVE YET)*/
 TRUNCATE COURTS;
 
+-- Add column to capture the province
+ALTER TABLE COURTS ADD COLUMN provinceUKey int(11) NOT NULL;
+
+-- Add Foreign key constraint
+ALTER TABLE COURTS ADD CONSTRAINT `FK_Courts_Province_provinceUKey` FOREIGN KEY (`provinceUKey`) REFERENCES `COMMON`.`PROVINCE` (`provinceUKey`);
+
 -- Insert New court details.
 -- Courts in Western Province
 INSERT INTO COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME, provinceUKey) VALUES(1,'District Court of Colombo','කොළඹ දිසා අධිකරණය','கொழும்பு மாவட்ட நீதிமன்றம்', 1);
