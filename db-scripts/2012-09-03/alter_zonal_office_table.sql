@@ -15,3 +15,6 @@ ALTER TABLE ZONAL_OFFICES DROP COLUMN lastUpdatedUserId;
 -- Add column to capture status
 ALTER TABLE ZONAL_OFFICES ADD COLUMN `active` smallint(6) NOT NULL DEFAULT '1';
 
+-- Update phone number of central zone
+UPDATE ZONAL_OFFICES SET zonalOfficeLandPhone = '0812224470' WHERE zonalOfficeUKey = 2;
+
