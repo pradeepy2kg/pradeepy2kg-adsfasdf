@@ -2192,7 +2192,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
         StringBuilder csv = new StringBuilder();
         String filename = ReportCodes.BIRTH_RAW_DATA_NAME + CSV_EXT;
-        csv.append("IYEAR").append(COMMA).
+        csv.append("YEAR").append(COMMA).
             append("MONTH").append(COMMA).
             append("RDIST").append(COMMA).
             append("RDS").append(COMMA).
