@@ -2321,7 +2321,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
 
                 csv.append(COMMA).
-                    append(new SimpleDateFormat("yyyy-MM-dd").format(life.getCreatedTimestamp())).append(COMMA);
+                    append(new SimpleDateFormat("yyyy-MM-dd").format(life.getCreatedTimestamp()));
                 csv.append(NEW_LINE);
                 count++;
             }
