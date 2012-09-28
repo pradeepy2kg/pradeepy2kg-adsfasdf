@@ -2192,38 +2192,38 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
         StringBuilder csv = new StringBuilder();
         String filename = ReportCodes.BIRTH_RAW_DATA_NAME + CSV_EXT;
-        csv.append("YEAR").append(COMMA).
-            append("MONTH").append(COMMA).
+        csv.append("RYEAR").append(COMMA).
+            append("RMONTH").append(COMMA).
+            append("RDAY").append(COMMA).
             append("RDIST").append(COMMA).
             append("RDS").append(COMMA).
             append("RD").append(COMMA).
-            append("REGNO").append(COMMA).
+            append("RSERIAL").append(COMMA).
+            append("BCNO").append(COMMA).
             append("BYEAR").append(COMMA).
             append("BMONTH").append(COMMA).
             append("BDAY").append(COMMA).
             append("HOS").append(COMMA).
             append("SEX").append(COMMA).
             append("TWIN").append(COMMA).
-            append("WEIGHTKG").append(COMMA).
-            append("WEIGHTG").append(COMMA).
-            append("MDAY").append(COMMA).
-            append("MMON").append(COMMA).
-            append("MYEAR").append(COMMA).
-            append("MAGE").append(COMMA).
-            append("MARITAL").append(COMMA).
+            append("WKG").append(COMMA).
+            append("WGR").append(COMMA).
             append("ORDER").append(COMMA).
+            append("MYEAR").append(COMMA).
+            append("MMONTH").append(COMMA).
+            append("MDAY").append(COMMA).
+            append("MAGE").append(COMMA).
             append("UDIST").append(COMMA).
             append("UDS").append(COMMA).
+            append("UGN").append(COMMA).
             append("MRACE").append(COMMA).
             append("FRACE").append(COMMA).
-            append("ParcellD").append(COMMA).
-            append("EDATE\n");
+            append("MARITAL\n");
 
 
         for (DSDivision dsDivision : dsDivisions) {
             birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
-//            csv.append(dsDivision.getEnDivisionName()).append(COMMA);
 
             boolean noRecords = true;
             int count = 0;
@@ -2246,11 +2246,13 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
                     csv.append(calendar.get(Calendar.YEAR)).append(COMMA).
                         append(calendar.get(Calendar.MONTH)).append(COMMA).
+                        append(calendar.get(Calendar.DATE)).append(COMMA).
                         append(birth.getBirthDistrict().getDistrictId()).append(COMMA).
                         append(birth.getDsDivision().getDivisionId()).append(COMMA).
-                        append(birth.getBirthDivision().getDivisionId()).append(COMMA);
+                        append(birth.getBirthDivision().getDivisionId()).append(COMMA).
+                        append(birth.getBdfSerialNo()).append(COMMA);
                 } else {
-                    csv.append(",,,,,");
+                    csv.append(",,,,,,,");
                 }
                 csv.append(bd.getIdUKey()).append(COMMA);
 
@@ -2265,13 +2267,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         csv.append("2").append(COMMA);
                     }
 
-                    if (child.getChildGender() == 0) {
-                        csv.append("1").append(COMMA);
-                    } else if (child.getChildGender() == 1) {
-                        csv.append("2").append(COMMA);
-                    } else {
-                        csv.append(COMMA);
-                    }
+                    csv.append(child.getChildGender()).append(COMMA);
 
                     if (child.getNumberOfChildrenBorn() != null) {
                         csv.append(child.getNumberOfChildrenBorn()).append(COMMA);
@@ -2279,49 +2275,47 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         csv.append(COMMA);
                     }
                     csv.append(Math.floor(child.getChildBirthWeight())).append(COMMA).
-                        append(Math.floor((child.getChildBirthWeight() % 1) * 1000)).append(COMMA);
+                        append(Math.floor((child.getChildBirthWeight() % 1) * 1000)).append(COMMA).
+                        append(child.getChildRank()).append(COMMA);
                 } else {
-                    csv.append(",,,,,,,,");
+                    csv.append(",,,,,,,,,");
                 }
 
                 if (parent != null) {
-                    calendar.setTime(parent.getMotherDOB());
-                    csv.append(calendar.get(Calendar.DATE)).append(COMMA).
-                        append(calendar.get(Calendar.MONTH)).append(COMMA).
-                        append(calendar.get(Calendar.YEAR)).append(COMMA).
-                        append(parent.getMotherAgeAtBirth()).append(COMMA);
+                    if (parent.getMotherDOB() != null) {
+                        calendar.setTime(parent.getMotherDOB());
+                        csv.append(calendar.get(Calendar.YEAR)).append(COMMA).
+                            append(calendar.get(Calendar.MONTH)).append(COMMA).
+                            append(calendar.get(Calendar.DATE)).append(COMMA).
+                            append(parent.getMotherAgeAtBirth()).append(COMMA);
+                    }else {
+                        csv.append(",,,,");
+                    }
+                    if(parent.getMotherDSDivision() != null){
+                        csv.append(parent.getMotherDSDivision().getDistrictId()).append(COMMA).
+                            append(parent.getMotherDSDivision().getDivisionId()).append(COMMA);
+                    }else{
+                        csv.append(",,");
+                    }
+
+                    if(parent.getMotherGNDivision() != null){
+                        csv.append(parent.getMotherGNDivision().getGnDivisionId()).append(COMMA);
+                    }else{
+                        csv.append(",");
+                    }
+                    csv.append(parent.getMotherRace().getRaceId()).append(COMMA).
+                        append(parent.getFatherRace().getRaceId()).append(COMMA);
                 } else {
-                    csv.append(",,,,");
+                    csv.append(",,,,,,,,,");
                 }
 
                 if (marriage != null) {
                     if (MarriageInfo.MarriedStatus.MARRIED.equals(marriage.getParentsMarried())) {
-                        csv.append("1").append(COMMA);
+                        csv.append("1");
                     } else if (MarriageInfo.MarriedStatus.UNMARRIED.equals(marriage.getParentsMarried())) {
-                        csv.append("2").append(COMMA);
-                    } else {
-                        csv.append(COMMA);
+                        csv.append("2");
                     }
-                } else {
-                    csv.append(COMMA);
                 }
-
-                if (child != null) {
-                    csv.append(child.getChildRank()).append(COMMA);
-                } else {
-                    csv.append(COMMA);
-                }
-                if (parent != null) {
-                    csv.append(parent.getMotherDSDivision().getDistrictId()).append(COMMA).
-                        append(parent.getMotherDSDivision().getDivisionId()).append(COMMA).
-                        append(parent.getMotherRace().getRaceId()).append(COMMA).
-                        append(parent.getFatherRace().getRaceId()).append(COMMA);
-                } else {
-                    csv.append(",,,,");
-                }
-
-                csv.append(COMMA).
-                    append(new SimpleDateFormat("yyyy-MM-dd").format(life.getCreatedTimestamp()));
                 csv.append(NEW_LINE);
                 count++;
             }
