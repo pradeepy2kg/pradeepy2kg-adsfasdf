@@ -2225,11 +2225,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
 
-            boolean noRecords = true;
-            int count = 0;
-
             for (BirthDeclaration bd : birthRecords) {
-                noRecords = false;
                 ChildInfo child = bd.getChild();
                 MarriageInfo marriage = bd.getMarriage();
                 ParentInfo parent = bd.getParent();
@@ -2277,19 +2273,19 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                             append(calendar.get(Calendar.MONTH)).append(COMMA).
                             append(calendar.get(Calendar.DATE)).append(COMMA).
                             append(parent.getMotherAgeAtBirth()).append(COMMA);
-                    }else {
+                    } else {
                         csv.append(",,,,");
                     }
-                    if(parent.getMotherDSDivision() != null){
+                    if (parent.getMotherDSDivision() != null) {
                         csv.append(parent.getMotherDSDivision().getDistrictId()).append(COMMA).
                             append(parent.getMotherDSDivision().getDivisionId()).append(COMMA);
-                    }else{
+                    } else {
                         csv.append(",,");
                     }
 
-                    if(parent.getMotherGNDivision() != null){
+                    if (parent.getMotherGNDivision() != null) {
                         csv.append(parent.getMotherGNDivision().getGnDivisionId()).append(COMMA);
-                    }else{
+                    } else {
                         csv.append(",");
                     }
                     csv.append(parent.getMotherRace().getRaceId()).append(COMMA).
@@ -2301,10 +2297,6 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 if (marriage != null) {
                     csv.append(marriage.getParentsMarried().ordinal());
                 }
-                csv.append(NEW_LINE);
-                count++;
-            }
-            if (noRecords) {
                 csv.append(NEW_LINE);
             }
         }
@@ -2351,158 +2343,116 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         StringBuilder csv = new StringBuilder();
         String filename = ReportCodes.DEATH_RAW_DATA_NAME + CSV_EXT;
 
-        csv.append("DIVISION_NAME").append(COMMA).
-            append("CAUSE_OF_DEATH").append(COMMA).
-            append("CAUSE_OF_DEATH_ESTABLISHED").append(COMMA).
-            append("DATE_OF_DEATH").append(COMMA).
-            append("DATE_OF_REGISTRATION").append(COMMA).
-            append("DEATH_SERIALNO").append(COMMA).
-            append("ICD_CODE_OF_CAUSE").append(COMMA).
-            append("INFANT_LESS_THAN_30_DAYS").append(COMMA).
-            append("PLACE_OF_BURIAL").append(COMMA).
-            append("PLACE_OF_DEATH_IN_ENGLISH").append(COMMA).
-            append("PLACE_OF_ISSUE").append(COMMA).
-            append("TIME_OF_DEATH").append(COMMA).
-            append("DEATH_PERSON_AGE").append(COMMA).
-            append("DEATH_PERSON_DOB").append(COMMA).
-            append("DEATH_PERSON_FATHER_PIN_OR_NIC").append(COMMA).
-            append("DEATH_PERSON_GENDER").append(COMMA).
-            append("DEATH_PERSON_MOTHER_PIN_OR_NIC").append(COMMA).
-            append("DEATH_PERSON_PIN_OR_NIC").append(COMMA).
-            append("DEATH_PERSON_PASSPORT_NO").append(COMMA).
-            append("DEATH_TYPE").append(COMMA).
-            append("DECLARANT_EMAIL").append(COMMA).
-            append("DECLARANT_NIC_OR_PIN").append(COMMA).
-            append("DECLARANT_PHONE").append(COMMA).
-            append("DECLARANT_TYPE").append(COMMA).
-            append("APPROVAL_OR_REJECT_TIMESTAMP").append(COMMA).
-            append("CERTIFICATE_GENERATED_TIMESTAMP").append(COMMA).
-            append("CREATED_TIMESTAMP").append(COMMA).
-            append("NOTIFYING_AUTHORITY_PIN").append(COMMA).
-            append("NOTIFYING_AUTHORITY_SIGNDATE").append(COMMA).
-            append("STATUS").append(COMMA).
-            append("BDDIVISION_CODE").append(COMMA).
-            append("DEATH_PERSON_COUNTRYID").append(COMMA).
-            append("DEATH_PERSON_RACE").append(COMMA).
-            append("APPROVAL_OR_REJECT_USERID").append(COMMA).
-            append("CERTIFICATE_GENERATED_USERID").append(COMMA).
-            append("CREATED_USERID").append(COMMA).
-            append("ORIGINAL_DC_ISSUE_USERID").append(COMMA).
-            append("ORIGINAL_DCP_ISSUE_LOCATIONID\n");
+        csv.append("RYEAR").append(COMMA).
+            append("RMONTH").append(COMMA).
+            append("RDAY").append(COMMA).
+            append("RDIST").append(COMMA).
+            append("RDS").append(COMMA).
+            append("RD").append(COMMA).
+            append("RSERIAL").append(COMMA).
+            append("DCNO").append(COMMA).
+            append("DYEAR").append(COMMA).
+            append("DMONTH").append(COMMA).
+            append("DDAY").append(COMMA).
+            append("HOS").append(COMMA).
+            append("SEX").append(COMMA).
+            append("AGE").append(COMMA).
+            append("RACE").append(COMMA).
+            append("UDIST").append(COMMA).
+            append("UDS").append(COMMA).
+            append("UGN").append(COMMA).
+            append("AYEARS").append(COMMA).
+            append("AMONTHS").append(COMMA).
+            append("ADAYS").append(COMMA).
+            append("EXCHILD").append(COMMA).
+            append("DESIXW").append(COMMA).
+            append("ABSIXW").append(COMMA).
+            append("DEABDAY\n");
 
         for (DSDivision dsDivision : dsDivisionList) {
             deathRecords = deathRegSvc.getByDSDivisionAndStatusAndRegistrationDateRange(
                 dsDivision, startDate, endDate, DeathRegister.State.ARCHIVED_CERT_GENERATED, systemUser);
-            csv.append(dsDivision.getEnDivisionName()).append(COMMA);
-
-            boolean noRecords = true;
-            int count = 0;
 
             for (DeathRegister deathRegister : deathRecords) {
-                noRecords = false;
                 DeathPersonInfo person = deathRegister.getDeathPerson();
                 DeathInfo info = deathRegister.getDeath();
-                DeclarantInfo decl = deathRegister.getDeclarant();
-                CRSLifeCycleInfo life = deathRegister.getLifeCycleInfo();
-                NotifyingAuthorityInfo notify = deathRegister.getNotifyingAuthority();
 
-                if (count > 0) {
-                    csv.append(dsDivision.getEnDivisionName()).append(COMMA);
-                }
-
+                Calendar calendar = Calendar.getInstance();
                 if (info != null) {
-                    csv.append(QUOTE).append(info.getCauseOfDeath()).append(QUOTE).append(COMMA).
-                        append(info.isCauseOfDeathEstablished()).append(COMMA).
-                        append(info.getDateOfDeath()).append(COMMA).
-                        append(info.getDateOfRegistration()).append(COMMA).
+                    calendar.setTime(info.getDateOfRegistration());
+                    csv.append(calendar.get(Calendar.YEAR)).append(COMMA).
+                        append(calendar.get(Calendar.MONTH)).append(COMMA).
+                        append(calendar.get(Calendar.DATE)).append(COMMA).
+                        append(info.getDeathDistrict().getDistrictId()).append(COMMA).
+                        append(info.getDeathDivision().getDsDivision().getDivisionId()).append(COMMA).
+                        append(info.getDeathDivision().getDivisionId()).append(COMMA).
                         append(info.getDeathSerialNo()).append(COMMA).
-                        append(info.getIcdCodeOfCause()).append(COMMA).
-                        append(info.isInfantLessThan30Days()).append(COMMA).
-                        append(QUOTE).append(info.getPlaceOfBurial()).append(QUOTE).append(COMMA).
-                        append(QUOTE).append(info.getPlaceOfDeath()).append(QUOTE).append(COMMA).
-                        append(QUOTE).append(info.getPlaceOfIssue()).append(QUOTE).append(COMMA).
-                        append(info.getTimeOfDeath()).append(COMMA);
+                        append(deathRegister.getIdUKey()).append(COMMA);
+                    // Set Date of Death
+                    calendar.setTime(info.getDateOfDeath());
+                    csv.append(calendar.get(Calendar.YEAR)).append(COMMA).
+                        append(calendar.get(Calendar.MONTH)).append(COMMA).
+                        append(calendar.get(Calendar.DATE)).append(COMMA).
+                        append(info.isDeathOccurAtaHospital() ? "1" : "0").append(COMMA);
                 } else {
-                    csv.append(",,,,,,,,,,,");
+                    csv.append(",,,,,,,,,,,,");
                 }
                 if (person != null) {
-                    csv.append(person.getDeathPersonAge()).append(COMMA).
-                        append(person.getDeathPersonDOB()).append(COMMA).
-                        append(person.getDeathPersonFatherPINorNIC()).append(COMMA).
-                        append(person.getDeathPersonGender()).append(COMMA).
-                        append(person.getDeathPersonMotherPINorNIC()).append(COMMA).
-                        append(person.getDeathPersonPINorNIC()).append(COMMA).
-                        append(person.getDeathPersonPassportNo()).append(COMMA);
-                } else {
-                    csv.append(",,,,,,,");
-                }
-                if (deathRegister != null) {
-                    csv.append(deathRegister.getDeathType()).append(COMMA);
-                } else {
-                    csv.append(COMMA);
-                }
-                if (decl != null) {
-                    csv.append(decl.getDeclarantEMail()).append(COMMA).append(decl.getDeclarantNICorPIN()).
-                        append(COMMA).append(decl.getDeclarantPhone()).append(COMMA).append(decl.getDeclarantType()).
-                        append(COMMA);
-                } else {
-                    csv.append(",,,,");
-                }
-                if (life != null) {
-                    csv.append(life.getApprovalOrRejectTimestamp()).append(COMMA).
-                        append(life.getCertificateGeneratedTimestamp()).append(COMMA).
-                        append(life.getCreatedTimestamp()).append(COMMA);
-                } else {
-                    csv.append(",,,");
-                }
-                if (notify != null) {
-                    csv.append(notify.getNotifyingAuthorityPIN()).append(COMMA).
-                        append(notify.getNotifyingAuthoritySignDate()).append(COMMA);
-                } else {
-                    csv.append(",,");
-                }
-                if (deathRegister != null) {
-                    csv.append(deathRegister.getStatus()).append(COMMA);
-                } else {
-                    csv.append(COMMA);
-                }
-                if (info != null) {
-                    if (info.getDeathDivision() != null) {
-                        csv.append(info.getDeathDivision().getDivisionId()).append(COMMA);
-                    } else {
-                        csv.append(COMMA);
-                    }
-                } else {
-                    csv.append(COMMA);
-                }
-                if (person != null) {
-                    if (person.getDeathPersonCountry() != null) {
-                        csv.append(person.getDeathPersonCountry().getCountryCode()).append(COMMA);
-                    } else {
-                        csv.append(COMMA);
-                    }
-                    csv.append(person.getDeathPersonRace().getRaceId()).append(COMMA);
-                } else {
-                    csv.append(",,");
-                }
-                if (life != null) {
-                    csv.append(life.getApprovalOrRejectUser().getUserId()).append(COMMA).
-                        append(life.getCertificateGeneratedUser().getUserId()).append(COMMA).
-                        append(life.getCreatedUser().getUserId()).append(COMMA);
-                } else {
-                    csv.append(",,,");
-                }
-                if (deathRegister != null) {
-                    csv.append(deathRegister.getOriginalDCIssueUser().getUserId()).
-                        append(COMMA).append(deathRegister.getOriginalDCPlaceOfIssue().getLocationCode());
-                } else {
-                    csv.append(",,");
-                }
-                csv.append(NEW_LINE);
-                count++;
-            }
+                    csv.append(person.getDeathPersonGender()).append(COMMA).
+                        append(person.getDeathPersonAge()).append(COMMA).
+                        append(person.getDeathPersonRace().getRaceId()).append(COMMA);
 
-            if (noRecords) {
+                    if (person.getGnDivision() != null) {
+                        csv.append(person.getGnDivision().getDsDivision().getDistrictId()).append(COMMA).
+                            append(person.getGnDivision().getDsDivision().getDivisionId()).append(COMMA).
+                            append(person.getGnDivision().getGnDivisionId()).append(COMMA);
+                    } else if (person.getDsDivisionOfPermanentAddress() != null) {
+                        csv.append(person.getDsDivisionOfPermanentAddress().getDistrictId()).append(COMMA).
+                            append(person.getDsDivisionOfPermanentAddress().getDivisionId()).append(COMMA).
+                            append(COMMA);
+                    } else {
+                        csv.append(",,,");
+                    }
+                    if (person.getDeathPersonAge() != null) {
+                        csv.append(person.getDeathPersonAge()).append(COMMA);
+                    } else {
+                        csv.append(COMMA);
+                    }
+                    if (person.getDeathPersonAgeMonth() != null) {
+                        csv.append(person.getDeathPersonAgeMonth()).append(COMMA);
+                    } else {
+                        csv.append(COMMA);
+                    }
+                    if (person.getDeathPersonAgeDate() != null) {
+                        csv.append(person.getDeathPersonAgeDate()).append(COMMA);
+                    } else {
+                        csv.append(COMMA);
+                    }
+                    if (person.isPregnantAtTimeOfDeath() != null && person.isGivenABirthWithInPreviouse6Weeks() != null && person.isAnAbortionTakenPlace() != null) {
+                        if (person.isPregnantAtTimeOfDeath()) {
+                            csv.append("1").append(COMMA);
+                        } else {
+                            csv.append("0").append(COMMA);
+                        }
+                        if (person.isGivenABirthWithInPreviouse6Weeks()) {
+                            csv.append("1").append(COMMA);
+                        } else {
+                            csv.append("0").append(COMMA);
+                        }
+                        if (person.isAnAbortionTakenPlace()) {
+                            csv.append("1").append(COMMA);
+                        } else {
+                            csv.append("0").append(COMMA);
+                        }
+                    } else {
+                        csv.append(",,,");
+                    }
+                    if (person.getDaysBeforeAbortionOrBirth() != null) {
+                        csv.append(person.getDaysBeforeAbortionOrBirth());
+                    }
+                } else {
+                    csv.append(",,,,,,,,,,,,");
+                }
                 csv.append(NEW_LINE);
             }
         }
