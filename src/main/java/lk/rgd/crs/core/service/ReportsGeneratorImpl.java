@@ -2233,11 +2233,6 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 ChildInfo child = bd.getChild();
                 MarriageInfo marriage = bd.getMarriage();
                 ParentInfo parent = bd.getParent();
-                ConfirmantInfo confirm = bd.getConfirmant();
-                GrandFatherInfo grandFather = bd.getGrandFather();
-                InformantInfo inform = bd.getInformant();
-                CRSLifeCycleInfo life = bd.getLifeCycleInfo();
-                NotifyingAuthorityInfo notify = bd.getNotifyingAuthority();
                 BirthRegisterInfo birth = bd.getRegister();
 
                 Calendar calendar = Calendar.getInstance();
@@ -2260,15 +2255,9 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     calendar.setTime(child.getDateOfBirth());
                     csv.append(calendar.get(Calendar.YEAR)).append(COMMA).
                         append(calendar.get(Calendar.MONTH)).append(COMMA).
-                        append(calendar.get(Calendar.DATE)).append(COMMA);
-                    if (child.getBirthAtHospital()) {
-                        csv.append("1").append(COMMA);
-                    } else {
-                        csv.append("2").append(COMMA);
-                    }
-
-                    csv.append(child.getChildGender()).append(COMMA);
-
+                        append(calendar.get(Calendar.DATE)).append(COMMA).
+                        append(child.getBirthAtHospital()).append(COMMA).
+                        append(child.getChildGender()).append(COMMA);
                     if (child.getNumberOfChildrenBorn() != null) {
                         csv.append(child.getNumberOfChildrenBorn()).append(COMMA);
                     } else {
@@ -2310,11 +2299,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
 
                 if (marriage != null) {
-                    if (MarriageInfo.MarriedStatus.MARRIED.equals(marriage.getParentsMarried())) {
-                        csv.append("1");
-                    } else if (MarriageInfo.MarriedStatus.UNMARRIED.equals(marriage.getParentsMarried())) {
-                        csv.append("2");
-                    }
+                    csv.append(marriage.getParentsMarried().ordinal());
                 }
                 csv.append(NEW_LINE);
                 count++;
