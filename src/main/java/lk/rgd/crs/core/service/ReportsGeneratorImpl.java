@@ -2252,7 +2252,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         csv.append(calendar.get(Calendar.YEAR)).append(COMMA).
                             append(calendar.get(Calendar.MONTH)).append(COMMA).
                             append(calendar.get(Calendar.DATE)).append(COMMA).
-                            append(child.getBirthAtHospital()).append(COMMA).
+                            append(child.getBirthAtHospital()?"1":"0").append(COMMA).
                             append(child.getChildGender()).append(COMMA);
                         if (child.getNumberOfChildrenBorn() != null) {
                             csv.append(child.getNumberOfChildrenBorn()).append(COMMA);
