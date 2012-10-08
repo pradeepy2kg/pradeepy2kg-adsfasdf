@@ -2205,7 +2205,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             append("BDAY").append(COMMA).
             append("HOS").append(COMMA).
             append("SEX").append(COMMA).
-            append("TWIN").append(COMMA).
+            append("MULTIPLE").append(COMMA).
             append("WKG").append(COMMA).
             append("WGR").append(COMMA).
             append("ORDER").append(COMMA).
@@ -2365,10 +2365,10 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             append("AYEARS").append(COMMA).
             append("AMONTHS").append(COMMA).
             append("ADAYS").append(COMMA).
-            append("EXCHILD").append(COMMA).
-            append("DESIXW").append(COMMA).
-            append("ABSIXW").append(COMMA).
-            append("DEABDAY\n");
+            append("PREGNT").append(COMMA).
+            append("DELIV").append(COMMA).
+            append("ABORT").append(COMMA).
+            append("DBABORT\n");
 
         for (DSDivision dsDivision : dsDivisionList) {
             deathRecords = deathRegSvc.getByDSDivisionAndStatusAndRegistrationDateRange(
