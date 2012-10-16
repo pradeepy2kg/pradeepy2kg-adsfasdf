@@ -22,20 +22,20 @@
 
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 <script>
-$(function() {
+$(function () {
     $("#submitDatePicker").datepicker({
-        changeYear: true,
-        yearRange: '1960:2020',
+        changeYear:true,
+        yearRange:'1960:2020',
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
         endDate:'2040-12-31'
     });
 });
 
-$(function() {
+$(function () {
     $("#birthDatePicker").datepicker({
-        changeYear: true,
-        yearRange: '1960:2020',
+        changeYear:true,
+        yearRange:'1960:2020',
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
         endDate:'2020-12-31'
@@ -45,11 +45,11 @@ $(function() {
 // mode 1 = passing District, will return DS list
 // mode 2 = passing DsDivision, will return BD list
 // any other = passing district, will return DS list and the BD list for the first DS
-$(function() {
-    $('select#districtId').bind('change', function(evt1) {
+$(function () {
+    $('select#districtId').bind('change', function (evt1) {
         var id = $("select#districtId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                function(data) {
+                function (data) {
                     var options1 = '';
                     var ds = data.dsDivisionList;
                     for (var i = 0; i < ds.length; i++) {
@@ -73,10 +73,10 @@ $(function() {
                 });
     });
 
-    $('select#dsDivisionId').bind('change', function(evt2) {
+    $('select#dsDivisionId').bind('change', function (evt2) {
         var id = $("select#dsDivisionId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:2},
-                function(data) {
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
+                function (data) {
                     var options = '';
                     var bd = data.bdDivisionList;
                     for (var i = 0; i < bd.length; i++) {
@@ -94,11 +94,11 @@ $(function() {
     });
 
 
-    $('img#childName').bind('click', function(evt3) {
+    $('img#childName').bind('click', function (evt3) {
         var text = $("textarea#childFullNameOfficialLang").attr("value");
 
-        $.post('/ecivil/TransliterationService', {text:text,gender:'M'},
-                function(data) {
+        $.post('/ecivil/TransliterationService', {text:text, gender:'M'},
+                function (data) {
                     if (data != null) {
                         var s = data.translated;
                         $("textarea#childFullNameEnglish").val(s);
@@ -106,11 +106,11 @@ $(function() {
                 });
     });
 
-    $('img#place').bind('click', function(evt4) {
+    $('img#place').bind('click', function (evt4) {
         var text = $("input#placeOfBirth").attr("value");
 
-        $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
-                function(data) {
+        $.post('/ecivil/TransliterationService', {text:text, gender:'U'},
+                function (data) {
                     if (data != null) {
                         var s = data.translated;
                         $("input#placeOfBirthEnglish").val(s);
@@ -280,18 +280,16 @@ function dateRange() {
     if (declarationType.value != 0) {
         var birthdate = new Date(document.getElementById('birthDatePicker').value);
         var submit = new Date(document.getElementById('submitDatePicker').value);
-        //comparing 90 days delay
-        var one_day = 1000 * 60 * 60 * 24;
-        var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
-        if (numDays >= 92) {
-            if (numDays >= 367) {
-                document.getElementById('belatedError').innerHTML = document.getElementById('error8').value;
-            } else {
+        var maxLateDay = new Date(birthdate);
+        maxLateDay.setMonth(birthdate.getMonth() + 3);
+        var maxBelateDay = new Date(birthdate);
+        maxBelateDay.setYear(birthdate.getFullYear() + 1);
 
-                document.getElementById('belatedError').innerHTML = document.getElementById('error7').value;
-            }
-        }
-        else {
+        if (submit > maxBelateDay) {
+            document.getElementById('belatedError').innerHTML = document.getElementById('error8').value;
+        } else if (submit > maxLateDay) {
+            document.getElementById('belatedError').innerHTML = document.getElementById('error7').value;
+        } else {
             document.getElementById('belatedError').innerHTML = '';
         }
     }
