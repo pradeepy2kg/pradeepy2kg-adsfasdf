@@ -1154,24 +1154,23 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * @return int id of specific item in DateState
      */
     private int checkDateLateOrBelated(BirthDeclaration bdf) {
-        long maxLateDays = appParametersDAO.getIntParameter(AppParameter.CRS_BIRTH_LATE_REG_DAYS);
-        long maxBelatedDays = appParametersDAO.getIntParameter(AppParameter.CRS_BELATED_MAX_DAYS);
-        long registerDate = bdf.getRegister().getDateOfRegistration().getTime();
-        long birthDate = bdf.getChild().getDateOfBirth().getTime();
-        long milliSecPerDay = 1000 * 60 * 60 * 24;
+        Date birthDay = bdf.getChild().getDateOfBirth();
+        Date registerDay = bdf.getRegister().getDateOfRegistration();
+        Calendar maxLateDay = Calendar.getInstance();
+        Calendar maxBelateDay = Calendar.getInstance();
+        maxLateDay.setTime(birthDay);
+        maxBelateDay.setTime(birthDay);
+        maxLateDay.add(Calendar.MONTH, 3);      // Registration after 3 months from birth day.
+        maxBelateDay.add(Calendar.YEAR, 1);     // Registration after 1 year from birth day.
 
-        long dateDiff = (registerDate - birthDate) / milliSecPerDay;
-
-        if (dateDiff >= 0) {
-            if (dateDiff >= maxBelatedDays) {
-                return DateState.BD_BELATED.getStateId();
-            } else if (dateDiff >= maxLateDays) {
-                return DateState.BD_LATE.getStateId();
-            } else {
-                return DateState.BD_OK.getStateId();
-            }
-        } else {
+        if(registerDay.after(maxBelateDay.getTime())){
+            return DateState.BD_BELATED.getStateId();
+        }else if(registerDay.after(maxLateDay.getTime())){
+            return DateState.BD_LATE.getStateId();
+        }else if(registerDay.before(birthDay)){
             return DateState.ERROR.getStateId();
+        }else{
+            return DateState.BD_OK.getStateId();
         }
     }
 
