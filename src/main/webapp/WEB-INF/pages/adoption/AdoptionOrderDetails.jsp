@@ -131,16 +131,16 @@
             </td>
         </tr>
         <tr valign="top" class="font-9">
-            <td rowspan="2"><s:label name="adoption.adoptionEntryNo"/></td>
-            <td rowspan="2"><s:label name="adoption.orderReceivedDate"/></td>
-            <td rowspan="2"><s:label name="adoption.childNewName"/></td>
-            <td rowspan="2" align="center">
+            <td rowspan="3"><s:label name="adoption.adoptionEntryNo"/></td>
+            <td rowspan="3"><s:label name="adoption.orderReceivedDate"/></td>
+            <td rowspan="3"><s:label name="adoption.childNewName"/></td>
+            <td rowspan="3" align="center">
                 <label>
                     <% AdoptionOrder a = (AdoptionOrder) request.getAttribute("adoption");
                         out.print(GenderUtil.getGender(a.getChildGender(), a.getLanguageToTransliterate()));%>
                 </label>
             </td>
-            <td rowspan="2">
+            <td rowspan="3">
                 <s:if test="adoption.applicantMother == true">
                     <s:label name="adoption.applicantName"/><br/>
                     <s:label name="adoption.applicantOccupation"/><br/><br/>
@@ -154,8 +154,8 @@
                 <s:else>
                     <s:label name="adoption.applicantName"/><br/>
                     <s:label name="adoption.applicantOccupation"/><br/><br/>
-                    <s:label name="adoption.wifeName"/><br/>
-                    <s:label name="adoption.wifeOccupation"/><br/><br/>
+                    <s:label name="adoption.spouseName"/><br/>
+                    <s:label name="adoption.spouseOccupation"/><br/><br/>
                     <s:textarea value="%{adoption.applicantAddress}"
                                 cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; "
                                 rows="5" disabled="true"/>
@@ -164,10 +164,10 @@
                                 rows="5" disabled="true"/>
                 </s:else>
             </td>
-            <td rowspan="2" align="center">
+            <td rowspan="3" align="center">
                 <s:label name="adoption.childBirthDate"/>
             </td>
-            <td rowspan="2">
+            <td rowspan="3">
                 <s:label name="adoption.orderIssuedDate"/><br><br>
                 <s:if test="adoption.languageToTransliterate == \"si\"">
                     <s:label name="adoption.court.siCourtName"/><br><br>
@@ -179,16 +179,22 @@
                 <s:label name="adoption.courtOrderNumber"/>
             </td>
             <td style="border-bottom:none;">
-                <s:textarea rows="18" disabled="true"
+                <s:textarea rows="10" disabled="true"
                             cssStyle="margin: 0; resize: none; background: #fff; width: 100px; border: none;"/>
             </td>
         </tr>
         <tr>
-            <td align="center" class="font-9"><br>
+            <td align="center" class="font-9" style="border-bottom: none;"><br>
                 ........................................... <br/>
                 සහකාර රෙජිස්ට්‍රාර් ජනරාල්.<br>
                 உதவி பதிவாளர் நாயகம்.<br>
                 Assistant Registrar-General.
+            </td>
+        </tr>
+        <tr>
+            <td style="border-top: none;">
+                <s:textarea rows="7" disabled="true"
+                            cssStyle="margin: 0; resize: none; background: #fff; width: 100px; border: none;"/>
             </td>
         </tr>
         <tr class="font-7">
