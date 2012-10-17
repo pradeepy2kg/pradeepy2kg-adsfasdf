@@ -628,12 +628,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
             bdf.getParent().setFatherPassportNo(ao.getApplicantPassport());
 
-            bdf.getParent().setMotherNICorPIN(ao.getWifePINorNIC());
-            bdf.getParent().setMotherFullName(ao.getWifeName());
-            if (ao.getWifeCountryId() > 0) {
-                bdf.getParent().setMotherCountry(countryDAO.getCountry(ao.getWifeCountryId()));
+            bdf.getParent().setMotherNICorPIN(ao.getSpousePINorNIC());
+            bdf.getParent().setMotherFullName(ao.getSpouseName());
+            if (ao.getSpouseCountryId() > 0) {
+                bdf.getParent().setMotherCountry(countryDAO.getCountry(ao.getSpouseCountryId()));
             }
-            bdf.getParent().setMotherPassportNo(ao.getWifePassport());
+            bdf.getParent().setMotherPassportNo(ao.getSpousePassport());
         }
 
         session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);

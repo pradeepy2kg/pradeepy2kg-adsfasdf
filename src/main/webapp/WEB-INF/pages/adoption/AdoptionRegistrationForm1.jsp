@@ -19,10 +19,10 @@ $(function () {
     document.getElementById('oldBirthRegistrationDivisionName').disabled = true;
     document.getElementById('oldBirthRegistrationDate').disabled = true;
     if ($('#birthCertificateNumber').val() > 0) {
-        $('#availableNewCerttrue').checked = true;
+        $('#availableNewCerttrue').attr('checked', 'checked');
         enableCertificateNumber(false);
     } else if ($('#birthProvinceUKey').val() > 0 || $('#birthDistrictId').val() > 0 || $('#oldBirthDSName').val() != '' || $('#oldBirthRegistrationDivisionName').val() != '' || $('#oldBirthRegistrationDate').val() != '') {
-        $('#availableNewCertfalse').checked = true;
+        $('#availableNewCertfalse').attr('checked', 'checked');
         enableCertificateInfo(false);
     }
 
@@ -43,6 +43,9 @@ $(function () {
 });
 
 $(function () {
+    if ($('#idUKey').val() == 0 || $('#jointApplicantfalse').is(':checked')){
+        disable(true);
+    }
     $('#clearInfo').val($('#clear').val());
     $('#clearInfo').bind('click', function () {
         $('#availableNewCerttrue').attr('checked', false);
@@ -134,12 +137,12 @@ $(function () {
     });
     $(function () {
         $('img#mother_lookup').bind('click', function (evt3) {
-            var id1 = $("input#wifePINorNIC").attr("value");
+            var id1 = $("input#spousePINorNIC").attr("value");
 
-            $("textarea#wifeName").val('');
+            $("textarea#spouseName").val('');
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function (data1) {
-                        $("textarea#wifeName").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#spouseName").val(data1.fullNameInOfficialLanguage);
                     });
         });
     });
@@ -153,23 +156,33 @@ function validate() {
 
     var returnval = true;
     var domObject;
-    //order issued date
-    domObject = document.getElementById("orderIssuedDatePicker");
+<%-- validate Adoption Entry Number --%>
+    domObject = document.getElementById('adoptionEntryNo');
     if (isFieldEmpty(domObject)) {
-        isEmpty(domObject, "", 'error2');
-    } else {
-        isDate(domObject.value, 'error12', 'error2');
+        errormsg = errormsg + "\n" + document.getElementById("error22").value;
+    } else if ($('#adoptionEntryNo').val() <= 0) {
+        errormsg = errormsg + "\n" + document.getElementById("error23").value;
     }
+<%-- Validate Entry Date --%>
     domObject = document.getElementById("receivedDatePicker");
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, "", 'error0');
     } else {
         isDate(domObject.value, 'error12', 'error0');
     }
+<%-- Validate Order details --%>
+    domObject = document.getElementById("orderIssuedDatePicker");
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", 'error2');
+    } else {
+        isDate(domObject.value, 'error12', 'error2');
+    }
     domObject = document.getElementById("courtOrderNumber");
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, "", 'error3');
     }
+
+<%-- Validate applicant details --%>
     domObject = document.getElementById("applicantName");
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, "", 'error5');
@@ -182,6 +195,14 @@ function validate() {
     if (!isFieldEmpty(domObject)) {
         validatePINorNIC(domObject, 'error12', 'error13');
     }
+<%-- Validate spouse details --%>
+    if($('#jointApplicanttrue').is(':checked')){
+        domObject = document.getElementById("spouseName");
+        if(isFieldEmpty(domObject)){
+            isEmpty(domObject, "", 'error24');
+        }
+    }
+<%-- Validate child details --%>
     domObject = document.getElementById("childAgeYears");
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, "", 'error7');
@@ -201,10 +222,7 @@ function validate() {
     if (!isFieldEmpty(domObject)) {
         isDate(domObject.value, 'error12', 'error14');
     }
-//    domObject = document.getElementById("birthRegistrationSrialNum");
-//    if (!isFieldEmpty(domObject)) {
-//        isNumeric(domObject.value, 'error12', 'error15');
-//    }
+
     domObject = document.getElementById("birthCertificateNumber");
     if (!isFieldEmpty(domObject)) {
         isNumeric(domObject.value, 'error12', 'error16');
@@ -222,16 +240,9 @@ function validate() {
     if (issueDate.getTime() > receivedDate.getTime()) {
         printMessage("error12", "error18");
     }
-    domObject = document.getElementById('wifePINorNIC');
+    domObject = document.getElementById('spousePINorNIC');
     if (domObject.disabled == false && !isFieldEmpty(domObject)) {
         validatePINorNIC(domObject, "error12", "error19")
-    }
-
-    domObject = document.getElementById('adoptionEntryNo');
-    if (isFieldEmpty(domObject)) {
-        errormsg = errormsg + "\n" + document.getElementById("error22").value;
-    } else if ($('#adoptionEntryNo').val() <= 0) {
-        errormsg = errormsg + "\n" + document.getElementById("error23").value;
     }
 
     if (errormsg != "") {
@@ -243,11 +254,16 @@ function validate() {
 }
 
 function disable(mode) {
-    document.getElementById('wifePINorNIC').disabled = mode;
-    document.getElementById('wifeCountryId').disabled = mode;
-    document.getElementById('wifePassport').disabled = mode;
-    document.getElementById('wifeName').disabled = mode;
-    document.getElementById('wifeOccupation').disabled = mode;
+    if(!mode){
+        $('#spouseNameMarker').css('display', 'inline');
+    }else{
+        $('#spouseNameMarker').css('display', 'none');
+    }
+    document.getElementById('spousePINorNIC').disabled = mode;
+    document.getElementById('spouseCountryId').disabled = mode;
+    document.getElementById('spousePassport').disabled = mode;
+    document.getElementById('spouseName').disabled = mode;
+    document.getElementById('spouseOccupation').disabled = mode;
 }
 //todo 
 function initPage() {
@@ -349,7 +365,7 @@ function enableCertificateInfo(mode) {
         </td>
     </tr>
     <tr>
-        <td colspan="2">අධිකරණය
+        <td colspan="2">අධිකරණය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>நீதிமன்றம்
             <br>Court
         </td>
@@ -403,7 +419,7 @@ function enableCertificateInfo(mode) {
 <table class="adoption-reg-form-header-table">
     <tr>
         <td>
-            අයදුම් කරුගේ විස්තර
+            අයදුම්කරුගේ විස්තර
             <br>விண்ணப்பதாரரின் விபரங்கள்
             <br>Applicants Details
         </td>
@@ -420,27 +436,25 @@ function enableCertificateInfo(mode) {
     <tbody>
     <tr>
         <td>
-            අයදුම් කරු
-            <br>விண்ணப்பதாரி
-            <br>Applicant
+            ද්විත්ව අයදුම්කරුවන්ද?
+            <br>Are joint applicants in ta?
+            <br>Are Joint Applicants?
         </td>
         <td>
-            පියා
-            <br>தந்தை
-            <br>Father
+            ඔව්
+            <br>Yes in ta
+            <br>Yes
         </td>
         <td>
-            <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'false':''}"
-                     id="adoptionApplicantFather"
-                     onclick="disable(false)"/>
+            <s:radio id="jointApplicant" name="adoption.jointApplicant" list="#@java.util.HashMap@{'true':''}" onclick="disable(false)"/>
         </td>
         <td>
-            මව
-            <br>தாய்
-            <br>Mother
+            නැත
+            <br>No in ta
+            <br>No
         </td>
         <td>
-            <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'true':''}" onclick="disable(true);"/>
+            <s:radio id="jointApplicant" name="adoption.jointApplicant" list="#@java.util.HashMap@{'false':''}" onclick="disable(true)"/>
         </td>
     </tr>
     <tr>
@@ -463,7 +477,7 @@ function enableCertificateInfo(mode) {
     </tr>
     <tr>
         <td>
-            විදේශිකය‍කු නම්
+            විදේශිකයකු නම්
             <br>வெளிநாட்டவர் எனின்,
             <br>If a foreigner
         </td>
@@ -486,7 +500,7 @@ function enableCertificateInfo(mode) {
     </tr>
     <tr>
         <td>
-            අයදුම් කරුගේ නම <s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            අයදුම්කරුගේ නම <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>விண்ணப்பதாரரின் பெயர்
             <br>Name of the Applicant
         </td>
@@ -498,7 +512,8 @@ function enableCertificateInfo(mode) {
             <br>முகவரி 1
             <br>Address 1
         </td>
-        <td colspan="4"><s:textarea name="adoption.applicantAddress" cols="50" rows="4" onkeydown="return limitLines(this, event);"
+        <td colspan="4"><s:textarea name="adoption.applicantAddress" cols="50" rows="4"
+                                    onkeydown="return limitLines(this, event);"
                                     id="applicantAddress"/></td>
     </tr>
     <tr>
@@ -507,7 +522,8 @@ function enableCertificateInfo(mode) {
             <br>முகவரி 2
             <br>Address 2
         </td>
-        <td colspan="4"><s:textarea name="adoption.applicantSecondAddress" cols="50" rows="4" onkeydown="return limitLines(this, event);"
+        <td colspan="4"><s:textarea name="adoption.applicantSecondAddress" cols="50" rows="4"
+                                    onkeydown="return limitLines(this, event);"
                                     id="applicantSecondAddress"/></td>
     </tr>
     <tr>
@@ -524,10 +540,9 @@ function enableCertificateInfo(mode) {
 <table class="adoption-reg-form-header-table">
     <tr>
         <td><br/>
-            අයදුම් කරු පියා නම් මවගේ විස්තර
-            <br> விண்ணப்பதாரி தந்தையாயின் தாயின் விபரங்கள்
-            <br>If applicant is the father,
-            Mother's details
+            සහකරුගේ විස්තර
+            <br>Spouse's details in ta
+            <br>Spouse's details
         </td>
     </tr>
 </table>
@@ -540,23 +555,23 @@ function enableCertificateInfo(mode) {
     <col/>
     <tr>
         <td>
-            මවගේ අනන්‍යතා අංකය
-            <br>தாயின் அடையாள எண்
-            <br>Mothers Identification Number
+            සහකරුගේ අනන්‍යතා අංකය
+            <br>Identification Number of Sopuse in ta
+            <br>Identification Number of Sopuse
         </td>
         <td colspan="5" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                 id="wife_NIC_V" onclick="javascript:addXorV('wifePINorNIC','V','error21')">
+                 id="spouse_NIC_V" onclick="javascript:addXorV('spousePINorNIC','V','error21')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                 id="wife_NIC_X" onclick="javascript:addXorV('wifePINorNIC','X','error21')">
+                 id="spouse_NIC_X" onclick="javascript:addXorV('spousePINorNIC','X','error21')">
             <br>
-            <s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"
+            <s:textfield name="adoption.spousePINorNIC" id="spousePINorNIC"
                          cssStyle="float:left;width:200px;" maxLength="12"/>
             <img src="<s:url value="/images/search-mother.png" />"
                  style="vertical-align:middle; margin-left:10px;" id="mother_lookup"></td>
     </tr>
     <tr>
-        <td>විදේශිකය‍කු නම් <br/>
+        <td>විදේශිකයකු නම් <br/>
             வெளிநாட்டவர் எனின்<br/>
             If a foreigner
         </td>
@@ -565,7 +580,7 @@ function enableCertificateInfo(mode) {
             Country
         </td>
         <td width="175px">
-            <s:select id="wifeCountryId" name="adoption.wifeCountryId" list="countryList" headerKey="0"
+            <s:select id="spouseCountryId" name="adoption.spouseCountryId" list="countryList" headerKey="0"
                       headerValue="%{getText('adoption.select_country.label')}" cssStyle="width:90%"/>
         </td>
         <td>ගමන් බලපත්‍ර අංකය <br/>
@@ -573,28 +588,29 @@ function enableCertificateInfo(mode) {
             Passport No.
         </td>
         <td>
-            <s:textfield name="adoption.wifePassport" id="wifePassport" cssStyle="width:90%"
+            <s:textfield name="adoption.spousePassport" id="spousePassport" cssStyle="width:90%"
                          maxLength="15"> </s:textfield>
         </td>
     </tr>
     <tr>
         <td>
-            මවගේ නම
+            සහකරුගේ නම <s:label id="spouseNameMarker" value="*" cssStyle="color:blue;font-size:11pt; display:none;"/>
             <br>தாயின் பெயர்
-            <br>Name of Mother
+            <br>Name of Spouse
         </td>
-        <td colspan="4"><s:textarea name="adoption.wifeName" id="wifeName"/></td>
+        <td colspan="4"><s:textarea name="adoption.spouseName" id="spouseName"/></td>
     </tr>
     <tr>
         <td>
-            මවගේ රැකියාව
+            සහකරුගේ රැකියාව
             <br>தாயின் தொழில்
-            <br>Occupation of Mother
+            <br>Occupation of Spouse
         </td>
-        <td colspan="4"><s:textarea name="adoption.wifeOccupation"
-                                    id="wifeOccupation"/></td>
+        <td colspan="4"><s:textarea name="adoption.spouseOccupation"
+                                    id="spouseOccupation"/></td>
     </tr>
 </table>
+
 <table class="adoption-reg-form-header-table">
     <tr>
         <td>
@@ -762,8 +778,8 @@ function enableCertificateInfo(mode) {
             <br>Province in ta
             <br>Province
         </td>
-        <td colspan="4"><s:select id="birthProvinceUKey" name="birthProvinceUKey" list="provinceList"
-                                  value="%{birthProvinceUKey}" headerKey="0" headerValue="%{getText('select.label')}"
+        <td colspan="4"><s:select id="birthProvinceUKey" name="adoption.birthProvinceUKey" list="provinceList"
+                                  value="%{adoption.birthProvinceUKey}" headerKey="0" headerValue="%{getText('select.label')}"
                                   cssStyle="width:280px;margin-left:5px;"/>
         </td>
     </tr>
@@ -773,8 +789,8 @@ function enableCertificateInfo(mode) {
             <br>மாவட்டம்
             <br>District
         </td>
-        <td colspan="4"><s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                                  value="%{birthDistrictId}" headerKey="0" headerValue="%{getText('select.label')}"
+        <td colspan="4"><s:select id="birthDistrictId" name="adoption.birthDistrictId" list="districtList"
+                                  value="%{adoption.birthDistrictId}" headerKey="0" headerValue="%{getText('select.label')}"
                                   cssStyle="width:280px;margin-left:5px;"/>
         </td>
     </tr>
@@ -814,7 +830,7 @@ function enableCertificateInfo(mode) {
 <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
 <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
 <s:hidden name="pageNo" value="%{#request.pageNo}"/>
-<s:hidden name="idUKey" value="%{#request.idUKey}"/>
+<s:hidden id="idUKey" name="idUKey" value="%{#request.idUKey}"/>
 <%--<s:hidden name="pageNo" value="1"/>--%>
 <div class="button" align="right">
     <s:submit value="%{getText('adoption.submit')}" cssStyle="margin-top:10px;"/>
@@ -841,11 +857,12 @@ function enableCertificateInfo(mode) {
 <s:hidden id="error16" value="%{getText('er.label.birthCertificateNumber')}"/>
 <s:hidden id="error17" value="%{getText('er.label.child.newNameOrExistingName')}"/>
 <s:hidden id="error18" value="%{getText('er.label.orderIssuedDate.orderRecievedDate')}"/>
-<s:hidden id="error19" value="%{getText('er.label.wifePINorNIC')}"/>
+<s:hidden id="error19" value="%{getText('er.label.spousePINorNIC')}"/>
 <s:hidden id="error20" value="%{getText('er.label.childPIN')}"/>
 <s:hidden id="error21" value="%{getText('NIC.error.add.VX')}"/>
 <s:hidden id="error22" value="%{getText('er.label.no.adoption.entry.number')}"/>
 <s:hidden id="error23" value="%{getText('er.label.invalid.adoption.entry.number')}"/>
+<s:hidden id="error24" value="%{getText('er.label.spouse.name')}"/>
 
 <s:hidden id="clear" value="%{getText('clear.label')}"/>
 </div>
