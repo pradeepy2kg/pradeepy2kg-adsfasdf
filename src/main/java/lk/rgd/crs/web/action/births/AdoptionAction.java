@@ -2,18 +2,15 @@ package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.*;
-import lk.rgd.crs.api.domain.BDDivision;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Locale;
 import java.util.List;
 
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.CourtDAO;
@@ -123,24 +120,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String addOrEditAdoption() {
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
-        //  populateBasicLists(language);         bug 2202
-        //    populateAllDSDivisionList();
         long birthCertificateNo = 0;
-
-        //check applicant type
-        if (adoption.isApplicantMother()) {
-            //check wife details are already filled if so give action error
-            if (adoption.getWifeName() != null || adoption.getWifePassport() != null
-                || adoption.getWifePINorNIC() != null) {
-                addActionError(getText("er.if.applicant.type.mother.wife.detail.null"));
-                basicLists();
-                populate();
-                populateAllDSDivisionList();
-                return "invalidBirthCertificateNumber";
-            }
-        }
 
         if (idUKey > 0) {
             AdoptionOrder existingOrder = service.getById(idUKey, user);
@@ -157,14 +138,25 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 }
             }
             populateAdoptionObjectForEdit(adoption, existingOrder);
-            if(birthProvinceUKey > 0){
-                adoption.setBirthProvinceUKey(birthProvinceUKey);
-                adoption.setBirthDistrictId(birthDistrictId);
-                adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(birthProvinceUKey).getZonalOffice());
-            }else{
-                adoption.setNoticingZonalOffice(adoption.getCourt().getProvince().getZonalOffice());
+
+            try {
+                /**
+                 * Setting the zonal office
+                 * Zonal office where the birth province related to. (If the previous birth province is given)
+                 * Zonal office where the court belongs to. (If province is not mentioned)
+                 */
+                if(adoption.getBirthProvinceUKey() > 0){
+                    adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(adoption.getBirthProvinceUKey()).getZonalOffice());
+                }else{
+                    adoption.setNoticingZonalOffice(adoption.getCourt().getProvince().getZonalOffice());
+                }
+            } catch (CRSRuntimeException e) {
+                basicLists();
+                return "invalidBirthCertificateNumber";
             }
             service.updateAdoptionOrder(adoption, user);
+            setIdUKey(adoption.getIdUKey());
+            setAllowApproveAdoption(user.isAuthorized(Permission.APPROVE_ADOPTION));
             addActionMessage(getText("message.successfully.edited.adoption.order",
                 new String[]{adoption.getCourtOrderNumber()}));
         } else {
@@ -187,10 +179,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 }
             }
             try {
-                if(birthProvinceUKey > 0){
-                    adoption.setBirthProvinceUKey(birthProvinceUKey);
-                    adoption.setBirthDistrictId(birthDistrictId);
-                    adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(birthProvinceUKey).getZonalOffice());
+                /**
+                 * Setting the zonal office
+                 * Zonal office where the birth province related to. (If the previous birth province is given)
+                 * Zonal office where the court belongs to. (If province is not mentioned)
+                 */
+                if(adoption.getBirthProvinceUKey() > 0){
+                    adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(adoption.getBirthProvinceUKey()).getZonalOffice());
                 }else{
                     adoption.setNoticingZonalOffice(adoption.getCourt().getProvince().getZonalOffice());
                 }
@@ -200,7 +195,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 basicLists();
                 return "invalidBirthCertificateNumber";
             }
-            logger.debug("added an adoption successfully with idUKey : {}", adoption.getIdUKey());
+            logger.debug("added an adoption successfully with idUKey : {} by {}", adoption.getIdUKey(), user.getUserId());
             setIdUKey(adoption.getIdUKey());
             setAllowApproveAdoption(user.isAuthorized(Permission.APPROVE_ADOPTION));
             addActionMessage(getText("message.add.successfully.adoption", new String[]{adoption.getCourtOrderNumber()}));
@@ -269,12 +264,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         populate();
         populateAllDSDivisionList();
 
-        if(adoption.getBirthProvinceUKey() != 0){
-            birthProvinceUKey = adoption.getBirthProvinceUKey();
-        }
-        if(adoption.getBirthDistrictId() != 0){
-            birthDistrictId = adoption.getBirthDistrictId();
-        }
         if(adoption.getNoticingZonalOffice() != null){
             zonalOfficeId = adoption.getNoticingZonalOffice().getZonalOfficeUKey();
         }
@@ -316,8 +305,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (adoption.getApplicantCountryId() > 0) {
             applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
         }
-        if (adoption.getWifeCountryId() > 0) {
-            wifeCountryName = countryDAO.getNameByPK(adoption.getWifeCountryId(), language);
+        if (adoption.getSpouseCountryId() > 0) {
+            wifeCountryName = countryDAO.getNameByPK(adoption.getSpouseCountryId(), language);
         }
         if (adoption.getCourt().getCourtId() > 0) {
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtId(), language);
@@ -343,8 +332,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (adoption.getApplicantCountryId() > 0) {
             applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
         }
-        if (adoption.getWifeCountryId() > 0) {
-            wifeCountryName = countryDAO.getNameByPK(adoption.getWifeCountryId(), language);
+        if (adoption.getSpouseCountryId() > 0) {
+            wifeCountryName = countryDAO.getNameByPK(adoption.getSpouseCountryId(), language);
         }
         if (adoption.getCourt().getCourtId() > 0) {
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtId(), language);

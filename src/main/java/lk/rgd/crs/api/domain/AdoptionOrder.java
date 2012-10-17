@@ -123,6 +123,10 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = true)
     private String judgeName;
 
+    /**
+     * Details of the applicant.
+     * Applicant can be Father, Mother, Both parents or other person [ONLY ONE] such as matron.
+     */
     @Column(nullable = false)
     private String applicantName;
 
@@ -144,23 +148,37 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = true)
     private String applicantPassport;
 
+    /**
+     * Only husband and wife can apply as joint applicants.
+     * It this is TRUE, then the spouseName should be mandatory; Null otherwise.
+     */
+    @Column(nullable = false)
+    private boolean jointApplicant;
+
+    // TODO remove
     @Column(nullable = false)
     private boolean applicantMother; // false if father is the applicant (Usual case), true if it is the mother
 
+    /**
+     * Details of the spouse.
+     * These details will be captured only if the court order is given to two parties (husband and wife).
+     * If it is a joint application, then the name of the spouse should be mandatory.
+     */
     @Column(nullable = true)
-    private String wifeName; // applies only if applicantMother is false (father)
+    private String spouseName;
 
     @Column(nullable = true)
-    private String wifeOccupation;
+    private String spouseOccupation;
 
     @Column(nullable = true, length = 12)
-    private String wifePINorNIC;
+    private String spousePINorNIC;
 
     @Column(nullable = true)
-    private int wifeCountryId;
+    private int spouseCountryId;
 
     @Column(nullable = true)
-    private String wifePassport;
+    private String spousePassport;
+
 
     @Column(nullable = true)
     private String childPIN;
@@ -333,36 +351,36 @@ public class AdoptionOrder implements Serializable {
         this.applicantPassport = WebUtils.filterBlanksAndToUpper(applicantPassport);
     }
 
-    public String getWifePINorNIC() {
-        return wifePINorNIC;
+    public String getSpousePINorNIC() {
+        return spousePINorNIC;
     }
 
-    public void setWifePINorNIC(String wifePINorNIC) {
-        this.wifePINorNIC = WebUtils.filterBlanksAndToUpper(wifePINorNIC);
+    public void setSpousePINorNIC(String spousePINorNIC) {
+        this.spousePINorNIC = WebUtils.filterBlanksAndToUpper(spousePINorNIC);
     }
 
-    public int getWifeCountryId() {
-        return wifeCountryId;
+    public int getSpouseCountryId() {
+        return spouseCountryId;
     }
 
-    public void setWifeCountryId(int wifeCountryId) {
-        this.wifeCountryId = wifeCountryId;
+    public void setSpouseCountryId(int spouseCountryId) {
+        this.spouseCountryId = spouseCountryId;
     }
 
-    public String getWifePassport() {
-        return wifePassport;
+    public String getSpousePassport() {
+        return spousePassport;
     }
 
-    public void setWifePassport(String wifePassport) {
-        this.wifePassport = WebUtils.filterBlanksAndToUpper(wifePassport);
+    public void setSpousePassport(String spousePassport) {
+        this.spousePassport = WebUtils.filterBlanksAndToUpper(spousePassport);
     }
 
-    public String getWifeName() {
-        return wifeName;
+    public String getSpouseName() {
+        return spouseName;
     }
 
-    public void setWifeName(String wifeName) {
-        this.wifeName = WebUtils.filterBlanksAndToUpper(wifeName);
+    public void setSpouseName(String spouseName) {
+        this.spouseName = WebUtils.filterBlanksAndToUpper(spouseName);
     }
 
     public String getCourtOrderNumber() {
@@ -541,12 +559,12 @@ public class AdoptionOrder implements Serializable {
         this.applicantOccupation = applicantOccupation;
     }
 
-    public String getWifeOccupation() {
-        return wifeOccupation;
+    public String getSpouseOccupation() {
+        return spouseOccupation;
     }
 
-    public void setWifeOccupation(String wifeOccupation) {
-        this.wifeOccupation = wifeOccupation;
+    public void setSpouseOccupation(String spouseOccupation) {
+        this.spouseOccupation = spouseOccupation;
     }
 
     public ZonalOffice getNoticingZonalOffice() {
@@ -611,5 +629,13 @@ public class AdoptionOrder implements Serializable {
 
     public void setApplicantSecondAddress(String applicantSecondAddress) {
         this.applicantSecondAddress = applicantSecondAddress;
+    }
+
+    public boolean isJointApplicant() {
+        return jointApplicant;
+    }
+
+    public void setJointApplicant(boolean jointApplicant) {
+        this.jointApplicant = jointApplicant;
     }
 }

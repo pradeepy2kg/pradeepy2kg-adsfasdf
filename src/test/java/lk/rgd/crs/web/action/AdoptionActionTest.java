@@ -9,7 +9,6 @@ import lk.rgd.UnitTestManager;
 import lk.rgd.common.CustomStrutsTestCase;
 import lk.rgd.common.api.dao.ZonalOfficesDAO;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.ZonalOffice;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
@@ -367,10 +366,10 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
             adoption.setApplicantPINorNIC("19862361002" + i);
             //set applicant is mother
             adoption.setApplicantMother(true);
-            adoption.setWifeName("wife name" + i);
-            adoption.setWifePINorNIC("19782361002" + i);
-            adoption.setWifeCountryId(3);
-            adoption.setWifePassport("wife passport" + i);
+            adoption.setSpouseName("Spouse name" + i);
+            adoption.setSpousePINorNIC("19782361002" + i);
+            adoption.setSpouseCountryId(3);
+            adoption.setSpousePassport("Spouse passport" + i);
             //court given name so existing name can be null
             adoption.setChildNewName("child new name" + i);
             adoption.setChildAgeYears(10);
