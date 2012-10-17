@@ -119,6 +119,22 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+    public String adoptionDeclaration() {
+        logger.debug("initializing adoption registration");
+        if (idUKey == 0) {
+            adoption = new AdoptionOrder();
+        }
+        Long lastEntry = service.getLastEntryNo(user);
+        if (lastEntry != null) {
+            adoption.setAdoptionEntryNo(lastEntry + 1);
+        }
+        populateBasicLists(language);
+        populateAllDSDivisionList();
+        birthProvinceUKey = 0;
+        birthDistrictId = 0;
+        return SUCCESS;
+    }
+
     public String addOrEditAdoption() {
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
         long birthCertificateNo = 0;
@@ -137,7 +153,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                     return "invalidBirthCertificateNumber";
                 }
             }
-            populateAdoptionObjectForEdit(adoption, existingOrder);
+            adoption.setLifeCycleInfo(existingOrder.getLifeCycleInfo());
 
             try {
                 /**
@@ -210,28 +226,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         courtOrderNo = null;
         courtId = 0;
         populateBasicLists(user.getPrefLanguage());
-        return SUCCESS;
-    }
-
-    private void populateAdoptionObjectForEdit(AdoptionOrder adoption, AdoptionOrder existingOrder) {
-        adoption.setLifeCycleInfo(existingOrder.getLifeCycleInfo());
-//todo amith bug 2202 populate others
-    }
-
-
-    public String adoptionDeclaration() {
-        logger.debug("initializing adoption registration");
-        if (idUKey == 0) {
-            adoption = new AdoptionOrder();
-        }
-        Long lastEntry = service.getLastEntryNo(user);
-        if (lastEntry != null) {
-            adoption.setAdoptionEntryNo(lastEntry + 1);
-        }
-        populateBasicLists(language);
-        populateAllDSDivisionList();
-        birthProvinceUKey = 0;
-        birthDistrictId = 0;
         return SUCCESS;
     }
 
