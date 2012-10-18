@@ -140,27 +140,27 @@
                         out.print(GenderUtil.getGender(a.getChildGender(), a.getLanguageToTransliterate()));%>
                 </label>
             </td>
-            <td rowspan="3">
-                <s:if test="adoption.applicantMother == true">
-                    <s:label name="adoption.applicantName"/><br/>
-                    <s:label name="adoption.applicantOccupation"/><br/><br/>
-                    <s:textarea value="%{adoption.applicantAddress}"
-                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none;"
-                                rows="4" disabled="true"/><br/>
-                    <s:textarea value="%{adoption.applicantSecondAddress}"
-                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none;"
-                                rows="4" disabled="true"/>
-                </s:if>
-                <s:else>
+            <td rowspan="3" class="font-9">
+                <s:if test="adoption.jointApplicant">
                     <s:label name="adoption.applicantName"/><br/>
                     <s:label name="adoption.applicantOccupation"/><br/><br/>
                     <s:label name="adoption.spouseName"/><br/>
                     <s:label name="adoption.spouseOccupation"/><br/><br/>
                     <s:textarea value="%{adoption.applicantAddress}"
-                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; "
+                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
+                                rows="4" disabled="true"/><br/>
+                    <s:textarea value="%{adoption.applicantSecondAddress}"
+                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
+                                rows="4" disabled="true"/>
+                </s:if>
+                <s:else>
+                    <s:label name="adoption.applicantName"/><br/>
+                    <s:label name="adoption.applicantOccupation"/><br/><br/>
+                    <s:textarea value="%{adoption.applicantAddress}"
+                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
                                 rows="5" disabled="true"/>
                     <s:textarea value="%{adoption.applicantSecondAddress}"
-                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none;"
+                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
                                 rows="5" disabled="true"/>
                 </s:else>
             </td>
@@ -179,7 +179,7 @@
                 <s:label name="adoption.courtOrderNumber"/>
             </td>
             <td style="border-bottom:none;">
-                <s:textarea rows="10" disabled="true"
+                <s:textarea rows="12" disabled="true"
                             cssStyle="margin: 0; resize: none; background: #fff; width: 100px; border: none;"/>
             </td>
         </tr>
@@ -193,7 +193,7 @@
         </tr>
         <tr>
             <td style="border-top: none;">
-                <s:textarea rows="7" disabled="true"
+                <s:textarea rows="5" disabled="true"
                             cssStyle="margin: 0; resize: none; background: #fff; width: 100px; border: none;"/>
             </td>
         </tr>
@@ -201,7 +201,7 @@
             <td colspan="8" align="center">වෙනස් කිරීම්/திருத்தங்கள்/AMENDMENTS</td>
         </tr>
         <tr>
-            <td height="135px"><br/></td>
+            <td height="180px"><br/></td>
             <td><br/></td>
             <td><br/></td>
             <td><br/></td>
