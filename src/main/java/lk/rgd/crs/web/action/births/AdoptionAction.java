@@ -89,7 +89,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String birthDivisionName;
     private String applicantCountryName;
     private String courtName;
-    private String wifeCountryName;
+    private String spouseCountryName;
     private String birthDistrictName;
     private String birthProvinceName;
     private String certificateApplicantAddress;
@@ -300,7 +300,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
         }
         if (adoption.getSpouseCountryId() > 0) {
-            wifeCountryName = countryDAO.getNameByPK(adoption.getSpouseCountryId(), language);
+            spouseCountryName = countryDAO.getNameByPK(adoption.getSpouseCountryId(), language);
         }
         if (adoption.getCourt().getCourtId() > 0) {
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtId(), language);
@@ -327,7 +327,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
         }
         if (adoption.getSpouseCountryId() > 0) {
-            wifeCountryName = countryDAO.getNameByPK(adoption.getSpouseCountryId(), language);
+            spouseCountryName = countryDAO.getNameByPK(adoption.getSpouseCountryId(), language);
         }
         if (adoption.getCourt().getCourtId() > 0) {
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtId(), language);
@@ -959,12 +959,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.applicantCountryName = applicantCountryName;
     }
 
-    public String getWifeCountryName() {
-        return wifeCountryName;
+    public String getSpouseCountryName() {
+        return spouseCountryName;
     }
 
-    public void setWifeCountryName(String wifeCountryName) {
-        this.wifeCountryName = wifeCountryName;
+    public void setSpouseCountryName(String spouseCountryName) {
+        this.spouseCountryName = spouseCountryName;
     }
 
     public String getBirthDistrictName() {

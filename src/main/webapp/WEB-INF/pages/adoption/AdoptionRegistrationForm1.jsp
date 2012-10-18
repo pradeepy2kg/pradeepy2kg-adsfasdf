@@ -335,7 +335,7 @@ function enableCertificateInfo(mode) {
     <tr>
         <td colspan="3" align="center">
             දරුකමට හදාගැනීමේ උසාවි නියෝගය ලියාපදිංචි කිරීම (අංක 4 දරන ආකෘති පත්‍රය)
-            <br>நீதிமன்ற மகவேற்புக் கட்டளையினை பதிவு செய்தல் ( 4 ஆம் இலக்க விண்ணப்ப படிவம்)
+            <br>நீதிமன்ற மகவேற்புக் கட்டளையினை பதிவு செய்தல் (4 ஆம் இலக்க விண்ணப்ப படிவம்)
             <br>Registration of an Adoption Order Issued by Court
         </td>
     </tr>
