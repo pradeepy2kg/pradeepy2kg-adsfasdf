@@ -91,9 +91,10 @@
         </td>
     </tr>
 </table>
+
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>අයදුම් කරුගේ විස්තර <br/>
+        <td>අයදුම්කරුගේ විස්තර <br/>
             விண்ணப்பதாரரின் விபரங்கள்<br/>
             Applicants Details
         </td>
@@ -102,60 +103,65 @@
 
 <table class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
     <caption></caption>
-    <col width="330px"/>
+    <col width="320px"/>
     <col width="175px"/>
     <col width="175px"/>
-    <col width="175px"/>
-    <col width="175px"/>
+    <col/>
+    <col/>
     <tbody>
     <tr>
-        <td colspan="2">අයදුම් කරු <br/>
-            விண்ணப்பதாரர்<br/>
-            Applicant
+        <td>
+            ද්විත්ව අයදුම්කරුවන්ද?
+            <br>Are joint applicants in ta?
+            <br>Are Joint Applicants?
         </td>
-        <s:if test="#request.adoption.applicantMother==0">
-            <td colspan="3">පියා<br/>
-                தகப்பன்<br/>
-                Father
-            </td>
-        </s:if>
-        <s:else>
-
-            <td colspan="3">මව <br/>
-                தாய்<br/>
-                Mother
-            </td>
-        </s:else>
+        <td colspan="4">
+            <s:if test="adoption.jointApplicant">
+                ඔව්
+                <br>Yes in ta
+                <br>Yes
+            </s:if>
+            <s:else>
+                නැත
+                <br>No in ta
+                <br>No
+            </s:else>
+        </td>
     </tr>
     <tr>
-        <td colspan="2">අයදුම් කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br/>
-            விண்ணப்பதாரரின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
-            Applicant's PIN / NIC Number
+        <td>
+            අනන්‍යතා අංකය
+            <br>அடையாள எண்
+            <br>Identification No.
         </td>
-        <td colspan="3"><s:label value="%{#request.adoption.applicantPINorNIC}"/></td>
+        <td colspan="4" align="left" class="find-person">
+            <s:label value="%{#request.adoption.applicantPINorNIC}"/>
+        </td>
     </tr>
     <tr>
-        <td>විදේශිකය‍කු නම් <br/>
-            வெளிநாட்டவர் <br/>
-            If a foreigner
-        </td>
-        <td>රට <br/>
-            நாடு <br/>
-            Country
+        <td>
+            විදේශිකයකු නම්
+            <br>வெளிநாட்டவர் எனின்,
+            <br>If a foreigner
         </td>
         <td>
-            <s:label value="%{#request.applicantCountryName}"/>
+            රට
+            <br>நாடு
+            <br>Country
         </td>
-        <td>ගමන් බලපත්‍ර අංකය <br/>
-            கடவுச் சீட்டு இல. <br/>
-            Passport No.
+        <td><s:label value="%{#request.applicantCountryName}"/></td>
+        <td>
+            ගමන් බලපත්‍ර අංකය
+            <br>கடவுச் சீட்டு இல.
+            <br>Passport No.
         </td>
         <td><s:label value="%{#request.adoption.applicantPassport}"/></td>
     </tr>
     <tr>
-        <td>නම <br/>
-            விண்ணப்பதாரரின் பெயர்<br/>
-            Name of the Applicant
+        <td>
+            අයදුම්කරුගේ නම
+            <br>விண்ணப்பதாரரின் பெயர்
+            <br>Name of the Applicant
         </td>
         <td colspan="4"><s:label value="%{#request.adoption.applicantName}"/></td>
     </tr>
@@ -185,58 +191,66 @@
     </tr>
     </tbody>
 </table>
-<table class="adoption-reg-form-header-table">
-    <tr>
-        <td><br/>
-            අයදුම් කරු පියා නම් මවගේ විස්තර /விண்ணப்பதாரர் தந்தையாயின் தாயின் விபரங்கள் / If applicant is the father,
-            Mother's details
-        </td>
-    </tr>
-</table>
-<table class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
-    <tr>
-        <td colspan="3" width="680px">මවගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br/>
-            தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
-            Wife's PIN / NIC Number
-        </td>
-        <td colspan="2"><s:label value="%{#request.adoption.wifePINorNIC}"/></td>
-    </tr>
-    <tr>
-        <td width="330px">විදේශිකය‍කු නම් <br/>
-            வெளிநாட்டவர் <br/>
-            If a foreigner
-        </td>
-        <td width="175px">රට <br/>
-            நாடு <br/>
-            Country
-        </td>
-        <td width="175px">
-            <s:label value="%{#request.wifeCountryName}"/>
-        </td>
-        <td width="175px">ගමන් බලපත්‍ර අංකය <br/>
-            கடவுச் சீட்டு இல. <br/>
-            Passport No.
-        </td>
-        <td width="175px">
-            <s:label value="%{#request.adoption.wifePassport}"/>
-        </td>
-    </tr>
-    <tr>
-        <td> මවගේ නම <br/>
-            தாயின் பெயர்<br/>
-            Name of Mother
-        </td>
-        <td colspan="4"><s:label value="%{#request.adoption.wifeName}"/></td>
-    </tr>
-    <tr>
-        <td>
-            මවගේ රැකියාව
-            <br>தாயின் தொழில்
-            <br>Occupation of Mother
-        </td>
-        <td colspan="4"><s:label value="%{#request.adoption.wifeOccupation}"/></td>
-    </tr>
-</table>
+<s:if test="adoption.jointApplicant">
+    <table class="adoption-reg-form-header-table">
+        <tr>
+            <td><br/>
+                සහකරුගේ විස්තර
+                <br>Spouse's details in ta
+                <br>Spouse's details
+            </td>
+        </tr>
+    </table>
+    <table class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
+        <caption></caption>
+        <col width="320px"/>
+        <col width="175px"/>
+        <col width="175px"/>
+        <col/>
+        <col/>
+        <tr>
+            <td>
+                සහකරුගේ අනන්‍යතා අංකය
+                <br>Identification Number of Sopuse in ta
+                <br>Identification Number of Sopuse
+            </td>
+            <td colspan="5" class="find-person">
+                <s:label value="%{#request.adoption.spousePINorNIC}"/></td>
+        </tr>
+        <tr>
+            <td>විදේශිකයකු නම් <br/>
+                வெளிநாட்டவர் எனின்<br/>
+                If a foreigner
+            </td>
+            <td>රට <br/>
+                நாடு <br/>
+                Country
+            </td>
+            <td width="175px"><s:label value="%{#request.spouseCountryName}"/></td>
+            <td>ගමන් බලපත්‍ර අංකය <br/>
+                கடவுச் சீட்டு இல. <br/>
+                Passport No.
+            </td>
+            <td><s:label value="%{#request.adoption.spousePassport}"/></td>
+        </tr>
+        <tr>
+            <td>
+                සහකරුගේ නම
+                <br>தாயின் பெயர்
+                <br>Name of Spouse
+            </td>
+            <td colspan="4"><s:label value="%{#request.adoption.spouseName}"/></td>
+        </tr>
+        <tr>
+            <td>
+                සහකරුගේ රැකියාව
+                <br>தாயின் தொழில்
+                <br>Occupation of Spouse
+            </td>
+            <td colspan="4"><s:label value="%{#request.adoption.spouseOccupation}"/></td>
+        </tr>
+    </table>
+</s:if>
 <table class="adoption-reg-form-header-table">
     <tr>
         <td>ළමයාගේ විස්තර <br/>
