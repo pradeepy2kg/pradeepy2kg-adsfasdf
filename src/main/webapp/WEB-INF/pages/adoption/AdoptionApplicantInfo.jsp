@@ -22,26 +22,28 @@
     });
 
     function setApplicantInfo() {
-        var pin = $('#pin').val();
-        var name = $('#name').val();
-        var address = $('#address').val();
-        var wifePin = $('#wifePin').val();
-        var wifeName = $('#wifeName').val();
+        if ($('#jointApplicant').val() == 'true') {
+            var pin = $('#pin').val();
+            var name = $('#name').val();
+            var address = $('#address').val();
+            var spousePin = $('#spousePin').val();
+            var spouseName = $('#spouseName').val();
 
-        var applicantPin = document.getElementById("certifcateApplicantPin").value = "";
-        var applicantName = document.getElementById("certificateApplicantName").value = "";
-        var applicantAddress = document.getElementById("certificateApplicantAddress").value = "";
-        domObject0 = document.getElementsByName("certificateApplicantType")[0];
-        if (domObject0.checked) {
-            var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
-            var applicantName = document.getElementById("certificateApplicantName").value = name;
-            var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
-        }
-        domObject1 = document.getElementsByName("certificateApplicantType")[1];
-        if (domObject1.checked) {
-            var applicantPin = document.getElementById("certifcateApplicantPin").value = wifePin;
-            var applicantName = document.getElementById("certificateApplicantName").value = wifeName;
-            var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
+            var applicantPin = document.getElementById("certifcateApplicantPin").value = "";
+            var applicantName = document.getElementById("certificateApplicantName").value = "";
+            var applicantAddress = document.getElementById("certificateApplicantAddress").value = "";
+            domObject0 = document.getElementsByName("certificateApplicantType")[0];
+            if (domObject0.checked) {
+                var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
+                var applicantName = document.getElementById("certificateApplicantName").value = name;
+                var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
+            }
+            domObject1 = document.getElementsByName("certificateApplicantType")[1];
+            if (domObject1.checked) {
+                var applicantPin = document.getElementById("certifcateApplicantPin").value = spousePin;
+                var applicantName = document.getElementById("certificateApplicantName").value = spouseName;
+                var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
+            }
         }
     }
 
@@ -381,7 +383,8 @@
                 Address
             </td>
             <td colspan="6">
-                <s:textarea id="certificateApplicantAddress" name="certificateApplicantAddress" cols="50" rows="4" onkeydown="return limitLines(this, event);"
+                <s:textarea id="certificateApplicantAddress" name="certificateApplicantAddress" cols="50" rows="4"
+                            onkeydown="return limitLines(this, event);"
                             cssStyle="width:98.2%;"/>
             </td>
         </tr>
@@ -401,11 +404,12 @@
     <s:hidden id="error7" value="%{getText('er.label.serialNo.required')}"/>
     <s:hidden id="error8" value="%{getText('er.label.serialNo.format')}"/>
 
-<%-- Values to auto populate applicant info --%>
+    <%-- Values to auto populate applicant info --%>
     <s:hidden id="pin" name="adoption.applicantPINorNIC"/>
     <s:hidden id="name" name="adoption.applicantName"/>
     <s:hidden id="address" name="adoption.applicantAddress"/>
-    <s:hidden id="wifeName" name="adoption.wifeName"/>
-    <s:hidden id="wifePin" name="adoption.wifePINorNIC"/>
+    <s:hidden id="spouseName" name="adoption.spouseName"/>
+    <s:hidden id="spousePin" name="adoption.spousePINorNIC"/>
+    <s:hidden id="jointApplicant" value="%{adoption.jointApplicant}"/>
 </s:form>
 </div>
