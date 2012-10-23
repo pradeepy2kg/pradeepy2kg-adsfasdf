@@ -89,7 +89,6 @@
     </tr>
     </tbody>
 </table>
-
 <table border="1" width="99%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <col width="250px">
     <col width="250px">
@@ -164,10 +163,6 @@
         </td>
     </tr>
     <tr>
-        <%--<td height="80px" width="250px">පුද්ගල අනන්‍යතා අංකය <br>தனிநபர்அடையாள எண் <br>Person Identification Number--%>
-        <%--(PIN)--%>
-        <%--</td>--%>
-        <%--<td width="250px"><s:label name="" value="%{adoption.childPIN}"/></td>--%>
         <td>උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth
         <td colspan="2"><s:label name="" value="%{adoption.childBirthDate}"/>
         </td>
@@ -179,44 +174,22 @@
         </td>
     </tr>
     <tr>
-        <td height="120px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
+        <td height="120px">
+            දරුකමට ගන්නා අයගේ හෝ අයවළුන්ගේ නම් සහ වාසගම් සහ රක්ෂාවන්<br/>
+            Name and Surname and Occupation of adopter or adopters in ta <br/>
+            Name and Surname and Occupation of adopter or adopters
         </td>
-        <td colspan="2" class="bc-name" style="font-size:12pt">
-            <s:if test="#request.adoption.applicantMother==0">
-                <s:label name="" value="%{adoption.applicantName}"/>
-            </s:if>
-        </td>
-        <td>
-            පියාගේ රැකියාව
-            <br>தகப்பனின் தொழில்
-            <br>Occupation of Father
-        </td>
-        <td>
-            <s:if test="#request.adoption.applicantMother==0">
-                <s:label value="%{adoption.applicantOccupation}"/>
-            </s:if>
-        </td>
-    </tr>
-    <tr>
-        <td height="120px"> මවගේ සම්පූර්ණ නම <br>
-            தாயின் முழுப் பெயர் <br>
-            Mother's Full Name
-        </td>
-        <td colspan="2" class="bc-name" style="font-size:12pt">
-            <s:if test="#request.adoption.applicantMother==1">
-                <s:label name="" value="%{adoption.applicantName}"/>
+        <td colspan="4" class="bc-name" style="font-size:12pt">
+            <s:if test="adoption.jointApplicant">
+                <s:label name="adoption.applicantName"/><br/>
+                <s:label name="adoption.applicantOccupation"/><br/><br/>
+                <s:label name="adoption.spouseName"/><br/>
+                <s:label name="adoption.spouseOccupation"/>
             </s:if>
             <s:else>
-                <s:label name="" value="%{adoption.wifeName}"/>
+                <s:label name="adoption.applicantName"/><br/>
+                <s:label name="adoption.applicantOccupation"/>
             </s:else>
-        </td>
-        <td>
-            මවගේ රැකියාව
-            <br>தாயின் தொழில் 
-            <br>Occupation of Mother
-        </td>
-        <td>
-            <s:label value="%{adoption.wifeOccupation}"/>
         </td>
     </tr>
     <tr>
@@ -231,7 +204,6 @@
     </tr>
     </tbody>
 </table>
-
 <table border="1" width="99%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <col width="250px">
     <col width="215px">
@@ -345,7 +317,7 @@
     <tr>
         <td>
             (1941 අංක 24 දරන දරුකමට ගැනීම පිලිබඳ ආඥාපනතේ 11 වෙනි වගන්තිය යටතේ නිකුත් කරන ලදී)
-            <br>1941 ஆம ஆண்டு 24 ஆம் இலக்க மகவேற்புக்கட்டளைச்சட்டத்தின் 11 ஆம் பிரிவின் கீழ் வழங்கப்பட்டது
+            <br>(1941 ஆம ஆண்டு 24 ஆம் இலக்க மகவேற்புக்கட்டளைச்சட்டத்தின் 11 ஆம் பிரிவின் கீழ் வழங்கப்பட்டது)
             <br>(Issued under Section 11 of the Adoption of Children Ordinance, No. 24 of 1941)
         </td>
     </tr>
@@ -392,15 +364,6 @@
     <tr>
         <td colspan="2"><p></p></td>
     </tr>
-    <%--    <tr>
-        <td>
-            Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
-        </td>
-
-        <td style="text-align:right;margin-left:auto;margin-right:0;">        style="margin:15px 0 0 10px; "
-            &lt;%&ndash;<%= DateTimeUtils.getISO8601FormattedString(new Date()) %>&ndash;%&gt;
-        </td>
-    </tr>--%>
     </tbody>
 </table>
 <hr style="border-style:dashed ; float:left;width:100% ;margin-top:30px;"/>
