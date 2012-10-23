@@ -2,6 +2,7 @@
 @media print {
     body {
         background-color: white !important;
+        font-family: BhashitaComplex, Bhashitha2, Sri Tamil;
     }
 
     * {
