@@ -52,10 +52,7 @@
 
         var returnval = true;
         var domObject;
-        //domObject = document.getElementById("courtOrderNo");
-        //if (isFieldEmpty(domObject)) {
-        //    isEmpty(domObject, "", 'error4');
-        //}
+
         domObject = document.getElementsByName("certificateApplicantType")[0];
         domObject1 = document.getElementsByName("certificateApplicantType")[1];
         domObject2 = document.getElementsByName("certificateApplicantType")[2];
@@ -66,12 +63,7 @@
         if (!isFieldEmpty(domObject)) {
             validatePINorNIC(domObject, 'error5', 'error0');
         }
-//        if (isFieldEmpty(domObject)) {
-//            isEmpty(domObject, "", 'error0');
-//        }
-//        else {
-//            validatePINorNIC(domObject, 'error5', 'error0');
-//        }
+
         domObject = document.getElementById("certificateApplicantName");
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error1');
