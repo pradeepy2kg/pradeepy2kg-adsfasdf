@@ -1,6 +1,9 @@
 -- Database: CRS
 USE CRS;
 
+-- Clear previous data entered
+TRUNCATE ADOPTION_ORDER;
+
 -- Alter wife details as spouse details.
 ALTER TABLE ADOPTION_ORDER CHANGE COLUMN wifeName spouseName varchar(255) DEFAULT NULL;
 ALTER TABLE ADOPTION_ORDER CHANGE COLUMN wifeOccupation spouseOccupation varchar(255) DEFAULT NULL;
