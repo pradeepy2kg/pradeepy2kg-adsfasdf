@@ -52,17 +52,17 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     public Map<Integer, String> getDistrictNamesByProvince(String language, int provinceUKey, User user) {
         Map<Integer, String> districts = new TreeMap<Integer, String>();
         List<District> districtList = getDistrictsByProvince(provinceUKey, user);
-        if(districtList!= null && districtList.size() > 0){
-            if(AppConstants.SINHALA.equals(language)){
-                for(District d: districtList){
+        if (districtList != null && districtList.size() > 0) {
+            if (AppConstants.SINHALA.equals(language)) {
+                for (District d : districtList) {
                     districts.put(d.getDistrictUKey(), d.getSiDistrictName());
                 }
-            }else if(AppConstants.TAMIL.equals(language)){
-                for(District d: districtList){
+            } else if (AppConstants.TAMIL.equals(language)) {
+                for (District d : districtList) {
                     districts.put(d.getDistrictUKey(), d.getTaDistrictName());
                 }
-            }else if(AppConstants.ENGLISH.equals(language)){
-                for(District d: districtList){
+            } else if (AppConstants.ENGLISH.equals(language)) {
+                for (District d : districtList) {
                     districts.put(d.getDistrictUKey(), d.getEnDistrictName());
                 }
             }
@@ -178,7 +178,6 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         return q.getResultList();
     }
 
-
     /**
      * Loads all values from the database table into a cache
      */
@@ -199,17 +198,18 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         final int districtId = d.getDistrictId();
         final int districtUKey = d.getDistrictUKey();
         final boolean active = d.isActive();
-
-        if (active) {
-            districtsByPK.put(districtUKey, d);
-            siDistricts.put(districtUKey, districtId + SPACER + d.getSiDistrictName());
-            enDistricts.put(districtUKey, districtId + SPACER + d.getEnDistrictName());
-            taDistricts.put(districtUKey, districtId + SPACER + d.getTaDistrictName());
-        } else {
-            districtsByPK.remove(districtUKey);
-            siDistricts.remove(districtUKey);
-            enDistricts.remove(districtUKey);
-            taDistricts.remove(districtUKey);
+        if (districtId != AppConstants.COLOMBO_CONSULAR_ID) {
+            if (active) {
+                districtsByPK.put(districtUKey, d);
+                siDistricts.put(districtUKey, districtId + SPACER + d.getSiDistrictName());
+                enDistricts.put(districtUKey, districtId + SPACER + d.getEnDistrictName());
+                taDistricts.put(districtUKey, districtId + SPACER + d.getTaDistrictName());
+            } else {
+                districtsByPK.remove(districtUKey);
+                siDistricts.remove(districtUKey);
+                enDistricts.remove(districtUKey);
+                taDistricts.remove(districtUKey);
+            }
         }
     }
 }
