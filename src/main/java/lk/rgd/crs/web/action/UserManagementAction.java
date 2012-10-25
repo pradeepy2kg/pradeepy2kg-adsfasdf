@@ -64,6 +64,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private String userName;
     private String language;
 
+    private int provinceId;
     private int userDistrictId;
     private int dsDivisionId;
     private int divisionId;
@@ -102,6 +103,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private List<Location> primaryLocationSelectionList;
 
     private String roleId;
+    private final ProvinceDAO provinceDAO;
     private final DistrictDAO districtDAO;
     private final RoleDAO roleDAO;
     private final BDDivisionDAO bdDivisionDAO;
@@ -117,6 +119,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private static final String VIEW_USERS = "viewUsers";
     private static final String COLON = " : ";
 
+    private Map<Integer, String> provinceList;
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
     private Map<String, String> roleList;
@@ -142,7 +145,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     public UserManagementAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
         BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
         AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO,
-        BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer, GNDivisionDAO gnDivisionDAO) {
+        BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer, GNDivisionDAO gnDivisionDAO, ProvinceDAO provinceDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
@@ -159,6 +162,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         this.deathRecordsIndexer = deathRecordsIndexer;
         this.prsRecordsIndexer = prsRecordsIndexer;
         this.gnDivisionDAO = gnDivisionDAO;
+        this.provinceDAO = provinceDAO;
     }
 
     public String createUser() {
@@ -832,11 +836,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 }
                 if (checkDuplicate == 0) {
                     district.setActive(true);
+                    district.setProvince(provinceDAO.getProvinceByUKey(provinceId));
                     dataManagementService.addDistrict(district, currentUser);
                     logger.debug("New Id of new District {} is   :{}", district.getEnDistrictName(), district.getDistrictId());
                     printMessage("new.district.add", district.getSiDistrictName(), district.getEnDistrictName(),
                         district.getTaDistrictName());
                 }
+                provinceList = provinceDAO.getActiveProvinces(language);
                 break;
             case 2:
                 List<DSDivision> checkDSDivisions = dsDivisionDAO.getDSDivisionByAnyName(dsDivision);
@@ -1083,6 +1089,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private void populate() {
         logger.debug("USER ID = {}", userId);
         logger.debug("lang : {}", language);
+
+        provinceList = provinceDAO.getActiveProvinces(language);
         if (districtList == null) {
             districtList = districtDAO.getAllDistrictNames(language, user);
         }
@@ -1694,5 +1702,21 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public void setGnDivisions(int[] gnDivisions) {
         this.gnDivisions = gnDivisions;
+    }
+
+    public Map<Integer, String> getProvinceList() {
+        return provinceList;
+    }
+
+    public void setProvinceList(Map<Integer, String> provinceList) {
+        this.provinceList = provinceList;
+    }
+
+    public int getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(int provinceId) {
+        this.provinceId = provinceId;
     }
 }
