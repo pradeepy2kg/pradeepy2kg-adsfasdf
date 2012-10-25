@@ -556,6 +556,14 @@
             <s:if test="pageType==6"><s:hidden name="locationId" value="%{locationId}"/></s:if>
             <s:if test="pageType==7"><s:hidden name="gnDivisionId" value="%{gnDivisionId}"/></s:if>
 
+            <s:if test="pageType==1">
+                <tr>
+                    <td colspan="2">Province</td>
+                    <td>
+                        <s:select list="provinceList" name="provinceId" />
+                    </td>
+                </tr>
+            </s:if>
             <s:if test="pageType!=7">
                 <tr>
                     <td colspan="2">
