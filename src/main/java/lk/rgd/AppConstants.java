@@ -78,5 +78,8 @@ public class AppConstants {
      * Registration Mode of the Marriage Register
      */
     public static final String REGISTER = "register";
-
+    /**
+     * District id of the Colombo Consular
+     */
+    public static final int COLOMBO_CONSULAR_ID = 14;
 }
