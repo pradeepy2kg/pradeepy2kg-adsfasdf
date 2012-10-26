@@ -37,14 +37,6 @@ public interface ZonalOfficesDAO {
     public ZonalOffice getZonalOffice(int zonalOfficeUKey);
 
     /**
-     * Returns the Zonal Office related to the given District. (District PK)
-     *
-     * @param district  Selected District.
-     * @return          Zonal Office related to the given District.
-     */
-    public ZonalOffice getZonalOfficeByDistrict(District district);
-
-    /**
      * Returns the Name of the Zonal Office in the given Language.
      *
      * @param zonalOfficeUKey   Primary Key of the Zonal Office.

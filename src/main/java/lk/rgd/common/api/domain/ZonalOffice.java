@@ -15,10 +15,6 @@ import java.util.Set;
 @Table(name = "ZONAL_OFFICES", schema = "COMMON")
 @NamedQueries({
     @NamedQuery(
-        name = "getZonalOfficeByDistrict",
-        query = "SELECT z FROM ZonalOffice z WHERE :district MEMBER OF z.districts"
-    ),
-    @NamedQuery(
         name = "getAllActiveZonalOffices",
         query = "SELECT z FROM ZonalOffice z WHERE z.active = TRUE"
     )
@@ -72,15 +68,6 @@ public class ZonalOffice implements Serializable {
      */
     @Column(nullable = true, length = 50)
     private String zonalOfficeEmail;
-
-    /**
-     * Districts assigned to this Zonal Office.
-     */
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(schema = "COMMON", name = "ZONAL_OFFICE_DISTRICTS",
-        joinColumns = @JoinColumn(name = "zonalOfficeUKey"),
-        inverseJoinColumns = @JoinColumn(name = "districtUKey"))
-    private Set<District> districts;
 
     public int getZonalOfficeUKey() {
         return zonalOfficeUKey;
@@ -160,14 +147,6 @@ public class ZonalOffice implements Serializable {
 
     public void setZonalOfficeEmail(String zonalOfficeEmail) {
         this.zonalOfficeEmail = zonalOfficeEmail;
-    }
-
-    public Set<District> getDistricts() {
-        return districts;
-    }
-
-    public void setDistricts(Set<District> districts) {
-        this.districts = districts;
     }
 
     public boolean isActive() {

@@ -46,20 +46,6 @@ public class ZonalOfficeDAOImpl extends BaseDAO implements ZonalOfficesDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public ZonalOffice getZonalOfficeByDistrict(District district) {
-        Query q = em.createNamedQuery("getZonalOfficeByDistrict");
-        q.setParameter("district", district);
-        try {
-            return (ZonalOffice) q.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.SUPPORTS)
     public String getZonalOfficeNameByPK(int zonalOfficeUKey, String language) {
         ZonalOffice zonalOffice = getZonalOffice(zonalOfficeUKey);
         if (zonalOffice != null) {
