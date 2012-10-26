@@ -161,9 +161,14 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                  * Zonal office where the birth province related to. (If the previous birth province is given)
                  * Zonal office where the court belongs to. (If province is not mentioned)
                  */
-                if(adoption.getBirthProvinceUKey() > 0){
-                    adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(adoption.getBirthProvinceUKey()).getZonalOffice());
-                }else{
+                if (adoption.getBirthProvinceUKey() > 0) {
+//                    TODO set the notifying zonal office for adopting foreign children
+//                    if (adoption.getBirthProvinceUKey() == 1 && adoption.getBirthDistrictId() == AppConstants.COLOMBO_CONSULAR_IDUKEY) {
+//
+//                    } else {
+                        adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(adoption.getBirthProvinceUKey()).getZonalOffice());
+//                    }
+                } else {
                     adoption.setNoticingZonalOffice(adoption.getCourt().getProvince().getZonalOffice());
                 }
             } catch (CRSRuntimeException e) {
@@ -200,9 +205,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                  * Zonal office where the birth province related to. (If the previous birth province is given)
                  * Zonal office where the court belongs to. (If province is not mentioned)
                  */
-                if(adoption.getBirthProvinceUKey() > 0){
+                if (adoption.getBirthProvinceUKey() > 0) {
                     adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(adoption.getBirthProvinceUKey()).getZonalOffice());
-                }else{
+                } else {
                     adoption.setNoticingZonalOffice(adoption.getCourt().getProvince().getZonalOffice());
                 }
                 logger.debug("Adding Adoption {} by {}", adoption.getAdoptionEntryNo(), user.getUserId());
@@ -220,7 +225,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    public String searchAdoptionRecords(){
+    public String searchAdoptionRecords() {
         searchResults = service.searchAdoptionOrder(adoptionEntryNo, courtOrderNo, courtId);
         adoptionEntryNo = null;
         courtOrderNo = null;
@@ -258,7 +263,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         populate();
         populateAllDSDivisionList();
 
-        if(adoption.getNoticingZonalOffice() != null){
+        if (adoption.getNoticingZonalOffice() != null) {
             zonalOfficeId = adoption.getNoticingZonalOffice().getZonalOfficeUKey();
         }
 
@@ -269,7 +274,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
 
     private boolean isApplicantMother(AdoptionOrder adoption) {
-
         return false;
     }
 
@@ -289,10 +293,10 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             return "skip";
         }
 
-        if(adoption.getBirthProvinceUKey() > 0){
+        if (adoption.getBirthProvinceUKey() > 0) {
             birthProvinceName = provinceDAO.getNameByPK(adoption.getBirthProvinceUKey(), language);
         }
-        if(adoption.getBirthDistrictId() > 0){
+        if (adoption.getBirthDistrictId() > 0) {
             birthDistrictName = districtDAO.getNameByPK(adoption.getBirthDistrictId(), language);
         }
 

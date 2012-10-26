@@ -79,7 +79,9 @@ public class AppConstants {
      */
     public static final String REGISTER = "register";
     /**
-     * District id of the Colombo Consular
+     * District id of the Colombo Consular and IdUKey of it.
+     * Used for adoption of foreign children.
      */
     public static final int COLOMBO_CONSULAR_ID = 14;
+    public static final int COLOMBO_CONSULAR_IDUKEY = 26;
 }
