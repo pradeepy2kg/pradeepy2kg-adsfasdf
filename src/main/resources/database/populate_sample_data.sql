@@ -326,33 +326,6 @@ INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDist
 INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName, provinceUKey)  VALUES(91, 'රත්නපුර', 'Ratnapura', 'இரத்திணபுரி', 9);
 INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName, provinceUKey)  VALUES(92, 'කෑගල්ල', 'Kegalle', '‍‎‍‍‍கேகா‍லை', 9);
 
--- ZONAL_OFFICE_DISTRICTS
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (1, 1);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (1, 2);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (1, 3);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (2, 4);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (2, 5);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (2, 6);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (3, 7);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (3, 8);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (3, 9);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (4, 10);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (4, 11);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (4, 12);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (4, 13);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (4, 14);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (5, 15);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (5, 16);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (5, 17);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (6, 18);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (6, 19);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (6, 20);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (6, 21);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (7, 22);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (7, 23);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (7, 24);
-INSERT INTO COMMON.ZONAL_OFFICE_DISTRICTS (zonalOfficeUKey, districtUKey) VALUES (7, 25);
-
 -- DS Divisions (These are final and already translated)
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, enDivisionName, siDivisionName, taDivisionName) VALUES(1, 3, 'Colombo', 'කොළඹ', 'கொழும்பு');
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, enDivisionName, siDivisionName, taDivisionName) VALUES(1, 6, 'Kolonnawa', 'කොළොන්නාව', 'கொ‎லொண்ணா‍வை');
