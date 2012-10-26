@@ -594,7 +594,7 @@ function enableCertificateInfo(mode) {
     </tr>
     <tr>
         <td>
-            සහකරුගේ නම <s:label id="spouseNameMarker" value="*" cssStyle="color:blue;font-size:11pt; display:none;"/>
+            සහකරුගේ නම <s:label id="spouseNameMarker" value="*" cssStyle="color:red;font-size:11pt; display:none;"/>
             <br>தாயின் பெயர்
             <br>Name of Spouse
         </td>
