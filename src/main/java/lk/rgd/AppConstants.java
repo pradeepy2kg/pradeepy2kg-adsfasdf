@@ -82,6 +82,5 @@ public class AppConstants {
      * District id of the Colombo Consular and IdUKey of it.
      * Used for adoption of foreign children.
      */
-    public static final int COLOMBO_CONSULAR_ID = 14;
-    public static final int COLOMBO_CONSULAR_IDUKEY = 26;
+    public static final int NO_OF_ACTUAL_DISTRICTS = 25;
 }
