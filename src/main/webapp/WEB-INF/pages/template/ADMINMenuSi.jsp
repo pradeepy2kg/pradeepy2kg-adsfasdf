@@ -31,6 +31,11 @@
                     </a>
                 </li>
                 <li>
+                    <a id="manageZonalOffices.label" href="/ecivil/management/eprInitZonalOffices.do">
+                        කලාප කාර්යාලීය කළමනාකරණය
+                    </a>
+                </li>
+                <li>
                     <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do">
                         නව රෙජිස්ට්‍රාර් වරයකු ඇතුල් කිරීම
                     </a>

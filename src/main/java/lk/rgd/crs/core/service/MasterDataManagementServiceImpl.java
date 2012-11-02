@@ -2,14 +2,8 @@ package lk.rgd.crs.core.service;
 
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
-import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.dao.DistrictDAO;
-import lk.rgd.common.api.dao.LocationDAO;
-import lk.rgd.common.api.dao.UserLocationDAO;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.District;
-import lk.rgd.common.api.domain.Location;
-import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.dao.*;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.*;
 import lk.rgd.crs.api.domain.BDDivision;
@@ -45,12 +39,13 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     private final MarriageRegistrationDAO marriageRegistrationDAO;
     private final AdoptionOrderDAO adoptionOrderDAO;
     private final UserLocationDAO userLocationDAO;
+    private final ZonalOfficesDAO zonalOfficesDAO;
 
     public MasterDataManagementServiceImpl(BDDivisionDAO bdDivisionDAO, MRDivisionDAO mrDivisionDAO,
         DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO, LocationDAO locationDAO, CourtDAO courtDAO,
         GNDivisionDAO gnDivisionDAO, BirthDeclarationDAO birthDeclarationDAO, DeathRegisterDAO deathRegisterDAO,
         MarriageRegistrationDAO marriageRegistrationDAO, AdoptionOrderDAO adoptionOrderDAO,
-        UserLocationDAO userLocationDAO) {
+        UserLocationDAO userLocationDAO, ZonalOfficesDAO zonalOfficesDAO) {
         this.bdDivisionDAO = bdDivisionDAO;
         this.mrDivisionDAO = mrDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -63,6 +58,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         this.marriageRegistrationDAO = marriageRegistrationDAO;
         this.adoptionOrderDAO = adoptionOrderDAO;
         this.userLocationDAO = userLocationDAO;
+        this.zonalOfficesDAO = zonalOfficesDAO;
     }
 
     /**
@@ -244,6 +240,78 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void activateOrInactiveGNDivision(int gnDivisionUKey, boolean active, User user) {
         updateGNActivation(gnDivisionUKey, active, user);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addZonalOffice(ZonalOffice zonalOffice, User user) {
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            if(validateZonalOffice(zonalOffice)){
+                zonalOffice.setActive(true);
+                zonalOfficesDAO.addZonalOffice(zonalOffice, user);
+            }else{
+                logger.error("Attempt to add zonal office : {} failed", zonalOffice.getEnZonalOfficeName());
+                handleException("Mandatory fields not completed", ErrorCodes.INVALID_ZONAL_OFFICE);
+            }
+        } else {
+            logger.error("User : {} is not allowed to add Zonal Offices.", user.getUserName());
+            handleException("You don't have permission to add a Zonal Office", ErrorCodes.PERMISSION_DENIED);
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateZonalOffice(ZonalOffice zonalOffice, User user) {
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            if(validateZonalOffice(zonalOffice)){
+                ZonalOffice currentZonalOffice = zonalOfficesDAO.getZonalOffice(zonalOffice.getZonalOfficeUKey());
+                if(currentZonalOffice != null){
+                    currentZonalOffice.setSiZonalOfficeName(zonalOffice.getSiZonalOfficeName());
+                    currentZonalOffice.setTaZonalOfficeName(zonalOffice.getTaZonalOfficeName());
+                    currentZonalOffice.setEnZonalOfficeName(zonalOffice.getEnZonalOfficeName());
+                    currentZonalOffice.setSiZonalOfficeMailAddress(zonalOffice.getSiZonalOfficeMailAddress());
+                    currentZonalOffice.setTaZonalOfficeMailAddress(zonalOffice.getTaZonalOfficeMailAddress());
+                    currentZonalOffice.setEnZonalOfficeMailAddress(zonalOffice.getEnZonalOfficeMailAddress());
+                    currentZonalOffice.setZonalOfficeEmail(zonalOffice.getZonalOfficeEmail());
+                    currentZonalOffice.setZonalOfficeFax(zonalOffice.getZonalOfficeFax());
+                    currentZonalOffice.setZonalOfficeLandPhone(zonalOffice.getZonalOfficeLandPhone());
+                    zonalOfficesDAO.updateZonalOffice(currentZonalOffice, user);
+                }else {
+                    logger.error("Failed to update zonal office : {}", zonalOffice.getEnZonalOfficeName());
+                    handleException("Unable to find the zonal office", ErrorCodes.INVALID_ZONAL_OFFICE);
+                }
+            }else{
+                logger.error("Attempt to update zonal office : {} failed", zonalOffice.getEnZonalOfficeName());
+                handleException("Mandatory fields not completed", ErrorCodes.INVALID_ZONAL_OFFICE);
+            }
+        } else {
+            logger.error("User : {} is not allowed to update Zonal Offices.", user.getUserName());
+            handleException("You don't have permission to update a Zonal Office", ErrorCodes.PERMISSION_DENIED);
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void activateOrInactivateZonalOffice(int zonalOfficeUKey, boolean active, User user) {
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            ZonalOffice zonalOffice = zonalOfficesDAO.getZonalOffice(zonalOfficeUKey);
+            if (zonalOffice != null) {
+                zonalOffice.setActive(active);
+                zonalOfficesDAO.updateZonalOffice(zonalOffice, user);
+            }else{
+                logger.error("Unable to update the zonal office {} failed", zonalOfficeUKey);
+                handleException("Unable to find the zonal office", ErrorCodes.INVALID_ZONAL_OFFICE);
+            }
+        } else {
+            logger.error("User : {} is not allowed to manage Zonal Offices.", user.getUserName());
+            handleException("You don't have permission to manage Zonal Offices", ErrorCodes.PERMISSION_DENIED);
+        }
+    }
+
+    private boolean validateZonalOffice(ZonalOffice zonalOffice){
+        if(zonalOffice.getSiZonalOfficeName() != null && zonalOffice.getTaZonalOfficeName() != null &&
+            zonalOffice.getEnZonalOfficeName() != null && zonalOffice.getSiZonalOfficeMailAddress() != null &&
+            zonalOffice.getTaZonalOfficeMailAddress() != null && zonalOffice.getEnZonalOfficeMailAddress() != null){
+            return true;
+        }
+        return false;
     }
 
     private void updateGNActivation(int gnDivisionUKey, boolean activate, User user) {

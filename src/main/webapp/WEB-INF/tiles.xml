@@ -439,6 +439,11 @@
         <put-attribute name="title" value="report.title"/>
     </definition>
 
+    <definition name="epr.manageZonalOffices" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/ManageZonalOffices.jsp"/>
+        <put-attribute name="title" value="zonal.offices.management.title"/>
+    </definition>
+
     <!--  User Preferences Tiles -->
     <definition name="epr.UserPreferences" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/preferences/UserPreferences.jsp"/>

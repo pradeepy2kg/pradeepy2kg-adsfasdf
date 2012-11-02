@@ -68,4 +68,11 @@ public interface ZonalOfficesDAO {
      * @return          Map of all Zonal Offices.
      */
     public Map<Integer, String> getActiveZonalOffices(String language);
+
+    /**
+     * Returns all the zonal offices
+     *
+     * @return  List of all the zonal offices
+     */
+    public List<ZonalOffice> getAll();
 }

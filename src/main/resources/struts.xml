@@ -1247,6 +1247,15 @@
             <result type="tiles" name="success">epr.generateReports</result>
         </action>
 
+        <action name="eprInitZonalOffices" class="lk.rgd.crs.web.action.ZonalOfficeManagementAction" method="pageLoad">
+            <result type="tiles" name="success">epr.manageZonalOffices</result>
+        </action>
+
+        <action name="eprManageZonalOffices" class="lk.rgd.crs.web.action.ZonalOfficeManagementAction" method="manageZonalOffices">
+            <result type="tiles" name="success">epr.manageZonalOffices</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
     </package>
 
     <package name="alteration" namespace="/alteration" extends="NG">

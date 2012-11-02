@@ -117,4 +117,13 @@ public class ZonalOfficeDAOImpl extends BaseDAO implements ZonalOfficesDAO {
             return Collections.EMPTY_MAP;
         }
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<ZonalOffice> getAll() {
+        Query q = em.createNamedQuery("getAll");
+        return q.getResultList();
+    }
 }

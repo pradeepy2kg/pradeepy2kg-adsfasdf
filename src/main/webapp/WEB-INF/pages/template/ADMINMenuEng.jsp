@@ -31,6 +31,11 @@
                     </a>
                 </li>
                 <li>
+                    <a id="manageZonalOffices.label" href="/ecivil/management/eprInitZonalOffices.do">
+                        Manage Zonal Offices
+                    </a>
+                </li>
+                <li>
                     <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do">
                         Add Registrar
                     </a>
