@@ -31,6 +31,11 @@
                     </a>
                 </li>
                 <li>
+                    <a id="manageZonalOffices.label" href="/ecivil/management/eprInitZonalOffices.do">
+                        Manage Zonal Offices in ta
+                    </a>
+                </li>
+                <li>
                     <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do">
                         புதிய பதிவாளர்களை உட்புகுத்தல்
                     </a>

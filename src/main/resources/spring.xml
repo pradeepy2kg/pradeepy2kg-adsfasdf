@@ -274,6 +274,7 @@
         <constructor-arg ref="marriageRegistrationDAOImpl"/>
         <constructor-arg ref="adoptionOrderDAOImpl"/>
         <constructor-arg ref="userLocationDAOImpl"/>
+        <constructor-arg ref="zonalOfficeDAOImpl"/>
     </bean>
 
     <bean id="certificateSearchService" class="lk.rgd.crs.core.service.CertificateSearchServiceImpl">
@@ -466,6 +467,11 @@
         <constructor-arg ref="deathRecordsIndexer"/>
         <constructor-arg ref="prsRecordsIndexer"/>
         <constructor-arg ref="gnDivisionDAOImpl"/>
+    </bean>
+
+    <bean id="zonalOfficeManagementAction" class="lk.rgd.crs.web.action.ZonalOfficeManagementAction">
+        <constructor-arg ref="zonalOfficeDAOImpl"/>
+        <constructor-arg ref="masterDataManagementService"/>
     </bean>
 
     <bean id="registrarsManagmentAction" class="lk.rgd.crs.web.action.RegistrarManagementAction">

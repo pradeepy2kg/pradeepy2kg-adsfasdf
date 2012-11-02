@@ -1,9 +1,6 @@
 package lk.rgd.crs.api.service;
 
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.District;
-import lk.rgd.common.api.domain.Location;
-import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.Court;
 import lk.rgd.crs.api.domain.GNDivision;
@@ -196,5 +193,30 @@ public interface MasterDataManagementService {
      * @param user           the user invoking the action
      */
     void activateOrInactiveGNDivision(int gnDivisionUKey, boolean active, User user);
+
+    /**
+     * Adding a Zonal Office
+     *
+     * @param zonalOffice   Zonal Office to be added
+     * @param user          User requesting to add the zonal office
+     */
+    public void addZonalOffice(ZonalOffice zonalOffice, User user);
+
+    /**
+     * Updating a Zonal Office
+     *
+     * @param zonalOffice   Zonal Office to be updated
+     * @param user          User requesting to update the zonal office
+     */
+    public void updateZonalOffice(ZonalOffice zonalOffice, User user);
+
+    /**
+     * Activate/ Inactivate Zonal Offices
+     *
+     * @param zonalOfficeUKey   IdUKey of the zonal office to be activate/ inactivate
+     * @param active            Status
+     * @param user              User requesting to activate/ inactivate zonal office
+     */
+    public void activateOrInactivateZonalOffice(int zonalOfficeUKey, boolean active, User user);
 }
 

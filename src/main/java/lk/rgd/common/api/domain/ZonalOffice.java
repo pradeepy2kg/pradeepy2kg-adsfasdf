@@ -17,6 +17,10 @@ import java.util.Set;
     @NamedQuery(
         name = "getAllActiveZonalOffices",
         query = "SELECT z FROM ZonalOffice z WHERE z.active = TRUE"
+    ),
+    @NamedQuery(
+        name = "getAll",
+        query = "SELECT z FROM ZonalOffice z"
     )
 })
 public class ZonalOffice implements Serializable {
