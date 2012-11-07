@@ -160,12 +160,12 @@
                             <s:submit action="eprInitZonalOffices" value="BACK" cssStyle="margin-top:10px; font-size:10pt; width: 115px;" name="button"/>
                             <s:if test="zonalOfficeUKey > 0">
                                 <s:hidden name="page" value="4"/>
-                                <s:hidden name="zonalOfficeUKey" value="%{zonalOffice.zonalOfficeUKey}"/>
+                                <s:hidden name="zonalOffice.zonalOfficeUKey"/>
                                 <s:submit action="eprManageZonalOffices" value="UPDATE" cssStyle="margin-top:10px;font-size:10pt; width: 115px; "/>
                             </s:if>
                             <s:elseif test="zonalOfficeUKey == 0">
                                 <s:hidden name="page" value="4"/>
-                                <s:hidden name="zonalOfficeUKey" value="0"/>
+                                <s:hidden name="zonalOffice.zonalOfficeUKey" value="0"/>
                                 <s:submit action="eprManageZonalOffices" value="ADD" cssStyle="margin-top:10px;font-size:10pt; width: 115px; "/>
                             </s:elseif>
                         </div>
