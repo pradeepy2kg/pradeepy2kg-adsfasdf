@@ -49,81 +49,35 @@ public class ZonalOfficeManagementAction extends ActionSupport implements Sessio
 
     public String manageZonalOffices() {
         logger.debug("Manage zonal offices [Page: {}]", page);
-        switch (page) {
-            case 1:
-                try {
+        try {
+            switch (page) {
+                case 1:
                     service.activateOrInactivateZonalOffice(zonalOfficeUKey, false, user);
                     addActionMessage("Deactivate the zonal offices (" + zonalOfficeUKey + ") successful");
-                } catch (CRSRuntimeException e) {
-                    switch (e.getErrorCode()) {
-                        case ErrorCodes.INVALID_ZONAL_OFFICE:
-                            addActionError("Unable to deactivated zonal office");
-                            break;
-                        case ErrorCodes.PERMISSION_DENIED:
-                            addActionError("You don't have permission to deactivate the zonal office");
-                            break;
-                        default:
-                            addActionError("Unable to deactivated zonal office");
-                    }
-                }
-                break;
-            case 2:
-                try {
+                    break;
+                case 2:
                     service.activateOrInactivateZonalOffice(zonalOfficeUKey, true, user);
                     addActionMessage("Activate the zonal office (" + zonalOfficeUKey + ") successful");
-                } catch (CRSRuntimeException e) {
-                    switch (e.getErrorCode()) {
-                        case ErrorCodes.INVALID_ZONAL_OFFICE:
-                            addActionError("Unable to deactivated zonal office");
-                            break;
-                        case ErrorCodes.PERMISSION_DENIED:
-                            addActionError("You don't have permission to deactivate the zonal office");
-                            break;
-                        default:
-                            addActionError("Unable to deactivated zonal office");
-                    }
-                }
-                break;
-            case 3:
-                populate(zonalOfficeUKey);
-                break;
-            case 4:
-                if (zonalOfficeUKey > 0) {
-                    try {
+                    break;
+                case 3:
+                    populate(zonalOfficeUKey);
+                    break;
+                case 4:
+                    if (zonalOffice.getZonalOfficeUKey() > 0) {
                         service.updateZonalOffice(zonalOffice, user);
                         logger.debug("Successfully update the zonal office : {}", zonalOffice.getZonalOfficeUKey());
                         addActionMessage("Zonal Office (" + zonalOffice.getEnZonalOfficeName() + ") updated successfully.");
-                    } catch (CRSRuntimeException e) {
-                        switch (e.getErrorCode()) {
-                            case ErrorCodes.INVALID_ZONAL_OFFICE:
-                                addActionError("Unable to update the zonal office");
-                                break;
-                            case ErrorCodes.PERMISSION_DENIED:
-                                addActionError("You don't have permission to update the zonal office");
-                                break;
-                            default:
-                                addActionError("Unable to update zonal office");
-                        }
-                    }
-                } else if (zonalOfficeUKey == 0) {
-                    try {
+                    } else if (zonalOffice.getZonalOfficeUKey() == 0) {
                         service.addZonalOffice(zonalOffice, user);
                         logger.debug("Successfully add the zonal office : {}", zonalOffice.getZonalOfficeUKey());
                         addActionMessage("Zonal Office (" + zonalOffice.getEnZonalOfficeName() + ") added successfully.");
-                    } catch (CRSRuntimeException e) {
-                        switch (e.getErrorCode()) {
-                            case ErrorCodes.INVALID_ZONAL_OFFICE:
-                                addActionError("Unable to add a zonal office");
-                                break;
-                            case ErrorCodes.PERMISSION_DENIED:
-                                addActionError("You don't have permission to add a zonal office");
-                                break;
-                            default:
-                                addActionError("Unable to add zonal office");
-                        }
                     }
-                }
-                break;
+                    zonalOffice = null;
+                    break;
+            }
+        } catch (CRSRuntimeException e) {
+            logger.error(e.getMessage());
+            addActionError(e.getMessage());
         }
         populate();
         return SUCCESS;
