@@ -198,7 +198,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         final int districtId = d.getDistrictId();
         final int districtUKey = d.getDistrictUKey();
         final boolean active = d.isActive();
-        if (districtId <= AppConstants.NO_OF_ACTUAL_DISTRICTS) {
+        if (districtUKey <= AppConstants.NO_OF_ACTUAL_DISTRICTS) {
             if (active) {
                 districtsByPK.put(districtUKey, d);
                 siDistricts.put(districtUKey, districtId + SPACER + d.getSiDistrictName());
