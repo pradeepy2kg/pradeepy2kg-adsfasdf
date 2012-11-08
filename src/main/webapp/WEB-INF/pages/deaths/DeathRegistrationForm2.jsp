@@ -98,6 +98,10 @@ function validate() {
     var domObject;
     var returnval;
     var signdate = new Date(document.getElementById('submitDatePicker').value);
+    var deathDate = new Date($('#dateOfDeath').val());
+    var regDate = new Date($('#dateOfRegistration').val());
+    var declareDate = new Date($('#declarantDatePicker').val());
+    var notifyDate = new Date($('#submitDatePicker').val());
 
     //Validate Declarant Type
     var i,error = false;
@@ -139,8 +143,6 @@ function validate() {
         errormsg = errormsg + "\n" + document.getElementById('error15').value;
     }
     //validate declarent sign date
-    var declarant = document.getElementById("declarantDatePicker");
-    var notify = document.getElementById("submitDatePicker");
     domObject = document.getElementById('declarantDatePicker');
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, '', 'error21');
@@ -179,8 +181,20 @@ function validate() {
         isDate(domObject.value, 'error1', 'p2error6');
     }
 
-    if (!isFieldEmpty(notify) && !isFieldEmpty(declarant) && notify.value < declarant.value) {
-        errormsg = errormsg + "\n" + document.getElementById("error5").value;
+    if(declareDate < deathDate){
+        errormsg = errormsg + "\n" + document.getElementById('error22').value;
+    }
+    if(declareDate > regDate){
+        errormsg = errormsg + "\n" + document.getElementById('error23').value;
+    }
+    if(notifyDate < deathDate){
+        errormsg = errormsg + "\n" + document.getElementById('error24').value;
+    }
+    if(notifyDate < regDate){
+        errormsg = errormsg + "\n" + document.getElementById('error25').value;
+    }
+    if(notifyDate < declareDate){
+        errormsg = errormsg + "\n" + document.getElementById('error26').value;
     }
 
     if (errormsg != "") {
@@ -576,6 +590,8 @@ function maxLengthCalculate(id, max, divId) {
 </s:form>
 
 <s:hidden id="deathTypeId" value="%{deathType.ordinal()}"/>
+<s:hidden id="dateOfRegistration" value="%{death.dateOfRegistration}"/>
+<s:hidden id="dateOfDeath" value="%{death.dateOfDeath}"/>
 <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="error2" value="%{getText('declarant_email.text')}"/>
 <s:hidden id="error3" value="%{getText('declarant_phone_no.text')}"/>
@@ -600,6 +616,11 @@ function maxLengthCalculate(id, max, divId) {
 <s:hidden id="error19" value="%{getText('certifierSignDate.empty')}"/>
 <s:hidden id="error20" value="%{getText('certifierSignDate.text')}"/>
 <s:hidden id="error21" value="%{getText('declarantSignDate.empty')}"/>
+<s:hidden id="error22" value="%{getText('informant.date.after.dod')}"/>
+<s:hidden id="error23" value="%{getText('informant.date.before.reg.date')}"/>
+<s:hidden id="error24" value="%{getText('notifying.date.after.dod')}"/>
+<s:hidden id="error25" value="%{getText('notifying.date.after.reg.date')}"/>
+<s:hidden id="error26" value="%{getText('notifying.date.after.informant.date')}"/>
 <s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
 
 </div>
