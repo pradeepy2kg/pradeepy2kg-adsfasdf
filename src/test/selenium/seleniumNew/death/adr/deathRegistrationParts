@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>deathRegistrationParts</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">deathRegistrationParts</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>adr-kalutara-panadura</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>userPreference.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>user_preference_prefLanguage</td>
+	<td>label=English</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>user_preference_0</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>open</td>
+	<td>/ecivil/deaths/eprInitDeathHome.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death_registration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathSerialNo</td>
+	<td>2011000012</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfRegistrationDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfRegistrationDatePicker</td>
+	<td>2011-03-23</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>deathDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathDatePicker</td>
+	<td>2011-03-22</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>timePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>timePicker</td>
+	<td>17:15</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>deathDistrictId</td>
+	<td>label=11 : Colombo</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>deathDistrictId</td>
+	<td>label=13 : Kalutara</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//option[@value='3']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfDeath</td>
+	<td>රෝහල</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfDeathInEnglish</td>
+	<td>in hospital</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>death-registration-form-1_death_deathOccurAtaHospitaltrue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>causeOfDeath</td>
+	<td>unknown</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBurial</td>
+	<td>panadura cemetry</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>anyOtherInfo</td>
+	<td>other information</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>death-registration-form-1_deathPerson_personIdentifiedtrue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPerson_PINorNIC</td>
+	<td>663541542V</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>deathPersonDOB</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonDOB</td>
+	<td>1966-12-23</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>deathPersonRace</td>
+	<td>label=4 : Sri Lankan Moor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonNameOfficialLang</td>
+	<td>අල්හාජ් මොහොමඩ් නිජාබිඩින් මොහොමඩ් රාජාබිඩින්<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonNameInEnglish</td>
+	<td>alhaj mohomad nijabididn mohomad rajabidin</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>deathPersonPermenentAddressDistrictId</td>
+	<td>label=11 : Colombo</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>deathPersonPermenentAddressDistrictId</td>
+	<td>label=13 : Kalutara</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='deathPersonPermenentAddressDistrictId']/option[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>deathPersonPermenentAddressDSDivisionId</td>
+	<td>label=3 : Panadura</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='deathPersonPermenentAddressDSDivisionId']/option[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>deathPersonPermanentAddressGNDivision</td>
+	<td>label=90 : Wellawatta South</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonRank</td>
+	<td>bussines</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonFather_PINorNIC</td>
+	<td>420683049V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonFatherFullName</td>
+	<td>mohomad rajabidin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonMother_PINorNIC</td>
+	<td>411112345X</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonMotherFullName</td>
+	<td>rajabidin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonPermanentAddress</td>
+	<td>no. 17 , panadura</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeFATHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarant_pinOrNic</td>
+	<td>420683049V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantFullName</td>
+	<td>rajabidin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantAddress</td>
+	<td>no.4 , beruwala</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantPhone</td>
+	<td>0777293173</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantEMail</td>
+	<td>sfd@gmail.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantDatePicker</td>
+	<td>2011-03-22</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifying_authority_NICorPIN</td>
+	<td>707433191V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityName</td>
+	<td>kumar</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityAddress</td>
+	<td>no.34, panadura</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>submitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>submitDatePicker</td>
+	<td>2011-03-22</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death-registration-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death_approve_print_list.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>editImage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityName</td>
+	<td>KUMARa</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death-registration-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='death-registration-details-footer']/div/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death_approve_print_list.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>approveImage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>printImage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprPrintDeathCertificate_2</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

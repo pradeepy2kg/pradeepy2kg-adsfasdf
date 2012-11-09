@@ -1,0 +1,9 @@
+body{
+    font-family: Bhashitha2, Sri Tamil;
+}
+
+@media print{
+    body{
+        font-family: Bhashitha2, Sri Tamil;
+    }
+}
