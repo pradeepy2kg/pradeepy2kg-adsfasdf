@@ -153,7 +153,8 @@ $(function () {
 //these inpute can not be null
 var errormsg = "";
 function validate() {
-
+    var orderDate = new Date($("#orderIssuedDatePicker").val());
+    var childBDay = new Date($("#bdayDatePicker").val());
     var returnval = true;
     var domObject;
 <%-- validate Adoption Entry Number --%>
@@ -221,6 +222,9 @@ function validate() {
     domObject = document.getElementById("bdayDatePicker");
     if (!isFieldEmpty(domObject)) {
         isDate(domObject.value, 'error12', 'error14');
+        if(childBDay > orderDate){
+            errormsg = errormsg + "\n" + document.getElementById('error25').value;
+        }
     }
 
     domObject = document.getElementById("birthCertificateNumber");
@@ -863,6 +867,7 @@ function enableCertificateInfo(mode) {
 <s:hidden id="error22" value="%{getText('er.label.no.adoption.entry.number')}"/>
 <s:hidden id="error23" value="%{getText('er.label.invalid.adoption.entry.number')}"/>
 <s:hidden id="error24" value="%{getText('er.label.spouse.name')}"/>
+<s:hidden id="error25" value="%{getText('er.label.child.bday')}"/>
 
 <s:hidden id="clear" value="%{getText('clear.label')}"/>
 </div>
