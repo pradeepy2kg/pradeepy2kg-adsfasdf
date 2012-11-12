@@ -2,6 +2,7 @@ package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.*;
+import lk.rgd.common.api.domain.ZonalOffice;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -138,91 +139,71 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String addOrEditAdoption() {
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
         long birthCertificateNo = 0;
-
-        if (idUKey > 0) {
-            AdoptionOrder existingOrder = service.getById(idUKey, user);
-            adoption.setIdUKey(idUKey);
-            birthCertificateNo = adoption.getBirthCertificateNumber();
-            if (birthCertificateNo > 0) {
-                logger.info("checking the given birth Certificate for birth certificate number : {}", birthCertificateNo);
-                BirthDeclaration bdf = birthRegistrationService.getByIdForAdoptionLookup(birthCertificateNo, user);
-                if (bdf == null) {
-                    addActionError(getText("er.invalid.birth.certificate.number"));
+        try {
+            if (idUKey > 0) {
+                AdoptionOrder existingOrder = service.getById(idUKey, user);
+                adoption.setIdUKey(idUKey);
+                birthCertificateNo = adoption.getBirthCertificateNumber();
+                if (birthCertificateNo > 0) {
+                    logger.info("checking the given birth Certificate for birth certificate number : {}", birthCertificateNo);
+                    BirthDeclaration bdf = birthRegistrationService.getByIdForAdoptionLookup(birthCertificateNo, user);
+                    if (bdf == null) {
+                        addActionError(getText("er.invalid.birth.certificate.number"));
+                        populate();
+                        populateAllDSDivisionList();
+                        return "invalidBirthCertificateNumber";
+                    }
+                }
+                adoption.setLifeCycleInfo(existingOrder.getLifeCycleInfo());
+                adoption.setNoticingZonalOffice(setZonalOffice(adoption));
+                service.updateAdoptionOrder(adoption, user);
+                setIdUKey(adoption.getIdUKey());
+                setAllowApproveAdoption(user.isAuthorized(Permission.APPROVE_ADOPTION));
+                addActionMessage(getText("message.successfully.edited.adoption.order",
+                    new String[]{adoption.getCourtOrderNumber()}));
+            } else {
+                if (service.isEntryNoExist(adoption.getAdoptionEntryNo(), user)) {
+                    addActionError(getText("er.label.used.adoption.entry.number"));
+                    basicLists();
                     populate();
                     populateAllDSDivisionList();
-                    return "invalidBirthCertificateNumber";
+                    return "invalidEntryNo";
                 }
-            }
-            adoption.setLifeCycleInfo(existingOrder.getLifeCycleInfo());
 
-            try {
-                /**
-                 * Setting the zonal office
-                 * Zonal office where the birth province related to. (If the previous birth province is given)
-                 * Zonal office where the court belongs to. (If province is not mentioned)
-                 */
-                if (adoption.getBirthProvinceUKey() > 0) {
-//                    TODO set the notifying zonal office for adopting foreign children
-//                    if (adoption.getBirthProvinceUKey() == 1 && adoption.getBirthDistrictId() == AppConstants.COLOMBO_CONSULAR_IDUKEY) {
-//
-//                    } else {
-                        adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(adoption.getBirthProvinceUKey()).getZonalOffice());
-//                    }
-                } else {
-                    adoption.setNoticingZonalOffice(adoption.getCourt().getProvince().getZonalOffice());
+                birthCertificateNo = adoption.getBirthCertificateNumber();
+                if (birthCertificateNo > 0) {
+                    logger.info("checking the given birth Certificate for birth certificate number : {}", birthCertificateNo);
+                    BirthDeclaration bdf = birthRegistrationService.getByIdForAdoptionLookup(birthCertificateNo, user);
+                    if (bdf == null) {
+                        addActionError(getText("er.invalid.birth.certificate.number"));
+                        basicLists();
+                        return "invalidBirthCertificateNumber";
+                    }
                 }
-            } catch (CRSRuntimeException e) {
-                basicLists();
-                return "invalidBirthCertificateNumber";
-            }
-            service.updateAdoptionOrder(adoption, user);
-            setIdUKey(adoption.getIdUKey());
-            setAllowApproveAdoption(user.isAuthorized(Permission.APPROVE_ADOPTION));
-            addActionMessage(getText("message.successfully.edited.adoption.order",
-                new String[]{adoption.getCourtOrderNumber()}));
-        } else {
-            if (service.isEntryNoExist(adoption.getAdoptionEntryNo(), user)) {
-                addActionError(getText("er.label.used.adoption.entry.number"));
-                basicLists();
-                populate();
-                populateAllDSDivisionList();
-                return "invalidEntryNo";
-            }
-
-            birthCertificateNo = adoption.getBirthCertificateNumber();
-            if (birthCertificateNo > 0) {
-                logger.info("checking the given birth Certificate for birth certificate number : {}", birthCertificateNo);
-                BirthDeclaration bdf = birthRegistrationService.getByIdForAdoptionLookup(birthCertificateNo, user);
-                if (bdf == null) {
-                    addActionError(getText("er.invalid.birth.certificate.number"));
-                    basicLists();
-                    return "invalidBirthCertificateNumber";
-                }
-            }
-            try {
-                /**
-                 * Setting the zonal office
-                 * Zonal office where the birth province related to. (If the previous birth province is given)
-                 * Zonal office where the court belongs to. (If province is not mentioned)
-                 */
-                if (adoption.getBirthProvinceUKey() > 0) {
-                    adoption.setNoticingZonalOffice(provinceDAO.getProvinceByUKey(adoption.getBirthProvinceUKey()).getZonalOffice());
-                } else {
-                    adoption.setNoticingZonalOffice(adoption.getCourt().getProvince().getZonalOffice());
-                }
-                logger.debug("Adding Adoption {} by {}", adoption.getAdoptionEntryNo(), user.getUserId());
+                adoption.setNoticingZonalOffice(setZonalOffice(adoption));
                 service.addAdoptionOrder(adoption, user);
-            } catch (CRSRuntimeException e) {
-                basicLists();
-                return "invalidBirthCertificateNumber";
+                logger.debug("added an adoption successfully with idUKey : {} by {}", adoption.getIdUKey(), user.getUserId());
+                setIdUKey(adoption.getIdUKey());
+                setAllowApproveAdoption(user.isAuthorized(Permission.APPROVE_ADOPTION));
+                addActionMessage(getText("message.add.successfully.adoption", new String[]{adoption.getCourtOrderNumber()}));
             }
-            logger.debug("added an adoption successfully with idUKey : {} by {}", adoption.getIdUKey(), user.getUserId());
-            setIdUKey(adoption.getIdUKey());
-            setAllowApproveAdoption(user.isAuthorized(Permission.APPROVE_ADOPTION));
-            addActionMessage(getText("message.add.successfully.adoption", new String[]{adoption.getCourtOrderNumber()}));
+        } catch (CRSRuntimeException e) {
+            basicLists();
+            return "invalidBirthCertificateNumber";
         }
-
         return SUCCESS;
+    }
+
+    private ZonalOffice setZonalOffice(AdoptionOrder adoptionOrder) {
+        if (adoptionOrder.getBirthProvinceUKey() > 0) {
+            if (adoptionOrder.getBirthProvinceUKey() == 1 && adoptionOrder.getBirthDistrictId() > AppConstants.NO_OF_ACTUAL_DISTRICTS) {
+                return zonalOfficesDAO.getZonalOffice(AppConstants.CENTRAL_RECORD_ROOM_ID);
+            } else {
+                return provinceDAO.getProvinceByUKey(adoptionOrder.getBirthProvinceUKey()).getZonalOffice();
+            }
+        } else {
+            return adoptionOrder.getCourt().getProvince().getZonalOffice();
+        }
     }
 
     public String searchAdoptionRecords() {
@@ -261,6 +242,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             return ERROR;
         }
         populate();
+        if (adoption.getBirthProvinceUKey() > 0) {
+            districtList = districtDAO.getDistrictNamesByProvince(language, adoption.getBirthProvinceUKey(), user);
+        }
         populateAllDSDivisionList();
 
         if (adoption.getNoticingZonalOffice() != null) {
@@ -737,8 +721,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private void populate() {
         populateBasicLists(language);
         populateDynamicLists(language);
-
-
     }
 
     public String populateAdoption() {
