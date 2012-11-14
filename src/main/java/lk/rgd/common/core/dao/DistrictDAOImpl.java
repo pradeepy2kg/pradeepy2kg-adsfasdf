@@ -210,6 +210,12 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
                 enDistricts.remove(districtUKey);
                 taDistricts.remove(districtUKey);
             }
+        }else{
+            if(active){
+                districtsByPK.put(districtUKey, d);
+            }else {
+                districtsByPK.remove(districtUKey);
+            }
         }
     }
 }
