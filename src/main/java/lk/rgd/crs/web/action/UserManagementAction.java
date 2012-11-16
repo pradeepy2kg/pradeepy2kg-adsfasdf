@@ -799,6 +799,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         switch (pageType) {
             case 1:
                 dataManagementService.activateOrInactivateDistrict(userDistrictId, activate, currentUser);
+                provinceList = provinceDAO.getActiveProvinces(language);
                 break;
             case 2:
                 dataManagementService.activateOrInactivateDSDivision(dsDivisionId, activate, currentUser);
