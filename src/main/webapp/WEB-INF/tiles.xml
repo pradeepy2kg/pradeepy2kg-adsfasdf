@@ -512,6 +512,11 @@
         <put-attribute name="title" value="assigned user location"/>
     </definition>
 
+    <definition name="epr.adoptionAlterationPageLoad" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionAlterationHome.jsp"/>
+        <put-attribute name="title" value="adoption_alteration.title"/>
+    </definition>
+
     <!--Population Registry Tiles-->
     <definition name="epr.PRSAdvancedSearch" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/prs/PRSAdvancedSearch.jsp"/>

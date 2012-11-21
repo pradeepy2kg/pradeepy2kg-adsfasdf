@@ -73,6 +73,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
         entityClasses.add(BirthAlteration.class);
         entityClasses.add(DeathAlteration.class);
+        entityClasses.add(AdoptionAlteration.class);
         entityClasses.add(MarriageRegister.class);
         entityClasses.add(MarriageObjection.class);
 
@@ -119,10 +120,10 @@ public class DatabaseInitializer implements ApplicationContextAware {
             logger.info("Recreating a new database..");
             recreateCleanDB(mysql);
             // perform additional initialization with Java code
-            RolePermissionUtils.setPermissionBits(ctx);
             //   additionalInitialization(ctx);
         }
-
+        logger.debug("Updating role Permissions");
+        RolePermissionUtils.setPermissionBits(ctx);
         Map<String, PreloadableDAO> preloadableDaos = ctx.getBeansOfType(PreloadableDAO.class);
         for (PreloadableDAO dao : preloadableDaos.values()) {
             dao.preload();

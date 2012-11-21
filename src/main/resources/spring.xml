@@ -449,6 +449,10 @@
         <constructor-arg ref="zonalOfficeDAOImpl"/>
     </bean>
 
+    <bean id="adoptionAlterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction">
+
+    </bean>
+
     <bean id="userManagmentAction" class="lk.rgd.crs.web.action.UserManagementAction">
         <constructor-arg ref="provinceDAOImpl"/>
         <constructor-arg ref="districtDAOImpl"/>

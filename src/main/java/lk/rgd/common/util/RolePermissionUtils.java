@@ -53,6 +53,7 @@ public class RolePermissionUtils {
         deoBitSet.set(Permission.VIEW_MARRIAGE_REGISTER);
         deoBitSet.set(Permission.SEARCH_MARRIAGE);
         deoBitSet.set(Permission.VIEW_SCANNED_MARRIAGE_CERT);
+        deoBitSet.set(Permission.EDIT_ADOPTION_ALTERATION);
 
         // ADR
         adrBitSet = new BitSet();
@@ -135,7 +136,6 @@ public class RolePermissionUtils {
 
 
             logger.info("Initialized the database by performing permission initialization");
-            System.out.println("\n**********          **********          **********          **********          **********\n");
         } catch (Exception e) {
             logger.error("Error initializing role permissions on the database");
             throw new IllegalStateException("Error initializing role permissions. See log for details", e);

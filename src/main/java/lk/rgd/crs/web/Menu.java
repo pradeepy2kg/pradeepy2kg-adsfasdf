@@ -373,6 +373,10 @@ public class Menu {
         deoAlterationLink.put("eprDeathAlterationEditInit.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationEditInit.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprDeathAlterationDelete.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationDelete.do", Permission.EDIT_BIRTH_ALTERATION));
 
+        // TODO DEO Adoption Alteration Links
+        // TODO add proper permission bit set
+        deoAlterationLink.put("eprAdoptionAlterationPageLoad.do", new Link(null, "/ecivil/alteration/", "eprAdoptionAlterationPageLoad.do", Permission.EDIT_ADOPTION_ALTERATION));
+
         // Birth Alteration for ADR
         adrAlterationLink.putAll(deoAlterationLink);
         adrAlterationLink.put("eprRejectBirthAlterationInit.do", new Link(null, "/ecivil/births/", "eprRejectBirthAlterationInit", Permission.APPROVE_BIRTH_ALTERATION));
