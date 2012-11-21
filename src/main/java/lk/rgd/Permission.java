@@ -59,4 +59,8 @@ public final class Permission {
 
     // permission for Reports
     public static final int GENERATE_REPORTS = 61;
+
+    // permission for Adoption Alteration
+    public static final int EDIT_ADOPTION_ALTERATION = 70;
+    public static final int APPROVE_ADOPTION_ALTERATION = 71;
 }

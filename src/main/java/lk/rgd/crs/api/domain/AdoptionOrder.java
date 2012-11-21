@@ -251,23 +251,23 @@ public class AdoptionOrder implements Serializable {
      * eg: Serial number of 125th record in year 2012 is 201200125
      */
     @Column(nullable = true)
-    private Long adoptionSerialNo;
+    private long adoptionSerialNo;
 
     /**
      * Entry number of the adoption. Mentioned in the Adoption Order Details.
      */
     @Column(nullable = false)
-    private Long adoptionEntryNo;
+    private long adoptionEntryNo;
 
     @ManyToOne
     @JoinColumn(name = "noticingZonalOffice", nullable = false)
     private ZonalOffice noticingZonalOffice;
 
-    public Long getAdoptionEntryNo() {
+    public long getAdoptionEntryNo() {
         return adoptionEntryNo;
     }
 
-    public void setAdoptionEntryNo(Long adoptionEntryNo) {
+    public void setAdoptionEntryNo(long adoptionEntryNo) {
         this.adoptionEntryNo = adoptionEntryNo;
     }
 
@@ -543,11 +543,11 @@ public class AdoptionOrder implements Serializable {
         this.childPIN = childPIN;
     }
 
-    public Long getAdoptionSerialNo() {
+    public long getAdoptionSerialNo() {
         return adoptionSerialNo;
     }
 
-    public void setAdoptionSerialNo(Long adoptionSerialNo) {
+    public void setAdoptionSerialNo(long adoptionSerialNo) {
         this.adoptionSerialNo = adoptionSerialNo;
     }
 

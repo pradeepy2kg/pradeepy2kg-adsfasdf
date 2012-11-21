@@ -1442,6 +1442,11 @@
             <result type="tiles" name="pageLoad">epr.deathAlterationCapture</result>
             <result type="tiles" name="error">epr.deathAlterationSearchHome</result>
         </action>
+
+        <action name="eprAdoptionAlterationPageLoad" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
+                method="pageLoad">
+            <result type="tiles" name="success">epr.adoptionAlterationPageLoad</result>
+        </action>
     </package>
 
     <!--actions related to marriages-->
