@@ -1442,10 +1442,16 @@
             <result type="tiles" name="pageLoad">epr.deathAlterationCapture</result>
             <result type="tiles" name="error">epr.deathAlterationSearchHome</result>
         </action>
-
+        <!-- Adoption Alteration related actions. -->
         <action name="eprAdoptionAlterationPageLoad" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
                 method="pageLoad">
             <result type="tiles" name="success">epr.adoptionAlterationPageLoad</result>
+        </action>
+        <action name="eprLoadAdoptionRecordsForAlteration" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
+                method="loadAdoptionRecordsForAlteration">
+            <!--<result type="tiles" name="success">epr.adoptionAlterationForm</result>-->
+            <result type="tiles" name="success">epr.adoptionAlterationPageLoad</result>
+            <result type="tiles" name="error">epr.adoptionAlterationPageLoad</result>
         </action>
     </package>
 

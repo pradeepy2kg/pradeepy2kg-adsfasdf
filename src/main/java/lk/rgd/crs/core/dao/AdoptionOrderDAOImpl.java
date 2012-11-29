@@ -150,7 +150,7 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    public AdoptionOrder getAdoptionByEntryNumber(Long adoptionEntryNo) {
+    public AdoptionOrder getAdoptionByEntryNumber(long adoptionEntryNo) {
         Query q = em.createNamedQuery("getAdoptionByEntryNumber");
         q.setParameter("adoptionEntryNo", adoptionEntryNo);
         try{
@@ -165,6 +165,18 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
         Query q = em.createNamedQuery("getAdoptionsByCourt");
         q.setParameter("courtUKey", courtUKey);
         return q.getResultList();
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public AdoptionOrder getAdoptionByCourtOrderNumberAndEntryNumber(String courtOrderNumber, long adoptionEntryNo) {
+        Query q = em.createNamedQuery("getAdoptionByCourtOrderNumberAndEntryNumber");
+        q.setParameter("courtOrderNumber", courtOrderNumber);
+        q.setParameter("adoptionEntryNo", adoptionEntryNo);
+        try{
+            return (AdoptionOrder)q.getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }
     }
 
 }

@@ -161,4 +161,30 @@ public interface AdoptionOrderService {
      * @return List of adoption records match the given parameters.
      */
     public List<AdoptionOrder> searchAdoptionOrder(Long adoptionEntryNo, String courtOrderNumber, int courtUKey);
+
+    /**
+     * Return the adoption record which is entered as the given entry number and court order number.
+     *
+     * @param courtOrderNumber
+     * @param adoptionEntryNo
+     * @return
+     */
+    public AdoptionOrder getAdoptionByCourtOrderNumberAndEntryNumber(String courtOrderNumber, long adoptionEntryNo);
+
+    /**
+     * Returns an adoption record which is entered as the given entry number.
+     *
+     * @param adoptionEntryNo Selected adoption entry number.
+     * @return Adoption records which has the given entry number
+     */
+    public AdoptionOrder getAdoptionByEntryNumber(long adoptionEntryNo);
+
+    /**
+     * Returns a list of adoption records with the given court order number.
+     *
+     * @param courtOrderNo  Court Order Number
+     * @return              List of Adoption records.
+     */
+    public List<AdoptionOrder> getAdoptionOrdersByCourtOrderNumber(String courtOrderNo);
+
 }

@@ -517,6 +517,11 @@
         <put-attribute name="title" value="adoption_alteration.title"/>
     </definition>
 
+    <definition name="epr.adoptionAlterationForm" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionAlterationForm.jsp"/>
+        <put-attribute name="title" value="adoption_alteration.title"/>
+    </definition>
+
     <!--Population Registry Tiles-->
     <definition name="epr.PRSAdvancedSearch" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/prs/PRSAdvancedSearch.jsp"/>
