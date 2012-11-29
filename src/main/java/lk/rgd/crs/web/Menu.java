@@ -376,6 +376,7 @@ public class Menu {
         // TODO DEO Adoption Alteration Links
         // TODO add proper permission bit set
         deoAlterationLink.put("eprAdoptionAlterationPageLoad.do", new Link(null, "/ecivil/alteration/", "eprAdoptionAlterationPageLoad.do", Permission.EDIT_ADOPTION_ALTERATION));
+        deoAlterationLink.put("eprLoadAdoptionRecordsForAlteration.do", new Link(null, "/ecivil/alteration/", "eprLoadAdoptionRecordsForAlteration.do", Permission.EDIT_ADOPTION_ALTERATION));
 
         // Birth Alteration for ADR
         adrAlterationLink.putAll(deoAlterationLink);

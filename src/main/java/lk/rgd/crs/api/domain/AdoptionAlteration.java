@@ -12,6 +12,20 @@ import java.util.Date;
 
 @Entity
 @Table(name = "ALT_ADOPTION", schema = "CRS")
+@NamedQueries({
+    @NamedQuery(
+        name = "getAdoptionAlterationByIdUKey",
+        query = "SELECT a FROM AdoptionAlteration a WHERE a.idUKey = :idUKey"
+    ),
+    @NamedQuery(
+        name = "getAllAdoptionAlterationRecords",
+        query = "SELECT a FROM AdoptionAlteration a"
+    ),
+    @NamedQuery(
+        name = "getAdoptionAlterationsByStatus",
+        query = "SELECT a FROM AdoptionAlteration a WHERE a.status = :state"
+    )
+})
 public class AdoptionAlteration {
 
     public enum State{

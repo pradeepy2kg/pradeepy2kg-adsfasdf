@@ -249,6 +249,22 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public AdoptionOrder getAdoptionByCourtOrderNumberAndEntryNumber(String courtOrderNumber, long adoptionEntryNo) {
+        logger.debug("Looking for Adoption Order with the Entry No: {} and Court Order No: {}", adoptionEntryNo, courtOrderNumber);
+        return adoptionOrderDAO.getAdoptionByCourtOrderNumberAndEntryNumber(courtOrderNumber, adoptionEntryNo);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public AdoptionOrder getAdoptionByEntryNumber(long adoptionEntryNo) {
+        return adoptionOrderDAO.getAdoptionByEntryNumber(adoptionEntryNo);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<AdoptionOrder> getAdoptionOrdersByCourtOrderNumber(String courtOrderNo) {
+        return adoptionOrderDAO.getAdoptionsByCourtOrderNumber(courtOrderNo);
+    }
+
     private void setApprovalStatus(long idUKey, User user, AdoptionOrder.State state) {
         AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
         if (adoption.getStatus() == AdoptionOrder.State.DATA_ENTRY) {

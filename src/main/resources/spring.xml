@@ -127,6 +127,7 @@
     <bean id="pinNumberDAOImpl" class="lk.rgd.prs.core.dao.PINNumberDAOImpl"/>
     <bean id="certSearchDAOImpl" class="lk.rgd.crs.core.dao.CertificateSearchDAOImpl"/>
     <bean id="adoptionOrderDAOImpl" class="lk.rgd.crs.core.dao.AdoptionOrderDAOImpl"/>
+    <bean id="adoptionAlterationDAOImpl" class="lk.rgd.crs.core.dao.AdoptionAlterationDAOImpl"/>
     <bean id="deathRegisterDAOImpl" class="lk.rgd.crs.core.dao.DeathRegisterDAOImpl"/>
     <bean id="eventDAOImpl" class="lk.rgd.common.core.dao.EventDAOImpl"/>
     <bean id="registrarDAOImpl" class="lk.rgd.crs.core.dao.RegistrarDAOImpl"/>
@@ -232,6 +233,10 @@
 
     <bean id="adoptionOrderService" class="lk.rgd.crs.core.service.AdoptionOrderServiceImpl">
         <constructor-arg ref="adoptionOrderDAOImpl"/>
+    </bean>
+
+    <bean id="adoptionAlterationService" class="lk.rgd.crs.core.service.AdoptionAlterationServiceImpl">
+        <constructor-arg ref="adoptionAlterationDAOImpl"/>
     </bean>
 
     <bean id="birthAlterationService" class="lk.rgd.crs.core.service.BirthAlterationServiceImpl">
@@ -450,7 +455,8 @@
     </bean>
 
     <bean id="adoptionAlterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction">
-
+        <constructor-arg ref="adoptionOrderService"/>
+        <constructor-arg ref="adoptionAlterationService"/>
     </bean>
 
     <bean id="userManagmentAction" class="lk.rgd.crs.web.action.UserManagementAction">
