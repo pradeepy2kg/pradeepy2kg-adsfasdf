@@ -95,3 +95,11 @@ input, textarea{text-transform:uppercase;}
 #search_all_district_button:hover{
     background: url(../images/button_bg_hover_22.png);
 }
+
+
+#adoption-alteration-outer{
+    background: #FFF;
+    float: left;
+    width: 1030px;
+    padding: 10px;
+}

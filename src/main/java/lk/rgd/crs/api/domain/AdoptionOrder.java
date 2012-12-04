@@ -254,7 +254,7 @@ public class AdoptionOrder implements Serializable {
      * Format: Year in 4 digits followed by a sequence number 00001- 99999.
      * eg: Serial number of 125th record in year 2012 is 201200125
      */
-    @Column(nullable = true)
+    @Column(nullable = true, columnDefinition = "bigint not null default 0")
     private long adoptionSerialNo;
 
     /**

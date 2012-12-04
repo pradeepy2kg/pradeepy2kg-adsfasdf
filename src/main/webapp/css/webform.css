@@ -2032,34 +2032,34 @@ death-alteration-table-style01 td {
     border: none;
 }
 
-.birth-alteration-table-style02 {;
+.birth-alteration-table-style02, .alteration-table-style02 {;
     border-top: 1px solid #000;
     border-left: 1px solid #000;
     margin-top: 10px;
 }
 
-.birth-alteration-table-style02 td {
+.birth-alteration-table-style02 td, .alteration-table-style02 td {
     border-right: 1px solid #000;
     border-bottom: 1px solid #000;
     padding: 3px;
 }
 
-.birth-alteration-table-style02 textarea {
+.birth-alteration-table-style02 textarea, .alteration-table-style02 textarea {
     width: 95%;
     margin: 10px;
 }
 
-.birth-alteration-table-style02 input {
+.birth-alteration-table-style02 input, .alteration-table-style02 input {
     width: 85%;
     margin: 10px;
 }
 
-.birth-alteration-table-style02 select {
+.birth-alteration-table-style02 select, .alteration-table-style02 select {
     width: 95%;
     margin: 10px;
 }
 
-.birth-alteration-table-style02 label {
+.birth-alteration-table-style02 label, .alteration-table-style02 label {
     width: 95%;
 }
 

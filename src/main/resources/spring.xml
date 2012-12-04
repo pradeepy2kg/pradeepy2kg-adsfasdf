@@ -457,6 +457,10 @@
     <bean id="adoptionAlterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction">
         <constructor-arg ref="adoptionOrderService"/>
         <constructor-arg ref="adoptionAlterationService"/>
+        <constructor-arg ref="provinceDAOImpl"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="courtDAOImpl"/>
     </bean>
 
     <bean id="userManagmentAction" class="lk.rgd.crs.web.action.UserManagementAction">
