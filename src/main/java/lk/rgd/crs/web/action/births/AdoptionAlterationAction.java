@@ -1,7 +1,11 @@
 package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.dao.ProvinceDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.api.dao.CourtDAO;
 import lk.rgd.crs.api.domain.AdoptionAlteration;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.service.AdoptionAlterationService;
@@ -37,45 +41,59 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
 
     private final AdoptionOrderService adoptionOrderService;
     private final AdoptionAlterationService adoptionAlterationService;
+    private final ProvinceDAO provinceDAO;
+    private final DistrictDAO districtDAO;
+    private final CountryDAO countryDAO;
+    private final CourtDAO courtDAO;
 
-    private AdoptionOrder adoptionOrder;
+    private AdoptionOrder adoption;
     private AdoptionAlteration adoptionAlteration;
 
     private List<AdoptionOrder> adoptionOrderList;
     private String courtOrderNo;
     private long adoptionEntryNo;
     private long idUKey;
+    private String courtName;
+    private String birthProvinceName;
+    private String birthDistrictName;
+    private String applicantCountryName;
+    private String spouseCountryName;
+    private AdoptionAlteration.Method alterationMethod;
 
-    public AdoptionAlterationAction(AdoptionOrderService adoptionOrderService, AdoptionAlterationService adoptionAlterationService) {
+    public AdoptionAlterationAction(AdoptionOrderService adoptionOrderService, AdoptionAlterationService adoptionAlterationService, CourtDAO courtDAO, CountryDAO countryDAO, DistrictDAO districtDAO, ProvinceDAO provinceDAO) {
         this.adoptionOrderService = adoptionOrderService;
         this.adoptionAlterationService = adoptionAlterationService;
+        this.courtDAO = courtDAO;
+        this.countryDAO = countryDAO;
+        this.districtDAO = districtDAO;
+        this.provinceDAO = provinceDAO;
     }
 
-    public String pageLoad(){
+    public String pageLoad() {
         return SUCCESS;
     }
 
-    public String addAdoptionAlteration(){
+    public String addAdoptionAlteration() {
         return SUCCESS;
     }
 
-    public String updateAdoptionAlteration(){
+    public String updateAdoptionAlteration() {
         return SUCCESS;
     }
 
-    public String approveOrRejectAdoptionAlteration(){
+    public String approveOrRejectAdoptionAlteration() {
         return SUCCESS;
     }
 
-    public String loadAdoptionRecordsForAlteration(){
+    public String loadAdoptionRecordsForAlteration() {
         logger.debug("Adoption Entry No: {}", adoptionEntryNo);
         adoptionOrderList = new ArrayList<AdoptionOrder>();
-        if(adoptionEntryNo > 0){
+        if (adoptionEntryNo > 0) {
             adoptionOrderList.add(adoptionOrderService.getAdoptionByEntryNumber(adoptionEntryNo));
-        }else if(courtOrderNo != null && !courtOrderNo.isEmpty()){
+        } else if (courtOrderNo != null && !courtOrderNo.isEmpty()) {
             adoptionOrderList.addAll(adoptionOrderService.getAdoptionOrdersByCourtOrderNumber(courtOrderNo));
         }
-        if(adoptionOrderList.size() > 0){
+        if (adoptionOrderList.size() > 0) {
             logger.debug("Loading adoption records [{}]for alterations.", adoptionOrderList.size());
             return SUCCESS;
         }
@@ -83,11 +101,59 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
         return ERROR;
     }
 
-    public String populateAdoptionOrder(){
+    public String populateAdoptionOrder() {
         logger.debug("Loading Adoption Order with idUKey : {} for Alteration", idUKey);
-        adoptionOrder = adoptionOrderService.getById(idUKey, user);
-        if(adoptionOrder != null){
-            return SUCCESS;
+        try {
+            adoption = adoptionOrderService.getById(idUKey, user);
+            adoptionAlteration = new AdoptionAlteration();
+            if (adoption != null) {
+                adoptionAlteration.setAoUKey(adoption.getIdUKey());
+                adoptionAlteration.setApplicantName(adoption.getApplicantName());
+                adoptionAlteration.setApplicantAddress(adoption.getApplicantAddress());
+                if (adoption.getApplicantSecondAddress() != null) {
+                    adoptionAlteration.setApplicantSecondAddress(adoption.getApplicantSecondAddress());
+                }
+                if (adoption.getApplicantOccupation() != null) {
+                    adoptionAlteration.setApplicantOccupation(adoption.getApplicantOccupation());
+                }
+                if (adoption.isJointApplicant()) {
+                    adoptionAlteration.setSpouseName(adoption.getSpouseName());
+                    if (adoption.getSpouseOccupation() != null) {
+                        adoptionAlteration.setSpouseOccupation(adoption.getSpouseOccupation());
+                    }
+                }
+                if (adoption.getChildNewName() != null && !adoption.getChildNewName().isEmpty()) {
+                    adoptionAlteration.setChildName(adoption.getChildNewName());
+                } else {
+                    adoptionAlteration.setChildName(adoption.getChildExistingName());
+                }
+                adoptionAlteration.setChildGender(adoption.getChildGender());
+                adoptionAlteration.setChildBirthDate(adoption.getChildBirthDate());
+                adoptionAlteration.setMethod(alterationMethod);
+
+                if (adoption.getBirthProvinceUKey() > 0) {
+                    birthProvinceName = provinceDAO.getNameByPK(adoption.getBirthProvinceUKey(), language);
+                }
+                if (adoption.getBirthDistrictId() > 0) {
+                    birthDistrictName = districtDAO.getNameByPK(adoption.getBirthDistrictId(), language);
+                }
+
+                if (adoption.getApplicantCountryId() > 0) {
+                    applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
+                }
+                if (adoption.getSpouseCountryId() > 0) {
+                    spouseCountryName = countryDAO.getNameByPK(adoption.getSpouseCountryId(), language);
+                }
+                if (adoption.getCourt().getCourtId() > 0) {
+                    courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtId(), language);
+                }
+                logger.debug("Success");
+                return SUCCESS;
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            return ERROR;
         }
         return ERROR;
     }
@@ -108,12 +174,12 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
         this.language = language;
     }
 
-    public AdoptionOrder getAdoptionOrder() {
-        return adoptionOrder;
+    public AdoptionOrder getAdoption() {
+        return adoption;
     }
 
-    public void setAdoptionOrder(AdoptionOrder adoptionOrder) {
-        this.adoptionOrder = adoptionOrder;
+    public void setAdoption(AdoptionOrder adoption) {
+        this.adoption = adoption;
     }
 
     public AdoptionAlteration getAdoptionAlteration() {
@@ -221,5 +287,53 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
 
     public void setIdUKey(long idUKey) {
         this.idUKey = idUKey;
+    }
+
+    public String getCourtName() {
+        return courtName;
+    }
+
+    public void setCourtName(String courtName) {
+        this.courtName = courtName;
+    }
+
+    public String getBirthProvinceName() {
+        return birthProvinceName;
+    }
+
+    public void setBirthProvinceName(String birthProvinceName) {
+        this.birthProvinceName = birthProvinceName;
+    }
+
+    public String getBirthDistrictName() {
+        return birthDistrictName;
+    }
+
+    public void setBirthDistrictName(String birthDistrictName) {
+        this.birthDistrictName = birthDistrictName;
+    }
+
+    public String getApplicantCountryName() {
+        return applicantCountryName;
+    }
+
+    public void setApplicantCountryName(String applicantCountryName) {
+        this.applicantCountryName = applicantCountryName;
+    }
+
+    public String getSpouseCountryName() {
+        return spouseCountryName;
+    }
+
+    public void setSpouseCountryName(String spouseCountryName) {
+        this.spouseCountryName = spouseCountryName;
+    }
+
+    public AdoptionAlteration.Method getAlterationMethod() {
+        return alterationMethod;
+    }
+
+    public void setAlterationMethod(AdoptionAlteration.Method alterationMethod) {
+        this.alterationMethod = alterationMethod;
     }
 }

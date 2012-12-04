@@ -5,13 +5,6 @@
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
-
-    #adoption-alteration-outer{
-        background: #FFF;
-        float: left;
-        width: 1030px;
-        padding: 10px;
-    }
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript">
@@ -28,6 +21,9 @@
             "bJQueryUI":true,
             "sPaginationType":"full_numbers"
         });
+        if($('#adoptionEntryNo').val() == 0){
+            $('#adoptionEntryNo').val('');
+        }
     });
 </script>
 <div id="adoption-alteration-outer">
@@ -42,7 +38,7 @@
                 <tr>
                     <td><s:label value="%{getText('adoption_entry_no.label')}"/></td>
                     <td><s:textfield id="adoptionEntryNo" name="adoptionEntryNo"/></td>
-                    <td><s:label value="%{getText('order_no.label')}"/></td>
+                    <td><s:label value="%{getText('court_order_no.label')}"/></td>
                     <td><s:textfield id="courtOrderNo" name="courtOrderNo"/></td>
                 </tr>
                 <tr>
@@ -56,23 +52,36 @@
     <div style="float: left; width: 100%;">
     <s:if test="adoptionOrderList.size() > 0">
         <table width="100%" id="adoptionOrderListTable" cellpadding="0" cellspacing="0" class="display">
-            <col width="30px"/>
-            <col width="120px">
+            <col width="120px"/>
+            <col width="120px"/>
+            <col width="300px"/>
             <col>
-            <col width="80px">
+            <col width="50px"/>
             <thead>
-            <tr>
-                <th>#</th>
+            <tr align="center">
                 <th><s:label value="%{getText('entry_no.label')}"/></th>
-                <th><s:label value="%{getText('name.label')}"/></th>
+                <th><s:label value="%{getText('order_no.label')}"/></th>
+                <th><s:label value="%{getText('court.label')}"/></th>
+                <th><s:label value="%{getText('child_name.label')}"/></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <s:iterator id="adoptionOrderList" value="adoptionOrderList" status="status">
                 <tr>
-                    <td><s:property value="idUKey"/></td>
                     <td><s:property value="adoptionEntryNo"/></td>
+                    <td><s:property value="courtOrderNumber"/></td>
+                    <td>
+                        <s:if test="language == \"si\"">
+                            <s:property value="court.siCourtName"/>
+                        </s:if>
+                        <s:elseif test="language == \"ta\"">
+                            <s:property value="court.taCourtName"/>
+                        </s:elseif>
+                        <s:elseif test="language == \"en\"">
+                            <s:property value="court.enCourtName"/>
+                        </s:elseif>
+                    </td>
                     <s:if test="childNewName!=null">
                         <td><s:property value="getChildNewNameToLength(30)"/></td>
                     </s:if>

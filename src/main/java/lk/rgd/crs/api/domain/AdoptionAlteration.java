@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.domain;
 
 import javax.persistence.*;
+import java.util.BitSet;
 import java.util.Date;
 
 /**
@@ -27,11 +28,41 @@ import java.util.Date;
     )
 })
 public class AdoptionAlteration {
+    public static final int CHILD_NAME                  = 0;
+    public static final int CHILD_GENDER                = 1;
+    public static final int CHILD_DOB                   = 2;
+    public static final int APPLICANT_NAME              = 3;
+    public static final int APPLICANT_ADDRESS           = 4;
+    public static final int APPLICANT_SECOND_ADDRESS    = 5;
+    public static final int APPLICANT_OCCUPATION        = 6;
+    public static final int SPOUSE_NAME                 = 7;
+    public static final int SPOUSE_OCCUPATION           = 8;
 
     public enum State{
+        /**
+         * 0 - Newly entered adoption alteration. Can be edit by DEO
+         */
         DATA_ENTRY,
+        /**
+         * 1 - ARG or higher approved the alteration.
+         */
         FULL_APPROVED,
+        /**
+         * 2 - ARG or higher rejected the alteration.
+         */
         REJECTED
+    }
+
+    public enum Method{
+        /**
+         * 0 - Adoption alteration according to the form filled by (parents, guardian, etc).
+         *  Common way of applying for adoption alteration.
+         */
+        BY_APPLICATION,
+        /**
+         * 1- Adoption alteration according to a court order.
+         */
+        BY_COURT_ORDER
     }
 
     @Id
@@ -46,6 +77,22 @@ public class AdoptionAlteration {
 
     @Column(nullable = false)
     private State status;
+
+    @Column(nullable = false)
+    private Method method;
+
+    @Column(nullable = true)
+    private BitSet changedFields = new BitSet();
+
+    @Column(nullable = true)
+    private BitSet approvalStatuses = new BitSet();
+
+    @Column(nullable = false)
+    @Temporal(value = TemporalType.DATE)
+    private Date dateReceived;
+
+    @Column(nullable = false)
+    private String placeReceived;
 
     /**
      * Alteration fields for child details
@@ -84,6 +131,11 @@ public class AdoptionAlteration {
     @Column(nullable = true)
     private String spouseOccupation;
 
+    @Column
+    private String comments;
+
+    @Embedded
+    private DeclarantInfo declarant = new DeclarantInfo();
 
     public long getIdUKey() {
         return idUKey;
@@ -187,5 +239,61 @@ public class AdoptionAlteration {
 
     public void setSpouseOccupation(String spouseOccupation) {
         this.spouseOccupation = spouseOccupation;
+    }
+
+    public Date getDateReceived() {
+        return dateReceived;
+    }
+
+    public void setDateReceived(Date dateReceived) {
+        this.dateReceived = dateReceived;
+    }
+
+    public String getPlaceReceived() {
+        return placeReceived;
+    }
+
+    public void setPlaceReceived(String placeReceived) {
+        this.placeReceived = placeReceived;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public DeclarantInfo getDeclarant() {
+        return declarant;
+    }
+
+    public void setDeclarant(DeclarantInfo declarant) {
+        this.declarant = declarant;
+    }
+
+    public Method getMethod() {
+        return method;
+    }
+
+    public void setMethod(Method method) {
+        this.method = method;
+    }
+
+    public BitSet getChangedFields() {
+        return changedFields;
+    }
+
+    public void setChangedFields(BitSet changedFields) {
+        this.changedFields = changedFields;
+    }
+
+    public BitSet getApprovalStatuses() {
+        return approvalStatuses;
+    }
+
+    public void setApprovalStatuses(BitSet approvalStatuses) {
+        this.approvalStatuses = approvalStatuses;
     }
 }
