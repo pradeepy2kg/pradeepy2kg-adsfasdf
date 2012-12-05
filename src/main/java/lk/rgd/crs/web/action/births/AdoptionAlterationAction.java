@@ -74,6 +74,14 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     }
 
     public String addAdoptionAlteration() {
+        logger.debug("Attempt to add Adoption Alteration.");
+        try {
+            adoptionAlteration.setMethod(alterationMethod);
+            adoptionAlterationService.addAdoptionAlteration(adoptionAlteration, user);
+        } catch (Exception e) {
+            return ERROR;
+        }
+        addActionMessage("add.adoption.alteration.success");
         return SUCCESS;
     }
 
