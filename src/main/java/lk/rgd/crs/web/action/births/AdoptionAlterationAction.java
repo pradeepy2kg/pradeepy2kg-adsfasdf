@@ -5,6 +5,7 @@ import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.ProvinceDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.CourtDAO;
 import lk.rgd.crs.api.domain.AdoptionAlteration;
 import lk.rgd.crs.api.domain.AdoptionOrder;
@@ -59,6 +60,7 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     private String applicantCountryName;
     private String spouseCountryName;
     private AdoptionAlteration.Method alterationMethod;
+    private AdoptionAlteration.Method[] methodList = AdoptionAlteration.Method.values();
 
     public AdoptionAlterationAction(AdoptionOrderService adoptionOrderService, AdoptionAlterationService adoptionAlterationService, CourtDAO courtDAO, CountryDAO countryDAO, DistrictDAO districtDAO, ProvinceDAO provinceDAO) {
         this.adoptionOrderService = adoptionOrderService;
@@ -76,16 +78,21 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     public String addAdoptionAlteration() {
         logger.debug("Attempt to add Adoption Alteration.");
         try {
-            adoptionAlteration.setMethod(alterationMethod);
             adoptionAlterationService.addAdoptionAlteration(adoptionAlteration, user);
-        } catch (Exception e) {
+            logger.debug("Adoption Alteration added successfully. {}", adoptionAlteration.getIdUKey());
+        } catch (CRSRuntimeException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            addActionError(getText(e.getMessage()+".label"));
             return ERROR;
         }
-        addActionMessage("add.adoption.alteration.success");
+        addActionMessage(getText("add.adoption.alteration.success"));
         return SUCCESS;
     }
 
     public String updateAdoptionAlteration() {
+        logger.debug("Attempt to update Adoption Alteration");
+
         return SUCCESS;
     }
 
@@ -116,6 +123,7 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
             adoptionAlteration = new AdoptionAlteration();
             if (adoption != null) {
                 adoptionAlteration.setAoUKey(adoption.getIdUKey());
+                adoptionAlteration.setMethod(alterationMethod);
                 adoptionAlteration.setApplicantName(adoption.getApplicantName());
                 adoptionAlteration.setApplicantAddress(adoption.getApplicantAddress());
                 if (adoption.getApplicantSecondAddress() != null) {
@@ -343,5 +351,13 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
 
     public void setAlterationMethod(AdoptionAlteration.Method alterationMethod) {
         this.alterationMethod = alterationMethod;
+    }
+
+    public AdoptionAlteration.Method[] getMethodList() {
+        return methodList;
+    }
+
+    public void setMethodList(AdoptionAlteration.Method[] methodList) {
+        this.methodList = methodList;
     }
 }

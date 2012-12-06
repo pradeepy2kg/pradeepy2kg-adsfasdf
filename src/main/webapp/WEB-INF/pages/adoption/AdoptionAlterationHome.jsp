@@ -36,6 +36,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <td><s:label value="%{getText('alteration_method.label')}"/></td>
+                    <td colspan="3">
+                        <s:select list="methodList" name="alterationMethod"/>
+                    </td>
+                </tr>
+                <tr>
                     <td><s:label value="%{getText('adoption_entry_no.label')}"/></td>
                     <td><s:textfield id="adoptionEntryNo" name="adoptionEntryNo"/></td>
                     <td><s:label value="%{getText('court_order_no.label')}"/></td>
@@ -91,6 +97,7 @@
                     <td align="center">
                         <s:url id="alterAdoptionUrl" action="eprPopulateAdoptionForAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
+                            <s:param name="alterationMethod" value="alterationMethod"/>
                         </s:url>
                         <s:a href="%{alterAdoptionUrl}" title="%{getText('alter.label')}">
                             <img id="editImage" src="<s:url value='/images/edit.png'/>" width="25" height="25"

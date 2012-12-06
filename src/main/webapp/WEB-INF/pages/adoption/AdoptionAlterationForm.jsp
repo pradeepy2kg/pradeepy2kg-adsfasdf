@@ -75,6 +75,8 @@
     }
 </script>
 <div id="adoption-alteration-outer">
+<s:actionerror cssStyle="color: red; font-size: 10pt;"/>
+<s:actionmessage cssStyle="color: blue; font-size: 10pt;"/>
 <s:form method="POST" name="adoptionAlteration">
 <table class="adoption-alteration-table-style01" style="width:1030px; font-size: 9pt;">
     <col width="32%"/>
@@ -103,6 +105,14 @@
                         Recieved Date
                     </td>
                     <td><s:textfield cssClass="datePicker" name="adoptionAlteration.dateReceived"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        ස්ථානය<br/>
+                        Place in ta<br/>
+                        Place
+                    </td>
+                    <td><s:textfield name="adoptionAlteration.placeReceived"/></td>
                 </tr>
             </table>
         </td>
@@ -157,13 +167,6 @@
             Issued Date
         </td>
         <td style="text-align:left;"><s:label value="%{#request.adoption.orderIssuedDate}"/></td>
-    </tr>
-    <tr>
-        <td>විනිසුරු නම <br/>
-            நீதிபதியின் பெயர்<br/>
-            Name of the Judge
-        </td>
-        <td colspan="3"><s:label value="%{#request.adoption.judgeName}"/></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table" style="border: 1px solid #000; width: 100%;">
@@ -338,8 +341,99 @@
         </table>
     </div>
 </s:if>
+<table class="adoption-reg-form-01-table01" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
+    <caption></caption>
+    <col style="width:250px;"/>
+    <col style="width:190px;"/>
+    <col style="width:190px;"/>
+    <col style="width:190px;"/>
+    <col style="width:190px;"/>
+    <tbody>
+    <tr>
+        <td colspan="5" style="text-align:center;font-size:11pt">ප්‍රකාශය කරන්නාගේ විස්තර<br>
+            பிரதிக்கினை செய்பவரின் விபரங்கள்<br>
+            Details of the Declarant
+        </td>
+    </tr>
+    <tr>
+        <td>ප්‍රකාශය කරන්නේ කවුරුන් විසින් ද?<br>
+            தகவல் வழங்குபவர் <br>
+            Person Giving declaration
+        <td>
+            <table style="border:none;width:100%">
+                <tr>
+                    <td style="width:75%;border:none">
+                        මව <br>மாதா<br>Mother
+                    </td>
+                    <td style="width:25%;border:none;">
+                        <s:radio id="declarantType" name="adoptionAlteration.declarant.declarantType"
+                                 list="#@java.util.HashMap@{'MOTHER':''}"
+                                 onchange="javascript:setDeclarantPerson(1)"/></td>
+            </table>
+        </td>
+        <td>
+            <table style="border:none;width:100%">
+                <tr>
+                    <td style="width:75%;border:none"> පියා<br> பிதா<br> Father
+                    </td>
+                    <td style="width:25%;border:none;">
+                        <s:radio id="declarantType" name="adoptionAlteration.declarant.declarantType"
+                                 list="#@java.util.HashMap@{'FATHER':''}"
+                                 onchange="javascript:setDeclarantPerson(2)"/></td>
+            </table>
+
+        </td>
+        <td>
+            <table style="border:none;width:100%">
+                <tr>
+                    <td style="width:75%;border:none"> භාරකරු<br> பாதுகாவலர் <br> Guardian
+                    </td>
+                    <td style="width:25%;border:none;">
+                        <s:radio id="declarantType" name="adoptionAlteration.declarant.declarantType"
+                                 list="#@java.util.HashMap@{'OTHER':''}"
+                                 onchange="javascript:setDeclarantPerson(3) "/></td>
+            </table>
+        </td>
+        <td>
+            <table style="border:none;width:100%">
+                <tr>
+                    <td style="width:75%;border:none"> තමුන්<br> தன்னால்<br> Self
+                    </td>
+                    <td style="width:25%;border:none;">
+                        <s:radio id="declarantType" name="adoptionAlteration.declarant.declarantType"
+                                 list="#@java.util.HashMap@{'RELATIVE':''}"
+                                 onchange="javascript:setDeclarantPerson(4)"/></td>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            අනන්‍යතා අංකය
+            <br>அடையாள எண்
+            <br>Identification Number
+        </td>
+        <td colspan="2"><s:textfield id="Declarant_pinOrNic" name="adoptionAlteration.declarant.declarantNICorPIN"
+                                     maxLength="12"/>
+        </td>
+    </tr>
+    <tr>
+        <td>නම<br>
+            பெயர்<br>
+            Name<br></td>
+        <td colspan="4"><s:textarea id="declarantName" name="adoptionAlteration.declarant.declarantFullName"/></td>
+    </tr>
+    <tr>
+        <td>තැපැල් ලිපිනය<br>
+            தபால் முகவரி<br>
+            Postal Address
+        </td>
+        <td colspan="4"><s:textarea id="declarantAddress" name="adoptionAlteration.declarant.declarantAddress"/></td>
+    </tr>
+    </tbody>
+</table>
 <s:hidden id="jointApplicant" value="%{adoption.jointApplicant}"/>
-<s:hidden name="adoptionAlteration.alterationMethod"/>
+<s:hidden name="adoptionAlteration.aoUKey"/>
+<s:hidden name="adoptionAlteration.method" value="%{alterationMethod}"/>
 
 <div class="form-submit">
     <s:submit action="eprAddAdoptionAlteration" value="%{getText('save.label')}"/>
