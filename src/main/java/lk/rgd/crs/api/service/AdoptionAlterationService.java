@@ -11,4 +11,10 @@ public interface AdoptionAlterationService {
     public void addAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user);
 
     public void updateAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user);
+
+    public void deleteAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user);
+
+    public void approveAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user);
+
+    public void rejectAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user);
 }

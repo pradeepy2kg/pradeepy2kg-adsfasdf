@@ -34,6 +34,11 @@ public class AdoptionAlterationDAOImpl extends BaseDAO implements AdoptionAltera
         em.merge(adoptionAlteration);
     }
 
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void deleteAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user) {
+        em.remove(adoptionAlteration);
+    }
+
     @Transactional(propagation = Propagation.SUPPORTS)
     public AdoptionAlteration getAdoptionAlterationByIdUKey(long idUkey) {
         Query q = em.createNamedQuery("getAdoptionAlterationByIdUKey");
