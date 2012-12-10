@@ -161,6 +161,11 @@
                 මරණ සහතිකයේ වෙනස් කිරීම හැසිරවීම
             </a>
         </li>
+        <li>
+            <a id="adoption.registration.alterations" href="/ecivil/alteration/eprAdoptionAlterationPageLoad.do">
+                දරු සහතිකයේ වෙනස් කිරීම්
+            </a>
+        </li>
     </ul>
 </li>
 

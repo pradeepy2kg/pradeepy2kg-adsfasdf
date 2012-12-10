@@ -156,6 +156,11 @@
                 Manage Death Alteration
             </a>
         </li>
+        <li>
+            <a id="adoption.registration.alterations" href="/ecivil/alteration/eprAdoptionAlterationPageLoad.do">
+                Adoption Alteration
+            </a>
+        </li>
     </ul>
 </li>
 
