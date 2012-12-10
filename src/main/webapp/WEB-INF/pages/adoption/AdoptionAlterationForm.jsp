@@ -27,9 +27,18 @@
             });
         }
 
-//        $('#child-info-check').click(function(){
-//            document.getElementById('child-info-check').disabled = true;
-//        });
+        $('#child-info-check').click(function () {
+            document.getElementById('child-info-check').disabled = true;
+            enableFields(new Array('childName', 'childBirthDate', 'childGender'));
+        });
+        $('#applicant-info-check').click(function () {
+            document.getElementById('applicant-info-check').disabled = true;
+            enableFields(new Array('applicantName', 'applicantAddress', 'applicantSecondAddress', 'applicantOccupation'));
+        });
+        $('#spouse-info-check').click(function () {
+            document.getElementById('spouse-info-check').disabled = true;
+            enableFields(new Array('spouseName', 'spouseOccupation'));
+        });
 
         $(".datePicker").datepicker({
             changeYear:true,
@@ -43,11 +52,18 @@
     });
 
     function init() {
+        var fields;
         minimize("child-info");
         minimize("applicant-info");
         if ($('#jointApplicant').val()) {
             minimize("spouse-info");
         }
+        if ($('#jointApplicant').val()) {
+            fields = new Array('childName', 'childBirthDate', 'childGender', 'applicantName', 'applicantAddress', 'applicantSecondAddress', 'applicantOccupation', 'spouseName', 'spouseOccupation');
+        } else {
+            fields = new Array('childName', 'childBirthDate', 'childGender', 'applicantName', 'applicantAddress', 'applicantSecondAddress', 'applicantOccupation');
+        }
+        disableFields(fields);
     }
 
     function minimize(id) {
@@ -73,11 +89,54 @@
             document.getElementById(fieldIds[i]).disabled = false;
         }
     }
+
+    function disableFields(fields) {
+        for (i = 0; i < fields.length; i++) {
+            document.getElementById(fields[i]).disabled = true;
+        }
+    }
+
+    var errormsg = '';
+    function validate() {
+        var returnval = true;
+        var domObject;
+
+        domObject = document.getElementById('dateReceived');
+        if(isFieldEmpty(domObject)){
+            errormsg += $('#emptyDateReceived').val();
+        }
+
+        domObject = document.getElementById('placeReceived');
+        if(isFieldEmpty(domObject)){
+            errormsg += "\n" + $('#emptyPlace').val();
+        }
+
+        if(!$('input:radio[name="adoptionAlteration.declarant.declarantType"]').is(':checked')){
+            errormsg += "\n" + $('#emptyDeclarantType').val();
+        }
+
+        domObject = document.getElementById('declarantName');
+        if(isFieldEmpty(domObject)){
+            errormsg += "\n" + $('#emptyDeclarantName').val();
+        }
+
+        domObject = document.getElementById('declarantAddress');
+        if(isFieldEmpty(domObject)){
+            errormsg += "\n" + $('#emptyDeclarantAddress').val();
+        }
+
+        if (errormsg != ''){
+            alert(errormsg);
+            returnval = false;
+            errormsg = '';
+        }
+        return returnval;
+    }
 </script>
 <div id="adoption-alteration-outer">
 <s:actionerror cssStyle="color: red; font-size: 10pt;"/>
 <s:actionmessage cssStyle="color: blue; font-size: 10pt;"/>
-<s:form method="POST" name="adoptionAlteration">
+<s:form method="POST" name="adoptionAlteration" onsubmit="return validate();">
 <table class="adoption-alteration-table-style01" style="width:1030px; font-size: 9pt;">
     <col width="32%"/>
     <col/>
@@ -100,19 +159,19 @@
                 </tr>
                 <tr>
                     <td>
-                        භාරගත් දිනය<br/>
+                        භාරගත් දිනය <s:label cssStyle="color: red;" value="*"/><br/>
                         பெறப்பட்ட திகதி<br/>
                         Recieved Date
                     </td>
-                    <td><s:textfield cssClass="datePicker" name="adoptionAlteration.dateReceived"/></td>
+                    <td><s:textfield id="dateReceived" cssClass="datePicker" name="adoptionAlteration.dateReceived"/></td>
                 </tr>
                 <tr>
                     <td>
-                        ස්ථානය<br/>
+                        ස්ථානය <s:label cssStyle="color: red;" value="*"/><br/>
                         Place in ta<br/>
                         Place
                     </td>
-                    <td><s:textfield name="adoptionAlteration.placeReceived"/></td>
+                    <td><s:textfield id="placeReceived" name="adoptionAlteration.placeReceived"/></td>
                 </tr>
             </table>
         </td>
@@ -120,6 +179,7 @@
     <tr>
         <td colspan="3" align="center">
             <p style="font-size: 14pt; font-weight: bold;">ළමයින් දරුකමට හදා ගැනීමේ ආඥා පනතේ 10 (5) (ඇ) වන වගන්තිය</p>
+
             <p style="font-size: 12pt;">දරුකමට හදා ගැනීමේ ලේඛණයෙහි සටහනක යම් විස්තරවල ඇති යම් දෝෂයක් නිවරද කිරීම පිණිස
                 වූ ප්‍රකාශය</p>
         </td>
@@ -204,7 +264,8 @@
                 <br>பெற்றுக்கொடுக்கப்படும் பெயர் அரச கரும மொழியில்
                 <br>New name given in Official Language
             </td>
-            <td colspan="4"><s:textarea name="adoptionAlteration.childName" id="childName" cssStyle="margin-left:5px"/></td>
+            <td colspan="4"><s:textarea name="adoptionAlteration.childName" id="childName"
+                                        cssStyle="margin-left:5px"/></td>
         </tr>
         <tr>
             <td>
@@ -214,7 +275,7 @@
             </td>
             <td colspan="2">
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-                <s:textfield cssClass="datePicker" name="adoptionAlteration.childBirthDate"
+                <s:textfield id="childBirthDate" cssClass="datePicker" name="adoptionAlteration.childBirthDate"
                              cssStyle="margin-left:5px;width:200px" maxLength="10"/>
             </td>
             <td>
@@ -223,8 +284,10 @@
                 <br>Gender
             </td>
             <td>
-                <s:select list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                    name="adoptionAlteration.childGender" id="childGender" cssStyle="width:150px; margin-left:5px;"/>
+                <s:select
+                        list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                        name="adoptionAlteration.childGender" id="childGender"
+                        cssStyle="width:150px; margin-left:5px;"/>
             </td>
         </tr>
         </tbody>
@@ -280,7 +343,8 @@
                 <br>முகவரி 2
                 <br>Address 2
             </td>
-            <td colspan="4"><s:textarea id="applicantSecondAddress" name="adoptionAlteration.applicantSecondAddress"/></td>
+            <td colspan="4"><s:textarea id="applicantSecondAddress"
+                                        name="adoptionAlteration.applicantSecondAddress"/></td>
         </tr>
         <tr>
             <td>
@@ -343,7 +407,7 @@
 </s:if>
 <table class="adoption-reg-form-01-table01" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
     <caption></caption>
-    <col style="width:250px;"/>
+    <col style="width:260px;"/>
     <col style="width:190px;"/>
     <col style="width:190px;"/>
     <col style="width:190px;"/>
@@ -356,7 +420,7 @@
         </td>
     </tr>
     <tr>
-        <td>ප්‍රකාශය කරන්නේ කවුරුන් විසින් ද?<br>
+        <td>ප්‍රකාශය කරන්නේ කවුරුන් විසින් ද? <s:label cssStyle="color: red;" value="*"/><br>
             தகவல் வழங்குபவர் <br>
             Person Giving declaration
         <td>
@@ -417,13 +481,13 @@
         </td>
     </tr>
     <tr>
-        <td>නම<br>
+        <td>නම <s:label cssStyle="color: red;" value="*"/><br>
             பெயர்<br>
             Name<br></td>
         <td colspan="4"><s:textarea id="declarantName" name="adoptionAlteration.declarant.declarantFullName"/></td>
     </tr>
     <tr>
-        <td>තැපැල් ලිපිනය<br>
+        <td>තැපැල් ලිපිනය <s:label cssStyle="color: red;" value="*"/><br>
             தபால் முகவரி<br>
             Postal Address
         </td>
@@ -434,6 +498,13 @@
 <s:hidden id="jointApplicant" value="%{adoption.jointApplicant}"/>
 <s:hidden name="adoptionAlteration.aoUKey"/>
 <s:hidden name="adoptionAlteration.method" value="%{alterationMethod}"/>
+
+<%-- Error message labels --%>
+<s:hidden id="emptyDateReceived" value="%{getText('enter.date.received.label')}"/>
+<s:hidden id="emptyPlace" value="%{getText('enter.place.label')}"/>
+<s:hidden id="emptyDeclarantType" value="%{getText('enter.declarant.type.label')}"/>
+<s:hidden id="emptyDeclarantName" value="%{getText('enter.declarant.name.label')}"/>
+<s:hidden id="emptyDeclarantAddress" value="%{getText('enter.declarant.address.label')}"/>
 
 <div class="form-submit">
     <s:submit action="eprAddAdoptionAlteration" value="%{getText('save.label')}"/>

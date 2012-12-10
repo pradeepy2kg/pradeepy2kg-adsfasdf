@@ -92,11 +92,13 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
 
     public String updateAdoptionAlteration() {
         logger.debug("Attempt to update Adoption Alteration");
-
+//        TODO
         return SUCCESS;
     }
 
     public String approveOrRejectAdoptionAlteration() {
+        logger.debug("Attempt to approve or reject Adoption Alteration");
+//        TODO
         return SUCCESS;
     }
 
@@ -110,6 +112,8 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
         }
         if (adoptionOrderList.size() > 0) {
             logger.debug("Loading adoption records [{}]for alterations.", adoptionOrderList.size());
+            adoptionEntryNo = 0;
+            courtOrderNo = null;
             return SUCCESS;
         }
         addActionError(getText("no.adoption.record.found.label"));
