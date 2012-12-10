@@ -156,6 +156,11 @@
                 இறப்புச் சான்றிதழின் மாற்றத்தினை முகாமை செய்தல்
             </a>
         </li>
+        <li>
+            <a id="adoption.registration.alterations" href="/ecivil/alteration/eprAdoptionAlterationPageLoad.do">
+                Adoption Alteration in ta
+            </a>
+        </li>
     </ul>
 </li>
 
