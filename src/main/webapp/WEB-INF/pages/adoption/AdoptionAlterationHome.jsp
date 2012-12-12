@@ -33,6 +33,7 @@
                 <tr>
                     <td colspan="4">
                         <s:actionerror cssStyle="color: red; font-size: 10pt;"/>
+                        <s:actionmessage cssStyle="color: blue; font-size: 10pt;"/>
                     </td>
                 </tr>
                 <tr>

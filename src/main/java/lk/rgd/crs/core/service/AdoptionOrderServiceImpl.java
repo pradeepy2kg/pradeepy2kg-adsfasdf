@@ -238,7 +238,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         if (courtOrderNumber != null && !courtOrderNumber.isEmpty()) {
             searchResults.addAll(adoptionOrderDAO.getAdoptionsByCourtOrderNumber(courtOrderNumber));
         }
-        if(courtUKey > 0){
+        if (courtUKey > 0) {
             searchResults.addAll(adoptionOrderDAO.getAdoptionsByCourt(courtUKey));
         }
 
@@ -262,7 +262,27 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public List<AdoptionOrder> getAdoptionOrdersByCourtOrderNumber(String courtOrderNo) {
-        return adoptionOrderDAO.getAdoptionsByCourtOrderNumber(courtOrderNo);
+        List<AdoptionOrder> adoptionOrders = adoptionOrderDAO.getAdoptionsByCourtOrderNumber(courtOrderNo);
+        if (adoptionOrders.size() > 0) {
+            return adoptionOrders;
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public AdoptionOrder getAdoptionByEntryNumberForAlteration(long adoptionEntryNo) {
+        return adoptionOrderDAO.getAdoptionByEntryNumberAndState(adoptionEntryNo, AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<AdoptionOrder> getAdoptionsByCourtOrderNumberForAlterations(String courtOrderNumber) {
+        List<AdoptionOrder> adoptionOrders = adoptionOrderDAO.getAdoptionsByCourtOrderNumberAndState(courtOrderNumber, AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
+        if (adoptionOrders.size() > 0) {
+            return adoptionOrders;
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     private void setApprovalStatus(long idUKey, User user, AdoptionOrder.State state) {

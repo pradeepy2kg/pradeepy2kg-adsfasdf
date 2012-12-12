@@ -110,12 +110,30 @@ public interface AdoptionOrderDAO {
     public List<AdoptionOrder> getAdoptionsByCourtOrderNumber(String courtOrderNumber);
 
     /**
+     * Returns a list of adoption records which are under the given court order number and in the given State.
+     *
+     * @param courtOrderNumber
+     * @param state
+     * @return
+     */
+    public List<AdoptionOrder> getAdoptionsByCourtOrderNumberAndState(String courtOrderNumber, AdoptionOrder.State state);
+
+    /**
      * Returns an adoption record which is entered as the given entry number.
      *
      * @param adoptionEntryNo Selected adoption entry number.
      * @return Adoption records which has the given entry number
      */
     public AdoptionOrder getAdoptionByEntryNumber(long adoptionEntryNo);
+
+    /**
+     * Return an adoption record which is entered as the given entry no and in the selected state
+     *
+     * @param adoptionEntryNo
+     * @param state
+     * @return
+     */
+    public AdoptionOrder getAdoptionByEntryNumberAndState(long  adoptionEntryNo, AdoptionOrder.State state);
 
     /**
      * Returns a list of adoption records where the court order is given by the selected court.

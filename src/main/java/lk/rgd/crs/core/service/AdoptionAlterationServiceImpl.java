@@ -1,6 +1,9 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
+import lk.rgd.common.api.dao.LocationDAO;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
@@ -24,10 +27,12 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
     private static final Logger logger = LoggerFactory.getLogger(AdoptionAlterationServiceImpl.class);
     private final AdoptionAlterationDAO adoptionAlterationDAO;
     private final AdoptionOrderDAO adoptionOrderDAO;
+    private final LocationDAO locationDAO;
 
-    public AdoptionAlterationServiceImpl(AdoptionAlterationDAO adoptionAlterationDAO, AdoptionOrderDAO adoptionOrderDAO) {
+    public AdoptionAlterationServiceImpl(AdoptionAlterationDAO adoptionAlterationDAO, AdoptionOrderDAO adoptionOrderDAO, LocationDAO locationDAO) {
         this.adoptionAlterationDAO = adoptionAlterationDAO;
         this.adoptionOrderDAO = adoptionOrderDAO;
+        this.locationDAO = locationDAO;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -39,6 +44,7 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
             adoptionAlteration.setStatus(AdoptionAlteration.State.DATA_ENTRY);
             adoptionAlterationDAO.addAdoptionAlteration(adoptionAlteration, user);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
             handleException("unknown.error", ErrorCodes.UNKNOWN_ERROR);
         }
@@ -81,36 +87,36 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
     }
 
     private AdoptionAlteration markChangedFields(AdoptionAlteration adoptionAlteration, AdoptionOrder adoptionOrder) {
-        if (!adoptionAlteration.getApplicantName().equals(adoptionOrder.getApplicantName())) {
+        if (adoptionAlteration.getApplicantName() != null && !adoptionAlteration.getApplicantName().equals(adoptionOrder.getApplicantName())) {
             adoptionAlteration.getChangedFields().set(AdoptionAlteration.APPLICANT_NAME);
         }
-        if (!adoptionAlteration.getApplicantAddress().equals(adoptionOrder.getApplicantAddress())) {
+        if (adoptionAlteration.getApplicantAddress() != null && !adoptionAlteration.getApplicantAddress().equals(adoptionOrder.getApplicantAddress())) {
             adoptionAlteration.getChangedFields().set(AdoptionAlteration.APPLICANT_ADDRESS);
         }
-        if (!adoptionAlteration.getApplicantSecondAddress().equals(adoptionOrder.getApplicantSecondAddress())) {
+        if (adoptionAlteration.getApplicantSecondAddress() != null && !adoptionAlteration.getApplicantSecondAddress().equals(adoptionOrder.getApplicantSecondAddress())) {
             adoptionAlteration.getChangedFields().set(AdoptionAlteration.APPLICANT_SECOND_ADDRESS);
         }
-        if (!adoptionAlteration.getApplicantOccupation().equals(adoptionOrder.getApplicantOccupation())) {
+        if (adoptionAlteration.getApplicantOccupation() != null && !adoptionAlteration.getApplicantOccupation().equals(adoptionOrder.getApplicantOccupation())) {
             adoptionAlteration.getChangedFields().set(AdoptionAlteration.APPLICANT_OCCUPATION);
         }
         if (adoptionOrder.isJointApplicant()) {
-            if (!adoptionAlteration.getSpouseName().equals(adoptionOrder.getSpouseName())) {
+            if (adoptionAlteration.getSpouseName() != null && !adoptionAlteration.getSpouseName().equals(adoptionOrder.getSpouseName())) {
                 adoptionAlteration.getChangedFields().set(AdoptionAlteration.SPOUSE_NAME);
             }
-            if (!adoptionAlteration.getSpouseOccupation().equals(adoptionOrder.getSpouseOccupation())) {
+            if (adoptionAlteration.getSpouseOccupation() != null && !adoptionAlteration.getSpouseOccupation().equals(adoptionOrder.getSpouseOccupation())) {
                 adoptionAlteration.getChangedFields().set(AdoptionAlteration.SPOUSE_OCCUPATION);
             }
         }
         if (adoptionOrder.getChildNewName() != null && !adoptionOrder.getChildNewName().isEmpty()) {
-            if (!adoptionAlteration.getChildName().equals(adoptionOrder.getChildNewName())) {
+            if (adoptionAlteration.getChildName() != null && !adoptionAlteration.getChildName().equals(adoptionOrder.getChildNewName())) {
                 adoptionAlteration.getChangedFields().set(AdoptionAlteration.CHILD_NAME);
             }
         } else {
-            if (!adoptionAlteration.getChildName().equals(adoptionOrder.getChildExistingName())) {
+            if (adoptionAlteration.getChildName() != null && !adoptionAlteration.getChildName().equals(adoptionOrder.getChildExistingName())) {
                 adoptionAlteration.getChangedFields().set(AdoptionAlteration.CHILD_NAME);
             }
         }
-        if (!adoptionAlteration.getChildBirthDate().equals(adoptionOrder.getChildBirthDate())) {
+        if (adoptionAlteration.getChildBirthDate() != null && !adoptionAlteration.getChildBirthDate().equals(adoptionOrder.getChildBirthDate())) {
             adoptionAlteration.getChangedFields().set(AdoptionAlteration.CHILD_DOB);
         }
         if (adoptionAlteration.getChildGender() != adoptionOrder.getChildGender()) {
@@ -121,6 +127,7 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
 
     private void validateAccessOfUserToEditOrDelete(User user, AdoptionAlteration adoptionAlteration) {
         if (AdoptionAlteration.State.DATA_ENTRY.equals(adoptionAlteration.getStatus())) {
+            validateAccessOfUserToAdoption(user);
             // TODO handle permissions
         } else {
             handleException("Can not be edited as Adoption Alteration (" + adoptionAlteration.getIdUKey() + "is not in the Data Entry State", ErrorCodes.ILLEGAL_STATE);
@@ -129,9 +136,17 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
 
     private void validateAccessOfUserToApproval(User user, AdoptionAlteration adoptionAlteration) {
         if (AdoptionAlteration.State.DATA_ENTRY.equals(adoptionAlteration.getStatus())) {
+            validateAccessOfUserToAdoption(user);
             // TODO handle permissions
         } else {
             handleException("Can not be Approved as Adoption Alteration (" + adoptionAlteration.getIdUKey() + "is not in the Data Entry State", ErrorCodes.ILLEGAL_STATE);
+        }
+    }
+
+    private void validateAccessOfUserToAdoption(User user){
+        Location headOffice = locationDAO.getLocation(AppConstants.HEAD_OFFICE_LOCATION_ID);
+        if(!user.getActiveLocations().contains(headOffice)){
+            handleException("User is not authorized for adoption alteration", ErrorCodes.USER_IS_NOT_ALLOWED_FOR_LOCATION);
         }
     }
 

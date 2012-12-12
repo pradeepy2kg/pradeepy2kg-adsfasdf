@@ -85,4 +85,5 @@ public class AppConstants {
     public static final int NO_OF_ACTUAL_DISTRICTS = 25;
 
     public static final int CENTRAL_RECORD_ROOM_ID = 8;
+    public static final int HEAD_OFFICE_LOCATION_ID = 1;
 }

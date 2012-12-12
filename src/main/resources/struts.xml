@@ -1459,7 +1459,7 @@
         </action>
         <action name="eprAddAdoptionAlteration" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
                 method="addAdoptionAlteration">
-            <result type="tiles" name="success">epr.approveAdoptionAlteration</result>
+            <result type="tiles" name="success">epr.adoptionAlterationPageLoad</result>
             <result type="tiles" name="error">epr.adoptionAlterationForm</result>
         </action>
 
