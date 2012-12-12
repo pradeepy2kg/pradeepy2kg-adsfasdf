@@ -12,11 +12,19 @@
         $('#child-info-max').click(function () {
             maximize("child-info");
         });
+        $('#child-info-check').click(function () {
+            document.getElementById('child-info-check').disabled = true;
+            enableFields(new Array('childName', 'childBirthDate', 'childGender'));
+        });
         $('#applicant-info-min').click(function () {
             minimize("applicant-info");
         });
         $('#applicant-info-max').click(function () {
             maximize("applicant-info");
+        });
+        $('#applicant-info-check').click(function () {
+            document.getElementById('applicant-info-check').disabled = true;
+            enableFields(new Array('applicantName', 'applicantAddress', 'applicantSecondAddress', 'applicantOccupation'));
         });
         if ($('#jointApplicant').val()) {
             $('#spouse-info-min').click(function () {
@@ -25,20 +33,11 @@
             $('#spouse-info-max').click(function () {
                 maximize("spouse-info");
             });
+            $('#spouse-info-check').click(function () {
+                document.getElementById('spouse-info-check').disabled = true;
+                enableFields(new Array('spouseName', 'spouseOccupation'));
+            });
         }
-
-        $('#child-info-check').click(function () {
-            document.getElementById('child-info-check').disabled = true;
-            enableFields(new Array('childName', 'childBirthDate', 'childGender'));
-        });
-        $('#applicant-info-check').click(function () {
-            document.getElementById('applicant-info-check').disabled = true;
-            enableFields(new Array('applicantName', 'applicantAddress', 'applicantSecondAddress', 'applicantOccupation'));
-        });
-        $('#spouse-info-check').click(function () {
-            document.getElementById('spouse-info-check').disabled = true;
-            enableFields(new Array('spouseName', 'spouseOccupation'));
-        });
 
         $(".datePicker").datepicker({
             changeYear:true,

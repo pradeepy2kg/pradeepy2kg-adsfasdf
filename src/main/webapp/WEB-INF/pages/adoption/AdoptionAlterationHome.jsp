@@ -7,6 +7,7 @@
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="<s:url value="/js/common.js"/>"></script>
 <script type="text/javascript">
     $(function () {
         $('#adoptionOrderListTable').dataTable({
@@ -44,7 +45,7 @@
                 </tr>
                 <tr>
                     <td><s:label value="%{getText('adoption_entry_no.label')}"/></td>
-                    <td><s:textfield id="adoptionEntryNo" name="adoptionEntryNo"/></td>
+                    <td><s:textfield id="adoptionEntryNo" name="adoptionEntryNo" onkeypress="return numbersOnly(event, true);"/></td>
                     <td><s:label value="%{getText('court_order_no.label')}"/></td>
                     <td><s:textfield id="courtOrderNo" name="courtOrderNo"/></td>
                 </tr>
