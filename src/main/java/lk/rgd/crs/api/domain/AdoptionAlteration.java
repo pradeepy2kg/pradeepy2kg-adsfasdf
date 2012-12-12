@@ -110,10 +110,10 @@ public class AdoptionAlteration {
     /**
      * Alteration fields for applicant details
      */
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String applicantName;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String applicantAddress;
 
     @Column(nullable = true)
@@ -134,8 +134,21 @@ public class AdoptionAlteration {
     @Column
     private String comments;
 
+    /**
+     * When the alteration is according to a court order, The TYPE of the declarant will be OTHER.
+     */
     @Embedded
     private DeclarantInfo declarant = new DeclarantInfo();
+
+    /**
+     * If the alteration is done according to alteration request by court order, these fields will be captured.
+     */
+    @OneToOne
+    @JoinColumn(name = "courtUKey", nullable = true)
+    private Court court;
+
+    @Column(nullable = true)
+    private String courtOrderNumber;
 
     public long getIdUKey() {
         return idUKey;
@@ -295,5 +308,21 @@ public class AdoptionAlteration {
 
     public void setApprovalStatuses(BitSet approvalStatuses) {
         this.approvalStatuses = approvalStatuses;
+    }
+
+    public Court getCourt() {
+        return court;
+    }
+
+    public void setCourt(Court court) {
+        this.court = court;
+    }
+
+    public String getCourtOrderNumber() {
+        return courtOrderNumber;
+    }
+
+    public void setCourtOrderNumber(String courtOrderNumber) {
+        this.courtOrderNumber = courtOrderNumber;
     }
 }

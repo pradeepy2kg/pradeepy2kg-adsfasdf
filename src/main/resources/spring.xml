@@ -238,6 +238,7 @@
     <bean id="adoptionAlterationService" class="lk.rgd.crs.core.service.AdoptionAlterationServiceImpl">
         <constructor-arg ref="adoptionAlterationDAOImpl"/>
         <constructor-arg ref="adoptionOrderDAOImpl"/>
+        <constructor-arg ref="locationDAOImpl"/>
     </bean>
 
     <bean id="birthAlterationService" class="lk.rgd.crs.core.service.BirthAlterationServiceImpl">

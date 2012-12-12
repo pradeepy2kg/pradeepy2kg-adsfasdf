@@ -187,4 +187,18 @@ public interface AdoptionOrderService {
      */
     public List<AdoptionOrder> getAdoptionOrdersByCourtOrderNumber(String courtOrderNo);
 
+    /**
+     * Returns an adoption record which is entered as the given entry number and in ADOPTION_CERTIFICATE_PRINTED state
+     *
+     * @param adoptionEntryNo
+     * @return
+     */
+    public AdoptionOrder getAdoptionByEntryNumberForAlteration(long adoptionEntryNo);
+
+    /**
+     * Returns a list of adoption records which is under the given court order number and in the ADOPTION_CERTIFICATE_PRINTED state.
+     * @param courtOrderNumber
+     * @return
+     */
+    public List<AdoptionOrder> getAdoptionsByCourtOrderNumberForAlterations(String courtOrderNumber);
 }

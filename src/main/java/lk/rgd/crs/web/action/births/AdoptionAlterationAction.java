@@ -12,14 +12,12 @@ import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.service.AdoptionAlterationService;
 import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.util.FieldValue;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Duminda Dharmakeerthi
@@ -61,6 +59,7 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     private String spouseCountryName;
     private AdoptionAlteration.Method alterationMethod;
     private AdoptionAlteration.Method[] methodList = AdoptionAlteration.Method.values();
+    private List<FieldValue> changesList = new LinkedList<FieldValue>();
 
     public AdoptionAlterationAction(AdoptionOrderService adoptionOrderService, AdoptionAlterationService adoptionAlterationService, CourtDAO courtDAO, CountryDAO countryDAO, DistrictDAO districtDAO, ProvinceDAO provinceDAO) {
         this.adoptionOrderService = adoptionOrderService;
@@ -78,12 +77,15 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     public String addAdoptionAlteration() {
         logger.debug("Attempt to add Adoption Alteration.");
         try {
+            logger.debug("Method: {}", adoptionAlteration.getDeclarant().getDeclarantType());
             adoptionAlterationService.addAdoptionAlteration(adoptionAlteration, user);
             logger.debug("Adoption Alteration added successfully. {}", adoptionAlteration.getIdUKey());
-        } catch (CRSRuntimeException e) {
-            logger.error(e.getMessage());
+        } catch (Exception e) {
+            logger.error("Failed to add adoption alteration for adoption : {}", adoptionAlteration.getAoUKey());
             e.printStackTrace();
-            addActionError(getText(e.getMessage()+".label"));
+            addActionError(getText(e.getMessage() + ".label"));
+            idUKey = adoptionAlteration.getAoUKey();
+            populateAdoptionOrder();
             return ERROR;
         }
         addActionMessage(getText("add.adoption.alteration.success"));
@@ -106,14 +108,20 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
         logger.debug("Adoption Entry No: {}", adoptionEntryNo);
         adoptionOrderList = new ArrayList<AdoptionOrder>();
         if (adoptionEntryNo > 0) {
-            adoptionOrderList.add(adoptionOrderService.getAdoptionByEntryNumber(adoptionEntryNo));
-        } else if (courtOrderNo != null && !courtOrderNo.isEmpty()) {
-            adoptionOrderList.addAll(adoptionOrderService.getAdoptionOrdersByCourtOrderNumber(courtOrderNo));
+            AdoptionOrder adoptionOrder = adoptionOrderService.getAdoptionByEntryNumberForAlteration(adoptionEntryNo);
+            if (adoptionOrder != null) {
+                adoptionOrderList.add(adoptionOrder);
+            }
         }
+        if (courtOrderNo != null && !courtOrderNo.isEmpty()) {
+            List<AdoptionOrder> adoptionOrders = adoptionOrderService.getAdoptionsByCourtOrderNumberForAlterations(courtOrderNo);
+            if (adoptionOrders.size() > 0) {
+                adoptionOrderList.addAll(adoptionOrders);
+            }
+        }
+        adoptionEntryNo = 0;
+        courtOrderNo = null;
         if (adoptionOrderList.size() > 0) {
-            logger.debug("Loading adoption records [{}]for alterations.", adoptionOrderList.size());
-            adoptionEntryNo = 0;
-            courtOrderNo = null;
             return SUCCESS;
         }
         addActionError(getText("no.adoption.record.found.label"));
@@ -151,22 +159,13 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
                 adoptionAlteration.setChildBirthDate(adoption.getChildBirthDate());
                 adoptionAlteration.setMethod(alterationMethod);
 
-                if (adoption.getBirthProvinceUKey() > 0) {
-                    birthProvinceName = provinceDAO.getNameByPK(adoption.getBirthProvinceUKey(), language);
+                if (AdoptionAlteration.Method.BY_COURT_ORDER.equals(alterationMethod)) {
+                    if (adoption.getCourt().getCourtId() > 0) {
+                        adoptionAlteration.setCourt(adoption.getCourt());
+                        adoptionAlteration.setCourtOrderNumber(adoption.getCourtOrderNumber());
+                    }
                 }
-                if (adoption.getBirthDistrictId() > 0) {
-                    birthDistrictName = districtDAO.getNameByPK(adoption.getBirthDistrictId(), language);
-                }
-
-                if (adoption.getApplicantCountryId() > 0) {
-                    applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
-                }
-                if (adoption.getSpouseCountryId() > 0) {
-                    spouseCountryName = countryDAO.getNameByPK(adoption.getSpouseCountryId(), language);
-                }
-                if (adoption.getCourt().getCourtId() > 0) {
-                    courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtId(), language);
-                }
+                populateBasicLists();
                 logger.debug("Success");
                 return SUCCESS;
             }
@@ -176,6 +175,10 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
             return ERROR;
         }
         return ERROR;
+    }
+
+    private void populateBasicLists() {
+        courtList = courtDAO.getCourtNames(language);
     }
 
     public User getUser() {
