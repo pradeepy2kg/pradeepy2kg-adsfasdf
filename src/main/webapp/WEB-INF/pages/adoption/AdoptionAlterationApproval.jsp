@@ -21,7 +21,7 @@
             <tbody>
             <s:if test="adoptionAlteration.changedFields.get(0)">
                 <tr>
-                    <td></td>
+                    <td>ළමයාගේ නම<br/> Name of the Child in ta<br/>Name of the Child</td>
                     <td>
                         <s:if test="adoption.childNewName != null">
                             <s:property value="adoption.childNewName"/>
@@ -31,25 +31,80 @@
                         </s:else>
                     </td>
                     <td><s:property value="adoptionAlteration.childName"/></td>
-                    <td><s:checkbox name="childName"/></td>
+                    <td align="center"><s:checkbox name="childName"/></td>
                 </tr>
             </s:if>
             <s:if test="adoptionAlteration.changedFields.get(1)">
                 <tr>
-                    <td></td>
+                    <td>ස්ත්‍රී පුරුෂ භාවය<br/>Gender in ta<br/>Gender</td>
                     <td><s:property value="adoption.childGender"/></td>
                     <td><s:property value="adoptionAlteration.childGender"/></td>
-                    <td><s:checkbox name="childGender"/></td>
+                    <td align="center"><s:checkbox name="childGender"/></td>
                 </tr>
             </s:if>
             <s:if test="adoptionAlteration.changedFields.get(2)">
                 <tr>
-                    <td></td>
+                    <td>ළමයාගේ උපන්දිනය<br/>Child DOB in ta<br/>Child Date of Birth</td>
                     <td><s:property value="adoption.childBirthDate"/></td>
                     <td><s:property value="adoptionAlteration.childBirthDate"/></td>
-                    <td><s:checkbox name="childBirthDate"/></td>
+                    <td align="center"><s:checkbox name="childBirthDate"/></td>
                 </tr>
             </s:if>
+            <s:if test="adoptionAlteration.changedFields.get(3)">
+                <tr>
+                    <td>අයදුම්කරුගේ නම<br/>Applicant Name in ta<br/>Applicant Name</td>
+                    <td><s:property value="adoption.applicantName"/></td>
+                    <td><s:property value="adoptionAlteration.applicantName"/></td>
+                    <td align="center"><s:checkbox name="applicantName"/></td>
+                </tr>
+            </s:if>
+            <s:if test="adoptionAlteration.changedFields.get(4)">
+                <tr>
+                    <td>අයදුම්කරුගේ ලිපිනය<br/>Applicant Address in ta<br/>Applicant Address</td>
+                    <td><s:property value="adoption.applicantAddress"/></td>
+                    <td><s:property value="adoptionAlteration.applicantAddress"/></td>
+                    <td align="center"><s:checkbox name="applicantAddress"/></td>
+                </tr>
+            </s:if>
+            <s:if test="adoptionAlteration.changedFields.get(5)">
+                <tr>
+                    <td>අයදුම්කරුගේ ලිපිනය 2<br/>Applicant Address 2 in ta<br/>Applicant Address 2</td>
+                    <td><s:property value="adoption.applicantSecondAddress"/></td>
+                    <td><s:property value="adoptionAlteration.applicantSecondAddress"/></td>
+                    <td align="center"><s:checkbox name="applicantSecondAddress"/></td>
+                </tr>
+            </s:if>
+            <s:if test="adoptionAlteration.changedFields.get(6)">
+                <tr>
+                    <td>අයදුම්කරුගේ රැකියාව<br/>Applicant Occupation in ta<br/>Applicant Occupation</td>
+                    <td><s:property value="adoption.applicantOccupation"/></td>
+                    <td><s:property value="adoptionAlteration.applicantOccupation"/></td>
+                    <td><s:checkbox name="applicantOccupation"/></td>
+                </tr>
+            </s:if>
+            <s:if test="adoptionAlteration.changedFields.get(7)">
+                <tr>
+                    <td>සහකරුගේ නම<br/>Spouse Name in ta<br/>Spouse Name</td>
+                    <td><s:property value="adoption.spouseName"/></td>
+                    <td><s:property value="adoptionAlteration.spouseName"/></td>
+                    <td align="center"><s:checkbox name="spouseName"/></td>
+                </tr>
+            </s:if>
+            <s:if test="adoptionAlteration.changedFields.get(8)">
+                <tr>
+                    <td>සහකරුගේ රැකියාව<br/>Spouse Occupation in ta<br/>Spouse Occupation</td>
+                    <td><s:property value="adoption.spouseOccupation"/></td>
+                    <td><s:property value="adoptionAlteration.spouseOccupation"/></td>
+                    <td align="center"><s:checkbox name="spouseOccupation"/></td>
+                </tr>
+            </s:if>
+            <tr>
+                <td colspan="4" align="right">
+                    <div class="form-submit">
+                        <s:submit action="#" value="%{getText('update.label')}"/>
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
     </s:form>
