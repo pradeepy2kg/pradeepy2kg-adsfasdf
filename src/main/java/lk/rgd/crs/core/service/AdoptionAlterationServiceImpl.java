@@ -17,7 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Duminda Dharmakeerthi
@@ -36,18 +38,17 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
+    public AdoptionAlteration getAdoptionAlterationByIdUKey(long idUKey) {
+        return adoptionAlterationDAO.getAdoptionAlterationByIdUKey(idUKey);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
     public void addAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user) {
-        try {
-            logger.debug("Attempt to add an alteration for adoption : {} by {}", adoptionAlteration.getAoUKey(), user.getUserId());
-            AdoptionOrder adoptionOrder = adoptionOrderDAO.getById(adoptionAlteration.getAoUKey());
-            adoptionAlteration = markChangedFields(adoptionAlteration, adoptionOrder);
-            adoptionAlteration.setStatus(AdoptionAlteration.State.DATA_ENTRY);
-            adoptionAlterationDAO.addAdoptionAlteration(adoptionAlteration, user);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
-            handleException("unknown.error", ErrorCodes.UNKNOWN_ERROR);
-        }
+        logger.debug("Attempt to add an alteration for adoption : {} by {}", adoptionAlteration.getAoUKey(), user.getUserId());
+        AdoptionOrder adoptionOrder = adoptionOrderDAO.getById(adoptionAlteration.getAoUKey());
+        adoptionAlteration = markChangedFields(adoptionAlteration, adoptionOrder);
+        adoptionAlteration.setStatus(AdoptionAlteration.State.DATA_ENTRY);
+        adoptionAlterationDAO.addAdoptionAlteration(adoptionAlteration, user);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -84,6 +85,16 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
         adoptionAlteration.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
         adoptionAlteration.getLifeCycleInfo().setApprovalOrRejectUser(user);
         adoptionAlterationDAO.updateAdoptionAlteration(adoptionAlteration, user);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<AdoptionAlteration> getAdoptionAlterationsForApproval(User user) {
+        List<AdoptionAlteration> adoptionAlterations = adoptionAlterationDAO.getAdoptionAlterationsByStatus(AdoptionAlteration.State.DATA_ENTRY);
+        if (adoptionAlterations.size() > 0) {
+            return adoptionAlterations;
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     private AdoptionAlteration markChangedFields(AdoptionAlteration adoptionAlteration, AdoptionOrder adoptionOrder) {
@@ -143,9 +154,9 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
         }
     }
 
-    private void validateAccessOfUserToAdoption(User user){
+    private void validateAccessOfUserToAdoption(User user) {
         Location headOffice = locationDAO.getLocation(AppConstants.HEAD_OFFICE_LOCATION_ID);
-        if(!user.getActiveLocations().contains(headOffice)){
+        if (!user.getActiveLocations().contains(headOffice)) {
             handleException("User is not authorized for adoption alteration", ErrorCodes.USER_IS_NOT_ALLOWED_FOR_LOCATION);
         }
     }

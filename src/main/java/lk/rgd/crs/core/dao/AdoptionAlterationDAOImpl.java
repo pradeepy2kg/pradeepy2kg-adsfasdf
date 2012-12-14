@@ -59,7 +59,7 @@ public class AdoptionAlterationDAOImpl extends BaseDAO implements AdoptionAltera
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<AdoptionAlteration> getAdoptionAlterationsByStatus(AdoptionAlteration.State state) {
         Query q = em.createNamedQuery("getAdoptionAlterationsByStatus");
-        q.setParameter("status", state);
+        q.setParameter("state", state);
         return q.getResultList();
     }
 }

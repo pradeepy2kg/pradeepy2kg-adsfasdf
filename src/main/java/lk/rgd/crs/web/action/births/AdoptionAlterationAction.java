@@ -49,6 +49,8 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     private AdoptionAlteration adoptionAlteration;
 
     private List<AdoptionOrder> adoptionOrderList;
+    private List<AdoptionAlteration> adoptionAlterationList;
+
     private String courtOrderNo;
     private long adoptionEntryNo;
     private long idUKey;
@@ -60,6 +62,7 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     private AdoptionAlteration.Method alterationMethod;
     private AdoptionAlteration.Method[] methodList = AdoptionAlteration.Method.values();
     private List<FieldValue> changesList = new LinkedList<FieldValue>();
+    private boolean editMode;
 
     public AdoptionAlterationAction(AdoptionOrderService adoptionOrderService, AdoptionAlterationService adoptionAlterationService, CourtDAO courtDAO, CountryDAO countryDAO, DistrictDAO districtDAO, ProvinceDAO provinceDAO) {
         this.adoptionOrderService = adoptionOrderService;
@@ -77,30 +80,43 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     public String addAdoptionAlteration() {
         logger.debug("Attempt to add Adoption Alteration.");
         try {
-            logger.debug("Method: {}", adoptionAlteration.getDeclarant().getDeclarantType());
             adoptionAlterationService.addAdoptionAlteration(adoptionAlteration, user);
-            logger.debug("Adoption Alteration added successfully. {}", adoptionAlteration.getIdUKey());
+            addActionMessage(getText("add.adoption.alteration.success"));
         } catch (Exception e) {
-            logger.error("Failed to add adoption alteration for adoption : {}", adoptionAlteration.getAoUKey());
+            logger.error(e.getMessage());
             e.printStackTrace();
-            addActionError(getText(e.getMessage() + ".label"));
+            addActionError(getText("unknown.error.label"));
             idUKey = adoptionAlteration.getAoUKey();
             populateAdoptionOrder();
             return ERROR;
         }
-        addActionMessage(getText("add.adoption.alteration.success"));
         return SUCCESS;
     }
 
     public String updateAdoptionAlteration() {
         logger.debug("Attempt to update Adoption Alteration");
-//        TODO
+        try{
+            AdoptionAlteration existing = adoptionAlterationService.getAdoptionAlterationByIdUKey(adoptionAlteration.getIdUKey());
+            populateAdoptionAlterationForUpdate(adoptionAlteration, existing);
+            adoptionAlterationService.updateAdoptionAlteration(adoptionAlteration, user);
+            addActionMessage(getText("update.adoption.alteration.success"));
+        }catch (Exception e){
+            e.printStackTrace();
+            addActionError(getText("unknown.error.label"));
+            return ERROR;
+        }
         return SUCCESS;
     }
 
     public String approveOrRejectAdoptionAlteration() {
         logger.debug("Attempt to approve or reject Adoption Alteration");
 //        TODO
+        return SUCCESS;
+    }
+
+    public String loadAdoptionAlterationForApproval(){
+        logger.debug("Loading Adoption Alterations for approval");
+        adoptionAlterationList = adoptionAlterationService.getAdoptionAlterationsForApproval(user);
         return SUCCESS;
     }
 
@@ -160,10 +176,14 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
                 adoptionAlteration.setMethod(alterationMethod);
 
                 if (AdoptionAlteration.Method.BY_COURT_ORDER.equals(alterationMethod)) {
-                    if (adoption.getCourt().getCourtId() > 0) {
+                    if (adoption.getCourt().getCourtUKey() > 0) {
                         adoptionAlteration.setCourt(adoption.getCourt());
                         adoptionAlteration.setCourtOrderNumber(adoption.getCourtOrderNumber());
+                        adoptionAlteration.setOrderDate(adoption.getOrderIssuedDate());
                     }
+                }
+                if(adoption.getCourt() != null && adoption.getCourt().getCourtUKey() > 0){
+                    courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(), language);
                 }
                 populateBasicLists();
                 logger.debug("Success");
@@ -175,6 +195,32 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
             return ERROR;
         }
         return ERROR;
+    }
+
+    public String populateAdoptionAlteration(){
+        logger.debug("Loading Adoption Alteration : {}", idUKey);
+        try{
+            adoptionAlteration = adoptionAlterationService.getAdoptionAlterationByIdUKey(idUKey);
+            if(adoptionAlteration != null){
+                adoption = adoptionOrderService.getById(adoptionAlteration.getAoUKey(), user);
+                if(adoption != null && adoption.getCourt() != null){
+                    courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(), language);
+                }
+                populateBasicLists();
+                return SUCCESS;
+            }
+            loadAdoptionAlterationForApproval();
+            addActionError(getText("unable.to.load.adoption.alteration.record.label"));
+            return ERROR;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ERROR;
+        }
+    }
+
+    private void populateAdoptionAlterationForUpdate(AdoptionAlteration alteration, AdoptionAlteration existing){
+        alteration.setLifeCycleInfo(existing.getLifeCycleInfo());
+        alteration.setMethod(existing.getMethod());
     }
 
     private void populateBasicLists() {
@@ -366,5 +412,29 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
 
     public void setMethodList(AdoptionAlteration.Method[] methodList) {
         this.methodList = methodList;
+    }
+
+    public List<AdoptionAlteration> getAdoptionAlterationList() {
+        return adoptionAlterationList;
+    }
+
+    public void setAdoptionAlterationList(List<AdoptionAlteration> adoptionAlterationList) {
+        this.adoptionAlterationList = adoptionAlterationList;
+    }
+
+    public List<FieldValue> getChangesList() {
+        return changesList;
+    }
+
+    public void setChangesList(List<FieldValue> changesList) {
+        this.changesList = changesList;
+    }
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
     }
 }

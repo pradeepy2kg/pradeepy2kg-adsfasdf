@@ -378,7 +378,9 @@ public class Menu {
         deoAlterationLink.put("eprAdoptionAlterationPageLoad.do", new Link(null, "/ecivil/alteration/", "eprAdoptionAlterationPageLoad.do", Permission.EDIT_ADOPTION_ALTERATION));
         deoAlterationLink.put("eprLoadAdoptionRecordsForAlteration.do", new Link(null, "/ecivil/alteration/", "eprLoadAdoptionRecordsForAlteration.do", Permission.EDIT_ADOPTION_ALTERATION));
         deoAlterationLink.put("eprPopulateAdoptionForAlteration.do", new Link(null, "/ecivil/alteration/", "eprPopulateAdoptionForAlteration.do", Permission.EDIT_ADOPTION_ALTERATION));
+        deoAlterationLink.put("eprPopulateAdoptionAlterationForEdit.do", new Link(null, "/ecivil/alteration/", "eprPopulateAdoptionAlterationForEdit.do", Permission.EDIT_ADOPTION_ALTERATION));
         deoAlterationLink.put("eprAddAdoptionAlteration.do", new Link(null, "/ecivil/alteration/", "eprAddAdoptionAlteration.do", Permission.EDIT_ADOPTION_ALTERATION));
+        deoAlterationLink.put("eprAdoptionAlterationManagement.do", new Link(null, "/ecivil/alteration/", "eprAdoptionAlterationManagement.do", Permission.EDIT_ADOPTION_ALTERATION));
 
         // Birth Alteration for ADR
         adrAlterationLink.putAll(deoAlterationLink);
@@ -386,6 +388,8 @@ public class Menu {
         adrAlterationLink.put("eprApproveBirthAlterationInit.do", new Link(null, "/ecivil/alteration/", "eprApproveBirthAlterationInit.do", Permission.APPROVE_BIRTH_ALTERATION));
         adrAlterationLink.put("eprRejectBirthAlteration.do", new Link(null, "/ecivil/births/", "eprRejectBirthAlteration", Permission.APPROVE_BIRTH_ALTERATION));
         adrAlterationLink.put("eprApproveAndApplyBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprApproveAndApplyBirthAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
+        adrAlterationLink.put("eprLoadAdoptionAlterationForApprove.do", new Link(null, "/ecivil/alteration/", "eprLoadAdoptionAlterationForApprove.do", Permission.APPROVE_ADOPTION_ALTERATION));
+        adrAlterationLink.put("eprUpdateAdoptionAlteration.do", new Link(null, "/ecivil/alteration/", "eprUpdateAdoptionAlteration.do", Permission.APPROVE_ADOPTION_ALTERATION));
 
         //Birth Alteration for ARG
         argAlterationLink.putAll(adrAlterationLink);

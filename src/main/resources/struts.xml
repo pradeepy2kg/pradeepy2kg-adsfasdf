@@ -1445,22 +1445,58 @@
         <!-- Adoption Alteration related actions. -->
         <action name="eprAdoptionAlterationPageLoad" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
                 method="pageLoad">
+            <interceptor-ref name="adoption"/>
             <result type="tiles" name="success">epr.adoptionAlterationPageLoad</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
         <action name="eprLoadAdoptionRecordsForAlteration" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
                 method="loadAdoptionRecordsForAlteration">
+            <interceptor-ref name="adoption"/>
             <result type="tiles" name="success">epr.adoptionAlterationPageLoad</result>
             <result type="tiles" name="error">epr.adoptionAlterationPageLoad</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
         <action name="eprPopulateAdoptionForAlteration" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
                 method="populateAdoptionOrder">
+            <interceptor-ref name="adoption"/>
             <result type="tiles" name="success">epr.adoptionAlterationForm</result>
             <result type="tiles" name="error">epr.adoptionAlterationPageLoad</result>
+            <result type="tiles" name="none">epr.error</result>
+        </action>
+        <action name="eprPopulateAdoptionAlterationForEdit" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
+                method="populateAdoptionAlteration">
+            <interceptor-ref name="adoption"/>
+            <result type="tiles" name="success">epr.adoptionAlterationForm</result>
+            <result type="tiles" name="error">epr.adoptionAlterationManagement</result>
+            <result type="tiles" name="none">epr.error</result>
+        </action>
+        <action name="eprLoadAdoptionAlterationForApprove" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
+                method="populateAdoptionAlteration">
+            <interceptor-ref name="adoption"/>
+            <result type="tiles" name="success">epr.approveAdoptionAlteration</result>
+            <result type="tiles" name="error">epr.error</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
         <action name="eprAddAdoptionAlteration" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
                 method="addAdoptionAlteration">
+            <interceptor-ref name="adoption"/>
             <result type="tiles" name="success">epr.adoptionAlterationPageLoad</result>
             <result type="tiles" name="error">epr.adoptionAlterationForm</result>
+            <result type="tiles" name="none">epr.error</result>
+        </action>
+        <action name="eprUpdateAdoptionAlteration" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
+                method="updateAdoptionAlteration">
+            <interceptor-ref name="adoption"/>
+            <result type="tiles" name="success">epr.adoptionAlterationPageLoad</result>
+            <result type="tiles" name="error">epr.adoptionAlterationForm</result>
+            <result type="tiles" name="none">epr.error</result>
+        </action>
+
+        <action name="eprAdoptionAlterationManagement" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
+                method="loadAdoptionAlterationForApproval">
+            <interceptor-ref name="adoption"/>
+            <result type="tiles" name="success">epr.adoptionAlterationManagement</result>
+            <result type="tiles" name="none">epr.error</result>
         </action>
 
     </package>
