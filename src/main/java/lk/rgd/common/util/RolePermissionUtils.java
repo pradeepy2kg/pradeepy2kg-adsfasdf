@@ -75,6 +75,7 @@ public class RolePermissionUtils {
         adrBitSet.set(Permission.DIVORCE);
         adrBitSet.set(Permission.APPROVE_BIRTH_ALTERATION);
         adrBitSet.set(Permission.MARK_BIRTH_CERT_PRINTED);
+        adrBitSet.set(Permission.APPROVE_ADOPTION_ALTERATION);
 
         // DR
         drBitSet = new BitSet();

@@ -150,6 +150,10 @@ public class AdoptionAlteration {
     @Column(nullable = true)
     private String courtOrderNumber;
 
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
+    private Date orderDate;
+
     public long getIdUKey() {
         return idUKey;
     }
@@ -324,5 +328,13 @@ public class AdoptionAlteration {
 
     public void setCourtOrderNumber(String courtOrderNumber) {
         this.courtOrderNumber = courtOrderNumber;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 }

@@ -171,6 +171,11 @@
                 Adoption Alteration
             </a>
         </li>
+        <li>
+            <a id="adoption.manage.alterations" href="/ecivil/alteration/eprAdoptionAlterationManagement.do">
+                Manage Adoption Alteration
+            </a>
+        </li>
     </ul>
 </li>
 

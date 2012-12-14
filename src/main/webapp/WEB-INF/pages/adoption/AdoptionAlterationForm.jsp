@@ -15,6 +15,7 @@
         $('#child-info-check').click(function () {
             document.getElementById('child-info-check').disabled = true;
             enableFields(new Array('childName', 'childBirthDate', 'childGender'));
+            disableFields(new Array('childNameHidden', 'childBirthDateHidden', 'childGenderHidden'));
         });
         $('#applicant-info-min').click(function () {
             minimize("applicant-info");
@@ -25,6 +26,7 @@
         $('#applicant-info-check').click(function () {
             document.getElementById('applicant-info-check').disabled = true;
             enableFields(new Array('applicantName', 'applicantAddress', 'applicantSecondAddress', 'applicantOccupation'));
+            disableFields(new Array('applicantNameHidden', 'applicantAddressHidden', 'applicantSecondAddressHidden', 'applicantOccupationHidden'));
         });
         if ($('#jointApplicant').val()) {
             $('#spouse-info-min').click(function () {
@@ -36,6 +38,7 @@
             $('#spouse-info-check').click(function () {
                 document.getElementById('spouse-info-check').disabled = true;
                 enableFields(new Array('spouseName', 'spouseOccupation'));
+                disableFields(new Array('spouseNameHidden', 'spouseOccupationHidden'));
             });
         }
 
@@ -124,10 +127,15 @@
             if (isFieldEmpty(domObject)) {
                 errormsg += "\n" + $('#emptyDeclarantAddress').val();
             }
-        }else if($('#alterationMethod').val() == 'BY_COURT_ORDER'){
+        } else if ($('#alterationMethod').val() == 'BY_COURT_ORDER') {
             domObject = document.getElementById('orderNo');
-            if(isFieldEmpty(domObject)){
+            if (isFieldEmpty(domObject)) {
                 errormsg += "\n" + $('#emptyOrderNo').val();
+            }
+
+            domObject = document.getElementById('orderDate');
+            if (isFieldEmpty(domObject)) {
+                errormsg += "\n" + $('#emptyOrderDate').val();
             }
         }
         if (errormsg != '') {
@@ -271,7 +279,8 @@
                 <br>New name given in Official Language
             </td>
             <td colspan="4"><s:textarea name="adoptionAlteration.childName" id="childName"
-                                        cssStyle="margin-left:5px"/></td>
+                                        cssStyle="margin-left:5px"/>
+            </td>
         </tr>
         <tr>
             <td>
@@ -299,6 +308,10 @@
         </tbody>
     </table>
 </div>
+<%-- Hidden fields for child details. Will disable when the child info is editing --%>
+<s:hidden id="childNameHidden" name="adoptionAlteration.childName"/>
+<s:hidden id="childBirthDateHidden" name="adoptionAlteration.childBirthDate"/>
+<s:hidden id="childGenderHidden" name="adoptionAlteration.childGender"/>
 <table class="adoption-reg-form-header-table" style="border: 1px solid #000; width: 100%;">
     <tr>
         <td>අයදුම්කරුගේ විස්තර <br/>
@@ -363,6 +376,11 @@
         </tbody>
     </table>
 </div>
+<%-- Hidden fields for applicant details. Will disable when the applicant info is editing --%>
+<s:hidden id="applicantNameHidden" name="adoptionAlteration.applicantName"/>
+<s:hidden id="applicantAddressHidden" name="adoptionAlteration.applicantAddress"/>
+<s:hidden id="applicantSecondAddressHidden" name="adoptionAlteration.applicantSecondAddress"/>
+<s:hidden id="applicantOccupationHidden" name="adoptionAlteration.applicantOccupation"/>
 <s:if test="adoption.jointApplicant">
     <table class="adoption-reg-form-header-table" style="border: 1px solid #000; width: 100%;">
         <tr>
@@ -410,8 +428,11 @@
             </tr>
         </table>
     </div>
+    <%-- Hidden fields for spouse details. Will disable when the spouse info is editing --%>
+    <s:hidden id="spouseNameHidden" name="adoptionAlteration.spouseName"/>
+    <s:hidden id="spouseOccupationHidden" name="adoptionAlteration.spouseOccupation"/>
 </s:if>
-<s:if test="alterationMethod.ordinal() == 0">
+<s:if test="adoptionAlteration.method.ordinal() == 0">
     <table class="adoption-reg-form-01-table01" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
         <caption></caption>
         <col style="width:260px;"/>
@@ -504,7 +525,7 @@
         </tbody>
     </table>
 </s:if>
-<s:elseif test="alterationMethod.ordinal() == 1">
+<s:elseif test="adoptionAlteration.method.ordinal() == 1">
     <s:hidden name="adoptionAlteration.declarant.declarantType" value="OTHER"/>
     <table class="adoption-reg-form-01-table01" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
         <col width="180px"/>
@@ -513,15 +534,20 @@
         <col/>
         <tr>
             <td>උසාවිය <s:label cssStyle="color: red;" value="*"/><br/>Court in ta<br/>Court</td>
-            <td><s:select list="courtList" name="adoptionAlteration.court.courtUKey" id="court"/></td>
+            <td colspan="3"><s:select list="courtList" name="adoptionAlteration.court.courtUKey" id="court"/></td>
+        </tr>
+        <tr>
             <td>නියෝග අංකය <s:label cssStyle="color: red;" value="*"/><br/>Order No in ta<br/>Order Number</td>
             <td><s:textfield id="orderNo" name="adoptionAlteration.courtOrderNumber"/></td>
+            <td>නියෝග දිනය <s:label cssStyle="color: red;" value="*"/><br/>Order Date in ta<br/>Order Date</td>
+            <td><s:textfield id="orderDate" name="adoptionAlteration.orderDate" cssClass="datePicker"/></td>
         </tr>
     </table>
 </s:elseif>
 <s:hidden id="jointApplicant" value="%{adoption.jointApplicant}"/>
+<s:hidden name="adoptionAlteration.idUKey"/>
 <s:hidden name="adoptionAlteration.aoUKey"/>
-<s:hidden id="alterationMethod" name="adoptionAlteration.method" value="%{alterationMethod}"/>
+<s:hidden id="alterationMethod" name="adoptionAlteration.method"/>
 
 <%-- Error message labels --%>
 <s:hidden id="emptyDateReceived" value="%{getText('enter.date.received.label')}"/>
@@ -530,9 +556,15 @@
 <s:hidden id="emptyDeclarantName" value="%{getText('enter.declarant.name.label')}"/>
 <s:hidden id="emptyDeclarantAddress" value="%{getText('enter.declarant.address.label')}"/>
 <s:hidden id="emptyOrderNo" value="%{getText('enter.court.order.number.label')}"/>
+<s:hidden id="emptyOrderDate" value="%{getText('enter.court.order.date.label')}"/>
 
 <div class="form-submit">
-    <s:submit action="eprAddAdoptionAlteration" value="%{getText('save.label')}"/>
+    <s:if test="editMode">
+        <s:submit action="eprUpdateAdoptionAlteration" value="%{getText('update.label')}"/>
+    </s:if>
+    <s:else>
+        <s:submit action="eprAddAdoptionAlteration" value="%{getText('save.label')}"/>
+    </s:else>
 </div>
 </s:form>
 </div>

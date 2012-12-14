@@ -19,9 +19,37 @@
             </tr>
             </thead>
             <tbody>
-            <s:iterator status="status" value="changesList">
-
-            </s:iterator>
+            <s:if test="adoptionAlteration.changedFields.get(0)">
+                <tr>
+                    <td></td>
+                    <td>
+                        <s:if test="adoption.childNewName != null">
+                            <s:property value="adoption.childNewName"/>
+                        </s:if>
+                        <s:else>
+                            <s:property value="adoption.childExistingName"/>
+                        </s:else>
+                    </td>
+                    <td><s:property value="adoptionAlteration.childName"/></td>
+                    <td><s:checkbox name="childName"/></td>
+                </tr>
+            </s:if>
+            <s:if test="adoptionAlteration.changedFields.get(1)">
+                <tr>
+                    <td></td>
+                    <td><s:property value="adoption.childGender"/></td>
+                    <td><s:property value="adoptionAlteration.childGender"/></td>
+                    <td><s:checkbox name="childGender"/></td>
+                </tr>
+            </s:if>
+            <s:if test="adoptionAlteration.changedFields.get(2)">
+                <tr>
+                    <td></td>
+                    <td><s:property value="adoption.childBirthDate"/></td>
+                    <td><s:property value="adoptionAlteration.childBirthDate"/></td>
+                    <td><s:checkbox name="childBirthDate"/></td>
+                </tr>
+            </s:if>
             </tbody>
         </table>
     </s:form>
