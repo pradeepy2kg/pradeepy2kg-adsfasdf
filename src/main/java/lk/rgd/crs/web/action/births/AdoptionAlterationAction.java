@@ -61,8 +61,8 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     private String spouseCountryName;
     private AdoptionAlteration.Method alterationMethod;
     private AdoptionAlteration.Method[] methodList = AdoptionAlteration.Method.values();
-    private List<FieldValue> changesList = new LinkedList<FieldValue>();
     private boolean editMode;
+    private int[] approvedIndex;
 
     public AdoptionAlterationAction(AdoptionOrderService adoptionOrderService, AdoptionAlterationService adoptionAlterationService, CourtDAO courtDAO, CountryDAO countryDAO, DistrictDAO districtDAO, ProvinceDAO provinceDAO) {
         this.adoptionOrderService = adoptionOrderService;
@@ -95,12 +95,12 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
 
     public String updateAdoptionAlteration() {
         logger.debug("Attempt to update Adoption Alteration");
-        try{
+        try {
             AdoptionAlteration existing = adoptionAlterationService.getAdoptionAlterationByIdUKey(adoptionAlteration.getIdUKey());
             populateAdoptionAlterationForUpdate(adoptionAlteration, existing);
             adoptionAlterationService.updateAdoptionAlteration(adoptionAlteration, user);
             addActionMessage(getText("update.adoption.alteration.success"));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             addActionError(getText("unknown.error.label"));
             return ERROR;
@@ -108,13 +108,35 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
         return SUCCESS;
     }
 
-    public String approveOrRejectAdoptionAlteration() {
-        logger.debug("Attempt to approve or reject Adoption Alteration");
-//        TODO
+    public String approveAdoptionAlteration() {
+        logger.debug("Attempt to approve Adoption Alteration with {}", approvedIndex);
+        adoptionAlteration = adoptionAlterationService.getAdoptionAlterationByIdUKey(idUKey);
+        try {
+            BitSet approvedBits = new BitSet();
+            if (approvedIndex != null) {
+                for(int bit: approvedIndex){
+                    logger.debug("Bit {} ", bit);
+                    approvedBits.set(bit, true);
+                }
+            }
+            adoptionAlteration.setApprovalStatuses(approvedBits);
+            adoptionAlterationService.approveAdoptionAlteration(adoptionAlteration, user);
+            addActionMessage(getText("Successfully approve the adoption alteration"));
+        } catch (CRSRuntimeException e) {
+            logger.error(e.getMessage());
+            addActionError(getText("Error occurred."));
+            return ERROR;
+        }
         return SUCCESS;
     }
 
-    public String loadAdoptionAlterationForApproval(){
+    public String rejectAdoptionAlteration() {
+        logger.debug("Attempt to reject Adoption Alteration");
+//         TODO
+        return SUCCESS;
+    }
+
+    public String loadAdoptionAlterationForApproval() {
         logger.debug("Loading Adoption Alterations for approval");
         adoptionAlterationList = adoptionAlterationService.getAdoptionAlterationsForApproval(user);
         return SUCCESS;
@@ -182,7 +204,7 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
                         adoptionAlteration.setOrderDate(adoption.getOrderIssuedDate());
                     }
                 }
-                if(adoption.getCourt() != null && adoption.getCourt().getCourtUKey() > 0){
+                if (adoption.getCourt() != null && adoption.getCourt().getCourtUKey() > 0) {
                     courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(), language);
                 }
                 populateBasicLists();
@@ -197,13 +219,13 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
         return ERROR;
     }
 
-    public String populateAdoptionAlteration(){
+    public String populateAdoptionAlteration() {
         logger.debug("Loading Adoption Alteration : {}", idUKey);
-        try{
+        try {
             adoptionAlteration = adoptionAlterationService.getAdoptionAlterationByIdUKey(idUKey);
-            if(adoptionAlteration != null){
+            if (adoptionAlteration != null) {
                 adoption = adoptionOrderService.getById(adoptionAlteration.getAoUKey(), user);
-                if(adoption != null && adoption.getCourt() != null){
+                if (adoption != null && adoption.getCourt() != null) {
                     courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(), language);
                 }
                 populateBasicLists();
@@ -212,15 +234,16 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
             loadAdoptionAlterationForApproval();
             addActionError(getText("unable.to.load.adoption.alteration.record.label"));
             return ERROR;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ERROR;
         }
     }
 
-    private void populateAdoptionAlterationForUpdate(AdoptionAlteration alteration, AdoptionAlteration existing){
+    private void populateAdoptionAlterationForUpdate(AdoptionAlteration alteration, AdoptionAlteration existing) {
         alteration.setLifeCycleInfo(existing.getLifeCycleInfo());
         alteration.setMethod(existing.getMethod());
+        alteration.setStatus(existing.getStatus());
     }
 
     private void populateBasicLists() {
@@ -422,19 +445,19 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
         this.adoptionAlterationList = adoptionAlterationList;
     }
 
-    public List<FieldValue> getChangesList() {
-        return changesList;
-    }
-
-    public void setChangesList(List<FieldValue> changesList) {
-        this.changesList = changesList;
-    }
-
     public boolean isEditMode() {
         return editMode;
     }
 
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
+    }
+
+    public int[] getApprovedIndex() {
+        return approvedIndex;
+    }
+
+    public void setApprovedIndex(int[] approvedIndex) {
+        this.approvedIndex = approvedIndex;
     }
 }

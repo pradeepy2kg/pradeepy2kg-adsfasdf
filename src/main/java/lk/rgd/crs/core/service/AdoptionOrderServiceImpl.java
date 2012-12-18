@@ -69,6 +69,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     public void addAdoptionOrder(AdoptionOrder adoption, User user) {
         logger.debug("Adding an adoption order for court order : {}", adoption.getCourtOrderNumber());
         businessValidations(adoption);
+        adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
         adoptionOrderDAO.addAdoptionOrder(adoption, user);
     }
 
