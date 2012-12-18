@@ -1,10 +1,8 @@
 package lk.rgd.crs.core.service;
 
-import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
+import lk.rgd.Permission;
 import lk.rgd.common.api.dao.LocationDAO;
-import lk.rgd.common.api.domain.Location;
-import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.AdoptionAlterationDAO;
@@ -45,6 +43,7 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user) {
         logger.debug("Attempt to add an alteration for adoption : {} by {}", adoptionAlteration.getAoUKey(), user.getUserId());
+        checkUserPermission(Permission.EDIT_ADOPTION_ALTERATION, ErrorCodes.PERMISSION_DENIED, "add adoption alteration", user);
         AdoptionOrder adoptionOrder = adoptionOrderDAO.getById(adoptionAlteration.getAoUKey());
         adoptionAlteration = markChangedFields(adoptionAlteration, adoptionOrder);
         adoptionAlteration.setStatus(AdoptionAlteration.State.DATA_ENTRY);
@@ -54,33 +53,70 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user) {
         logger.debug("Attempt to update an alteration for adoption : {} by {}", adoptionAlteration.getAoUKey(), user.getUserId());
+        checkUserPermission(Permission.EDIT_ADOPTION_ALTERATION, ErrorCodes.PERMISSION_DENIED, "edit adoption alteration", user);
+        checkAdoptionAlterationStatus(adoptionAlteration, AdoptionAlteration.State.DATA_ENTRY, "update");
         AdoptionOrder adoptionOrder = adoptionOrderDAO.getById(adoptionAlteration.getAoUKey());
         adoptionAlteration = markChangedFields(adoptionAlteration, adoptionOrder);
-        adoptionAlteration.setStatus(AdoptionAlteration.State.DATA_ENTRY);
         adoptionAlterationDAO.updateAdoptionAlteration(adoptionAlteration, user);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user) {
         logger.debug("Attempt to delete an Adoption Alteration for adoption : {} by {}", adoptionAlteration.getAoUKey(), user.getUserId());
-        validateAccessOfUserToEditOrDelete(user, adoptionAlteration);
+        checkUserPermission(Permission.EDIT_ADOPTION_ALTERATION, ErrorCodes.PERMISSION_DENIED, "delete adoption alteration", user);
+        checkAdoptionAlterationStatus(adoptionAlteration, AdoptionAlteration.State.DATA_ENTRY, "delete");
         adoptionAlterationDAO.deleteAdoptionAlteration(adoptionAlteration, user);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user) {
         logger.debug("Attempt to approve an Adoption Alteration for adoption : {} by {}", adoptionAlteration.getAoUKey(), user.getUserId());
-        validateAccessOfUserToApproval(user, adoptionAlteration);
-        adoptionAlteration.setStatus(AdoptionAlteration.State.FULL_APPROVED);
-        adoptionAlteration.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
-        adoptionAlteration.getLifeCycleInfo().setApprovalOrRejectUser(user);
-        adoptionAlterationDAO.updateAdoptionAlteration(adoptionAlteration, user);
+        checkUserPermission(Permission.APPROVE_ADOPTION_ALTERATION, ErrorCodes.PERMISSION_DENIED, "approve adoption alteration", user);
+        checkAdoptionAlterationStatus(adoptionAlteration, AdoptionAlteration.State.DATA_ENTRY, "approve");
+        AdoptionAlteration existing = adoptionAlterationDAO.getAdoptionAlterationByIdUKey(adoptionAlteration.getIdUKey());
+        logger.debug("Permission OK.\tItem to approve : {}", adoptionAlteration.getApprovalStatuses().size());
+        /* Check for approved fields. */
+        boolean containsApprovedChanges = false;
+        for(int i=0; i < adoptionAlteration.getApprovalStatuses().size(); i++){
+            if(adoptionAlteration.getApprovalStatuses().get(i)){
+                containsApprovedChanges = true;
+                logger.debug("Approving {} ", i);
+            }
+        }
+        logger.debug("Contains Changes : {}", containsApprovedChanges);
+        if(containsApprovedChanges){
+            logger.debug("Mark adoption alteration {} as FULLY_APPROVED", existing.getIdUKey());
+            existing.setStatus(AdoptionAlteration.State.FULL_APPROVED);
+
+            AdoptionOrder ao = adoptionOrderDAO.getById(existing.getAoUKey());
+            AdoptionOrder newAO = null;
+            try{
+                newAO = ao.clone();
+            }catch (CloneNotSupportedException e){
+                e.printStackTrace();
+                handleException("Unable to clone Adoption Order : " + ao.getIdUKey(), ErrorCodes.ILLEGAL_STATE);
+            }
+            applyChanges(existing, ao);
+            newAO.setStatus(AdoptionOrder.State.APPROVED);
+            adoptionOrderDAO.addAdoptionOrder(newAO, user);
+            logger.debug("Added adoption order : {}", newAO.getIdUKey());
+            ao.setStatus(AdoptionOrder.State.ARCHIVED_ALTERED);
+            adoptionOrderDAO.updateAdoptionOrder(ao, user);
+            logger.debug("Archived adoption order : {}", ao.getIdUKey());
+        }
+        existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+        existing.getLifeCycleInfo().setApprovalOrRejectUser(user);        
+        adoptionAlterationDAO.updateAdoptionAlteration(existing, user);
+        logger.debug("Approved adoption alteration : {}", existing.getIdUKey());
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void rejectAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user) {
         logger.debug("Attempt to reject an Adoption Alteration for adoption : {} by {}", adoptionAlteration.getAoUKey(), user.getUserId());
-        validateAccessOfUserToApproval(user, adoptionAlteration);
+        checkUserPermission(Permission.APPROVE_ADOPTION_ALTERATION, ErrorCodes.PERMISSION_DENIED, "reject adoption alteration", user);
+        AdoptionAlteration existing = adoptionAlterationDAO.getAdoptionAlterationByIdUKey(adoptionAlteration.getIdUKey());
+        checkAdoptionAlterationStatus(existing, AdoptionAlteration.State.DATA_ENTRY, "reject");
+
         adoptionAlteration.setStatus(AdoptionAlteration.State.REJECTED);
         adoptionAlteration.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
         adoptionAlteration.getLifeCycleInfo().setApprovalOrRejectUser(user);
@@ -136,28 +172,45 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
         return adoptionAlteration;
     }
 
-    private void validateAccessOfUserToEditOrDelete(User user, AdoptionAlteration adoptionAlteration) {
-        if (AdoptionAlteration.State.DATA_ENTRY.equals(adoptionAlteration.getStatus())) {
-            validateAccessOfUserToAdoption(user);
-            // TODO handle permissions
-        } else {
-            handleException("Can not be edited as Adoption Alteration (" + adoptionAlteration.getIdUKey() + "is not in the Data Entry State", ErrorCodes.ILLEGAL_STATE);
+    private void applyChanges(AdoptionAlteration alteration, AdoptionOrder ao){
+        if(alteration.getApprovalStatuses().get(AdoptionAlteration.CHILD_NAME)){
+            ao.setChildNewName(alteration.getChildName());
+        }
+        if(alteration.getApprovalStatuses().get(AdoptionAlteration.CHILD_DOB)){
+            ao.setChildBirthDate(alteration.getChildBirthDate());
+        }
+        if(alteration.getApprovalStatuses().get(AdoptionAlteration.CHILD_GENDER)){
+            ao.setChildGender(alteration.getChildGender());
+        }
+        if(alteration.getApprovalStatuses().get(AdoptionAlteration.APPLICANT_NAME)){
+            ao.setApplicantName(alteration.getApplicantName());
+        }
+        if(alteration.getApprovalStatuses().get(AdoptionAlteration.APPLICANT_ADDRESS)){
+            ao.setApplicantAddress(alteration.getApplicantAddress());
+        }
+        if(alteration.getApprovalStatuses().get(AdoptionAlteration.APPLICANT_SECOND_ADDRESS)){
+            ao.setApplicantSecondAddress(alteration.getApplicantSecondAddress());
+        }
+        if(alteration.getApprovalStatuses().get(AdoptionAlteration.APPLICANT_OCCUPATION)){
+            ao.setApplicantOccupation(alteration.getApplicantOccupation());
+        }
+        if(alteration.getApprovalStatuses().get(AdoptionAlteration.SPOUSE_NAME)){
+            ao.setSpouseName(alteration.getSpouseName());
+        }
+        if(alteration.getApprovalStatuses().get(AdoptionAlteration.SPOUSE_OCCUPATION)){
+            ao.setSpouseOccupation(alteration.getSpouseOccupation());
         }
     }
 
-    private void validateAccessOfUserToApproval(User user, AdoptionAlteration adoptionAlteration) {
-        if (AdoptionAlteration.State.DATA_ENTRY.equals(adoptionAlteration.getStatus())) {
-            validateAccessOfUserToAdoption(user);
-            // TODO handle permissions
-        } else {
-            handleException("Can not be Approved as Adoption Alteration (" + adoptionAlteration.getIdUKey() + "is not in the Data Entry State", ErrorCodes.ILLEGAL_STATE);
+    private void checkUserPermission(int permissionBit, int errorCode, String msg, User user) {
+        if (!user.isAuthorized(permissionBit)) {
+            handleException("User : " + user.getUserId() + " is not permitted to " + msg, errorCode);
         }
     }
 
-    private void validateAccessOfUserToAdoption(User user) {
-        Location headOffice = locationDAO.getLocation(AppConstants.HEAD_OFFICE_LOCATION_ID);
-        if (!user.getActiveLocations().contains(headOffice)) {
-            handleException("User is not authorized for adoption alteration", ErrorCodes.USER_IS_NOT_ALLOWED_FOR_LOCATION);
+    private void checkAdoptionAlterationStatus(AdoptionAlteration alteration, AdoptionAlteration.State state, String message){
+        if(!state.equals(alteration.getStatus())){
+            handleException("Unable to "+ message+" adoption alteration due to illegal state", ErrorCodes.ILLEGAL_STATE);
         }
     }
 

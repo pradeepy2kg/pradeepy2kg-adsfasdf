@@ -22,7 +22,6 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
      */
     @Transactional(propagation = Propagation.MANDATORY)
     public void addAdoptionOrder(AdoptionOrder adoption, User user) {
-        adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
         adoption.getLifeCycleInfo().setCreatedTimestamp(new Date());
         adoption.getLifeCycleInfo().setCreatedUser(user);
         adoption.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());

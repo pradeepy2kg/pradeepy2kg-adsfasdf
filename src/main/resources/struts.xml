@@ -1499,6 +1499,13 @@
             <result type="tiles" name="none">epr.error</result>
         </action>
 
+        <action name="eprApproveAdoptionAlteration" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
+                method="approveAdoptionAlteration">
+            <interceptor-ref name="adoption"/>
+            <result type="tiles" name="success">epr.adoptionAlterationManagement</result>
+            <result type="tiles" name="none">epr.error</result>
+        </action>
+
     </package>
 
     <!--actions related to marriages-->

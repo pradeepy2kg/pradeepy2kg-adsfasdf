@@ -61,7 +61,7 @@ import java.util.Date;
     )
 })
 
-public class AdoptionOrder implements Serializable {
+public class AdoptionOrder implements Serializable, Cloneable {
 
     public enum State {
         /**
@@ -99,7 +99,11 @@ public class AdoptionOrder implements Serializable {
         /**
          * 8 - re registered
          */
-        RE_REGISTERED
+        RE_REGISTERED,
+        /**
+         * 9 - Altered
+         */
+        ARCHIVED_ALTERED
     }
 
     public enum ApplicantType {
@@ -228,7 +232,7 @@ public class AdoptionOrder implements Serializable {
 
     @Column(nullable = true)
     private String oldBirthRegistrationDivisionName;
-    
+
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date oldBirthRegistrationDate;
@@ -274,6 +278,14 @@ public class AdoptionOrder implements Serializable {
     @ManyToOne
     @JoinColumn(name = "noticingZonalOffice", nullable = false)
     private ZonalOffice noticingZonalOffice;
+
+    public AdoptionOrder clone() throws CloneNotSupportedException {
+        AdoptionOrder newAO = (AdoptionOrder) super.clone();
+
+        newAO.setIdUKey(0);
+        newAO.setLifeCycleInfo(lifeCycleInfo.clone());
+        return newAO;
+    }
 
     public long getAdoptionEntryNo() {
         return adoptionEntryNo;
@@ -540,6 +552,9 @@ public class AdoptionOrder implements Serializable {
     }
 
     public CRSLifeCycleInfo getLifeCycleInfo() {
+        if (lifeCycleInfo == null) {
+            return new CRSLifeCycleInfo();
+        }
         return lifeCycleInfo;
     }
 

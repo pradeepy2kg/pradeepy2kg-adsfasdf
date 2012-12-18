@@ -31,7 +31,7 @@
                         </s:else>
                     </td>
                     <td><s:property value="adoptionAlteration.childName"/></td>
-                    <td align="center"><s:checkbox name="childName"/></td>
+                    <td align="center"><s:checkbox name="approvedIndex" fieldValue="0"/></td>
                 </tr>
             </s:if>
             <s:if test="adoptionAlteration.changedFields.get(1)">
@@ -39,7 +39,7 @@
                     <td>ස්ත්‍රී පුරුෂ භාවය<br/>Gender in ta<br/>Gender</td>
                     <td><s:property value="adoption.childGender"/></td>
                     <td><s:property value="adoptionAlteration.childGender"/></td>
-                    <td align="center"><s:checkbox name="childGender"/></td>
+                    <td align="center"><s:checkbox name="approvedIndex" fieldValue="1"/></td>
                 </tr>
             </s:if>
             <s:if test="adoptionAlteration.changedFields.get(2)">
@@ -47,7 +47,7 @@
                     <td>ළමයාගේ උපන්දිනය<br/>Child DOB in ta<br/>Child Date of Birth</td>
                     <td><s:property value="adoption.childBirthDate"/></td>
                     <td><s:property value="adoptionAlteration.childBirthDate"/></td>
-                    <td align="center"><s:checkbox name="childBirthDate"/></td>
+                    <td align="center"><s:checkbox name="approvedIndex" fieldValue="2"/></td>
                 </tr>
             </s:if>
             <s:if test="adoptionAlteration.changedFields.get(3)">
@@ -55,7 +55,7 @@
                     <td>අයදුම්කරුගේ නම<br/>Applicant Name in ta<br/>Applicant Name</td>
                     <td><s:property value="adoption.applicantName"/></td>
                     <td><s:property value="adoptionAlteration.applicantName"/></td>
-                    <td align="center"><s:checkbox name="applicantName"/></td>
+                    <td align="center"><s:checkbox name="approvedIndex" fieldValue="3"/></td>
                 </tr>
             </s:if>
             <s:if test="adoptionAlteration.changedFields.get(4)">
@@ -63,7 +63,7 @@
                     <td>අයදුම්කරුගේ ලිපිනය<br/>Applicant Address in ta<br/>Applicant Address</td>
                     <td><s:property value="adoption.applicantAddress"/></td>
                     <td><s:property value="adoptionAlteration.applicantAddress"/></td>
-                    <td align="center"><s:checkbox name="applicantAddress"/></td>
+                    <td align="center"><s:checkbox name="approvedIndex" fieldValue="4"/></td>
                 </tr>
             </s:if>
             <s:if test="adoptionAlteration.changedFields.get(5)">
@@ -71,7 +71,7 @@
                     <td>අයදුම්කරුගේ ලිපිනය 2<br/>Applicant Address 2 in ta<br/>Applicant Address 2</td>
                     <td><s:property value="adoption.applicantSecondAddress"/></td>
                     <td><s:property value="adoptionAlteration.applicantSecondAddress"/></td>
-                    <td align="center"><s:checkbox name="applicantSecondAddress"/></td>
+                    <td align="center"><s:checkbox name="approvedIndex" fieldValue="5"/></td>
                 </tr>
             </s:if>
             <s:if test="adoptionAlteration.changedFields.get(6)">
@@ -79,7 +79,7 @@
                     <td>අයදුම්කරුගේ රැකියාව<br/>Applicant Occupation in ta<br/>Applicant Occupation</td>
                     <td><s:property value="adoption.applicantOccupation"/></td>
                     <td><s:property value="adoptionAlteration.applicantOccupation"/></td>
-                    <td><s:checkbox name="applicantOccupation"/></td>
+                    <td align="center"><s:checkbox name="approvedIndex" fieldValue="6"/></td>
                 </tr>
             </s:if>
             <s:if test="adoptionAlteration.changedFields.get(7)">
@@ -87,7 +87,7 @@
                     <td>සහකරුගේ නම<br/>Spouse Name in ta<br/>Spouse Name</td>
                     <td><s:property value="adoption.spouseName"/></td>
                     <td><s:property value="adoptionAlteration.spouseName"/></td>
-                    <td align="center"><s:checkbox name="spouseName"/></td>
+                    <td align="center"><s:checkbox name="approvedIndex" fieldValue="7"/></td>
                 </tr>
             </s:if>
             <s:if test="adoptionAlteration.changedFields.get(8)">
@@ -95,13 +95,14 @@
                     <td>සහකරුගේ රැකියාව<br/>Spouse Occupation in ta<br/>Spouse Occupation</td>
                     <td><s:property value="adoption.spouseOccupation"/></td>
                     <td><s:property value="adoptionAlteration.spouseOccupation"/></td>
-                    <td align="center"><s:checkbox name="spouseOccupation"/></td>
+                    <td align="center"><s:checkbox name="approvedIndex" fieldValue="8"/></td>
                 </tr>
             </s:if>
             <tr>
                 <td colspan="4" align="right">
                     <div class="form-submit">
-                        <s:submit action="#" value="%{getText('update.label')}"/>
+                        <s:hidden name="idUKey" value="%{adoptionAlteration.idUKey}"/>
+                        <s:submit action="eprApproveAdoptionAlteration" value="%{getText('approve.label')}"/>
                     </div>
                 </td>
             </tr>
