@@ -166,6 +166,11 @@
                 Adoption Alteration in ta
             </a>
         </li>
+        <li>
+            <a id="adoption.manage.alterations" href="/ecivil/alteration/eprAdoptionAlterationManagement.do">
+                Manage Adoption Alteration in ta
+            </a>
+        </li>
     </ul>
 </li>
 
