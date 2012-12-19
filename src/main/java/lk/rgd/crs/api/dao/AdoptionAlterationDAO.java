@@ -14,9 +14,9 @@ public interface AdoptionAlterationDAO {
 
     public void updateAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user);
 
-    public void deleteAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user);
+    public void deleteAdoptionAlteration(long idUKey, User user);
 
-    public AdoptionAlteration getAdoptionAlterationByIdUKey(long idUkey);
+    public AdoptionAlteration getAdoptionAlterationByIdUKey(long idUKey);
 
     public List<AdoptionAlteration> getAllAdoptionAlterationRecords();
 

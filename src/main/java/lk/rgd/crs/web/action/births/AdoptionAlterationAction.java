@@ -94,13 +94,27 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     }
 
     public String updateAdoptionAlteration() {
-        logger.debug("Attempt to update Adoption Alteration");
+        logger.debug("Attempt to update Adoption Alteration : {}", idUKey);
         try {
             AdoptionAlteration existing = adoptionAlterationService.getAdoptionAlterationByIdUKey(adoptionAlteration.getIdUKey());
             populateAdoptionAlterationForUpdate(adoptionAlteration, existing);
             adoptionAlterationService.updateAdoptionAlteration(adoptionAlteration, user);
             addActionMessage(getText("update.adoption.alteration.success"));
         } catch (Exception e) {
+            e.printStackTrace();
+            addActionError(getText("unknown.error.label"));
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+    public String deleteAdoptionAlteration(){
+        logger.debug("Attempt to delete Adoption Alteration : {}", idUKey);
+        try{
+            AdoptionAlteration existing = adoptionAlterationService.getAdoptionAlterationByIdUKey(idUKey);
+            adoptionAlterationService.deleteAdoptionAlteration(existing, user);
+            addActionMessage(getText("delete.adoption.alteration.label"));
+        }catch (Exception e){
             e.printStackTrace();
             addActionError(getText("unknown.error.label"));
             return ERROR;
@@ -241,7 +255,8 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     }
 
     private void populateAdoptionAlterationForUpdate(AdoptionAlteration alteration, AdoptionAlteration existing) {
-        alteration.setLifeCycleInfo(existing.getLifeCycleInfo());
+        alteration.getLifeCycleInfo().setCreatedTimestamp(existing.getLifeCycleInfo().getCreatedTimestamp());
+        alteration.getLifeCycleInfo().setCreatedUser(existing.getLifeCycleInfo().getCreatedUser());
         alteration.setMethod(existing.getMethod());
         alteration.setStatus(existing.getStatus());
     }

@@ -1453,21 +1453,21 @@
                 method="loadAdoptionRecordsForAlteration">
             <interceptor-ref name="adoption"/>
             <result type="tiles" name="success">epr.adoptionAlterationPageLoad</result>
-            <result type="tiles" name="error">epr.adoptionAlterationPageLoad</result>
+            <result type="redirectAction" name="error">eprAdoptionAlterationPageLoad</result>
             <result type="tiles" name="none">epr.error</result>
         </action>
         <action name="eprPopulateAdoptionForAlteration" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
                 method="populateAdoptionOrder">
             <interceptor-ref name="adoption"/>
             <result type="tiles" name="success">epr.adoptionAlterationForm</result>
-            <result type="tiles" name="error">epr.adoptionAlterationPageLoad</result>
+            <result type="tiles" name="error">epr.error</result>
             <result type="tiles" name="none">epr.error</result>
         </action>
         <action name="eprPopulateAdoptionAlterationForEdit" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
                 method="populateAdoptionAlteration">
             <interceptor-ref name="adoption"/>
             <result type="tiles" name="success">epr.adoptionAlterationForm</result>
-            <result type="tiles" name="error">epr.adoptionAlterationManagement</result>
+            <result type="tiles" name="error">epr.error</result>
             <result type="tiles" name="none">epr.error</result>
         </action>
         <action name="eprLoadAdoptionAlterationForApprove" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
@@ -1481,14 +1481,14 @@
                 method="addAdoptionAlteration">
             <interceptor-ref name="adoption"/>
             <result type="tiles" name="success">epr.adoptionAlterationPageLoad</result>
-            <result type="tiles" name="error">epr.adoptionAlterationForm</result>
+            <result type="tiles" name="error">epr.error</result>
             <result type="tiles" name="none">epr.error</result>
         </action>
         <action name="eprUpdateAdoptionAlteration" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
                 method="updateAdoptionAlteration">
             <interceptor-ref name="adoption"/>
-            <result type="tiles" name="success">epr.adoptionAlterationPageLoad</result>
-            <result type="tiles" name="error">epr.adoptionAlterationForm</result>
+            <result type="redirectAction" name="success">eprAdoptionAlterationPageLoad</result>
+            <result type="tiles" name="error">epr.error</result>
             <result type="tiles" name="none">epr.error</result>
         </action>
 
@@ -1499,10 +1499,17 @@
             <result type="tiles" name="none">epr.error</result>
         </action>
 
+        <action name="eprAdoptionAlterationDelete" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
+                method="deleteAdoptionAlteration">
+            <interceptor-ref name="adoption"/>
+            <result type="redirectAction" name="success">eprAdoptionAlterationManagement</result>
+            <result type="tiles" name="none">epr.error</result>
+        </action>
+
         <action name="eprApproveAdoptionAlteration" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
                 method="approveAdoptionAlteration">
             <interceptor-ref name="adoption"/>
-            <result type="tiles" name="success">epr.adoptionAlterationManagement</result>
+            <result type="redirectAction" name="success">eprAdoptionAlterationManagement</result>
             <result type="tiles" name="none">epr.error</result>
         </action>
 

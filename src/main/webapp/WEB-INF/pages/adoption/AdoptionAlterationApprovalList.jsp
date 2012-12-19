@@ -69,17 +69,17 @@
                             <s:url id="alterAdoptionApproveUrl" action="eprLoadAdoptionAlterationForApprove.do">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
-                            <s:a href="%{alterAdoptionApproveUrl}" title="%{getText('alter.label')}">
+                            <s:a href="%{alterAdoptionApproveUrl}" title="%{getText('approve.or.reject.label')}">
                                 <img id="editImage" src="<s:url value='/images/approve.gif'/>" width="25" height="25"
                                      border="none"/>
                             </s:a>
                         </s:if>
                     </td>
                     <td align="center">
-                        <s:url id="alterAdoptionDeleteUrl" action="eprPopulateAdoptionAlterationDelete.do">
+                        <s:url id="alterAdoptionDeleteUrl" action="eprAdoptionAlterationDelete.do">
                             <s:param name="idUKey" value="idUKey"/>
                         </s:url>
-                        <s:a href="%{alterAdoptionDeleteUrl}" title="%{getText('alter.label')}">
+                        <s:a href="%{alterAdoptionDeleteUrl}" title="%{getText('delete.label')}">
                             <img id="editImage" src="<s:url value='/images/delete.gif'/>" width="25" height="25"
                                  border="none"/>
                         </s:a>

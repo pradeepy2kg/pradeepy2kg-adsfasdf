@@ -97,7 +97,8 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<AdoptionOrder> getPaginatedListForAll(int pageNo, int noOfRows) {
-        Query q = em.createNamedQuery("getAllAdoptions").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        Query q = em.createNamedQuery("getPaginatedListForAll").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("state", AdoptionOrder.State.RE_REGISTRATION_REQUESTED);
         return q.getResultList();
     }
 
@@ -157,6 +158,15 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
+    public List<AdoptionOrder> getAdoptionsByCourtOrderNumberForAlteration(String courtOrderNumber, AdoptionOrder.State minState, AdoptionOrder.State maxState) {
+        Query q = em.createNamedQuery("getAdoptionsByCourtOrderNumberForAlteration");
+        q.setParameter("courtOrderNumber", "%"+courtOrderNumber+"%");
+        q.setParameter("minState", minState);
+        q.setParameter("maxState", maxState);
+        return q.getResultList();
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
     public AdoptionOrder getAdoptionByEntryNumber(long adoptionEntryNo) {
         Query q = em.createNamedQuery("getAdoptionByEntryNumber");
         q.setParameter("adoptionEntryNo", adoptionEntryNo);
@@ -172,6 +182,19 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
         Query q = em.createNamedQuery("getAdoptionByEntryNumberAndState");
         q.setParameter("adoptionEntryNo", adoptionEntryNo);
         q.setParameter("state", state);
+        try{
+            return (AdoptionOrder) q.getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public AdoptionOrder getAdoptionByEntryNumberForAlteration(long adoptionEntryNo, AdoptionOrder.State minState, AdoptionOrder.State maxState) {
+        Query q = em.createNamedQuery("getAdoptionByEntryNumberForAlteration");
+        q.setParameter("adoptionEntryNo", adoptionEntryNo);
+        q.setParameter("minState", minState);
+        q.setParameter("maxState", maxState);
         try{
             return (AdoptionOrder) q.getSingleResult();
         }catch (NoResultException e){

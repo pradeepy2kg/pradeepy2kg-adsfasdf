@@ -119,6 +119,16 @@ public interface AdoptionOrderDAO {
     public List<AdoptionOrder> getAdoptionsByCourtOrderNumberAndState(String courtOrderNumber, AdoptionOrder.State state);
 
     /**
+     * Return an adoption record which is entered with the given court order no and within the given states. (Having a state higher than min and lower than max)
+     *
+     * @param courtOrderNumber
+     * @param minState
+     * @param maxState
+     * @return
+     */
+    public List<AdoptionOrder> getAdoptionsByCourtOrderNumberForAlteration(String courtOrderNumber, AdoptionOrder.State minState, AdoptionOrder.State maxState);
+
+    /**
      * Returns an adoption record which is entered as the given entry number.
      *
      * @param adoptionEntryNo Selected adoption entry number.
@@ -134,6 +144,15 @@ public interface AdoptionOrderDAO {
      * @return
      */
     public AdoptionOrder getAdoptionByEntryNumberAndState(long  adoptionEntryNo, AdoptionOrder.State state);
+
+    /**
+     * Return an adoption record which is entered with the given entry no and within the given states. (Having a state higher than min and lower than max)
+     * @param adoptionEntryNo
+     * @param minState
+     * @param maxState
+     * @return
+     */
+    public AdoptionOrder getAdoptionByEntryNumberForAlteration(long adoptionEntryNo, AdoptionOrder.State minState, AdoptionOrder.State maxState);
 
     /**
      * Returns a list of adoption records where the court order is given by the selected court.
