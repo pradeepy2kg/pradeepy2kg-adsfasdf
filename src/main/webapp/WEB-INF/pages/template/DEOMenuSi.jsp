@@ -161,6 +161,11 @@
                 දරු සහතිකයේ වෙනස් කිරීම්
             </a>
         </li>
+        <li>
+            <a id="adoption.manage.alterations" href="/ecivil/alteration/eprAdoptionAlterationManagement.do">
+                දරු සහතිකයේ වෙනස් කිරීම් හැසිරවීම
+            </a>
+        </li>
     </ul>
 </li>
 
