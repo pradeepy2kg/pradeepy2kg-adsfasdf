@@ -35,8 +35,8 @@ public class AdoptionAlterationDAOImpl extends BaseDAO implements AdoptionAltera
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public void deleteAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user) {
-        em.remove(adoptionAlteration);
+    public void deleteAdoptionAlteration(long idUKey, User user) {
+        em.remove(getAdoptionAlterationByIdUKey(idUKey));
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)

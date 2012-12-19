@@ -45,9 +45,13 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
         logger.debug("Attempt to add an alteration for adoption : {} by {}", adoptionAlteration.getAoUKey(), user.getUserId());
         checkUserPermission(Permission.EDIT_ADOPTION_ALTERATION, ErrorCodes.PERMISSION_DENIED, "add adoption alteration", user);
         AdoptionOrder adoptionOrder = adoptionOrderDAO.getById(adoptionAlteration.getAoUKey());
+        adoptionOrder.setStatus(AdoptionOrder.State.ALTERATION_REQUESTED);
+        adoptionOrderDAO.updateAdoptionOrder(adoptionOrder, user);
+        logger.debug("Request an alteration for Adoption Order : {}", adoptionOrder.getIdUKey());
         adoptionAlteration = markChangedFields(adoptionAlteration, adoptionOrder);
         adoptionAlteration.setStatus(AdoptionAlteration.State.DATA_ENTRY);
         adoptionAlterationDAO.addAdoptionAlteration(adoptionAlteration, user);
+        logger.debug("Added adoption alteration {} for adoption {}", adoptionAlteration.getIdUKey(), adoptionOrder.getIdUKey());
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -65,7 +69,7 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
         logger.debug("Attempt to delete an Adoption Alteration for adoption : {} by {}", adoptionAlteration.getAoUKey(), user.getUserId());
         checkUserPermission(Permission.EDIT_ADOPTION_ALTERATION, ErrorCodes.PERMISSION_DENIED, "delete adoption alteration", user);
         checkAdoptionAlterationStatus(adoptionAlteration, AdoptionAlteration.State.DATA_ENTRY, "delete");
-        adoptionAlterationDAO.deleteAdoptionAlteration(adoptionAlteration, user);
+        adoptionAlterationDAO.deleteAdoptionAlteration(adoptionAlteration.getIdUKey(), user);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)

@@ -273,12 +273,12 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public AdoptionOrder getAdoptionByEntryNumberForAlteration(long adoptionEntryNo) {
-        return adoptionOrderDAO.getAdoptionByEntryNumberAndState(adoptionEntryNo, AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
+        return adoptionOrderDAO.getAdoptionByEntryNumberForAlteration(adoptionEntryNo, AdoptionOrder.State.APPROVED, AdoptionOrder.State.RE_REGISTRATION_REQUESTED);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public List<AdoptionOrder> getAdoptionsByCourtOrderNumberForAlterations(String courtOrderNumber) {
-        List<AdoptionOrder> adoptionOrders = adoptionOrderDAO.getAdoptionsByCourtOrderNumberAndState(courtOrderNumber, AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
+        List<AdoptionOrder> adoptionOrders = adoptionOrderDAO.getAdoptionsByCourtOrderNumberForAlteration(courtOrderNumber, AdoptionOrder.State.APPROVED, AdoptionOrder.State.RE_REGISTRATION_REQUESTED);
         if (adoptionOrders.size() > 0) {
             return adoptionOrders;
         } else {

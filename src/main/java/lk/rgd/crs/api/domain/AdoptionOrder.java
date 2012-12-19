@@ -56,8 +56,20 @@ import java.util.Date;
         query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo AND a.status = :state"
     ),
     @NamedQuery(
+        name = "getAdoptionByEntryNumberForAlteration",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo AND a.status > :minState AND a.status < :maxState"
+    ),
+    @NamedQuery(
         name = "getAdoptionsByCourtOrderNumberAndState",
         query = "SELECT a FROM AdoptionOrder a WHERE a.courtOrderNumber LIKE :courtOrderNumber AND a.status = :state"
+    ),
+    @NamedQuery(
+        name = "getAdoptionsByCourtOrderNumberForAlteration",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.courtOrderNumber LIKE :courtOrderNumber AND a.status > :minState AND a.status < :maxStatus"
+    ),
+    @NamedQuery(
+        name = "getPaginatedListForAll",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.status < :state"
     )
 })
 
@@ -101,7 +113,11 @@ public class AdoptionOrder implements Serializable, Cloneable {
          */
         RE_REGISTERED,
         /**
-         * 9 - Altered
+         * 9 - Request for an Alteration
+         */
+        ALTERATION_REQUESTED,
+        /**
+         * 10 - Archived after Alteration.
          */
         ARCHIVED_ALTERED
     }
