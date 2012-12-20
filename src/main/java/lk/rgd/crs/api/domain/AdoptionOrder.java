@@ -41,7 +41,7 @@ import java.util.Date;
     ),
     @NamedQuery(
         name = "getAdoptionByEntryNumber",
-        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo"
+        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo AND a.lifeCycleInfo.activeRecord = 1"
     ),
     @NamedQuery(
         name = "getAdoptionsByCourt",
@@ -57,7 +57,7 @@ import java.util.Date;
     ),
     @NamedQuery(
         name = "getAdoptionByEntryNumberForAlteration",
-        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo AND a.status > :minState AND a.status < :maxState"
+        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo AND a.status >= :minState AND a.status < :maxState AND a.lifeCycleInfo.activeRecord = 1"
     ),
     @NamedQuery(
         name = "getAdoptionsByCourtOrderNumberAndState",
@@ -65,7 +65,7 @@ import java.util.Date;
     ),
     @NamedQuery(
         name = "getAdoptionsByCourtOrderNumberForAlteration",
-        query = "SELECT a FROM AdoptionOrder a WHERE a.courtOrderNumber LIKE :courtOrderNumber AND a.status > :minState AND a.status < :maxStatus"
+        query = "SELECT a FROM AdoptionOrder a WHERE a.courtOrderNumber LIKE :courtOrderNumber AND a.status >= :minState AND a.status < :maxStatus"
     ),
     @NamedQuery(
         name = "getPaginatedListForAll",

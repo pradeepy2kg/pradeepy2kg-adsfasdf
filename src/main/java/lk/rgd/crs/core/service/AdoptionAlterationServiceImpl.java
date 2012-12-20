@@ -42,6 +42,8 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addAdoptionAlteration(AdoptionAlteration adoptionAlteration, User user) {
+        try{
+           
         logger.debug("Attempt to add an alteration for adoption : {} by {}", adoptionAlteration.getAoUKey(), user.getUserId());
         checkUserPermission(Permission.EDIT_ADOPTION_ALTERATION, ErrorCodes.PERMISSION_DENIED, "add adoption alteration", user);
         AdoptionOrder adoptionOrder = adoptionOrderDAO.getById(adoptionAlteration.getAoUKey());
@@ -52,6 +54,9 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
         adoptionAlteration.setStatus(AdoptionAlteration.State.DATA_ENTRY);
         adoptionAlterationDAO.addAdoptionAlteration(adoptionAlteration, user);
         logger.debug("Added adoption alteration {} for adoption {}", adoptionAlteration.getIdUKey(), adoptionOrder.getIdUKey());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -78,7 +83,7 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
         checkUserPermission(Permission.APPROVE_ADOPTION_ALTERATION, ErrorCodes.PERMISSION_DENIED, "approve adoption alteration", user);
         checkAdoptionAlterationStatus(adoptionAlteration, AdoptionAlteration.State.DATA_ENTRY, "approve");
         AdoptionAlteration existing = adoptionAlterationDAO.getAdoptionAlterationByIdUKey(adoptionAlteration.getIdUKey());
-        logger.debug("Permission OK.\tItem to approve : {}", adoptionAlteration.getApprovalStatuses().size());
+
         /* Check for approved fields. */
         boolean containsApprovedChanges = false;
         for(int i=0; i < adoptionAlteration.getApprovalStatuses().size(); i++){
@@ -87,9 +92,7 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
                 logger.debug("Approving {} ", i);
             }
         }
-        logger.debug("Contains Changes : {}", containsApprovedChanges);
         if(containsApprovedChanges){
-            logger.debug("Mark adoption alteration {} as FULLY_APPROVED", existing.getIdUKey());
             existing.setStatus(AdoptionAlteration.State.FULL_APPROVED);
 
             AdoptionOrder ao = adoptionOrderDAO.getById(existing.getAoUKey());
@@ -100,11 +103,12 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
                 e.printStackTrace();
                 handleException("Unable to clone Adoption Order : " + ao.getIdUKey(), ErrorCodes.ILLEGAL_STATE);
             }
-            applyChanges(existing, ao);
+            applyChanges(adoptionAlteration, newAO);
             newAO.setStatus(AdoptionOrder.State.APPROVED);
             adoptionOrderDAO.addAdoptionOrder(newAO, user);
             logger.debug("Added adoption order : {}", newAO.getIdUKey());
             ao.setStatus(AdoptionOrder.State.ARCHIVED_ALTERED);
+            ao.getLifeCycleInfo().setActiveRecord(false);
             adoptionOrderDAO.updateAdoptionOrder(ao, user);
             logger.debug("Archived adoption order : {}", ao.getIdUKey());
         }
@@ -120,11 +124,20 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
         checkUserPermission(Permission.APPROVE_ADOPTION_ALTERATION, ErrorCodes.PERMISSION_DENIED, "reject adoption alteration", user);
         AdoptionAlteration existing = adoptionAlterationDAO.getAdoptionAlterationByIdUKey(adoptionAlteration.getIdUKey());
         checkAdoptionAlterationStatus(existing, AdoptionAlteration.State.DATA_ENTRY, "reject");
-
-        adoptionAlteration.setStatus(AdoptionAlteration.State.REJECTED);
-        adoptionAlteration.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
-        adoptionAlteration.getLifeCycleInfo().setApprovalOrRejectUser(user);
-        adoptionAlterationDAO.updateAdoptionAlteration(adoptionAlteration, user);
+        AdoptionOrder adoptionOrder = adoptionOrderDAO.getById(existing.getAoUKey());
+        if(!AdoptionOrder.State.ALTERATION_REQUESTED.equals(adoptionOrder.getStatus())){
+            handleException("Adoption Alteration "+ existing.getIdUKey() + " can not be rejected.", ErrorCodes.ILLEGAL_STATE);
+        }else{
+            existing.setStatus(AdoptionAlteration.State.REJECTED);
+            existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            adoptionAlterationDAO.updateAdoptionAlteration(existing, user);
+            logger.debug("Rejected adoption alteration : {}", existing.getIdUKey());
+            // TODO set the status that was there before requesting the alteration
+            adoptionOrder.setStatus(AdoptionOrder.State.NOTICE_LETTER_PRINTED);
+            adoptionOrderDAO.updateAdoptionOrder(adoptionOrder, user);
+            logger.debug("Updated adoption order : {}", adoptionOrder.getIdUKey());
+        }
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -176,33 +189,33 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
         return adoptionAlteration;
     }
 
-    private void applyChanges(AdoptionAlteration alteration, AdoptionOrder ao){
+    private void applyChanges(AdoptionAlteration alteration, AdoptionOrder newAO){
         if(alteration.getApprovalStatuses().get(AdoptionAlteration.CHILD_NAME)){
-            ao.setChildNewName(alteration.getChildName());
+            newAO.setChildNewName(alteration.getChildName());
         }
         if(alteration.getApprovalStatuses().get(AdoptionAlteration.CHILD_DOB)){
-            ao.setChildBirthDate(alteration.getChildBirthDate());
+            newAO.setChildBirthDate(alteration.getChildBirthDate());
         }
         if(alteration.getApprovalStatuses().get(AdoptionAlteration.CHILD_GENDER)){
-            ao.setChildGender(alteration.getChildGender());
+            newAO.setChildGender(alteration.getChildGender());
         }
         if(alteration.getApprovalStatuses().get(AdoptionAlteration.APPLICANT_NAME)){
-            ao.setApplicantName(alteration.getApplicantName());
+            newAO.setApplicantName(alteration.getApplicantName());
         }
         if(alteration.getApprovalStatuses().get(AdoptionAlteration.APPLICANT_ADDRESS)){
-            ao.setApplicantAddress(alteration.getApplicantAddress());
+            newAO.setApplicantAddress(alteration.getApplicantAddress());
         }
         if(alteration.getApprovalStatuses().get(AdoptionAlteration.APPLICANT_SECOND_ADDRESS)){
-            ao.setApplicantSecondAddress(alteration.getApplicantSecondAddress());
+            newAO.setApplicantSecondAddress(alteration.getApplicantSecondAddress());
         }
         if(alteration.getApprovalStatuses().get(AdoptionAlteration.APPLICANT_OCCUPATION)){
-            ao.setApplicantOccupation(alteration.getApplicantOccupation());
+            newAO.setApplicantOccupation(alteration.getApplicantOccupation());
         }
         if(alteration.getApprovalStatuses().get(AdoptionAlteration.SPOUSE_NAME)){
-            ao.setSpouseName(alteration.getSpouseName());
+            newAO.setSpouseName(alteration.getSpouseName());
         }
         if(alteration.getApprovalStatuses().get(AdoptionAlteration.SPOUSE_OCCUPATION)){
-            ao.setSpouseOccupation(alteration.getSpouseOccupation());
+            newAO.setSpouseOccupation(alteration.getSpouseOccupation());
         }
     }
 

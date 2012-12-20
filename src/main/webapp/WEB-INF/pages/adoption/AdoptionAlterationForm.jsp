@@ -28,7 +28,7 @@
             enableFields(new Array('applicantName', 'applicantAddress', 'applicantSecondAddress', 'applicantOccupation'));
             disableFields(new Array('applicantNameHidden', 'applicantAddressHidden', 'applicantSecondAddressHidden', 'applicantOccupationHidden'));
         });
-        if ($('#jointApplicant').val()) {
+        if ($('#jointApplicant').val() == 'true') {
             $('#spouse-info-min').click(function () {
                 minimize("spouse-info");
             });
@@ -55,17 +55,17 @@
 
     function init() {
         var fields;
-        minimize("child-info");
-        minimize("applicant-info");
-        if ($('#jointApplicant').val()) {
-            minimize("spouse-info");
-        }
-        if ($('#jointApplicant').val()) {
+        if ($('#jointApplicant').val() == 'true') {
             fields = new Array('childName', 'childBirthDate', 'childGender', 'applicantName', 'applicantAddress', 'applicantSecondAddress', 'applicantOccupation', 'spouseName', 'spouseOccupation');
         } else {
             fields = new Array('childName', 'childBirthDate', 'childGender', 'applicantName', 'applicantAddress', 'applicantSecondAddress', 'applicantOccupation');
         }
         disableFields(fields);
+        minimize("child-info");
+        minimize("applicant-info");
+        if ($('#jointApplicant').val() == 'true') {
+            minimize("spouse-info");
+        }
     }
 
     function minimize(id) {
