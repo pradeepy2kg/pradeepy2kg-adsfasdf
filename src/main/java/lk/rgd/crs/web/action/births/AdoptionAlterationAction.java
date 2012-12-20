@@ -85,7 +85,7 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
-            addActionError(getText("unknown.error.label") + e.getMessage());
+            addActionError(getText("unknown.error.label"));
             idUKey = adoptionAlteration.getAoUKey();
             populateAdoptionOrder();
             return ERROR;
