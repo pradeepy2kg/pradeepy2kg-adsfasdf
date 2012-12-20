@@ -39,15 +39,16 @@ CREATE TABLE  `CRS`.`ALT_ADOPTION` (
   `lastUpdatedUserId` varchar(30) NOT NULL,
   `courtUKey` int(11) DEFAULT NULL,
   `courtOrderNumber` varchar(255) DEFAULT NULL,
+  `orderDate` date DEFAULT NULL,
   PRIMARY KEY (`idUKey`),
   KEY `FK4E2FFC4EF46583DA` (`createdUserId`),
   KEY `FK4E2FFC4E1B8742CA` (`certificateGeneratedUserId`),
   KEY `FK4E2FFC4E4B52CC97` (`lastUpdatedUserId`),
   KEY `FK4E2FFC4E7518D9B7` (`approvalOrRejectUserId`),
   KEY `FK_Alt_Adoption_Court_courtUKey` (`courtUKey`),
-  CONSTRAINT `FK_Alt_Adoption_Court_courtUKey` FOREIGN KEY (`courtUKey`) REFERENCES `COURTS` (`courtUKey`),
   CONSTRAINT `FK4E2FFC4E1B8742CA` FOREIGN KEY (`certificateGeneratedUserId`) REFERENCES `COMMON`.`USERS` (`userId`),
   CONSTRAINT `FK4E2FFC4E4B52CC97` FOREIGN KEY (`lastUpdatedUserId`) REFERENCES `COMMON`.`USERS` (`userId`),
   CONSTRAINT `FK4E2FFC4E7518D9B7` FOREIGN KEY (`approvalOrRejectUserId`) REFERENCES `COMMON`.`USERS` (`userId`),
-  CONSTRAINT `FK4E2FFC4EF46583DA` FOREIGN KEY (`createdUserId`) REFERENCES `COMMON`.`USERS` (`userId`)
+  CONSTRAINT `FK4E2FFC4EF46583DA` FOREIGN KEY (`createdUserId`) REFERENCES `COMMON`.`USERS` (`userId`),
+  CONSTRAINT `FK_Alt_Adoption_Court_courtUKey` FOREIGN KEY (`courtUKey`) REFERENCES `COURTS` (`courtUKey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
