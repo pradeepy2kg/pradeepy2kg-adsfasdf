@@ -133,7 +133,6 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void setApplicantInfo(AdoptionOrder adoption, User user) {
-
         logger.debug("Recording adoption certificate applicant information for : {}", adoption.getIdUKey());
 
         AdoptionOrder adopt = getById(adoption.getIdUKey(), user);

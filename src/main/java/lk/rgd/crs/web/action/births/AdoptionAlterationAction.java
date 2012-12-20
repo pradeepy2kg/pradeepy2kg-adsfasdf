@@ -135,7 +135,7 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
             }
             adoptionAlteration.setApprovalStatuses(approvedBits);
             adoptionAlterationService.approveAdoptionAlteration(adoptionAlteration, user);
-            addActionMessage(getText("Successfully approve the adoption alteration"));
+            addActionMessage(getText("approve.adoption.alteration.success.label"));
         } catch (CRSRuntimeException e) {
             logger.error(e.getMessage());
             addActionError(getText("Error occurred."));
@@ -146,7 +146,15 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
 
     public String rejectAdoptionAlteration() {
         logger.debug("Attempt to reject Adoption Alteration");
-//         TODO
+        adoptionAlteration = adoptionAlterationService.getAdoptionAlterationByIdUKey(idUKey);
+        try{
+            adoptionAlterationService.rejectAdoptionAlteration(adoptionAlteration, user);
+            addActionMessage(getText("reject.adoption.alteration.success.label"));
+        }catch (CRSRuntimeException e){
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            addActionError(getText("unknown.error.label"));
+        }
         return SUCCESS;
     }
 
