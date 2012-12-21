@@ -80,6 +80,7 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     public String addAdoptionAlteration() {
         logger.debug("Attempt to add Adoption Alteration.");
         try {
+            adoptionAlteration.setCourt(courtDAO.getCourt(adoptionAlteration.getCourt().getCourtUKey()));
             adoptionAlterationService.addAdoptionAlteration(adoptionAlteration, user);
             addActionMessage(getText("add.adoption.alteration.success"));
         } catch (Exception e) {
