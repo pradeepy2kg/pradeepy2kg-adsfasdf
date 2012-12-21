@@ -228,7 +228,7 @@
             நீதிமன்றம் <br/>
             Court
         </td>
-        <td colspan="3"><s:label name="courtName" id="court"/></td>
+        <td colspan="3"><s:label name="courtName" id="courtName"/></td>
     </tr>
     <tr>
         <td>නියෝග අංකය<br/>
@@ -534,7 +534,7 @@
         <col/>
         <tr>
             <td>උසාවිය <s:label cssStyle="color: red;" value="*"/><br/>Court in ta<br/>Court</td>
-            <td colspan="3"><s:select list="courtList" name="adoptionAlteration.court.courtUKey" id="court"/></td>
+            <td colspan="3"><s:select list="courtList" name="courtUKey" id="courtUKey"/></td>
         </tr>
         <tr>
             <td>නියෝග අංකය <s:label cssStyle="color: red;" value="*"/><br/>Order No in ta<br/>Order Number</td>

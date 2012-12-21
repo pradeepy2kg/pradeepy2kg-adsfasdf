@@ -185,6 +185,12 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
     }
 
     private void applyChanges(AdoptionAlteration alteration, AdoptionOrder newAO) {
+        /* Set the new court details if the this is an alteration based on a court order */
+        if(AdoptionAlteration.Method.BY_COURT_ORDER.equals(alteration.getMethod())){
+            newAO.setCourt(alteration.getCourt());
+            newAO.setCourtOrderNumber(alteration.getCourtOrderNumber());
+            newAO.setOrderIssuedDate(alteration.getOrderDate());
+        }
         if (alteration.getApprovalStatuses().get(AdoptionAlteration.CHILD_NAME)) {
             newAO.setChildNewName(alteration.getChildName());
         }

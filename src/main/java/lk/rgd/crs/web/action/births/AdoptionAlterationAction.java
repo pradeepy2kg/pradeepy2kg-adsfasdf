@@ -63,6 +63,7 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     private AdoptionAlteration.Method[] methodList = AdoptionAlteration.Method.values();
     private boolean editMode;
     private int[] approvedIndex;
+    private int courtUKey;
 
     public AdoptionAlterationAction(AdoptionOrderService adoptionOrderService, AdoptionAlterationService adoptionAlterationService, CourtDAO courtDAO, CountryDAO countryDAO, DistrictDAO districtDAO, ProvinceDAO provinceDAO) {
         this.adoptionOrderService = adoptionOrderService;
@@ -80,7 +81,9 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     public String addAdoptionAlteration() {
         logger.debug("Attempt to add Adoption Alteration.");
         try {
-            adoptionAlteration.setCourt(courtDAO.getCourt(adoptionAlteration.getCourt().getCourtUKey()));
+            if (AdoptionAlteration.Method.BY_COURT_ORDER.equals(adoptionAlteration.getMethod())) {
+                adoptionAlteration.setCourt(courtDAO.getCourt(courtUKey));
+            }
             adoptionAlterationService.addAdoptionAlteration(adoptionAlteration, user);
             addActionMessage(getText("add.adoption.alteration.success"));
         } catch (Exception e) {
@@ -99,6 +102,9 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
         try {
             AdoptionAlteration existing = adoptionAlterationService.getAdoptionAlterationByIdUKey(adoptionAlteration.getIdUKey());
             populateAdoptionAlterationForUpdate(adoptionAlteration, existing);
+            if (AdoptionAlteration.Method.BY_COURT_ORDER.equals(adoptionAlteration.getMethod())) {
+                adoptionAlteration.setCourt(courtDAO.getCourt(courtUKey));
+            }
             adoptionAlterationService.updateAdoptionAlteration(adoptionAlteration, user);
             addActionMessage(getText("update.adoption.alteration.success"));
         } catch (Exception e) {
@@ -109,13 +115,13 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
         return SUCCESS;
     }
 
-    public String deleteAdoptionAlteration(){
+    public String deleteAdoptionAlteration() {
         logger.debug("Attempt to delete Adoption Alteration : {}", idUKey);
-        try{
+        try {
             AdoptionAlteration existing = adoptionAlterationService.getAdoptionAlterationByIdUKey(idUKey);
             adoptionAlterationService.deleteAdoptionAlteration(existing, user);
             addActionMessage(getText("delete.adoption.alteration.label"));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             addActionError(getText("unknown.error.label"));
             return ERROR;
@@ -129,7 +135,7 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
         try {
             BitSet approvedBits = new BitSet();
             if (approvedIndex != null) {
-                for(int bit: approvedIndex){
+                for (int bit : approvedIndex) {
                     logger.debug("Bit {} ", bit);
                     approvedBits.set(bit, true);
                 }
@@ -148,10 +154,10 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
     public String rejectAdoptionAlteration() {
         logger.debug("Attempt to reject Adoption Alteration");
         adoptionAlteration = adoptionAlterationService.getAdoptionAlterationByIdUKey(idUKey);
-        try{
+        try {
             adoptionAlterationService.rejectAdoptionAlteration(adoptionAlteration, user);
             addActionMessage(getText("reject.adoption.alteration.success.label"));
-        }catch (CRSRuntimeException e){
+        } catch (CRSRuntimeException e) {
             logger.error(e.getMessage());
             e.printStackTrace();
             addActionError(getText("unknown.error.label"));
@@ -272,6 +278,9 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
 
     private void populateBasicLists() {
         courtList = courtDAO.getCourtNames(language);
+        if (adoptionAlteration != null && adoptionAlteration.getCourt() != null) {
+            courtUKey = adoptionAlteration.getCourt().getCourtUKey();
+        }
     }
 
     public User getUser() {
@@ -483,5 +492,13 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
 
     public void setApprovedIndex(int[] approvedIndex) {
         this.approvedIndex = approvedIndex;
+    }
+
+    public int getCourtUKey() {
+        return courtUKey;
+    }
+
+    public void setCourtUKey(int courtUKey) {
+        this.courtUKey = courtUKey;
     }
 }
