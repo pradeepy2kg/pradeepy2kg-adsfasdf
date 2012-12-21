@@ -39,7 +39,7 @@
             <thead>
             <tr align="center">
                 <th>#</th>
-                <th><s:label value="%{getText('child.name.label')}"/></th>
+                <th><s:label value="%{getText('child_name.label')}"/></th>
                 <th align="center"><s:label value="%{getText('method.label')}"/></th>
                 <th align="center"><s:label value="%{getText('status.label')}"/></th>
                 <th></th>
