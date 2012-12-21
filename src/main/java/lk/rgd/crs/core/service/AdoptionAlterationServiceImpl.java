@@ -69,6 +69,11 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
         logger.debug("Attempt to delete an Adoption Alteration for adoption : {} by {}", adoptionAlteration.getAoUKey(), user.getUserId());
         checkUserPermission(Permission.EDIT_ADOPTION_ALTERATION, ErrorCodes.PERMISSION_DENIED, "delete adoption alteration", user);
         checkAdoptionAlterationStatus(adoptionAlteration, AdoptionAlteration.State.DATA_ENTRY, "delete");
+        AdoptionOrder adoptionOrder = adoptionOrderDAO.getById(adoptionAlteration.getAoUKey());
+        adoptionOrder.setStatus(AdoptionOrder.State.APPROVED);
+        adoptionOrderDAO.updateAdoptionOrder(adoptionOrder, user);
+        logger.debug("Updated adoption order : {}", adoptionOrder.getIdUKey());
+        logger.debug("Deleting adoption alteration record : {}", adoptionAlteration.getIdUKey());
         adoptionAlterationDAO.deleteAdoptionAlteration(adoptionAlteration.getIdUKey(), user);
     }
 
@@ -129,7 +134,7 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
             adoptionAlterationDAO.updateAdoptionAlteration(existing, user);
             logger.debug("Rejected adoption alteration : {}", existing.getIdUKey());
             // TODO set the status that was there before requesting the alteration
-            adoptionOrder.setStatus(AdoptionOrder.State.NOTICE_LETTER_PRINTED);
+            adoptionOrder.setStatus(AdoptionOrder.State.APPROVED);
             adoptionOrderDAO.updateAdoptionOrder(adoptionOrder, user);
             logger.debug("Updated adoption order : {}", adoptionOrder.getIdUKey());
         }
