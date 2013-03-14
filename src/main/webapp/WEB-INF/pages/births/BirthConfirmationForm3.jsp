@@ -180,7 +180,7 @@
                     උපත තහවුරු කරන්නාගේ සම්පූර්ණ නම<s:label value="*" cssStyle="color:red;font-size:10pt"/>
                     <br>பிறப்​பை உறுதிப்படுத்துபவரின் முழுப் பெயர்
                     <br>Full Name of the person confirming the birth details</label></td>
-                <td colspan="4"><s:textarea name="confirmant.confirmantFullName" id="confirmantFullName"
+                <td colspan="4"><s:textarea name="confirmant.confirmantFullName" id="confirmantFullName" onchange="checkSyntax('confirmantFullName')"
                                             cssStyle="width:98%;"/></td>
             </tr>
             <tr>

@@ -532,7 +532,7 @@ function maxLengthCalculate(id, max, divId) {
                 විවාහ වු ස්ථානය / விவாகம் இடம்பெற்ற இடம் / Place of Marriage <s:label id="placeStar" value="*"
                                                                                       cssStyle="width:10px;color:red;font-size:14pt;"/>
             </label></td>
-            <td colspan="4"><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage"
+            <td colspan="4"><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage" onchange="checkSyntax('placeOfMarriage')"
                                          cssStyle="float:left;"/></td>
         </tr>
         <tr>
@@ -605,7 +605,7 @@ function maxLengthCalculate(id, max, divId) {
         <tr>
             <td colspan="1"><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
             <td colspan="5">
-                <s:textarea name="grandFather.grandFatherFullName" id="grandFatherFullName" cssStyle="width:97%;"
+                <s:textarea name="grandFather.grandFatherFullName" id="grandFatherFullName" onchange="checkSyntax('grandFatherFullName')" cssStyle="width:97%;"
                             onblur="maxLengthCalculate('grandFatherFullName','600','grandFatherFullName_div');"/>
                 <div id="grandFatherFullName_div" style="color:red;font-size:8pt"></div>
             </td>
@@ -621,7 +621,7 @@ function maxLengthCalculate(id, max, divId) {
             </td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td colspan="3"><s:textfield name="grandFather.grandFatherBirthPlace"
-                                         id="grandFatherBirthPlace" cssStyle="width:93%;"/></td>
+                                         id="grandFatherBirthPlace" onchange="checkSyntax('grandFatherBirthPlace')" cssStyle="width:93%;"/></td>
         </tr>
         <tr>
             <td colspan="7"><label> (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
@@ -651,7 +651,7 @@ function maxLengthCalculate(id, max, divId) {
         <tr>
             <td colspan="1"><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
             <td colspan="5">
-                <s:textarea name="grandFather.greatGrandFatherFullName" id="greatGrandFatherFullName"
+                <s:textarea name="grandFather.greatGrandFatherFullName" id="greatGrandFatherFullName" onchange="checkSyntax('greatGrandFatherFullName')"
                             cssStyle="width:97%;"
                             onblur="maxLengthCalculate('greatGrandFatherFullName','600','greatGrandFatherFullName_div');"/>
                 <div id="greatGrandFatherFullName_div" style="color:red;font-size:8pt"></div>
@@ -665,7 +665,7 @@ function maxLengthCalculate(id, max, divId) {
                     name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear" maxLength="4"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td><s:textfield name="grandFather.greatGrandFatherBirthPlace"
-                             id="greatGrandFatherBirthPlace" cssStyle="width:93%;"/></td>
+                             id="greatGrandFatherBirthPlace" onchange="checkSyntax('greatGrandFatherBirthPlace')" cssStyle="width:93%;"/></td>
         </tr>
         </tbody>
     </table>
@@ -755,7 +755,7 @@ function maxLengthCalculate(id, max, divId) {
             பெயர்
             <br>Name</label></td>
         <td colspan="4">
-            <s:textarea name="informant.informantName" id="informantName" cssStyle="width:95%;"
+            <s:textarea name="informant.informantName" id="informantName" onchange="checkSyntax('informantName')" cssStyle="width:95%;"
                         onblur="maxLengthCalculate('informantName','600','informantName_div');"/>
             <div id="informantName_div" style="color:red;font-size:8pt"></div>
         </td>
@@ -766,7 +766,7 @@ function maxLengthCalculate(id, max, divId) {
             <br>அஞ்சல் முகவரி
             <br>Postal Address</label></td>
         <td colspan="4">
-            <s:textarea name="informant.informantAddress" id="informantAddress" cssStyle="width:95%;"
+            <s:textarea name="informant.informantAddress" id="informantAddress" onchange="checkSyntax('informantAddress')" cssStyle="width:95%;"
                         onblur="maxLengthCalculate('informantAddress','255','informantAddress_div');"/>
             <div id="informantAddress_div" style="color:red;font-size:8pt"></div>
         </td>
