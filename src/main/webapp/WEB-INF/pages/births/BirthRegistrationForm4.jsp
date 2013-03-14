@@ -194,7 +194,7 @@
                     නම<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>கொடுப்பவரின் பெயர் <br>Name</label>
                 </td>
                 <td colspan="4">
-                    <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
+                    <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName" onchange="checkSyntax('notifyingAuthorityName')"
                                 cssStyle="width:95%;"
                                 onblur="maxLengthCalculate('notifyingAuthorityName','120','notifyingAuthorityName_div');"/>
                     <div id="notifyingAuthorityName_div" style="color:red;font-size:8pt"></div>
@@ -205,7 +205,7 @@
                     ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/>
                     <br>தபால் முகவரி<br>Postal Address</label></td>
                 <td colspan="4">
-                    <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress"
+                    <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress" onchange="checkSyntax('notifyingAuthorityAddress')"
                                 cssStyle="width:95%;"
                                 onblur="maxLengthCalculate('notifyingAuthorityAddress','255','notifyingAuthorityAddress_div');"/>
                     <div id="notifyingAuthorityAddress_div" style="color:red;font-size:8pt"></div>
@@ -258,7 +258,7 @@
                     <tr>
                         <td><label>අදහස් දක්වන්න <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
                             <br>கருத்தினை தெரிவிக்கவும் <br>Add Comments </label></td>
-                        <td><s:textarea name="register.comments" id="comments" cssStyle="width:98%;" rows="10"/></td>
+                        <td><s:textarea name="register.comments" id="comments" onchange="checkSyntax('comments')" cssStyle="width:98%;" rows="10"/></td>
                     </tr>
                     </tbody>
                 </table>

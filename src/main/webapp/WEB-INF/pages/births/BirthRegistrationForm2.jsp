@@ -467,7 +467,7 @@ function maxLengthCalculate(id, max, divId) {
             <br>முழுப் பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
             <br>Full Name in any of the official languages (Sinhala / Tamil)</label></td>
         <td colspan="7">
-            <s:textarea name="parent.fatherFullName" id="fatherFullName" cssStyle="width:98%;"
+            <s:textarea name="parent.fatherFullName" id="fatherFullName" onchange="checkSyntax('fatherFullName')" cssStyle="width:98%;"
                         onblur="maxLengthCalculate('fatherFullName','600','fatherFullName_div');"/>
             <div id="fatherFullName_div" style="color:red;font-size:8pt"></div>
         </td>
@@ -510,7 +510,7 @@ function maxLengthCalculate(id, max, divId) {
                                                                                                    value="#i+1"/>) උපන්
             ස්ථානය <br>பிறந்த இடம்
             <br>Place of Birth</label></td>
-        <td colspan="7"><s:textfield id="fatherPlaceOfBirth" name="parent.fatherPlaceOfBirth"
+        <td colspan="7"><s:textfield id="fatherPlaceOfBirth" name="parent.fatherPlaceOfBirth" onchange="checkSyntax('fatherPlaceOfBirth')"
                                      cssStyle="width:97%;"/></td>
     </tr>
     </tbody>
@@ -571,7 +571,7 @@ function maxLengthCalculate(id, max, divId) {
             <br>முழுப் பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
             <br>Full Name in any of the official languages (Sinhala / Tamil)</label></td>
         <td colspan="7">
-            <s:textarea name="parent.motherFullName" id="motherFullName" cssStyle="width:98%;"
+            <s:textarea name="parent.motherFullName" id="motherFullName" onchange="checkSyntax('motherFullName')" cssStyle="width:98%;"
                         onblur="maxLengthCalculate('motherFullName','600','motherFullName_div');"/>
             <div id="motherFullName_div" style="color:red;font-size:8pt"></div>
         </td>
@@ -632,7 +632,7 @@ function maxLengthCalculate(id, max, divId) {
                                                                                                    value="#i+1"/>
             ) උපන් ස්ථානය <br>பிறந்த இடம்
             <br>Place of Birth</label></td>
-        <td colspan="3" class="passport"><s:textfield id="motherPlaceOfBirth" name="parent.motherPlaceOfBirth"/></td>
+        <td colspan="3" class="passport"><s:textfield id="motherPlaceOfBirth" onchange="checkSyntax('motherPlaceOfBirth')" name="parent.motherPlaceOfBirth"/></td>
     </tr>
     <tr>
         <td rowspan="4"><label>(<s:property value="#row"/><s:set name="row"
@@ -640,7 +640,7 @@ function maxLengthCalculate(id, max, divId) {
                 name="i" value="#i+1"/>) ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address</label>
         </td>
         <td colspan="7">
-            <s:textarea name="parent.motherAddress" id="motherAddress" cssStyle="width:98%;"
+            <s:textarea name="parent.motherAddress" id="motherAddress" onchange="checkSyntax('motherAddress')" cssStyle="width:98%;"
                         onblur="maxLengthCalculate('motherAddress','255','motherAddress_div');"/>
             <div id="motherAddress_div" style="color:red;font-size:8pt"></div>
         </td>

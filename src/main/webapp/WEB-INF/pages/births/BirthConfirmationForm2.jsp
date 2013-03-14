@@ -111,7 +111,7 @@
             </tr>
             <tr>
                 <td><label>නම වෙනස් විය යුතු අයුරු<br>பெயர் மாற்றப்பட வேண்டிய விதம்  <br>Corrected name</label></td>
-                <td><s:textarea id="childFullNameOfficialLang" name="child.childFullNameOfficialLang" rows="3"/></td>
+                <td><s:textarea id="childFullNameOfficialLang" onchange="checkSyntax('childFullNameOfficialLang')" name="child.childFullNameOfficialLang" rows="3"/></td>
             </tr>
             <tr>
                 <td rowspan="2">15</td>
@@ -143,7 +143,7 @@
             <tr>
                 <td><label>නම වෙනස් විය යුතු අයුරු<br>பெயர் மாற்றப்பட வேண்டிய விதம்  <br>Corrected name</label></td>
                 <td>
-                    <s:textarea id="fatherFullNameOfficialLang" name="parent.fatherFullName" rows="3"/>
+                    <s:textarea id="fatherFullNameOfficialLang" onchange="checkSyntax('fatherFullNameOfficialLang')" name="parent.fatherFullName" rows="3"/>
                 </td>
             </tr>
             <tr>
@@ -175,7 +175,7 @@
             </tr>
             <tr>
                 <td><label>නම වෙනස් විය යුතු අයුරු<br>பெயர் மாற்றப்பட வேண்டிய விதம்  <br>Corrected name</label></td>
-                <td><s:textarea id="motherFullNameOfficialLang" name="parent.motherFullName" rows="3"/></td>
+                <td><s:textarea id="motherFullNameOfficialLang" onchange="checkSyntax('motherFullNameOfficialLang')" name="parent.motherFullName" rows="3"/></td>
             </tr>
             <tr>
                 <td rowspan="2">19</td>
