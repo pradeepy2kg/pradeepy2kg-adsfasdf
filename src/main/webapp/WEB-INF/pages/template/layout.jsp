@@ -128,6 +128,8 @@
     <div id="layout-footer">
         <tiles:insertAttribute name="footer"/>
     </div>
+    <s:hidden id="syntaxError" value="%{getText('syntax.errors.in.following.text.label')}"/>
+    <s:hidden id="correctSyntaxError" value="%{getText('want.to.correct.syntax.error.label')}"/>
 </div>
 </body>
 </html>
