@@ -1,14 +1,37 @@
 /**
+ * @author Duminda Dharmakeerthi
+ *
+ * To detect text input fields of the form.
+ * Will use jQuery methods. Therefore, jQuery library should be available for use.
+ */
+
+/**
+ * Return the IDs of the text fields and text areas as an array.
+ * @param formId ID of the web form
+ */
+function getActiveTextFields(formId){
+    $('#'+formId+' :input').each(function(index, element){
+        var fieldValue = element.value;
+        if(fieldValue.length > 0){
+            checkSyntax(element.id, fieldValue);
+        }
+    });
+}
+
+/**
  * Syntax Checker was originally written by Shanmugarajah Sinnathamby.
  * Modified to use in the ePopulation Registry and Converted to JavaScript by Duminda Dharmakeerthi.
  */
 
 /**
- * Check for Sinhala and Tamil syntax errors and return the corrected text without the syntax errors.
- * @param id ID of the input field that has to be checked for syntax errors.
+ * Check the input TEXT for syntax errors. (in Sinhala and Tamil)
+ * This function will look for syntax errors in Sinhala and Tamil text and provide an option to the user to correct.
+ * It will suggest the corrected text.
+ *
+ * @param id    ID of the element
+ * @param text  Content of the element.
  */
-function checkSyntax(id) {
-    var text = $('#'+id).val();
+function checkSyntax(id, text) {
     var curChar;
     var charCode;
     var output = "";
@@ -262,7 +285,7 @@ function checkSyntax(id) {
     output = output.replace("<<", "<");
     output = output.replace(">>", ">");
     if(text.length != output.length){
-        var check = confirm("There is a syntax error in the following text.\n"+ text +"\nDo you want to correct it as follows?\n "+ output);
+        var check = confirm($('#syntaxError').val()+"\n"+ text +"\n"+ $('#correctSyntaxError').val() +"\n "+ output);
         if(check){
             $('#'+id).val(output);
         }
