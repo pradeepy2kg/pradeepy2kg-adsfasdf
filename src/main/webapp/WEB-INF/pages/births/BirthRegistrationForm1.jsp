@@ -532,7 +532,7 @@ function maxLengthCalculate(id, max, divId) {
     <td rowspan="2">උපන් ස්ථානය<br/>பிறந்த இடம்<br/>Place of Birth</td>
     <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
     <td colspan="6">
-        <s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:95%;" onchange="checkSyntax('placeOfBirth')"
+        <s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:95%;"
                      maxLength="255"/>
     </td>
 </tr>
@@ -561,7 +561,7 @@ function maxLengthCalculate(id, max, divId) {
             <br>Name in any of the official languages (Sinhala / Tamil)</label>
         </td>
         <td colspan="7">
-            <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang" cssStyle="width:880px;"   onchange="checkSyntax('childFullNameOfficialLang')"
+            <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang" cssStyle="width:880px;"
                         onblur="maxLengthCalculate('childFullNameOfficialLang','600','childFullNameOfficialLang_div');"/>
             <div id="childFullNameOfficialLang_div" style="color:red;font-size:8pt"></div>
         </td>
@@ -670,7 +670,7 @@ function maxLengthCalculate(id, max, divId) {
     </s:checkbox>
 </div>
 <div class="form-submit">
-    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+    <s:submit value="%{getText('next.label')}" onclick="getActiveTextFields('birth-registration-form-1')" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
 
