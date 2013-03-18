@@ -591,7 +591,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
 <s:else>
     <s:url value="eprEditBirthAlteration.do" id="alteration"/>
 </s:else>
-<s:form action="%{alteration}" onsubmit="javascript:return validate()">
+<s:form id="birth-alteration-form" action="%{alteration}" onsubmit="javascript:return validate()">
 <table class="birth-alteration-table-style01" style="width:1030px;">
     <tr>
         <td width="30%"></td>
@@ -1590,7 +1590,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
     <s:hidden name="idUKey"/>
     <s:hidden name="sectionOfAct"/>
 <div class="form-submit">
-    <s:submit value="%{getText('save.label')}"/>
+    <s:submit onclick="getActiveTextFields('birth-alteration-form')" value="%{getText('save.label')}"/>
     </s:form>
 </div>
 <%--common errors--%>

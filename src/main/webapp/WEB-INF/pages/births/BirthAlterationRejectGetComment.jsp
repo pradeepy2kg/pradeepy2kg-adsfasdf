@@ -40,7 +40,7 @@
 
     <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
-    <s:form action="eprRejectBirthAlteration.do" method="post" onsubmit="javascript: return validate()">
+    <s:form id="birth-alteration-reject-form" action="eprRejectBirthAlteration.do" method="post" onsubmit="javascript: return validate()">
         <fieldset>
             <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
             <s:hidden name="idUKey" value="%{#request.idUKey}"/>
@@ -53,7 +53,7 @@
                     <td width="500px"><s:textarea id="comments" name="comment" rows="4" cols="35"/></td>
                     <td>
                         <div class="form-submit">
-                            <s:submit name="reject" value="%{getText('button.reject')}"/>
+                            <s:submit onclick="getActiveTextFields('birth-alteration-reject-form')" name="reject" value="%{getText('button.reject')}"/>
                         </div>
                     </td>
                 </tr>

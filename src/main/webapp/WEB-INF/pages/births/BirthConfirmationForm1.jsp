@@ -585,7 +585,7 @@ function initPage() {
 
 <s:if test="bdId != 0">
     <div class="form-submit">
-        <s:submit value="%{getText('next.label')}" id="next"/>
+        <s:submit onclick="getActiveTextFields('birth-confirmation-form-1')" value="%{getText('next.label')}" id="next"/>
         <s:hidden value="%{#request.bdId}" name="bdId"/>
     </div>
 </s:if>
