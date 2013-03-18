@@ -725,7 +725,7 @@ function maxLengthCalculate(id, max, divId) {
 </div>
 
 <div class="form-submit">
-    <s:submit value="%{getText('next.label')}"/>
+    <s:submit onclick="getActiveTextFields('birth-registration-form-2')" value="%{getText('next.label')}"/>
 </div>
 <div class="next-previous">
     <s:url id="backUrl" action="eprBirthRegistration">
