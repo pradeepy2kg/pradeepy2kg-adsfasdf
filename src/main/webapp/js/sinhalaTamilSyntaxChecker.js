@@ -9,12 +9,17 @@
  * Return the IDs of the text fields and text areas as an array.
  * @param formId ID of the web form
  */
-function getActiveTextFields(formId){
-    $('#'+formId+' :input').each(function(index, element){
+function getActiveTextFields(formId) {
+    $('#' + formId + ' :input').each(function(index, element) {
         var fieldValue = element.value;
-        if(fieldValue.length > 0){
-            checkSyntax(element.id, fieldValue);
+        var ok = true;
+        if (fieldValue.length > 0) {
+            if(!checkSyntax(element.id, fieldValue)){
+                ok = false;
+            }
         }
+        alert("Status: "+ ok);
+        return ok;
     });
 }
 
@@ -53,8 +58,8 @@ function checkSyntax(id, text) {
     text = text.replace("එ්", "ඒ");
     text = text.replace("ෙඑ", "ඓ");
     text = text.replace("ඔ්", "ඕ");
-    text = text.replace("ඔෟ", "ඓ");
-    text = text.replace("ෙඑ", "ඖ");
+    text = text.replace("ෙඑ", "ඓ");
+    text = text.replace("ඔෟ", "ඖ");
     text = text.replace("ේ", "ේ");
     text = text.replace("ො", "ො");
     text = text.replace("ෝ", "ෝ");
@@ -80,8 +85,9 @@ function checkSyntax(id, text) {
                     nextChar = arrChars[i + 1];
                     nextCharCode = nextChar.charCodeAt(0);
                     // next char is a sha
-                    if (nextCharCode == 2999)
+                    if (nextCharCode == 2999) {
                         isKsha = 1;
+                    }
                 }
             }
             if (isKsha == 0) {
@@ -98,8 +104,9 @@ function checkSyntax(id, text) {
                     nextChar = arrChars[i + 1];
                     nextCharCode = nextChar.charCodeAt(0);
                     // next char is a sha
-                    if (nextCharCode == 2999)
+                    if (nextCharCode == 2999) {
                         isHanging = 1;
+                    }
                 }
             }
             // check for bandhi and rakar and yanse and reph
@@ -114,8 +121,9 @@ function checkSyntax(id, text) {
                             prevprevChar = arrChars[i - 2];
                             prevprevCharCode = prevprevChar.charCodeAt(0);
                             // prev prev char is a sinhala consonant then allow
-                            if (prevprevCharCode > 3481 & prevprevCharCode < 3528)
+                            if (prevprevCharCode > 3481 & prevprevCharCode < 3528) {
                                 isHanging = 1;
+                            }
                         }
                     }
                 }
@@ -133,8 +141,9 @@ function checkSyntax(id, text) {
                             nextChar = arrChars[i + 2];
                             nextCharCode = nextChar.charCodeAt(0);
                             // next char is a sinhala consonant then allow
-                            if (nextCharCode > 3481 & nextCharCode < 3528)
+                            if (nextCharCode > 3481 & nextCharCode < 3528) {
                                 isHanging = 1;
+                            }
                         }
                     }
                 }
@@ -145,7 +154,7 @@ function checkSyntax(id, text) {
                 outputDone = 1;
             }
             prevConsonant = 0;
-        }else if (charCode > 3529 & charCode < 3572) {
+        } else if (charCode > 3529 & charCode < 3572) {
             // if sinhala vowel modifier not followed by sinhala consonant
 
             if (prevConsonant != 1) {
@@ -200,7 +209,7 @@ function checkSyntax(id, text) {
                 }
             }
             prevConsonant = 0;
-        }else if (charCode > 3006 & charCode < 3045) {
+        } else if (charCode > 3006 & charCode < 3045) {
             // if tamil vowel modifier not followed by tamil consonant
             if (prevConsonant != 2) {
                 if (charCode == 3014) {
@@ -263,7 +272,7 @@ function checkSyntax(id, text) {
                     }
                 }
                 if (outputDone != 1) {
-                    // // output = output + '<' + curChar + '>';
+                    // output = output + '<' + curChar + '>';
                     outputDone = 1;
                 }
             }
@@ -277,17 +286,22 @@ function checkSyntax(id, text) {
         }
 
         prevCharCode = charCode;
-        if (outputDone == 0)
+        if (outputDone == 0) {
             output = output + curChar;
+        }
     }
 
     text = text.replace("ෳ", "");
     output = output.replace("<<", "<");
     output = output.replace(">>", ">");
-    if(text.length != output.length){
-        var check = confirm($('#syntaxError').val()+"\n"+ text +"\n"+ $('#correctSyntaxError').val() +"\n "+ output);
-        if(check){
-            $('#'+id).val(output);
+
+    if (text.length != output.length) {
+        var check = confirm($('#syntaxError').val() + "\n" + text + "\n" + $('#correctSyntaxError').val() + "\n " + output);
+        if (check) {
+            $('#' + id).val(output);
+            return true;
+        } else {
+            return false;
         }
     }
 }
