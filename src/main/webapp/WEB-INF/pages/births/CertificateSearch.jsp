@@ -236,7 +236,7 @@ function numbersonly(e, decimal) {
     <s:url id="certificateSearch" value="eprDeathCertificateSearch.do"/>
 </s:elseif>
 
-<s:form action="%{certificateSearch}" name="birthCertificateSearchForm" id="birth-certificate-search-form-1"
+<s:form action="%{certificateSearch}" name="birthCertificateSearchForm" id="birth-certificate-search-form-1" onsubmit="getActiveTextFields('birth-certificate-search-form-1')"
         method="POST">
 <table style="font-size:9pt;">
     <caption></caption>

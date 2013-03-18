@@ -38,7 +38,7 @@
 
     <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
-    <s:form action="eprRejectBirthDeclaration.do" method="post" onsubmit="javascript:return validate()">
+    <s:form id="birth-declaration-reject-form" action="eprRejectBirthDeclaration.do" method="post" onsubmit="javascript:return validate()">
         <fieldset>
             <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
             <s:hidden name="bdId" value="%{#request.bdId}"/>
@@ -56,7 +56,7 @@
                     <td width="500px"><s:textarea id="comments" name="comments" rows="4" cols="35"/></td>
                     <td>
                         <div class="form-submit">
-                            <s:submit name="reject" value="%{getText('reject.label')}"/>
+                            <s:submit onclick="getActiveTextFields('birth-declaration-reject-form')" name="reject" value="%{getText('reject.label')}"/>
                         </div>
                     </td>
                 </tr>

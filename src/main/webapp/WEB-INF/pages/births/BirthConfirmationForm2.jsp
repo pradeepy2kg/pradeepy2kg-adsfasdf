@@ -207,7 +207,7 @@
             <s:hidden name="pageNo" value="2"/>
             <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
             <s:hidden value="%{#request.bdId}" name="bdId"/>
-            <s:submit value="%{getText('next.label')}"/>
+            <s:submit onclick="getActiveTextFields('birth-confirmation-form-2')" value="%{getText('next.label')}"/>
         </div>
     </s:form>
 
