@@ -6,26 +6,43 @@
  */
 
 /**
- * Return the IDs of the text fields and text areas as an array.
+ * Check for syntax errors in the text inputs in the given form.
+ * Provide the user an option to correct the syntax errors by the system suggested correct text.
+ * If the user confirm to correct the text based on the system suggested text, it will correct that particular data.
+ *
  * @param formId ID of the web form
+ * @return Custom error message based on the syntax errors. "" otherwise.
  */
-function getActiveTextFields(formId) {
+function checkActiveFieldsForSyntaxErrors(formId) {
+    var validInput = true;
+    var out = new Array();
     $('#' + formId + ' :input').each(function(index, element) {
+        output = new Object();
         var fieldValue = element.value;
-        var ok = true;
-        if (fieldValue.length > 0) {
-            if(!checkSyntax(element.id, fieldValue)){
-                ok = false;
+        var checkerValue = checkSyntax(fieldValue);
+        if (fieldValue.length != checkerValue.length) {
+            var check = confirm($('#syntaxError').val() + "\n" + fieldValue + "\n" + $('#correctSyntaxError').val() + "\n " + checkerValue);
+            if (check) {
+                $('#' + element.id).val(checkerValue);
+            } else {
+                output.id = element.id;
+                output.originalValue = fieldValue;
+                output.checkerValue = checkerValue;
+                out.push(output);
+                validInput = false;
             }
         }
-        alert("Status: "+ ok);
-        return ok;
     });
+    if (out.length > 0) {
+        return getErrorMessage(out);
+    }
+    return "";
 }
 
 /**
  * Syntax Checker was originally written by Shanmugarajah Sinnathamby.
- * Modified to use in the ePopulation Registry and Converted to JavaScript by Duminda Dharmakeerthi.
+ * Converting to JavaScript by Duminda Dharmakeerthi.
+ * Modified to use in general purpose for correcting syntax errors in web based systems.
  */
 
 /**
@@ -33,10 +50,10 @@ function getActiveTextFields(formId) {
  * This function will look for syntax errors in Sinhala and Tamil text and provide an option to the user to correct.
  * It will suggest the corrected text.
  *
- * @param id    ID of the element
  * @param text  Content of the element.
+ * @return Syntax corrected text.
  */
-function checkSyntax(id, text) {
+function checkSyntax(text) {
     var curChar;
     var charCode;
     var output = "";
@@ -295,13 +312,23 @@ function checkSyntax(id, text) {
     output = output.replace("<<", "<");
     output = output.replace(">>", ">");
 
-    if (text.length != output.length) {
-        var check = confirm($('#syntaxError').val() + "\n" + text + "\n" + $('#correctSyntaxError').val() + "\n " + output);
-        if (check) {
-            $('#' + id).val(output);
-            return true;
-        } else {
-            return false;
-        }
+    return output;
+}
+
+/**
+ * Generate a corresponding error message based on the syntax errors.
+ * errorList is a JavaScript object that contains three properties.
+ *      id              : ID of the element that has the error.
+ *      originalValue   : Original text entered by the user (which has syntax errors)
+ *      checkerValue    : Suggested correct text (from the syntax checker)
+ *
+ * @param errorList List of errors
+ * @return return a custom error message generated based on the errorList.
+ */
+function getErrorMessage(errorList) {
+    var msg = "\n" + $('#syntaxErrorData').val();
+    for (i = 0; i < errorList.length; i++) {
+        msg = msg + "\n\t" + errorList[i].originalValue;
     }
+    return msg;
 }
