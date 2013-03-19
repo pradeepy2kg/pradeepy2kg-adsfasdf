@@ -197,6 +197,11 @@ function validateSearch() {
         isNumeric(domObject.value, 'error1', 'error2');
     }
 
+    var out = checkActiveFieldsForSyntaxErrors('birth-confirmation-form-1');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -585,7 +590,7 @@ function initPage() {
 
 <s:if test="bdId != 0">
     <div class="form-submit">
-        <s:submit onclick="checkActiveFieldsForSyntaxErrors('birth-confirmation-form-1')" value="%{getText('next.label')}" id="next"/>
+        <s:submit value="%{getText('next.label')}" id="next"/>
         <s:hidden value="%{#request.bdId}" name="bdId"/>
     </div>
 </s:if>

@@ -109,6 +109,11 @@ function validate() {
 
     commonTags();
 
+    var out = checkActiveFieldsForSyntaxErrors('birth-certificate-search-form-1');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -169,6 +174,11 @@ function validateMandatory() {
     var returnval = true;
 
     mandatoryFields();
+
+    var out = checkActiveFieldsForSyntaxErrors('birth-certificate-search-form-1');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
 
     if (errormsg != "") {
         alert(errormsg);
@@ -236,7 +246,7 @@ function numbersonly(e, decimal) {
     <s:url id="certificateSearch" value="eprDeathCertificateSearch.do"/>
 </s:elseif>
 
-<s:form action="%{certificateSearch}" name="birthCertificateSearchForm" id="birth-certificate-search-form-1" onsubmit="checkActiveFieldsForSyntaxErrors('birth-certificate-search-form-1')"
+<s:form action="%{certificateSearch}" name="birthCertificateSearchForm" id="birth-certificate-search-form-1"
         method="POST">
 <table style="font-size:9pt;">
     <caption></caption>

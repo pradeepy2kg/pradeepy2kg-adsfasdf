@@ -466,6 +466,12 @@ function validate() {
     if (!(mother || father || other || self)) {
         errormsg = errormsg + "\n" + document.getElementById("declarantError1").value;
     }
+
+    var out = checkActiveFieldsForSyntaxErrors('birth-alteration-form');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -1590,7 +1596,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
     <s:hidden name="idUKey"/>
     <s:hidden name="sectionOfAct"/>
 <div class="form-submit">
-    <s:submit onclick="checkActiveFieldsForSyntaxErrors('birth-alteration-form')" value="%{getText('save.label')}"/>
+    <s:submit value="%{getText('save.label')}"/>
     </s:form>
 </div>
 <%--common errors--%>

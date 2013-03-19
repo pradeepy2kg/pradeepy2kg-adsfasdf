@@ -6,14 +6,23 @@
     }
     var errorMsg = "";
     function validate() {
+        var returnval = true;
         var comment = document.getElementById('comments').value;
         if (comment == "") {
             errorMsg = errorMsg + document.getElementById('commentEmpty').value;
-            alert(errorMsg);
-            errorMsg = "";
-            return false;
         }
-        return true;
+
+        var out = checkActiveFieldsForSyntaxErrors('birth-declaration-reject-form');
+        if(out != ""){
+            errorMsg = errorMsg + out;
+        }
+
+        if(errorMsg != ""){
+            alert(errorMsg);
+            returnval = false;
+        }
+        errorMsg = "";
+        return returnval;
     }
 </script>
 <div id="birth-declaration-reject-outer" class="birth-declaration-reject-outer">
@@ -56,7 +65,7 @@
                     <td width="500px"><s:textarea id="comments" name="comments" rows="4" cols="35"/></td>
                     <td>
                         <div class="form-submit">
-                            <s:submit onclick="checkActiveFieldsForSyntaxErrors('birth-declaration-reject-form')" name="reject" value="%{getText('reject.label')}"/>
+                            <s:submit name="reject" value="%{getText('reject.label')}"/>
                         </div>
                     </td>
                 </tr>

@@ -71,6 +71,11 @@
             isEmpty(domObject, "", 'error6');
         }
 
+        var out = checkActiveFieldsForSyntaxErrors('birth-confirmation-form-2');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -207,7 +212,7 @@
             <s:hidden name="pageNo" value="2"/>
             <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
             <s:hidden value="%{#request.bdId}" name="bdId"/>
-            <s:submit onclick="checkActiveFieldsForSyntaxErrors('birth-confirmation-form-2')" value="%{getText('next.label')}"/>
+            <s:submit value="%{getText('next.label')}"/>
         </div>
     </s:form>
 

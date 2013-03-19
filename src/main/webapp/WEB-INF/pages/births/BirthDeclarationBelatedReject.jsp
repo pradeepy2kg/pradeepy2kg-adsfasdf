@@ -3,6 +3,22 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
     function initPage(){}
+
+    var errormsg = "";
+    function validate(){
+        var returnval = true;
+        var out = checkActiveFieldsForSyntaxErrors('belated-birth-reject-form');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
+    }
 </script>
 <div id="birth-declaration-reject-outer" class="birth-declaration-reject-outer">
     <table>
@@ -26,7 +42,7 @@
 
     <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
-    <s:form id="belated-birth-reject-form" action="eprRejectBelatedBirthDeclaration.do" method="post">
+    <s:form id="belated-birth-reject-form" action="eprRejectBelatedBirthDeclaration.do" method="post" onsubmit="javascript:return validate()">
         <fieldset>
             <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
             <s:hidden name="bdId" value="%{#request.bdId}"/>
@@ -44,7 +60,7 @@
                     <td width="500px"><s:textarea id="comments" name="comments" rows="4" cols="35"/></td>
                     <td>
                         <div class="form-submit">
-                            <s:submit onclick="checkActiveFieldsForSyntaxErrors('belated-birth-reject-form')" name="reject" value="%{getText('reject.label')}"/>
+                            <s:submit name="reject" value="%{getText('reject.label')}"/>
                         </div>
                     </td>
                 </tr>
