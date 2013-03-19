@@ -1590,7 +1590,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
     <s:hidden name="idUKey"/>
     <s:hidden name="sectionOfAct"/>
 <div class="form-submit">
-    <s:submit onclick="getActiveTextFields('birth-alteration-form')" value="%{getText('save.label')}"/>
+    <s:submit onclick="checkActiveFieldsForSyntaxErrors('birth-alteration-form')" value="%{getText('save.label')}"/>
     </s:form>
 </div>
 <%--common errors--%>

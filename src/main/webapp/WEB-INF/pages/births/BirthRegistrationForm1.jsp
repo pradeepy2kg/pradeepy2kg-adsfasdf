@@ -143,6 +143,11 @@ function validate() {
         liveBirthCommonTags(check);
     }
 
+    var out = checkActiveFieldsForSyntaxErrors('birth-registration-form-1');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -670,7 +675,7 @@ function maxLengthCalculate(id, max, divId) {
     </s:checkbox>
 </div>
 <div class="form-submit">
-    <s:submit value="%{getText('next.label')}" onclick="getActiveTextFields('birth-registration-form-1')" cssStyle="margin-top:10px;"/>
+    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
 
