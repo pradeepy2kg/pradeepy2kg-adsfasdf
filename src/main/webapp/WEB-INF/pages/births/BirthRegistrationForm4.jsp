@@ -266,10 +266,10 @@
         </s:if>
         <div class="form-submit">
             <s:if test="%{#session.birthRegister.idUKey==0}">
-                <s:submit onclick="getActiveTextFields('birth-registration-form-4')" value="%{getText('add.label')}"/>
+                <s:submit onclick="checkActiveFieldsForSyntaxErrors('birth-registration-form-4')" value="%{getText('add.label')}"/>
             </s:if>
             <s:else>
-                <s:submit onclick="getActiveTextFields('birth-registration-form-4')" value="%{getText('save.label')}"/>
+                <s:submit onclick="checkActiveFieldsForSyntaxErrors('birth-registration-form-4')" value="%{getText('save.label')}"/>
             </s:else>
         </div>
         <div class="next-previous">

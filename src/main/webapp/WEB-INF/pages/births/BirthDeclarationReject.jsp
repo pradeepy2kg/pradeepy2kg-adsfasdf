@@ -56,7 +56,7 @@
                     <td width="500px"><s:textarea id="comments" name="comments" rows="4" cols="35"/></td>
                     <td>
                         <div class="form-submit">
-                            <s:submit onclick="getActiveTextFields('birth-declaration-reject-form')" name="reject" value="%{getText('reject.label')}"/>
+                            <s:submit onclick="checkActiveFieldsForSyntaxErrors('birth-declaration-reject-form')" name="reject" value="%{getText('reject.label')}"/>
                         </div>
                     </td>
                 </tr>
