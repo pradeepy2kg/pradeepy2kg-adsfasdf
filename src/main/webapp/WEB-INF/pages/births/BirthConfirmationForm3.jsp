@@ -63,6 +63,11 @@
         else
             isDate(domObject.value, 'invalid', 'infomantDate');
 
+        var out = checkActiveFieldsForSyntaxErrors('birth-confirmation-form3');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -199,7 +204,7 @@
         <s:hidden name="pageNo" value="3"/>
 
         <div class="form-submit">
-            <s:submit onclick="checkActiveFieldsForSyntaxErrors('birth-confirmation-form3')" value="%{getText('save.label')}"/>
+            <s:submit value="%{getText('save.label')}"/>
         </div>
         <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
     </s:form>

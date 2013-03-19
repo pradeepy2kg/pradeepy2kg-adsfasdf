@@ -278,6 +278,11 @@ function validate() {
     if (!isFieldEmpty(domObject))
         validateEmail(domObject, 'error2', 'error1')
 
+    var out = checkActiveFieldsForSyntaxErrors('birth-registration-form-2');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -725,7 +730,7 @@ function maxLengthCalculate(id, max, divId) {
 </div>
 
 <div class="form-submit">
-    <s:submit onclick="checkActiveFieldsForSyntaxErrors('birth-registration-form-2')" value="%{getText('next.label')}"/>
+    <s:submit value="%{getText('next.label')}"/>
 </div>
 <div class="next-previous">
     <s:url id="backUrl" action="eprBirthRegistration">

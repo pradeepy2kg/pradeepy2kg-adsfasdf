@@ -17,7 +17,7 @@ function checkActiveFieldsForSyntaxErrors(formId) {
     var validInput = true;
     var out = new Array();
     $('#' + formId + ' :input').each(function(index, element) {
-        output = new Object();
+        var output = new Object();
         var fieldValue = element.value;
         var checkerValue = checkSyntax(fieldValue);
         if (fieldValue.length != checkerValue.length) {
