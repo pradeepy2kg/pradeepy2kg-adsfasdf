@@ -131,6 +131,11 @@
             errormsg = errormsg + "Please Enter The Tamil Name of " + pageName + " \n";
         }
 
+        var out = checkActiveFieldsForSyntaxErrors('editDivisions');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             return false;
@@ -529,7 +534,7 @@
         <s:url id="manageDivision" action="eprAddDivisionsAndDsDivisions.do" namespace="../management"/>
         <s:url id="print" action="eprAddDivisionsAndDsDivisions.do" namespace="../management"/>
     </s:else>
-    <s:form name="editDivisions" method="POST" action="%{manageDivision}"
+    <s:form name="editDivisions" id="editDivisions" method="POST" action="%{manageDivision}"
             onsubmit="javascript:return validate()">
         <table class="add-inactive-divisions-outer-table" cellspacing="0" align="center" style="margin-top:2px;">
             <col width="27%"/>

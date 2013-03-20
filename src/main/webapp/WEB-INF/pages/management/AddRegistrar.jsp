@@ -87,6 +87,11 @@
             isDate(dob.value, "Invalid ", "invalideData")
         }
 
+        var out = checkActiveFieldsForSyntaxErrors('add-registrar-form');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -136,7 +141,7 @@
 
 <div class="add-registrar-body">
     <div class="block">
-        <s:form action="eprRegistrarsAdd.do" method="post" onsubmit="javascript:return validate()">
+        <s:form id="add-registrar-form" action="eprRegistrarsAdd.do" method="post" onsubmit="javascript:return validate()">
         <table width="100%" cellpadding="5" cellspacing="5">
             <caption></caption>
             <col width="400px"/>

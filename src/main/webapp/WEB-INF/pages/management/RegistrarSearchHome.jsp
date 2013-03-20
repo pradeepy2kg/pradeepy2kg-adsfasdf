@@ -53,6 +53,12 @@
         if (pin.value != "") {
             validatePIN(pin, "err_invalide_input_type", "filed_pin");
         }
+
+        var out = checkActiveFieldsForSyntaxErrors('registrar-search-home');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg)
             errormsg = "";
@@ -66,7 +72,7 @@
     }
 </script>
 <fieldset style="margin-bottom:0px;margin-top:5px;border:none;">
-    <s:form method="post" action="eprFindRegistrar.do" onsubmit="javascript:return validatePage()">
+    <s:form id="registrar-search-home" method="post" action="eprFindRegistrar.do" onsubmit="javascript:return validatePage()">
         <div id="tabs" style="font-size:10pt;">
             <ul>
                 <li><a href="#fragment-1"><span> <s:label
