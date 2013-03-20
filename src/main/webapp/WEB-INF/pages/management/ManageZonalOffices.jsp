@@ -64,6 +64,11 @@
             errormsg = errormsg + "Please Enter The Zonal Office Mail Address in English\n";
         }
 
+        var out = checkActiveFieldsForSyntaxErrors('add_edit_zonal_office');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             return false;

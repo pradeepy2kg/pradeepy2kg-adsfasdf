@@ -95,6 +95,11 @@
         else
             isDate(domObject.value, "error1", "error7");
 
+        var out = checkActiveFieldsForSyntaxErrors('events-viewer-form');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -109,7 +114,7 @@
 
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend><b><s:label value="Filter Events"/></b></legend>
-    <s:form action="eprFilterEventsList.do" method="POST" onsubmit="javascript:return validate()">
+    <s:form id="events-viewer-form" action="eprFilterEventsList.do" method="POST" onsubmit="javascript:return validate()">
         <table width="100%" cellpadding="5" cellspacing="0">
             <col width="200px">
             <col width="200px">
