@@ -84,6 +84,12 @@
         if (isFieldEmpty(domObject)) {
             printMessage('text_must_fill', "declerent_address")
         }
+
+        var out = checkActiveFieldsForSyntaxErrors('death-alteration-form');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -245,7 +251,7 @@
 <s:else>
     <s:url action="eprCaptureDeathAlteration" id="urlEditOrAdd" namespace="../alteration"/>
 </s:else>
-<s:form method="post" action="%{urlEditOrAdd}" onsubmit="javascript:return validate()">
+<s:form id="death-alteration-form" method="post" action="%{urlEditOrAdd}" onsubmit="javascript:return validate()">
 <table class="death-alteration-table-style01" style="width:1030px;" cellpadding="2px">
     <tr>
         <td width="30%"></td>

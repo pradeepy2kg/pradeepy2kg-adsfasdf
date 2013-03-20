@@ -197,6 +197,11 @@ function validate() {
         errormsg = errormsg + "\n" + document.getElementById('error26').value;
     }
 
+    var out = checkActiveFieldsForSyntaxErrors('death-registration-form-2');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
