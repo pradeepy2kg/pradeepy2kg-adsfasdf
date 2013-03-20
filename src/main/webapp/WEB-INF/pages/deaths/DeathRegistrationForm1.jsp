@@ -334,6 +334,12 @@ function validate() {
     domObject = document.getElementById('days_before_abortion_or_birth');
     isNumeric(domObject.value, 'p1error1', 'daysBeforeAbortionOrBirth')
     //  otherValidations();
+
+    var out = checkActiveFieldsForSyntaxErrors('death-registration-form-1');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
