@@ -36,16 +36,29 @@
 
     function validateComments() {
         var errormsg = "";
+        var out="";
+
         var mode = document.getElementById("mode").value;
         if (mode == 'divorce') {
             errormsg = validateEmptyField("divorceComment", "errorComment", errormsg);
             errormsg = validateEmptyField("effectiveDateDatePicker", "errorCommentDate", errormsg);
+
+            out = checkActiveFieldsForSyntaxErrors('marriage-extract-form');
+            if (out != "") {
+                errormsg = errormsg + out;
+            }
             return printErrorMessages(errormsg);
         }
         else if (mode == 'reject') {
             errormsg = validateEmptyField("registrationRejectComment", "errorComment", errormsg);
+
+            out = checkActiveFieldsForSyntaxErrors('marriage-extract-form');
+            if (out != "") {
+                errormsg = errormsg + out;
+            }
             return printErrorMessages(errormsg);
         }
+
         return false;
     }
 </script>
@@ -563,7 +576,7 @@
     </tr>
 </table>
 <s:if test="mode=='reject'">
-    <s:form method="post" onsubmit="javascript:return validateComments()">
+    <s:form id="marriage-extract-form" method="post" onsubmit="javascript:return validateComments()">
         <s:hidden name="mode" id="mode"/>
         <s:hidden name="idUKey"/>
         <table border="1" style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;"
@@ -590,7 +603,7 @@
     </s:form>
 </s:if>
 <s:if test="mode=='divorce'">
-    <s:form method="post" onsubmit="javascript:return validateComments()">
+    <s:form id="marriage-extract-form" method="post" onsubmit="javascript:return validateComments()">
         <s:hidden name="mode" id="mode"/>
         <s:hidden name="idUKey"/>
         <table border="1" style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;"

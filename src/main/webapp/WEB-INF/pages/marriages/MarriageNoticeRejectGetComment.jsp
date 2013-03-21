@@ -9,6 +9,12 @@
         if (comment == "") {
             errMsg = errMsg + document.getElementById('error1').value;
         }
+
+        var out = checkActiveFieldsForSyntaxErrors('marriage-notice-reject-get-comment-form');
+        if (out != "") {
+             errMsg = errMsg + out;
+        }
+
         if (errMsg != "") {
             alert(errMsg)
             errMsg="";
@@ -55,7 +61,7 @@
 
     <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
-    <s:form action="eprMarriageNoticeReject.do" method="post" onsubmit="javascript: return validate()">
+    <s:form id="marriage-notice-reject-get-comment-form" action="eprMarriageNoticeReject.do" method="post" onsubmit="javascript: return validate()">
         <fieldset>
             <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
             <s:hidden name="idUKey" value="%{#request.idUKey}"/>
