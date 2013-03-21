@@ -1,7 +1,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
-    function initPage() {
+    var errormsg = "";
+    function validate() {
+        var returnVal = true;
+
+        var out = checkActiveFieldsForSyntaxErrors('password-change-form');
+        if (out != "") {
+            errormsg = errormsg + out;
+        }
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnVal = false;
+        }
+        errormsg = "";
+        return returnVal;
     }
 </script>
 
@@ -28,7 +42,8 @@
 </style>
 <div id="space"></div>
 <div id="content">
-    <s:form action="/preferences/eprChangePass.do" method="POST">
+    <s:form id="password-change-form" action="/preferences/eprChangePass.do" method="POST"
+            onsubmit="javascript:return validate()">
         <%--name="eprChangePass">--%>
     <table id="passwordTable" width="100%" cellpadding="30" class="user-preference-table" cellspacing="30">
         <col width="50%">
