@@ -79,6 +79,11 @@
             validateTemPIN(domObject, 'error1', 'error3');
         }
 
+        var out = checkActiveFieldsForSyntaxErrors('person-approval-list-form');
+        if (out != "") {
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnVal = false;
@@ -89,7 +94,7 @@
 </script>
 
 <div id="person-approval-list">
-<s:form action="eprPersonApproval.do" method="POST" onsubmit="javascript:return validate()">
+<s:form id="person-approval-list-form" action="eprPersonApproval.do" method="POST" onsubmit="javascript:return validate()">
     <div id="tab1" style="font-size:10pt;">
         <ul>
             <li><a href="#tab1"><span><b><s:label value="%{getText('searchOption.label')}"/></b></span></a></li>
