@@ -9,7 +9,7 @@
 <script type="text/javascript" src="<s:url value="/js/agecalculator.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
-<script>
+<script type="text/javascript">
 $(function () {
     document.getElementById('birthCertificateNumber').disabled = true;
     document.getElementById('oldBirthSLIN').disabled = true;
@@ -43,7 +43,7 @@ $(function () {
 });
 
 $(function () {
-    if ($('#idUKey').val() == 0 || $('#jointApplicantfalse').is(':checked')){
+    if ($('#idUKey').val() == 0 || $('#jointApplicantfalse').is(':checked')) {
         disable(true);
     }
     $('#clearInfo').val($('#clear').val());
@@ -73,24 +73,53 @@ $(function () {
         endDate:'2020-12-31',
         onSelect:function () {
             var bday = new Date(document.getElementById('bdayDatePicker').value);
-            var age = calculateAge(bday, new Date());
-            document.getElementById("childAgeYears").value = age[0];
-            document.getElementById("childAgeMonths").value = age[1];
+            var oday = new Date(document.getElementById('orderIssuedDatePicker').value);
+            if (oday != "Invalid Date") {
+                var age = calculateAge(bday, oday);
+                document.getElementById("childAgeYears").value = age[0];
+                document.getElementById("childAgeMonths").value = age[1];
+            }
         }
     });
 
     $('#bdayDatePicker').bind('change', function () {
         var bday = new Date(document.getElementById('bdayDatePicker').value);
-        var age = calculateAge(bday, new Date());
-        document.getElementById("childAgeYears").value = age[0];
-        document.getElementById("childAgeMonths").value = age[1];
+        var oday = new Date(document.getElementById('orderIssuedDatePicker').value);
+        if (oday != "Invalid Date") {
+            var age = calculateAge(bday, oday);
+            document.getElementById("childAgeYears").value = age[0];
+            document.getElementById("childAgeMonths").value = age[1];
+        }
+    });
+
+    $('#orderIssuedDatePicker').bind('change', function () {
+        var bday = new Date(document.getElementById('bdayDatePicker').value);
+        var oday = new Date(document.getElementById('orderIssuedDatePicker').value);
+        if (bday != "Invalid Date") {
+            var age = calculateAge(bday, oday);
+            document.getElementById("childAgeYears").value = age[0];
+            document.getElementById("childAgeMonths").value = age[1];
+        }
     });
 
     $('#bdayDatePicker').bind('click', function () {
         var bday = new Date(document.getElementById('bdayDatePicker').value);
-        var age = calculateAge(bday, new Date());
-        document.getElementById("childAgeYears").value = age[0];
-        document.getElementById("childAgeMonths").value = age[1];
+        var oday = new Date(document.getElementById('orderIssuedDatePicker').value);
+        if (oday != "Invalid Date") {
+            var age = calculateAge(bday, oday);
+            document.getElementById("childAgeYears").value = age[0];
+            document.getElementById("childAgeMonths").value = age[1];
+        }
+    });
+
+    $('#orderIssuedDatePicker').bind('click', function () {
+        var bday = new Date(document.getElementById('bdayDatePicker').value);
+        var oday = new Date(document.getElementById('orderIssuedDatePicker').value);
+        if (bday != "Invalid Date") {
+            var age = calculateAge(bday, oday);
+            document.getElementById("childAgeYears").value = age[0];
+            document.getElementById("childAgeMonths").value = age[1];
+        }
     });
 });
 
@@ -100,7 +129,16 @@ $(function () {
         changeYear:true,
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
-        endDate:'2020-12-31'
+        endDate:'2020-12-31',
+        onSelect:function () {
+            var bday = new Date(document.getElementById('bdayDatePicker').value);
+            var oday = new Date(document.getElementById('orderIssuedDatePicker').value);
+            if (bday != "Invalid Date") {
+                var age = calculateAge(bday, oday);
+                document.getElementById("childAgeYears").value = age[0];
+                document.getElementById("childAgeMonths").value = age[1];
+            }
+        }
     });
 });
 
@@ -197,9 +235,9 @@ function validate() {
         validatePINorNIC(domObject, 'error12', 'error13');
     }
 <%-- Validate spouse details --%>
-    if($('#jointApplicanttrue').is(':checked')){
+    if ($('#jointApplicanttrue').is(':checked')) {
         domObject = document.getElementById("spouseName");
-        if(isFieldEmpty(domObject)){
+        if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error24');
         }
     }
@@ -222,7 +260,7 @@ function validate() {
     domObject = document.getElementById("bdayDatePicker");
     if (!isFieldEmpty(domObject)) {
         isDate(domObject.value, 'error12', 'error14');
-        if(childBDay > orderDate){
+        if (childBDay > orderDate) {
             errormsg = errormsg + "\n" + document.getElementById('error25').value;
         }
     }
@@ -258,9 +296,9 @@ function validate() {
 }
 
 function disable(mode) {
-    if(!mode){
+    if (!mode) {
         $('#spouseNameMarker').css('display', 'inline');
-    }else{
+    } else {
         $('#spouseNameMarker').css('display', 'none');
     }
     document.getElementById('spousePINorNIC').disabled = mode;
@@ -269,7 +307,7 @@ function disable(mode) {
     document.getElementById('spouseName').disabled = mode;
     document.getElementById('spouseOccupation').disabled = mode;
 }
-//todo 
+//todo
 function initPage() {
     var domObject = document.getElementById('birthCertificateNumber');
     if (domObject.value.trim() == 0) {
@@ -450,7 +488,8 @@ function enableCertificateInfo(mode) {
             <br>Yes
         </td>
         <td>
-            <s:radio id="jointApplicant" name="adoption.jointApplicant" list="#@java.util.HashMap@{'true':''}" onclick="disable(false)"/>
+            <s:radio id="jointApplicant" name="adoption.jointApplicant" list="#@java.util.HashMap@{'true':''}"
+                     onclick="disable(false)"/>
         </td>
         <td>
             නැත
@@ -458,7 +497,8 @@ function enableCertificateInfo(mode) {
             <br>No
         </td>
         <td>
-            <s:radio id="jointApplicant" name="adoption.jointApplicant" list="#@java.util.HashMap@{'false':''}" onclick="disable(true)"/>
+            <s:radio id="jointApplicant" name="adoption.jointApplicant" list="#@java.util.HashMap@{'false':''}"
+                     onclick="disable(true)"/>
         </td>
     </tr>
     <tr>
@@ -783,7 +823,8 @@ function enableCertificateInfo(mode) {
             <br>Province
         </td>
         <td colspan="4"><s:select id="birthProvinceUKey" name="adoption.birthProvinceUKey" list="provinceList"
-                                  value="%{adoption.birthProvinceUKey}" headerKey="0" headerValue="%{getText('select.label')}"
+                                  value="%{adoption.birthProvinceUKey}" headerKey="0"
+                                  headerValue="%{getText('select.label')}"
                                   cssStyle="width:280px;margin-left:5px;"/>
         </td>
     </tr>
@@ -794,7 +835,8 @@ function enableCertificateInfo(mode) {
             <br>District
         </td>
         <td colspan="4"><s:select id="birthDistrictId" name="adoption.birthDistrictId" list="districtList"
-                                  value="%{adoption.birthDistrictId}" headerKey="0" headerValue="%{getText('select.label')}"
+                                  value="%{adoption.birthDistrictId}" headerKey="0"
+                                  headerValue="%{getText('select.label')}"
                                   cssStyle="width:280px;margin-left:5px;"/>
         </td>
     </tr>
