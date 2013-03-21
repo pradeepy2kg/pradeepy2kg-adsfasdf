@@ -72,6 +72,11 @@
             }
         }
 
+        var out = checkActiveFieldsForSyntaxErrors('person-details-update-form');
+        if (out != "") {
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnVal = false;
@@ -269,7 +274,7 @@
 
 <div class="prs-existing-person-register-outer">
 
-<s:form action="eprUpdatePersonDetails.do" method="POST" onsubmit="javascript:return validate()">
+<s:form id="person-details-update-form" action="eprUpdatePersonDetails.do" method="POST" onsubmit="javascript:return validate()">
 
 <table class="table_reg_header_01" style="font-size:9pt">
 <caption></caption>
