@@ -16,14 +16,14 @@
 <head>
     <title>E-Population System</title>
 
-    <script type="text/javascript">
+    <%--<script type="text/javascript">
         if (navigator.appVersion.indexOf("Win") != -1) {
             document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/windowsFont.css\"/>");
         }
         else if (navigator.appVersion.indexOf("X11") != -1) {
             document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/ubuntuFont.css\"/>");
         }
-    </script>
+    </script>--%>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/webform.css"/> '/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
