@@ -8,12 +8,14 @@
     function validateMarriageIdUkey() {
         var errormsg = "";
         errormsg = validateIdUkey("marriageIdUKey", "errorEmptyMarriageIdUKey", "errorInvalidMarriageIdUKey", errormsg);
+
+        var out = checkActiveFieldsForSyntaxErrors('searchByIdUKey');
+        if (out != "") {
+            errormsg = errormsg + out;
+        }
+
         return printErrorMessages(errormsg);
     }
-
-    function initPage() {
-    }
-
 </script>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage cssStyle="color:blue;font-size:10pt"/>
