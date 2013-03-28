@@ -206,17 +206,17 @@
     <col>
     <tr>
         <td>
-            සටහනේ අංකය<br>
-            பதிவு இலக்கம்<br>
-            Number of Entry
+            ලියාපදිංචි කිරීමේ අංකය<br>
+            Registration No in ta<br>
+            Registration Number
         </td>
         <td>
             <s:label value="%{adoption.adoptionEntryNo}"/>
         </td>
         <td>
-            සටහනේ දිනය
-            <br>பதிவு திகத
-            <br>Date of Entry
+            ලියාපදිංචි කිරීමේ දිනය
+            <br>Date of Registration in ta
+            <br>Date of Registration
         </td>
         <td>
             <s:label value="%{adoption.orderReceivedDate}"/><br>
