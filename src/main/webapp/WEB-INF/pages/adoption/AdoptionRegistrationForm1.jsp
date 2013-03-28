@@ -387,18 +387,18 @@ function enableCertificateInfo(mode) {
 <table class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
     <tr>
         <td>
-            සටහනේ අංකය<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
-            பதிவு இலக்கம்<br>
-            Number of Entry
+            ලියාපදිංචි කිරීමේ අංකය<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
+            Registration No in ta<br>
+            Registration Number
         </td>
         <td>
             <s:textfield id="adoptionEntryNo" name="adoption.adoptionEntryNo"
                          onkeypress="return numbersOnly(event, true);"/>
         </td>
         <td>
-            සටහනේ දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
-            <br>பதிவு திகதி
-            <br>Date of Entry
+            ලියාපදිංචි කිරීමේ දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            <br>Date of Registration in ta
+            <br>Date of Registration
         </td>
         <td>
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>

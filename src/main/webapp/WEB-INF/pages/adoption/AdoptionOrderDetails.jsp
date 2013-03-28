@@ -90,14 +90,14 @@
         <col width="180px"/>
         <tr valign="top" align="center" class="font-7">
             <td>
-                සටහනේ අංකය<br>
-                பதிவு இலக்கம்<br>
-                Number of Entry
+                ලියාපදිංචි කිරීමේ අංකය<br>
+                Registration No in ta<br>
+                Registration Number
             </td>
             <td>
-                සටහනේ දිනය<br>
-                பதிவு திகதி <br>
-                Date of Entry
+                ලියාපදිංචි කිරීමේ දිනය
+                <br/>Date of Registration in ta
+                <br/>Date of Registration
             </td>
             <td>
                 දරුකමට හදාගත් ළමයාගේ නම <br>
