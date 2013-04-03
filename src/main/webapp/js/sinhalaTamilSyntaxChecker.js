@@ -2,7 +2,7 @@
  * @author Duminda Dharmakeerthi
  *
  * To detect text input fields of the form.
- * Will use jQuery methods. Therefore, jQuery library should be available for use.
+ * Will use jQuery methods. Therefore, jQuery library should be available for usage.
  */
 
 /**
@@ -41,7 +41,7 @@ function checkActiveFieldsForSyntaxErrors(formId) {
 
 /**
  * Syntax Checker was originally written by Shanmugarajah Sinnathamby.
- * Converting to JavaScript by Duminda Dharmakeerthi.
+ * Converted to JavaScript by Duminda Dharmakeerthi.
  * Modified to use in general purpose for correcting syntax errors in web based systems.
  */
 
