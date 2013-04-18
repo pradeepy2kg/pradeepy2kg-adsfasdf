@@ -221,4 +221,28 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
         }
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<AdoptionOrder> getAdoptionsWithSameChildName(String childName, long adoptionEntryNo) {
+        Query q = em.createNamedQuery("getAdoptionsWithSameChildName");
+        q.setParameter("childName", childName);
+        q.setParameter("adoptionEntryNo", adoptionEntryNo);
+        return q.getResultList();
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<AdoptionOrder> getAdoptionsWithSameParentNames(String applicantName, String spouseName, long adoptionEntryNo) {
+        Query q = em.createNamedQuery("getAdoptionsWithSameParentNames");
+        q.setParameter("applicantName", applicantName);
+        q.setParameter("spouseName", spouseName);
+        q.setParameter("adoptionEntryNo", adoptionEntryNo);
+        return q.getResultList();
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<AdoptionOrder> getAdoptionsWithSameApplicantName(String applicantName, long adoptionEntryNo) {
+        Query q = em.createNamedQuery("getAdoptionsWithSameApplicantName");
+        q.setParameter("applicantName", applicantName);
+        q.setParameter("adoptionEntryNo", adoptionEntryNo);
+        return q.getResultList();
+    }
 }

@@ -170,4 +170,10 @@ public interface AdoptionOrderDAO {
      * @return
      */
     public AdoptionOrder getAdoptionByCourtOrderNumberAndEntryNumber(String courtOrderNumber, long adoptionEntryNo);
+
+    public List<AdoptionOrder> getAdoptionsWithSameChildName(String childName, long adoptionEntryNo);
+
+    public List<AdoptionOrder> getAdoptionsWithSameParentNames(String applicantName, String spouseName, long adoptionEntryNo);
+
+    public List<AdoptionOrder> getAdoptionsWithSameApplicantName(String applicantName, long adoptionEntryNo);
 }
