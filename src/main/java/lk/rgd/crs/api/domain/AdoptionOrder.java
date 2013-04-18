@@ -18,7 +18,7 @@ import java.util.Date;
 
 @NamedQueries({
     @NamedQuery(name = "adoption.filter.by.status.paginated", query = "SELECT adoption FROM AdoptionOrder adoption " +
-        "WHERE adoption.status = :status " + "ORDER BY adoption.orderIssuedDate desc"),
+        "WHERE adoption.status = :status " + "ORDER BY adoption.adoptionEntryNo desc"),
 
     @NamedQuery(name = "get.by.court.and.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
         "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
@@ -69,7 +69,19 @@ import java.util.Date;
     ),
     @NamedQuery(
         name = "getPaginatedListForAll",
-        query = "SELECT a FROM AdoptionOrder a WHERE a.status < :state"
+        query = "SELECT a FROM AdoptionOrder a WHERE a.status < :state ORDER BY a.adoptionEntryNo DESC"
+    ),
+    @NamedQuery(
+        name = "getAdoptionsWithSameChildName",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.childExistingName = :childName AND a.adoptionEntryNo <> :adoptionEntryNo"
+    ),
+    @NamedQuery(
+        name = "getAdoptionsWithSameParentNames",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo <> :adoptionEntryNo AND (a.applicantName LIKE :applicantName OR a.spouseName LIKE :applicantName) AND (a.applicantName LIKE :spouseName OR a.spouseName LIKE :spouseName)"
+    ),
+    @NamedQuery(
+        name = "getAdoptionsWithSameApplicantName",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo <> :adoptionEntryNo AND (a.applicantName LIKE :applicantName OR a.spouseName LIKE :applicantName)"
     )
 })
 
@@ -294,6 +306,13 @@ public class AdoptionOrder implements Serializable, Cloneable {
     @ManyToOne
     @JoinColumn(name = "noticingZonalOffice", nullable = false)
     private ZonalOffice noticingZonalOffice;
+
+    /**
+     * Comments on rejections
+     */
+    @Lob
+    @Column(nullable = true, length = 4096)
+    private String comments;
 
     public AdoptionOrder clone() throws CloneNotSupportedException {
         AdoptionOrder newAO = (AdoptionOrder) super.clone();
@@ -680,5 +699,13 @@ public class AdoptionOrder implements Serializable, Cloneable {
 
     public void setJointApplicant(boolean jointApplicant) {
         this.jointApplicant = jointApplicant;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }
