@@ -60,6 +60,9 @@
             <s:param name="idUKey" value="%{#request.idUKey}"/>
             <s:param name="approved" value="#request.approved"/>
         </s:url>
+        <s:url id="viewAdoptionOrderDetails" action="eprAdoptionOrderDetailsViewMode.do">
+            <s:param name="idUKey" value="idUKey"/>
+        </s:url>
     </s:if>
     <s:else>
         <s:url id="markAsPrint" action="eprMarkAdoptionNoticeAsPrinted.do">

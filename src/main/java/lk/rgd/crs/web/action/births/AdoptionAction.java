@@ -648,7 +648,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         boolean caughtException = false;
         try {
             warnings = service.approveAdoptionOrder(idUKey, false, user);
-//            setApproved(true);
         } catch (CRSRuntimeException e) {
             caughtException = true;
             switch (e.getErrorCode()){
@@ -703,9 +702,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             return ERROR;
         }else if(warnings != null && !warnings.isEmpty()){
             logger.debug("Adoption record with idUKey {} approved ignoring warnings.", idUKey);
+            setApproved(true);
             addActionMessage(getText("approve_adoption_ignore_warning"));
         }
-        adoptionApprovalAndPrint();
         return SUCCESS;
     }
 
