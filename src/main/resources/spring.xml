@@ -233,6 +233,7 @@
 
     <bean id="adoptionOrderService" class="lk.rgd.crs.core.service.AdoptionOrderServiceImpl">
         <constructor-arg ref="adoptionOrderDAOImpl"/>
+        <constructor-arg ref="ecivilService"/>
     </bean>
 
     <bean id="adoptionAlterationService" class="lk.rgd.crs.core.service.AdoptionAlterationServiceImpl">

@@ -1,12 +1,15 @@
 package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.ZonalOffice;
+import lk.rgd.crs.api.bean.UserWarning;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Locale;
 import java.util.List;
@@ -53,6 +56,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private AdoptionOrder.State state;
     private AdoptionOrder.ApplicantType certificateApplicantType;
 
+    private List<UserWarning> warnings;
     private Map<Integer, String> provinceList;
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
@@ -254,11 +258,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         //populate court
         courtId = adoption.getCourt().getCourtUKey();
         return SUCCESS;
-    }
-
-
-    private boolean isApplicantMother(AdoptionOrder adoption) {
-        return false;
     }
 
     /**
@@ -514,6 +513,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private void populateApprovalAndPrintList() {
         populate();
         initPermissionForApprovalAndPrint();
+        logger.debug("page: {}\trows: {}", pageNo, noOfRows);
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         if (state != null) {
             adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
@@ -605,11 +605,31 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String approveAdoption() {
         logger.debug("requested to approve AdoptionOrder with idUKey : {}", idUKey);
+        boolean caughtException = false;
         try {
-            service.approveAdoptionOrder(getIdUKey(), user);
-            addActionMessage(getText("message.successfully.approved.adoption.order"));
+            warnings = service.approveAdoptionOrder(getIdUKey(), false, user);
         } catch (CRSRuntimeException e) {
-            addActionError(getText("adoption.error.no.permission"));
+            caughtException = true;
+            switch (e.getErrorCode()){
+                case ErrorCodes.ILLEGAL_STATE:
+                    addActionError(getText("adoption.approve.error.illegal.state"));
+                    break;
+                case ErrorCodes.PERMISSION_DENIED:
+                    addActionError(getText("adoption.error.no.permission"));
+                    break;
+                default:
+                    addActionError(MessageFormat.format(getText("unknown.error"), e.getMessage()));
+            }
+        }
+
+        if(caughtException){
+            return ERROR;
+        }else if(warnings != null && !warnings.isEmpty()){
+            logger.debug("Approval of adoption record with idUKey {} stopped due to warnings.", idUKey);
+            return "haltApproval";
+        }else{
+            // No warnings. No exceptions occurred.
+            logger.debug("Adoption record with idUKey {} approved.", idUKey);
         }
         populateApprovalAndPrintList();
         return SUCCESS;
@@ -625,12 +645,67 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String directApproveAdoption() {
         logger.debug("initiating adoption direct approval with idUKey : {}", idUKey);
+        boolean caughtException = false;
         try {
-            service.approveAdoptionOrder(idUKey, user);
-            setApproved(true);
+            warnings = service.approveAdoptionOrder(idUKey, false, user);
+//            setApproved(true);
         } catch (CRSRuntimeException e) {
-            addActionError(getText("adoption.error.no.permission"));
+            caughtException = true;
+            switch (e.getErrorCode()){
+                case ErrorCodes.ILLEGAL_STATE:
+                    addActionError(getText("adoption.approve.error.illegal.state"));
+                    break;
+                case ErrorCodes.PERMISSION_DENIED:
+                    addActionError(getText("adoption.error.no.permission"));
+                    break;
+                default:
+                    addActionError(MessageFormat.format(getText("unknown.error"), e.getMessage()));
+            }
         }
+
+        if(caughtException){
+            return ERROR;
+        }else if(warnings != null && !warnings.isEmpty()){
+            logger.debug("Approval of adoption record with idUKey {} stopped due to warnings.", idUKey);
+            return "haltApproval";
+        }else{
+            // No warnings. No exceptions occurred.
+            setApproved(true);
+            logger.debug("Adoption record with idUKey {} approved.", idUKey);
+        }
+        return SUCCESS;
+    }
+
+    /**
+     * Approve adoption record ignore warnings.
+     *
+     * @return
+     */
+    public String approveAdoptionIgnoreWarnings(){
+        logger.debug("Request to approve adoption {} ignore warnings", idUKey);
+        boolean caughtException = false;
+        try{
+            warnings = service.approveAdoptionOrder(getIdUKey(), true, user);
+        }catch (CRSRuntimeException e){
+            caughtException = true;
+            switch (e.getErrorCode()){
+                case ErrorCodes.ILLEGAL_STATE:
+                    addActionError(getText("adoption.approve.error.illegal.state"));
+                    break;
+                case ErrorCodes.PERMISSION_DENIED:
+                    addActionError(getText("adoption.error.no.permission"));
+                    break;
+                default:
+                    addActionError(MessageFormat.format(getText("unknown.error"), e.getMessage()));
+            }
+        }
+        if(caughtException){
+            return ERROR;
+        }else if(warnings != null && !warnings.isEmpty()){
+            logger.debug("Adoption record with idUKey {} approved ignoring warnings.", idUKey);
+            addActionMessage(getText("approve_adoption_ignore_warning"));
+        }
+        adoptionApprovalAndPrint();
         return SUCCESS;
     }
 
@@ -1202,5 +1277,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setBirthProvinceName(String birthProvinceName) {
         this.birthProvinceName = birthProvinceName;
+    }
+
+    public List<UserWarning> getWarnings() {
+        return warnings;
+    }
+
+    public void setWarnings(List<UserWarning> warnings) {
+        this.warnings = warnings;
+    }
+
+    public int getNoOfRows() {
+        return noOfRows;
+    }
+
+    public void setNoOfRows(int noOfRows) {
+        this.noOfRows = noOfRows;
     }
 }

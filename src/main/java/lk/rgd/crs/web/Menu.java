@@ -342,6 +342,7 @@ public class Menu {
         argAdoptionLink.put("eprApproveAdoption.do", new Link(null, "/ecivil/adoption/", "eprApproveAdoption.do", Permission.APPROVE_ADOPTION));
         argAdoptionLink.put("eprRejectAdoption.do", new Link(null, "/ecivil/adoption/", "eprRejectAdoption.do", Permission.APPROVE_ADOPTION));
         argAdoptionLink.put("eprAdoptionDirectApproval.do", new Link(null, "/ecivil/adoption/", "eprAdoptionDirectApproval.do", Permission.APPROVE_ADOPTION));
+        argAdoptionLink.put("eprAdoptionIgnoreWarning.do", new Link(null, "/ecivil/adoption/", "eprAdoptionIgnoreWarning.do", Permission.APPROVE_ADOPTION));
 
 
         //birth alteration for DEO
