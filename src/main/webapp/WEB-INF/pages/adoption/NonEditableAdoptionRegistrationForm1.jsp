@@ -63,7 +63,7 @@
     <tr>
         <td>නියෝග අංකය<br/>
             கட்டளை இலக்கம்<br/>
-            Serial number
+            Court Order Number
         </td>
         <td><s:label value="%{#request.adoption.courtOrderNumber}"/></td>
         <td>නියෝගය නිකුත් කල දිනය <br/>

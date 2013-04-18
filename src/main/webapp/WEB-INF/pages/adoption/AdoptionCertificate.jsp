@@ -212,23 +212,6 @@
     <col>
     <tbody>
     <tr>
-        <td width="250px">
-            ලියාපදිංචි කළ ස්ථානය
-            <br/>பதிவு செய்த இடம்
-            <br/>Place of Registration
-        </td>
-        <td colspan="3">
-            <s:property value="placeOfIssue"/>
-        </td>
-        <td height="70px" width="150px">
-            ලියාපදිංචි කළ දිනය
-            <br/> பதிவு செய்யப்பட்ட திகதி
-            <br/> Date of Registration
-        </td>
-        <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectTimestamp}"/>
-        </td>
-    </tr>
-    <tr>
         <td width="250px" height="120px">
             සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන
             <br/> சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்

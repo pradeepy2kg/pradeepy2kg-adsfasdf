@@ -480,6 +480,10 @@
         <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionResult.jsp"/>
         <put-attribute name="title" value="adoption_summary.label"/>
     </definition>
+    <definition name="epr.adoptionApprovalWarning" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionRegistrationApprovalWarning.jsp"/>
+        <put-attribute name="title" value="adoption_approve_warning.label"/>
+    </definition>
     <definition name="epr.adoptionApplicantInfo" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionApplicantInfo.jsp"/>
         <put-attribute name="title" value="adoption_applicant_info.label"/>

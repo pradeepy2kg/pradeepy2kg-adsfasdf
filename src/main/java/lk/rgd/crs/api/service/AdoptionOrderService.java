@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.service;
 
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
@@ -67,8 +68,10 @@ public interface AdoptionOrderService {
      *
      * @param adoptionId adoption order unique key to be approved
      * @param user       user invoking the action
+     * @param ignoreWarnings Whether user choose to ignore the warnings
+     * @return List of Warning messages. (if any)
      */
-    public void approveAdoptionOrder(long adoptionId, User user);
+    public List<UserWarning> approveAdoptionOrder(long adoptionId, boolean ignoreWarnings, User user);
 
     /**
      * Reject adoption order

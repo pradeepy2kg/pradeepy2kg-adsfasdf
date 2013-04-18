@@ -837,6 +837,9 @@
         <action name="eprAdoptionDirectApproval" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="directApproveAdoption">
             <result type="tiles" name="success">epr.adoptionSummary</result>
+            <result type="tiles" name="haltApproval">epr.adoptionApprovalWarning</result>
+            <result type="tiles" name="none">epr.error</result>
+            <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprMarkDirectlyAdoptionNoticeAsPrinted" class="lk.rgd.crs.web.action.births.AdoptionAction"
@@ -915,7 +918,9 @@
         <action name="eprApproveAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="approveAdoption">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="haltApproval">epr.adoptionApprovalWarning</result>
             <result type="tiles" name="none">epr.error</result>
+            <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprRejectAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
@@ -928,6 +933,13 @@
                 method="deleteAdoption">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
             <result type="tiles" name="none">epr.error</result>
+        </action>
+
+        <action name="eprAdoptionIgnoreWarning" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="approveAdoptionIgnoreWarnings">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
+            <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprAdoptionEditMode" class="lk.rgd.crs.web.action.births.AdoptionAction"
@@ -948,16 +960,19 @@
             <result type="tiles" name="success">epr.adoptionOrderDetailsList</result>
             <result type="tiles" name="none">epr.error</result>
         </action>
+
         <action name="eprAdoptionOrderDetailsViewMode" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="eprAdoptionOrderDetailsViewMode">
             <result type="tiles" name="success">epr.adoptionOrderDetails</result>
             <result type="tiles" name="none">epr.error</result>
         </action>
+
         <action name="eprAdoptionOrderFilterByStatus" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="filterByStatus">
             <result type="tiles" name="success">epr.adoptionOrderDetailsList</result>
             <result type="tiles" name="none">epr.error</result>
         </action>
+
         <action name="eprAdoptionOrderBackToPreviousState" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionBackToPreviouseState">
             <result type="tiles" name="success">epr.adoptionOrderDetailsList</result>

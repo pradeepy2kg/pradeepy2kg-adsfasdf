@@ -62,7 +62,6 @@
 </script>
 <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
 
-
 <table cellpadding="5" cellspacing="0">
     <s:form action="eprAdoptionFilterByStatus" method="post">
 
@@ -107,11 +106,11 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <%--<th></th>--%>
+                <%--<th></th>--%>
                 <th></th>
                 <th><s:label name="delete" value="%{getText('ReRegistration.label')}"/></th>
+                <th></th>
             </tr>
             </thead>
 
@@ -125,7 +124,7 @@
                     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                 </s:url>
 
-                <s:url id="approveSelected" action="eprApproveAdoption.do">
+                <%--<s:url id="approveSelected" action="eprApproveAdoption.do">
                     <s:param name="idUKey" value="idUKey"/>
                     <s:param name="currentStatus" value="%{#request.currentStatus}"/>
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -139,7 +138,7 @@
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
                     <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                </s:url>
+                </s:url>--%>
 
                 <s:url id="deleteSelected" action="eprDeleteAdoption.do">
                     <s:param name="idUKey" value="idUKey"/>
@@ -184,7 +183,7 @@
                         </s:if>
                     </td>
 
-                    <td align="center">
+                    <%--<td align="center">
                         <s:if test="%{allowApproveAdoption && allowEditAdoption && status.ordinal()==0}">
                             <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
                                 <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
@@ -200,16 +199,7 @@
                                      border="none"/>
                             </s:a>
                         </s:if>
-                    </td>
-
-                    <td align="center">
-                        <s:if test="%{allowEditAdoption && status.ordinal()==0}">
-                            <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
-                                <img id='deleteImage' src="<s:url value='/images/delete.gif'/>" width="25" height="25"
-                                     border="none"/>
-                            </s:a>
-                        </s:if>
-                    </td>
+                    </td>--%>
 
                     <td align="center">
                         <s:a href="%{viewSelected}" title="%{getText('viewAdoptionRegistrationTooltip.label')}">
@@ -272,6 +262,16 @@
                             </s:a>
                         </s:if>
                     </td>
+
+                    <td align="center">
+                        <s:if test="%{allowEditAdoption && status.ordinal()==0}">
+                            <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
+                                <img id='deleteImage' src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                     border="none"/>
+                            </s:a>
+                        </s:if>
+                    </td>
+
                 </tr>
             </s:iterator>
             </tbody>
