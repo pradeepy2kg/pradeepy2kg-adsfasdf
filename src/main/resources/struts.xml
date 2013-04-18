@@ -937,7 +937,7 @@
 
         <action name="eprAdoptionIgnoreWarning" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="approveAdoptionIgnoreWarnings">
-            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="success">epr.adoptionSummary</result>
             <result type="tiles" name="none">epr.error</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
