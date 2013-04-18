@@ -185,7 +185,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         long idUKey = 5;
         //set state to approve
         AdoptionOrder adoption = adoptionOrderService.getById(idUKey, user);
-        adoptionOrderService.approveAdoptionOrder(idUKey, user);
+        adoptionOrderService.approveAdoptionOrder(idUKey, true, user);
         // set to order details printed.
         adoptionOrderService.setStatusToPrintedAdoptionOrderDetails(idUKey, user);
         //set to notice letter printed
@@ -237,7 +237,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         User user = loginSampleUser();
         long idUKey = 3;
         //set state to approve
-        adoptionOrderService.approveAdoptionOrder(idUKey, user);
+        adoptionOrderService.approveAdoptionOrder(idUKey, true, user);
         // set to order details printed.
         adoptionOrderService.setStatusToPrintedAdoptionOrderDetails(idUKey, user);
         //set to notice letter printed
@@ -278,7 +278,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         long idUKey = 2;
         //set state to approve
         AdoptionOrder adoption = adoptionOrderService.getById(idUKey, user);
-        adoptionOrderService.approveAdoptionOrder(idUKey, user);
+        adoptionOrderService.approveAdoptionOrder(idUKey, true, user);
         // set to order details printed.
         adoptionOrderService.setStatusToPrintedAdoptionOrderDetails(idUKey, user);
         //set to notice letter printed
