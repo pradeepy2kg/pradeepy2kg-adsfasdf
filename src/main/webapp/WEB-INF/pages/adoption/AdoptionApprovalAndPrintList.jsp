@@ -165,7 +165,10 @@
                     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                 </s:url>
                 <tr>
-                    <td><s:property value="idUKey"/></td>
+                    <td>
+                        <s:if test="adoptionSerialNo > 0"><s:property value="adoptionSerialNo"/></s:if>
+                        <s:else> - </s:else>
+                    </td>
                     <td><s:property value="adoptionEntryNo"/></td>
                     <s:if test="childNewName!=null">
                         <td><s:property value="getChildNewNameToLength(30)"/></td>
