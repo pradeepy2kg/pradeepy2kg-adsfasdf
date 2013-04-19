@@ -252,9 +252,9 @@
         ගෙවා දරු සහතිකය ලබා ගත හැක. තැපැල් මගින් යොමු කරන්නේ නම්, රෙජිස්ට්‍රාර් ජනරාල්ගේ ලංකා බැංකුවේ පිටකොටුව
         ශාඛාවේ අංක 7041650 දරණ ගිණුමට මුදල් බැර කර, ලදුපත සහ අයදුම්පත අමුණා එවිය යුතුය. තවද ලිපිනය සහිත කවරයක්
         අයදුම්පත සමඟ ඉදිරිපත් කළ යුතු අතර, ලියාපදිංචි/ සාමාන්‍ය තැපෑලට සරිලන මුද්දර, කවරයට අලවා එවිය යුතුය.
-        <br/><br/>
+        <br/>
         <s:if test="!adoption.jointApplicant">
-            <strong> සැ. යු. - </strong>දරු නියෝගය ගරු අධිකරණයෙන් නිකුත් කර ඇත්තේ විවාහක දෙමාපියන් වෙත නොවන බැවින් මෙම
+            <br/><strong> සැ. යු. - </strong>දරු නියෝගය ගරු අධිකරණයෙන් නිකුත් කර ඇත්තේ විවාහක දෙමාපියන් වෙත නොවන බැවින් මෙම
             දරු උපත නැවත ලියාපදිංචි කිරීමට 1977 අංක 06 දරණ දරුකමට හදා ගැනීමේ සංශෝධිත පනතින් ප්‍රතිපාදන සැලසී නොමැත.
             එබැවින් දරු සහතිකය උප්පැන්නයක් ලෙස භාවිතා කිරීමට සිදු වන බව දන්වා සිටිමි.<br/>
         </s:if>
@@ -264,13 +264,13 @@
         7041650 உடைய கணக்கிற்கு வரவு வைத்து. பற்றுச்சீட்டு மற்றும் விண்ணப்பத்தினை இணைத்தனுப்பல் வேண்டும். மேலும்
         முகவரியிடப்பட்ட கடித உறையினை விண்ணப்பத்துடன் சமரப்பித்தல் வேண்டியதுடன். பதிவு/ சாதாரண தபாலுக்குரிய முத்திறையினை
         உறையில் ஒட்டி அனுப்பல் வேண்டும்.
-        <br/><br/>
+        <br/>
         <s:if test="!adoption.jointApplicant">
-            <strong> கவனிக்குக:- </strong>
+            <br/><strong> கவனிக்குக:- </strong>
             மகவேற்புக் கட்டளை கௌரவ நீதிமன்றத்தினால் வழங்கப்பட்டது திருமணமாகிய திறத்தாருக்கல்லாது விடின் இப் பிறப்பினை மீள பதிவு செய்வதற்கு 1977 ஆம் ஆண்டின் 06 ஆம் இலக்க மகவேற்புக் (திருத்தற்) கட்டளைச் சட்டத்தில் ஏற்பாடுகள் இல்லை. ஆகையினால் மகவேற்புச் சான்றிதழினை பிறப்புச் சான்றிதழாக உபயோகிப்பதற்கு ஏற்படும் என அறிவிக்கின்றேன்.
             <br/>
 
-            <div style="page-break-after:always;"></div>
+            <div style="page-break-after:always;"></div> <br/><br/><br/>
         </s:if>
         <br>The adoption certificate can be obtained from the following office by paying Rs. 100/= along with the
         duly completed adoption application which attached herewith. If submit by post, payment should be made by
@@ -285,6 +285,9 @@
             certificate has to be used as a Birth Certificate.
         </s:if>
         <br/><br/>
+<s:if test="adoption.jointApplicant">
+    <div style="page-break-after:always;"></div> <br/><br/><br/>
+</s:if>
         <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" width="99%">
             <tr>
                 <td height="90px">
@@ -319,9 +322,6 @@
     </li>
 </ol>
 </div>
-<s:if test="adoption.jointApplicant">
-    <div style="page-break-after:always;"></div>
-</s:if>
 <div id="page2">
     <br/>
     <s:if test="adoption.jointApplicant">
@@ -420,8 +420,7 @@
 <br/>
 
 <div style="page-break-after:always;"></div>
-<br/>
-<br/>
+<br/><br/><br/>
 <table class="adoption-reg-form-header-table" width="99%">
     <tr>
         <td style="font-size:18px">
