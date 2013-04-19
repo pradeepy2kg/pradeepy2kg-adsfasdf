@@ -385,6 +385,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } else {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
+        pageNo = 1;
+        populateApprovalAndPrintList();
         return SUCCESS;
     }
 
@@ -398,6 +400,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         logger.debug("initiating Adoption marking as its notice as printed for the idUKey : {}", idUKey);
         service.setStatusToPrintedNotice(idUKey, user);
         setPrinted(true);
+        pageNo = 1;
+        populateApprovalAndPrintList();
         return SUCCESS;
     }
 
@@ -610,7 +614,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             warnings = service.approveAdoptionOrder(getIdUKey(), false, user);
         } catch (CRSRuntimeException e) {
             caughtException = true;
-            switch (e.getErrorCode()){
+            switch (e.getErrorCode()) {
                 case ErrorCodes.ILLEGAL_STATE:
                     addActionError(getText("adoption.approve.error.illegal.state"));
                     break;
@@ -622,12 +626,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             }
         }
 
-        if(caughtException){
+        if (caughtException) {
             return ERROR;
-        }else if(warnings != null && !warnings.isEmpty()){
+        } else if (warnings != null && !warnings.isEmpty()) {
             logger.debug("Approval of adoption record with idUKey {} stopped due to warnings.", idUKey);
             return "haltApproval";
-        }else{
+        } else {
             // No warnings. No exceptions occurred.
             logger.debug("Adoption record with idUKey {} approved.", idUKey);
         }
@@ -650,7 +654,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             warnings = service.approveAdoptionOrder(idUKey, false, user);
         } catch (CRSRuntimeException e) {
             caughtException = true;
-            switch (e.getErrorCode()){
+            switch (e.getErrorCode()) {
                 case ErrorCodes.ILLEGAL_STATE:
                     addActionError(getText("adoption.approve.error.illegal.state"));
                     break;
@@ -662,12 +666,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             }
         }
 
-        if(caughtException){
+        if (caughtException) {
             return ERROR;
-        }else if(warnings != null && !warnings.isEmpty()){
+        } else if (warnings != null && !warnings.isEmpty()) {
             logger.debug("Approval of adoption record with idUKey {} stopped due to warnings.", idUKey);
             return "haltApproval";
-        }else{
+        } else {
             // No warnings. No exceptions occurred.
             setApproved(true);
             logger.debug("Adoption record with idUKey {} approved.", idUKey);
@@ -680,14 +684,14 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      *
      * @return
      */
-    public String approveAdoptionIgnoreWarnings(){
+    public String approveAdoptionIgnoreWarnings() {
         logger.debug("Request to approve adoption {} ignore warnings", idUKey);
         boolean caughtException = false;
-        try{
+        try {
             warnings = service.approveAdoptionOrder(getIdUKey(), true, user);
-        }catch (CRSRuntimeException e){
+        } catch (CRSRuntimeException e) {
             caughtException = true;
-            switch (e.getErrorCode()){
+            switch (e.getErrorCode()) {
                 case ErrorCodes.ILLEGAL_STATE:
                     addActionError(getText("adoption.approve.error.illegal.state"));
                     break;
@@ -698,9 +702,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                     addActionError(MessageFormat.format(getText("unknown.error"), e.getMessage()));
             }
         }
-        if(caughtException){
+        if (caughtException) {
             return ERROR;
-        }else if(warnings != null && !warnings.isEmpty()){
+        } else if (warnings != null && !warnings.isEmpty()) {
             logger.debug("Adoption record with idUKey {} approved ignoring warnings.", idUKey);
             setApproved(true);
             addActionMessage(getText("approve_adoption_ignore_warning"));
