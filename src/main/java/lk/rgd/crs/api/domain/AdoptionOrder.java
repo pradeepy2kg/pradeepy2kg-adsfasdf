@@ -65,7 +65,7 @@ import java.util.Date;
     ),
     @NamedQuery(
         name = "getAdoptionsByCourtOrderNumberForAlteration",
-        query = "SELECT a FROM AdoptionOrder a WHERE a.courtOrderNumber LIKE :courtOrderNumber AND a.status >= :minState AND a.status < :maxStatus"
+        query = "SELECT a FROM AdoptionOrder a WHERE a.courtOrderNumber LIKE :courtOrderNumber AND a.status >= :minState AND a.status < :maxState"
     ),
     @NamedQuery(
         name = "getPaginatedListForAll",
