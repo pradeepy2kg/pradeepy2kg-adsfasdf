@@ -212,7 +212,7 @@
     <col>
     <tbody>
     <tr>
-        <td width="250px" height="120px">
+        <td width="250px" height="150px">
             සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන
             <br/> சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்
             <br/>Name, Signature and Designation of certifying officer
@@ -222,35 +222,18 @@
             <s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectUser.role.roleId}"/></td>
     </tr>
     <tr>
-        <td width="250px" height="30px">
-            නිකුත් කළ ස්ථානය
-            <br/>வழங்கிய இடம்
-            <br/>Place of Issue
+        <td width="250px" height="150px">
+            නිකුත් කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන
+            <br/>Name, Signature and Designation of issuing officer in ta
+            <br/>Name, Signature and Designation of issuing officer
         </td>
-        <td colspan="3">
-            <s:if test="lang==si">
-                <s:label> රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව, බත්තරමුල්ල
-                    <br>Registrar General's Department, Battaramulla</s:label>
-            </s:if>
-            <s:elseif test="lang==ta">
-                <s:label>பதிவாளர் நாயகம் திணைக்களம் , பத்தரமுல்லை
-                    <br>Registrar General's Department, Battaramulla</s:label>
-
-            </s:elseif>
-        </td>
-
-        <td width="150px">
-            නිකුත් කළ දිනය
-            <br/>வழங்கிய திகதி
-            <br/>Date of Issue
-        </td>
-        <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.lastUpdatedTimestamp}"/>
-        </td>
+        <td colspan="5" style="font-size:10pt"></td>
     </tr>
     </tbody>
 </table>
 
-<s:if test="#request.adoption.birthCertificateNumber>0 || #request.adoption.birthRegistrationSerial>0">
+<%-- Commented as mentioned that these fields are useless for the purpose. --%>
+<%--<s:if test="#request.adoption.birthCertificateNumber>0 || #request.adoption.birthRegistrationSerial>0">
     <table style="font-size:12pt;text-align:center;width:99%">
         <tr></tr>
         <tr>
@@ -281,9 +264,9 @@
                 Registration Division
             </td>
             <td width="25%"><s:label name="" value="%{birthDivisionName}"/></td>
-            <td>දැනට පවතින උප්පැන්න සහතිකයේ අණුක්‍රමික අංකය<br/>
-                தற்போதைய பிறப்புச்சான்றிதழின் தொடர் இலக்கம் <br/>
-                The serial number of the existing Birth Certificate
+            <td>අණුක්‍රමික අංකය<br/>
+                Serial Number in ta<br/>
+                Serial Number
             </td>
             <td width="25%">
                 <s:if test="#request.adoption.birthCertificateNumber>0">
@@ -295,8 +278,8 @@
             </td>
         </tr>
     </table>
-</s:if>
-<table style="width:99%; border-left:none;font-size:10pt;text-align:center;margin-bottom:10px;">
+</s:if>--%>
+<table style="width:99%; border-left:none;font-size:8pt;text-align:center;margin-bottom:10px;">
     <tr>
         <td>
             (1941 අංක 24 දරන දරුකමට ගැනීම පිලිබඳ ආඥාපනතේ 11 වෙනි වගන්තිය යටතේ නිකුත් කරන ලදී)
@@ -332,7 +315,7 @@
     </tr>
     <tr>
         <td>
-            <s:label value="%{adoption.certificateApplicantAddress}" cssStyle="width:600px;font-size:12pt;"/>
+            <s:textarea rows="5" value="%{adoption.certificateApplicantAddress}" cssStyle="width:600px;font-size:12pt; background:#FFF; border:none; color:#000;"></s:textarea>
         </td>
     </tr>
     <tr>
