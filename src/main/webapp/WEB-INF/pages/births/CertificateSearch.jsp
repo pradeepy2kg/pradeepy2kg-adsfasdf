@@ -365,7 +365,7 @@ function numbersonly(e, decimal) {
                                                                                                            cssStyle="color:red;font-size:10pt"/>
                     <br>விண்ணப்பிப்பது யாருடைய இறப்பினை?
                     அவரின் முழுப்பெயர் ஆங்கில மொழியில்<br>
-                    Full Name of the person respecting whose birth application is made in English ?</label>
+                    Full Name of the person respecting whose death application is made in English ?</label>
             </s:if>
         </td>
         <td colspan="6"><s:textarea name="certSearch.search.searchFullNameEnglish" id="searchFullNameEnglish"
