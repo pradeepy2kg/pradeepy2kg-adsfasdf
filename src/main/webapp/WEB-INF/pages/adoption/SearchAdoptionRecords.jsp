@@ -53,7 +53,8 @@
                         <s:label value="%{getText('court.label')}"/>
                     </td>
                     <td>
-                        <s:select list="courtList" name="courtId" headerKey="0" headerValue="%{getText('select.label')}"/>
+                        <s:select list="courtList" name="courtId" headerKey="0"
+                                  headerValue="%{getText('select.label')}"/>
                     </td>
                     <td></td>
                     <td class="form-submit" align="right">
@@ -72,7 +73,8 @@
                 <th width="120px"><s:label value="%{getText('entry_no.label')}"/></th>
                 <th><s:label value="%{getText('name.label')}"/></th>
                 <th width="150px"><s:label value="%{getText('court.order.no.label')}"/></th>
-                <th width="60px"><s:label value="%{getText('view.label')}"/></th>
+                <th width="20px"></th>
+                <th width="20px"></th>
             </tr>
             </thead>
             <tbody>
@@ -105,6 +107,27 @@
                                  border="none"/>
                         </s:a>
                     </td>
+
+                    <td align="center">
+
+                        <s:url id="cetificatePrintUrl" action="eprRePrintApplicationForAdoption.do">
+                            <s:param name="idUKey" value="idUKey"/>
+                            <s:param name="certificateflag" value="false"/>
+                            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                            <s:param name="pageNo" value="%{#request.pageNo}"/>
+                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                        </s:url>
+
+                        <s:a href="%{cetificatePrintUrl}"
+                             title="%{getText('reprintAdoptionRegistrationTooltip.label')}">
+                            <img id="printImage" src="<s:url value='/images/print_icon.gif'/>"
+                                 border="none" width="25" height="25"/>
+                        </s:a>
+
+                    </td>
+
+
                 </tr>
             </s:iterator>
             </tbody>
