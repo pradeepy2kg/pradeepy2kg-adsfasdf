@@ -222,6 +222,8 @@ public class SearchAction extends ActionSupport implements SessionAware {
                         searchResultList = certificateSearchService.performBirthCertificateSearch(certSearch, user, dsDivisionId, birthDistrictId);
                     } else if (certificateType == CertificateSearch.CertificateType.DEATH) {
                         searchResultList = certificateSearchService.performDeathCertificateSearch(certSearch, user, dsDivisionId, birthDistrictId);
+                    } else if (certificateType == CertificateSearch.CertificateType.ADOPTION) {
+                        searchResultList = certificateSearchService.performDeathCertificateSearch(certSearch, user, dsDivisionId, birthDistrictId);
                     }
                     logger.debug("Certificate search result size : {}", searchResultList.size());
                     if (searchResultList.size() == 0) {

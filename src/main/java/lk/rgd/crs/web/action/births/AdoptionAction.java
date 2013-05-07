@@ -106,8 +106,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String language;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-        AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
-        BirthRegistrationService birthRegistrationService, CourtDAO courtDAO, ZonalOfficesDAO zonalOfficesDAO, ProvinceDAO provinceDAO) {
+                          AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
+                          BirthRegistrationService birthRegistrationService, CourtDAO courtDAO, ZonalOfficesDAO zonalOfficesDAO, ProvinceDAO provinceDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -164,7 +164,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 setIdUKey(adoption.getIdUKey());
                 setAllowApproveAdoption(user.isAuthorized(Permission.APPROVE_ADOPTION));
                 addActionMessage(getText("message.successfully.edited.adoption.order",
-                    new String[]{adoption.getCourtOrderNumber()}));
+                        new String[]{adoption.getCourtOrderNumber()}));
             } else {
                 if (service.isEntryNoExist(adoption.getAdoptionEntryNo(), user)) {
                     addActionError(getText("er.label.used.adoption.entry.number"));
@@ -343,10 +343,33 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
-                adoption.getLanguageToTransliterate());
+                    adoption.getLanguageToTransliterate());
             zonalOfficeList = zonalOfficesDAO.getActiveZonalOffices(language);
             zonalOfficeId = adoption.getNoticingZonalOffice().getZonalOfficeUKey();
             return SUCCESS;
+        }
+    }
+
+    public String loadApplicationForAdoption() {
+        adoption = service.getById(idUKey, user);
+        if (adoption == null) {
+            addActionError(getText("er.invalid.Entry"));
+            populateApprovalAndPrintList();
+            return "skip";
+        }
+        if (!(adoption.getStatus() == AdoptionOrder.State.APPROVED || adoption.getStatus() == AdoptionOrder.State.ORDER_DETAILS_PRINTED || adoption.getStatus() == AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
+            logger.debug("Current state of adoption order : {}", adoption.getStatus());
+            genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
+            genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
+            courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
+                    adoption.getLanguageToTransliterate());
+            zonalOfficeList = zonalOfficesDAO.getActiveZonalOffices(language);
+            zonalOfficeId = adoption.getNoticingZonalOffice().getZonalOfficeUKey();
+            return SUCCESS;
+        } else {
+            addActionError(getText("adoption.not.permited.operation"));
+            logger.debug("Current state of adoption order : {}", adoption.getStatus());
+            return ERROR;
         }
     }
 
@@ -418,9 +441,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             return "skip";
         }
         if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) &&
-            (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED) &&
-            adoption.getStatus() != AdoptionOrder.State.RE_REGISTRATION_REQUESTED &&
-            adoption.getStatus() != AdoptionOrder.State.RE_REGISTERED) {
+                (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED) &&
+                adoption.getStatus() != AdoptionOrder.State.RE_REGISTRATION_REQUESTED &&
+                adoption.getStatus() != AdoptionOrder.State.RE_REGISTERED) {
             addActionError(getText("adoption.not.permited.operation"));
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             return ERROR;
@@ -805,7 +828,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         adoption = service.getById(idUKey, user);
         if (adoption != null) {
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
-                ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
+                    ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
             if (adoption.getStatus().equals(AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
                 session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
 
