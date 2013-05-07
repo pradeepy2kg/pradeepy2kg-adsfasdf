@@ -1035,6 +1035,12 @@
             <result type="tiles" name="none">epr.error</result>
         </action>
 
+        <action name="eprRePrintApplicationForAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="loadApplicationForAdoption">
+            <result type="tiles" name="success">epr.RePrintApplicationForAdoption</result>
+            <result type="tiles" name="none">epr.error</result>
+        </action>
+
     </package>
 
     <package name="management" namespace="/management" extends="NG">
