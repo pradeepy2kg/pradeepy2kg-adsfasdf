@@ -218,6 +218,36 @@
         <put-attribute name="title" value="BirthCertificateSearch.title"/>
     </definition>
 
+    <definition name="epr.birthCertificateSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/CertificateSearch.jsp"/>
+        <put-attribute name="title" value="BirthCertificateSearch.title"/>
+    </definition>
+
+    <definition name="epr.birthCertificateSearchResult" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/CertificateSearchResult.jsp"/>
+        <put-attribute name="title" value="BirthCertificateSearch.title"/>
+    </definition>
+
+    <definition name="epr.deathCertificateSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/CertificateSearch.jsp"/>
+        <put-attribute name="title" value="DeathCertificateSearch.title"/>
+    </definition>
+
+    <definition name="epr.deathCertificateSearchResult" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/CertificateSearchResult.jsp"/>
+        <put-attribute name="title" value="DeathCertificateSearch.title"/>
+    </definition>
+
+    <definition name="epr.adoptionCertificateSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/CertificateSearch.jsp"/>
+        <put-attribute name="title" value="AdoptionCertificateSearch.title"/>
+    </definition>
+
+    <definition name="epr.adoptionCertificateSearchResult" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/CertificateSearchResult.jsp"/>
+        <put-attribute name="title" value="AdoptionCertificateSearch.title"/>
+    </definition>
+
     <definition name="epr.birthRegisterReject" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthDeclarationReject.jsp"/>
         <put-attribute name="title" value="reject.title"/>
@@ -463,6 +493,10 @@
     <definition name="epr.AdoptionReReg" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionReRegistration.jsp"/>
         <put-attribute name="title" value="adoption_re_reg.title"/>
+    </definition>
+    <definition name="epr.RePrintApplicationForAdoption" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/RePrintApplicationForAdoption.jsp"/>
+        <put-attribute name="title" value="adoption_reg_re_print.title"/>
     </definition>
     <definition name="epr.adoptionRegistrationHome" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionRegistrationHomePage.jsp"/>
