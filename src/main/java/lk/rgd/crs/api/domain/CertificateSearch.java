@@ -29,7 +29,11 @@ public class CertificateSearch implements Serializable {
         /**
          * 1 - A Death Certificate
          */
-        DEATH
+        DEATH,
+        /**
+         * 1 - Adoption
+         */
+        ADOPTION
     }
 
     /**
