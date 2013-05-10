@@ -82,6 +82,14 @@ import java.util.Date;
     @NamedQuery(
         name = "getAdoptionsWithSameApplicantName",
         query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo <> :adoptionEntryNo AND (a.applicantName LIKE :applicantName OR a.spouseName LIKE :applicantName)"
+    ),
+    @NamedQuery(
+        name = "getAllAdoptionsForAGivenCourtAndForADataEntryPeriod",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.court.courtUKey = :courtId And a.lifeCycleInfo.createdTimestamp>= :dataEntryDateFrom And a.lifeCycleInfo.createdTimestamp <= :dataEntryDateTo "
+    ),
+    @NamedQuery(
+        name = "getAllAdoptionsForADataEntryPeriod",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.lifeCycleInfo.createdTimestamp>=:dataEntryDateFrom And a.lifeCycleInfo.createdTimestamp<=:dataEntryDateTo "
     )
 })
 

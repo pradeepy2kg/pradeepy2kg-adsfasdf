@@ -4,6 +4,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 
 import java.util.List;
+import java.util.Date;
 
 /**
  * @author Ashoka Ekanayaka
@@ -171,6 +172,27 @@ public interface AdoptionOrderDAO {
      */
     public AdoptionOrder getAdoptionByCourtOrderNumberAndEntryNumber(String courtOrderNumber, long adoptionEntryNo);
 
+    /**
+     * Returns a list of adoption records according to the court and entered date period.
+     * (if a court has not been selected then show records of all courts)
+     *
+     * @param courtId Court Id
+     * @param dataEntryDateFrom  Start date of the data entry period.
+     * @param dataEntryDateTo    End date of the data entry period.
+     *
+     * @return   List of Adoption records.
+     */
+    public List<AdoptionOrder> getAdoptionsByCourtIdAndDataEntryPeriod(int courtId,Date dataEntryDateFrom,Date dataEntryDateTo);
+
+    /**
+     * Returns a list of adoption records according to the given data entry period.
+     *
+     * @param dataEntryDateFrom  Start date of the data entry period.
+     * @param dataEntryDateTo    End date of the data entry period.
+     * @return   List of Adoption records.
+     */
+    public List<AdoptionOrder> getAdoptionsByDataEntryPeriod(Date dataEntryDateFrom,Date dataEntryDateTo);
+    
     public List<AdoptionOrder> getAdoptionsWithSameChildName(String childName, long adoptionEntryNo);
 
     public List<AdoptionOrder> getAdoptionsWithSameParentNames(String applicantName, String spouseName, long adoptionEntryNo);

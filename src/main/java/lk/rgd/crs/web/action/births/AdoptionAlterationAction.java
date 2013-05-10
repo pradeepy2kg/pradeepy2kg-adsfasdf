@@ -12,7 +12,6 @@ import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.service.AdoptionAlterationService;
 import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.util.FieldValue;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

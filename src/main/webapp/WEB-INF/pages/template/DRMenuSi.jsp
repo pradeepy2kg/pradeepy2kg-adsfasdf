@@ -122,6 +122,11 @@
                 (4) දරුකමට හදාගැනීම දෙවන ලියාපදිංචිය
             </a>
         </li>
+        <li>
+             <a id="search_adoption_reports.label" href="/ecivil/adoption/eprAdoptionReportGeneration.do">
+                (6) වාර්තා සැකසීම
+             </a>
+        </li>
     </ul>
 </li>
 

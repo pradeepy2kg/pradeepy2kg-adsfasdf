@@ -132,6 +132,11 @@
                 (5) Search Adoption Records in ta
             </a>
         </li>
+        <li>
+            <a id="search_adoption_reports.label" href="/ecivil/adoption/eprAdoptionReportGeneration.do">
+                (6) Reports Generation in ta
+            </a>
+        </li>
     </ul>
 </li>
 

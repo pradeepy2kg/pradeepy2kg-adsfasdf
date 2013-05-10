@@ -103,7 +103,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
             adoptionOrderDAO.deleteAdoptionOrder(idUKey);
         } else {
             handleException("Cannot delete adoption order " + adoption.getIdUKey() +
-                " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
     }
 
@@ -181,9 +181,9 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
 
         AdoptionOrder adopt = getById(adoption.getIdUKey(), user);
         if ((adopt.getStatus() != AdoptionOrder.State.NOTICE_LETTER_PRINTED) ||
-            (adoption.getStatus() != AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
+                (adoption.getStatus() != AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
             handleException("Cannot change status to certificate issue request captured, " + adoption.getIdUKey() +
-                " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         adoption.setStatus(AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED);
         adoptionOrderDAO.updateAdoptionOrder(adoption, user);
@@ -197,7 +197,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         AdoptionOrder adoption = getById(adoptionId, user);
         if (adoption.getStatus() != AdoptionOrder.State.APPROVED) {
             handleException("Cannot change status to adoption order details printed, " + adoption.getIdUKey() +
-                " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         adoption.setStatus(AdoptionOrder.State.ORDER_DETAILS_PRINTED);
         adoptionOrderDAO.updateAdoptionOrder(adoption, user);
@@ -211,7 +211,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         AdoptionOrder adoption = getById(adoptionId, user);
         if (adoption.getStatus() != AdoptionOrder.State.ORDER_DETAILS_PRINTED) {
             handleException("Cannot change status to notice letter printed, " + adoption.getIdUKey() +
-                " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         adoption.setStatus(AdoptionOrder.State.NOTICE_LETTER_PRINTED);
         adoptionOrderDAO.updateAdoptionOrder(adoption, user);
@@ -225,7 +225,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         AdoptionOrder adoption = getById(adoptionId, user);
         if (adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) {
             handleException("Cannot change status to adoption certificate printed, " + adoption.getIdUKey() +
-                " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
 
         adoption.setStatus(AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
@@ -237,7 +237,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<AdoptionOrder> getPaginatedListForState(int pageNo, int noOfRows,
-        AdoptionOrder.State status, User user) {
+                                                        AdoptionOrder.State status, User user) {
         try {
             return adoptionOrderDAO.getPaginatedListForState(pageNo, noOfRows, status);
         } catch (Exception e) {
@@ -321,7 +321,9 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public List<AdoptionOrder> getAdoptionsByCourtOrderNumberForAlterations(String courtOrderNumber) {
-        List<AdoptionOrder> adoptionOrders = adoptionOrderDAO.getAdoptionsByCourtOrderNumberForAlteration(courtOrderNumber, AdoptionOrder.State.APPROVED, AdoptionOrder.State.RE_REGISTRATION_REQUESTED);
+        //List<AdoptionOrder> adoptionOrders = adoptionOrderDAO.getAdoptionsByCourtOrderNumberForAlteration(courtOrderNumber, AdoptionOrder.State.APPROVED, AdoptionOrder.State.RE_REGISTRATION_REQUESTED);
+        List<AdoptionOrder> adoptionOrders = adoptionOrderDAO.getAdoptionsByCourtOrderNumberAndState(courtOrderNumber, AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
+
         if (adoptionOrders.size() > 0) {
             return adoptionOrders;
         } else {
@@ -333,7 +335,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
         if (AdoptionOrder.State.DATA_ENTRY != adoption.getStatus()) {
             handleException("Cannot approve/reject adoption order " + adoption.getIdUKey() +
-                " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         validateAccess(user);
 
@@ -353,21 +355,21 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
 
         if ((adoption.getChildNewName() == null) && (adoption.getChildExistingName() == null)) {
             handleException("can not update adoption order " + adoption.getIdUKey() +
-                " A Name not given : " + adoption.getStatus(), ErrorCodes.INVALID_DATA);
+                    " A Name not given : " + adoption.getStatus(), ErrorCodes.INVALID_DATA);
         }
     }
 
     private void validateAccess(User user) {
         String role = user.getRole().getRoleId();
         if (!(User.State.ACTIVE == user.getStatus()) ||
-            !(Role.ROLE_ARG.equals(role) || Role.ROLE_RG.equals(role))) {
+                !(Role.ROLE_ARG.equals(role) || Role.ROLE_RG.equals(role))) {
             handleException("User : " + user.getUserId() + " of role : " + role +
-                " is not allowed access to approve/reject an adoption : ", ErrorCodes.PERMISSION_DENIED);
+                    " is not allowed access to approve/reject an adoption : ", ErrorCodes.PERMISSION_DENIED);
         }
 
         if (!user.isAuthorized(Permission.APPROVE_ADOPTION)) {
             handleException("User : " + user.getUserId() + " is not allowed to approve/reject Adoptions",
-                ErrorCodes.PERMISSION_DENIED);
+                    ErrorCodes.PERMISSION_DENIED);
         }
 
     }
@@ -428,5 +430,20 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     private void handleException(String message, int code) {
         logger.error(message);
         throw new CRSRuntimeException(message, code);
+    }
+
+    public List<AdoptionOrder> generateAdoptionReports(int courtId, Date dataEntryDateFrom, Date dataEntryDateTo) {
+        logger.debug("Court Id Service: {} \t Court ID : {}", courtId);
+        List<AdoptionOrder> searchResults = new ArrayList<AdoptionOrder>();
+        if (courtId > 0 && dataEntryDateFrom != null && dataEntryDateTo != null) {
+            searchResults = adoptionOrderDAO.getAdoptionsByCourtIdAndDataEntryPeriod(courtId, dataEntryDateFrom, dataEntryDateTo);
+        }
+        else if(courtId==0 && dataEntryDateFrom != null && dataEntryDateTo != null){
+            searchResults = adoptionOrderDAO.getAdoptionsByDataEntryPeriod(dataEntryDateFrom, dataEntryDateTo);
+        }
+        else if(courtId>0){
+            searchResults = adoptionOrderDAO.getAdoptionsByCourt(courtId);
+        }
+        return searchResults;
     }
 }

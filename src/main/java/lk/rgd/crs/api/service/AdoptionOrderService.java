@@ -6,6 +6,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
 
 import java.util.List;
+import java.util.Date;
 
 /**
  * @author Ashoka Ekanayaka
@@ -204,4 +205,14 @@ public interface AdoptionOrderService {
      * @return
      */
     public List<AdoptionOrder> getAdoptionsByCourtOrderNumberForAlterations(String courtOrderNumber);
+    /**
+     * Returns a list of adoption records according to the court(i.e if a court has not been selected then show records of all courts) and entered date period.
+     *
+     * @param courtId Court Id
+     * @param dataEntryDateFrom  Start date of the data entry period.
+     * @param dataEntryDateTo    End date of the data entry period.
+     *
+     * @return   List of Adoption records.
+     */
+    public List<AdoptionOrder> generateAdoptionReports(int courtId,Date dataEntryDateFrom,Date dataEntryDateTo);
 }

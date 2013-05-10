@@ -26,6 +26,8 @@ import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
 import lk.rgd.AppConstants;
+import java.util.Date;
+import java.util.Calendar;
 
 /**
  * @author Duminda Dharmakeerthi
@@ -75,6 +77,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private int currentStatus;
     private int pageNo;
     private int zonalOfficeId;
+    private int childGender;
+    private int childAgeFrom;
+    private int childAgeTo;
 
     private long idUKey;
     private long adoptionId;
@@ -88,6 +93,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private boolean alreadyPrinted;
     private boolean approved;
     private boolean printed;
+    private boolean jointApplicant;
 
     private String courtOrderNo;
     private String dsDivisionName;
@@ -104,6 +110,10 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String genderEn;
     private String genderSi;
     private String language;
+
+    private Date childDateOfBirth;
+    private Date dataEntryPeriodFrom;
+    private Date dataEntryPeriodTo;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
@@ -219,6 +229,35 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+    /*
+       This method sets the maximun time value for a given date.
+     */
+    private Date setMaxTimePartForDates(Date date){
+        Date d=null;
+        try{
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.set(Calendar.HOUR_OF_DAY,23);
+            cal.set(Calendar.MINUTE,59);
+            cal.set(Calendar.SECOND,59);
+            cal.set(Calendar.MILLISECOND,999);
+            d = cal.getTime();
+       }catch(Exception ex){
+
+       }
+       return d;
+    }
+
+    public String generateAdoptionReports() {
+        if(dataEntryPeriodFrom!=null && dataEntryPeriodTo!=null && dataEntryPeriodTo.before(dataEntryPeriodFrom)){
+           logger.debug("Inside the date validation condition. ");
+           addActionError(getText("date.comparison.validation.label"));
+        }
+        searchResults = service.generateAdoptionReports(courtId,dataEntryPeriodFrom,setMaxTimePartForDates(dataEntryPeriodTo));
+        populateBasicLists(user.getPrefLanguage());
+        return SUCCESS;
+    }
+
     public String initApplicantInfo() {
         logger.debug("initializing applicant info");
         return SUCCESS;
@@ -258,6 +297,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         //populate court
         courtId = adoption.getCourt().getCourtUKey();
         return SUCCESS;
+    }
+
+
+    private boolean isApplicantMother(AdoptionOrder adoption) {
+        return false;
     }
 
     /**
@@ -1319,5 +1363,61 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setNoOfRows(int noOfRows) {
         this.noOfRows = noOfRows;
+    }
+
+    public int getChildGender() {
+        return childGender;
+    }
+
+    public void setChildGender(int childGender) {
+        this.childGender = childGender;
+    }
+
+    public int getChildAgeFrom() {
+        return childAgeFrom;
+    }
+
+    public void setChildAgeFrom(int childAgeFrom) {
+        this.childAgeFrom = childAgeFrom;
+    }
+
+    public int getChildAgeTo() {
+        return childAgeTo;
+    }
+
+    public void setChildAgeTo(int childAgeTo) {
+        this.childAgeTo = childAgeTo;
+    }
+
+    public Date getDataEntryPeriodFrom() {
+        return dataEntryPeriodFrom;
+    }
+
+    public void setDataEntryPeriodFrom(Date dataEntryPeriodFrom) {
+        this.dataEntryPeriodFrom = dataEntryPeriodFrom;
+    }
+
+    public Date getDataEntryPeriodTo() {
+        return dataEntryPeriodTo;
+    }
+
+    public void setDataEntryPeriodTo(Date dataEntryPeriodTo) {
+        this.dataEntryPeriodTo = dataEntryPeriodTo;
+    }
+
+    public boolean isJointApplicant() {
+        return jointApplicant;
+    }
+
+    public void setJointApplicant(boolean jointApplicant) {
+        this.jointApplicant = jointApplicant;
+    }
+
+    public Date getChildDateOfBirth() {
+        return childDateOfBirth;
+    }
+
+    public void setChildDateOfBirth(Date childDateOfBirth) {
+        this.childDateOfBirth = childDateOfBirth;
     }
 }

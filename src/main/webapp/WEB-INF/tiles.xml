@@ -510,6 +510,10 @@
         <put-attribute name="body" value="/WEB-INF/pages/adoption/SearchAdoptionRecords.jsp"/>
         <put-attribute name="title" value="search_adoption_records.label"/>
     </definition>
+    <definition name="epr.adoptionReportGeneration" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionReportGeneration.jsp"/>
+        <put-attribute name="title" value="search_adoption_records.label"/>
+    </definition>
     <definition name="epr.adoptionSummary" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionResult.jsp"/>
         <put-attribute name="title" value="adoption_summary.label"/>
