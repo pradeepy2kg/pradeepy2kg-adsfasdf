@@ -216,3 +216,7 @@ body {
     margin: auto;
     clear: both;
 }
+
+.width80{
+    width: 80px;    
+}

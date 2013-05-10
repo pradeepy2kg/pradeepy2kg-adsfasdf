@@ -1041,6 +1041,12 @@
             <result type="tiles" name="none">epr.error</result>
         </action>
 
+        <action name="eprAdoptionReportGeneration" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="generateAdoptionReports">
+            <result type="tiles" name="success">epr.adoptionReportGeneration</result>
+            <result type="tiles" name="none">epr.error</result>
+        </action>
+
     </package>
 
     <package name="management" namespace="/management" extends="NG">

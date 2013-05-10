@@ -245,4 +245,21 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
         q.setParameter("adoptionEntryNo", adoptionEntryNo);
         return q.getResultList();
     }
+
+   @Transactional(propagation = Propagation.SUPPORTS)
+   public List<AdoptionOrder> getAdoptionsByCourtIdAndDataEntryPeriod(int courtId,Date dataEntryDateFrom,Date dataEntryDateTo){
+        Query q = em.createNamedQuery("getAllAdoptionsForAGivenCourtAndForADataEntryPeriod");
+        q.setParameter("courtId", courtId);
+        q.setParameter("dataEntryDateFrom", dataEntryDateFrom);
+        q.setParameter("dataEntryDateTo", dataEntryDateTo);
+        return q.getResultList();
+    }
+    
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<AdoptionOrder> getAdoptionsByDataEntryPeriod(Date dataEntryDateFrom,Date dataEntryDateTo){
+        Query q = em.createNamedQuery("getAllAdoptionsForADataEntryPeriod");
+        q.setParameter("dataEntryDateFrom", dataEntryDateFrom);
+        q.setParameter("dataEntryDateTo", dataEntryDateTo);
+        return q.getResultList();
+    }
 }
