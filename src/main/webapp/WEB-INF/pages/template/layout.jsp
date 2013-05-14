@@ -16,34 +16,35 @@
 <head>
     <title>E-Population System</title>
 
-    <script type="text/javascript">
-        if (navigator.appVersion.indexOf("Win")!=-1){
+    <%--<script type="text/javascript">
+        if (navigator.appVersion.indexOf("Win") != -1) {
             document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/windowsFont.css\"/>");
         }
-        else if(navigator.appVersion.indexOf("X11")!=-1){
+        else if (navigator.appVersion.indexOf("X11") != -1) {
             document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/ubuntuFont.css\"/>");
         }
-    </script>
+    </script>--%>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/webform.css"/> '/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
     <link rel="stylesheet" type="text/css" media="print" href='<s:url value="/css/print.css"/>'/>
 
-<script type="text/javascript">
-    function initPage() {
-    }
+    <script type="text/javascript" src="<s:url value="/js/sinhalaTamilSyntaxChecker.js"/>"></script>
+    <script type="text/javascript">
+        function initPage() {
+        }
 
-    // Display popup by using specified url
-    function displayHelpPopup(url) {
-        var w = 990;
-        var h = 850;
-        var left = (w / 2 - 300);
-        var top = (h / 2 - 350);
-        var features = "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left;
-        features += ",scrollbars=1,resizable=0,status=0,directories=no,menubar=0,toolbar=0";
-        window.open(url, 'Help Window',features);
-    }
-</script>
+        // Display popup by using specified url
+        function displayHelpPopup(url) {
+            var w = 990;
+            var h = 850;
+            var left = (w / 2 - 300);
+            var top = (h / 2 - 350);
+            var features = "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left;
+            features += ",scrollbars=1,resizable=0,status=0,directories=no,menubar=0,toolbar=0";
+            window.open(url, 'Help Window', features);
+        }
+    </script>
 </head>
 <body onload="initPage()">
 <div id="wrapper">
@@ -127,6 +128,9 @@
     <div id="layout-footer">
         <tiles:insertAttribute name="footer"/>
     </div>
+    <s:hidden id="syntaxError" value="%{getText('syntax.errors.in.following.text.label')}"/>
+    <s:hidden id="syntaxErrorData" value="%{getText('syntax.errors.in.following.text.data.label')}"/>
+    <s:hidden id="correctSyntaxError" value="%{getText('want.to.correct.syntax.error.label')}"/>
 </div>
 </body>
 </html>

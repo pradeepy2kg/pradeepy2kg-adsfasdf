@@ -212,6 +212,11 @@ function validateForm() {
         isDate(dob.value, "Invalid ", "invalideData")
     }
 
+    var out = checkActiveFieldsForSyntaxErrors('add-edit-registrars-form');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -278,7 +283,7 @@ $(function() {
 </style>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend align="right"><s:property value="%{getText('registrar.basic.info')}"/></legend>
-    <form action="eprUpdateRegistrar.do" method="post" onsubmit="javascript:return validateForm()">
+    <form id="add-edit-registrars-form" action="eprUpdateRegistrar.do" method="post" onsubmit="javascript:return validateForm()">
         <table border="0" style="width: 100%" cellpadding="5" cellspacing="5">
             <caption></caption>
             <col width="400px"/>

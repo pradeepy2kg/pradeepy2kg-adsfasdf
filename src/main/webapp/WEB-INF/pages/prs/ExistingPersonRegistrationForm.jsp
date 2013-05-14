@@ -76,8 +76,6 @@
         }
 
 
-
-
         domObject = document.getElementById("placeOfBirth");
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error5');
@@ -120,6 +118,12 @@
             validateEmail(domObject, "error0", 'error10');
         }
 
+
+        var out = checkActiveFieldsForSyntaxErrors('existing-person-registration-form');
+        if (out != "") {
+            errormsg = errormsg + out;
+        }
+        
         if (errormsg != "") {
             alert(errormsg);
             returnVal = false;
@@ -139,6 +143,11 @@
             checkPassportNo();
         } else {
             checkPassportNo();
+        }
+
+        var out = checkActiveFieldsForSyntaxErrors('existing-person-registration-form');
+        if (out != "") {
+            errormsg = errormsg + out;
         }
 
         if (errormsg != "") {
@@ -359,7 +368,7 @@
 </script>
 
 <div class="prs-existing-person-register-outer">
-<s:form action="eprExistingPersonRegistration.do" method="POST" onsubmit="javascript:return validate()">
+<s:form id="existing-person-registration-form" action="eprExistingPersonRegistration.do" method="POST" onsubmit="javascript:return validate()">
 
 <table class="table_reg_header_01" style="font-size:9pt">
     <caption></caption>

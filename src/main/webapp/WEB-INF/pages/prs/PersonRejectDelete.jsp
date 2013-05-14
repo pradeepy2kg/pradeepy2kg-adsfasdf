@@ -41,6 +41,11 @@
             errormsg = document.getElementById("error").value;
         }
 
+        var out = checkActiveFieldsForSyntaxErrors('person-reject-details-form');
+        if (out != "") {
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnVal = false;
@@ -149,7 +154,7 @@
         <s:param name="printStart" value="%{#request.printStart}"/>
     </s:url>
     <table>
-        <s:form action="%{perform}" method="post" onsubmit="javascript:return validate()">
+        <s:form id="person-reject-details-form" action="%{perform}" method="post" onsubmit="javascript:return validate()">
             <col width="180px;"/>
             <col width="10px;"/>
             <col width="840px;"/>

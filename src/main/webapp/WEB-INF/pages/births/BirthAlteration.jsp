@@ -466,6 +466,12 @@ function validate() {
     if (!(mother || father || other || self)) {
         errormsg = errormsg + "\n" + document.getElementById("declarantError1").value;
     }
+
+    var out = checkActiveFieldsForSyntaxErrors('birth-alteration-form');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -591,7 +597,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
 <s:else>
     <s:url value="eprEditBirthAlteration.do" id="alteration"/>
 </s:else>
-<s:form action="%{alteration}" onsubmit="javascript:return validate()">
+<s:form id="birth-alteration-form" action="%{alteration}" onsubmit="javascript:return validate()">
 <table class="birth-alteration-table-style01" style="width:1030px;">
     <tr>
         <td width="30%"></td>

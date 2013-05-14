@@ -278,6 +278,11 @@ function validate() {
     if (!isFieldEmpty(domObject))
         validateEmail(domObject, 'error2', 'error1')
 
+    var out = checkActiveFieldsForSyntaxErrors('birth-registration-form-2');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -632,7 +637,7 @@ function maxLengthCalculate(id, max, divId) {
                                                                                                    value="#i+1"/>
             ) උපන් ස්ථානය <br>பிறந்த இடம்
             <br>Place of Birth</label></td>
-        <td colspan="3" class="passport"><s:textfield id="motherPlaceOfBirth" name="parent.motherPlaceOfBirth"/></td>
+        <td colspan="3" class="passport"><s:textfield id="motherPlaceOfBirth"  name="parent.motherPlaceOfBirth"/></td>
     </tr>
     <tr>
         <td rowspan="4"><label>(<s:property value="#row"/><s:set name="row"

@@ -135,6 +135,13 @@
         isDate(permanentDate, "invalideData", "permanentDate")
         isDate(terminationDate, "invalideData", "terminationDate")
 
+
+
+        var out = checkActiveFieldsForSyntaxErrors('add-assignment-form');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -152,7 +159,7 @@
 
 <s:set name="indirect" value="directAssignment"/>
 
-<s:form action="eprAssignmentAdd.do" method="post" onsubmit="javascript:return validateForm()">
+<s:form id="add-assignment-form" action="eprAssignmentAdd.do" method="post" onsubmit="javascript:return validateForm()">
 
     <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
         <table>

@@ -197,6 +197,11 @@ function validateSearch() {
         isNumeric(domObject.value, 'error1', 'error2');
     }
 
+    var out = checkActiveFieldsForSyntaxErrors('birth-confirmation-form-1');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -430,7 +435,7 @@ function initPage() {
     <td colspan="1"><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
     <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
                                  disabled="true" size="45"/></td>
-    <td colspan="5"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
+    <td colspan="5"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth" onchange="checkSyntax('placeOfBirth')"/></td>
 </tr>
 <tr>
     <td colspan="1"><label>ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கில மொழியில்<br>In English</label></td>

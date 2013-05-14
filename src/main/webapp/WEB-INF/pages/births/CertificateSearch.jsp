@@ -109,6 +109,11 @@ function validate() {
 
     commonTags();
 
+    var out = checkActiveFieldsForSyntaxErrors('birth-certificate-search-form-1');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -169,6 +174,11 @@ function validateMandatory() {
     var returnval = true;
 
     mandatoryFields();
+
+    var out = checkActiveFieldsForSyntaxErrors('birth-certificate-search-form-1');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
 
     if (errormsg != "") {
         alert(errormsg);

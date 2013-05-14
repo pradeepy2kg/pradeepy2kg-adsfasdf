@@ -197,6 +197,11 @@ function validate() {
         errormsg = errormsg + "\n" + document.getElementById('error26').value;
     }
 
+    var out = checkActiveFieldsForSyntaxErrors('death-registration-form-2');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -350,7 +355,7 @@ function maxLengthCalculate(id, max, divId) {
             <br>Name
         </td>
         <td colspan="6">
-            <s:textarea name="declarant.declarantFullName" id="declarantFullName"
+            <s:textarea name="declarant.declarantFullName" id="declarantFullName" onchange="checkSyntax('declarantFullName')"
                         cssStyle="width:99%;"
                         onblur="maxLengthCalculate('declarantFullName','255','declarantFullName_div');"/>
             <div id="declarantFullName_div" style="color:red;font-size:8pt"></div>
@@ -363,7 +368,7 @@ function maxLengthCalculate(id, max, divId) {
             <br>Postal Address
         </td>
         <td colspan="6">
-            <s:textarea name="declarant.declarantAddress" id="declarantAddress"
+            <s:textarea name="declarant.declarantAddress" id="declarantAddress" onchange="checkSyntax('declarantAddress')"
                         cssStyle="width:99%;"
                         onblur="maxLengthCalculate('declarantAddress','255','declarantAddress_div');"/>
             <div id="declarantAddress_div" style="color:red;font-size:8pt"></div>
@@ -444,7 +449,7 @@ function maxLengthCalculate(id, max, divId) {
                 <br>Name
             </td>
             <td colspan="3">
-                <s:textarea name="certifyingAuthority.certifyingAuthorityName" id="certifyingAuthorityName"
+                <s:textarea name="certifyingAuthority.certifyingAuthorityName" id="certifyingAuthorityName" onchange="checkSyntax('certifyingAuthorityName')"
                             cssStyle="width:99%;"
                             onblur="maxLengthCalculate('certifyingAuthorityName','120','certifyingAuthorityName_div');"/>
                 <div id="certifyingAuthorityName_div" style="color:red;font-size:8pt"></div>
@@ -457,7 +462,7 @@ function maxLengthCalculate(id, max, divId) {
                 <br>Postal Address
             </td>
             <td colspan="3">
-                <s:textarea name="certifyingAuthority.certifyingAuthorityAddress" id="certifyingAuthorityAddress"
+                <s:textarea name="certifyingAuthority.certifyingAuthorityAddress" id="certifyingAuthorityAddress" onchange="checkSyntax('certifyingAuthorityAddress')"
                             cssStyle="width:99%;"
                             onblur="maxLengthCalculate('certifyingAuthorityAddress','255','certifyingAuthorityAddress_div');"/>
                 <div id="certifyingAuthorityAddress_div" style="color:red;font-size:8pt"></div>
@@ -532,7 +537,7 @@ function maxLengthCalculate(id, max, divId) {
             <br>Name
         </td>
         <td colspan="3">
-            <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
+            <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName" onchange="checkSyntax('notifyingAuthorityName')"
                         cssStyle="width:99%;"
                         onblur="maxLengthCalculate('notifyingAuthorityName','120','notifyingAuthorityName_div');"/>
             <div id="notifyingAuthorityName_div" style="color:red;font-size:8pt"></div>
@@ -545,7 +550,7 @@ function maxLengthCalculate(id, max, divId) {
             <br>Postal Address
         </td>
         <td colspan="3">
-            <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress"
+            <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress" onchange="checkSyntax('notifyingAuthorityAddress')"
                         cssStyle="width:99%;"
                         onblur="maxLengthCalculate('notifyingAuthorityAddress','255','notifyingAuthorityAddress_div');"/>
             <div id="notifyingAuthorityAddress_div" style="color:red;font-size:8pt"></div>

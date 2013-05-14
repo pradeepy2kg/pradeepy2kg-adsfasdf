@@ -3,6 +3,22 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
     function initPage(){}
+
+    var errormsg = "";
+    function validate(){
+        var returnval = true;
+        var out = checkActiveFieldsForSyntaxErrors('belated-birth-reject-form');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
+    }
 </script>
 <div id="birth-declaration-reject-outer" class="birth-declaration-reject-outer">
     <table>
@@ -26,7 +42,7 @@
 
     <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
-    <s:form action="eprRejectBelatedBirthDeclaration.do" method="post">
+    <s:form id="belated-birth-reject-form" action="eprRejectBelatedBirthDeclaration.do" method="post" onsubmit="javascript:return validate()">
         <fieldset>
             <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
             <s:hidden name="bdId" value="%{#request.bdId}"/>

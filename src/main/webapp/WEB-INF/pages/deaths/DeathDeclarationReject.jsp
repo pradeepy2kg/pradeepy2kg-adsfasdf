@@ -9,6 +9,11 @@
         var comment = document.getElementById('comment');
         isEmpty(comment, document.getElementById("error").value, "commentField")
 
+        var out = checkActiveFieldsForSyntaxErrors('death-declaration-reject-form');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -33,7 +38,7 @@
 
     <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
-    <s:form action="eprRejectDeath.do" method="post" onsubmit="javascript:return validate()">
+    <s:form id="death-declaration-reject-form" action="eprRejectDeath.do" method="post" onsubmit="javascript:return validate()">
         <fieldset>
             <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
             <s:hidden name="idUKey" value="%{#request.idUKey}"/>

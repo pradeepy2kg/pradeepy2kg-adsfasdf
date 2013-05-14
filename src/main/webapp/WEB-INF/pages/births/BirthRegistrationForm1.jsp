@@ -143,6 +143,11 @@ function validate() {
         liveBirthCommonTags(check);
     }
 
+    var out = checkActiveFieldsForSyntaxErrors('birth-registration-form-1');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
