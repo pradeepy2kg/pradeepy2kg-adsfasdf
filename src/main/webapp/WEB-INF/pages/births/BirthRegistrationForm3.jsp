@@ -170,6 +170,11 @@ function validate() {
         }
     }
 
+    var out = checkActiveFieldsForSyntaxErrors('birth-registration-form-3');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -605,7 +610,7 @@ function maxLengthCalculate(id, max, divId) {
         <tr>
             <td colspan="1"><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
             <td colspan="5">
-                <s:textarea name="grandFather.grandFatherFullName" id="grandFatherFullName" cssStyle="width:97%;"
+                <s:textarea name="grandFather.grandFatherFullName" id="grandFatherFullName"  cssStyle="width:97%;"
                             onblur="maxLengthCalculate('grandFatherFullName','600','grandFatherFullName_div');"/>
                 <div id="grandFatherFullName_div" style="color:red;font-size:8pt"></div>
             </td>
@@ -621,7 +626,7 @@ function maxLengthCalculate(id, max, divId) {
             </td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td colspan="3"><s:textfield name="grandFather.grandFatherBirthPlace"
-                                         id="grandFatherBirthPlace" cssStyle="width:93%;"/></td>
+                                         id="grandFatherBirthPlace"  cssStyle="width:93%;"/></td>
         </tr>
         <tr>
             <td colspan="7"><label> (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
@@ -665,7 +670,7 @@ function maxLengthCalculate(id, max, divId) {
                     name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear" maxLength="4"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td><s:textfield name="grandFather.greatGrandFatherBirthPlace"
-                             id="greatGrandFatherBirthPlace" cssStyle="width:93%;"/></td>
+                             id="greatGrandFatherBirthPlace"  cssStyle="width:93%;"/></td>
         </tr>
         </tbody>
     </table>
@@ -755,7 +760,7 @@ function maxLengthCalculate(id, max, divId) {
             பெயர்
             <br>Name</label></td>
         <td colspan="4">
-            <s:textarea name="informant.informantName" id="informantName" cssStyle="width:95%;"
+            <s:textarea name="informant.informantName" id="informantName"  cssStyle="width:95%;"
                         onblur="maxLengthCalculate('informantName','600','informantName_div');"/>
             <div id="informantName_div" style="color:red;font-size:8pt"></div>
         </td>

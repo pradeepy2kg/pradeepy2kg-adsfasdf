@@ -6,7 +6,12 @@
         var comment = document.getElementById('comment').value;
 
         if (comment == "") {
-            erroMassage = erroMassage + document.getElementById('coomentNull').value;
+            erroMassage = erroMassage + document.getElementById('commentNull').value;
+        }
+
+        var out = checkActiveFieldsForSyntaxErrors('death-alteration-reject-form');
+        if(out != ""){
+            erroMassage = erroMassage + out;
         }
 
         if (erroMassage != "") {
@@ -23,7 +28,7 @@
     function initPage() {
     }
 </script>
-<s:form method="post" action="eprDeathAlterationReject.do" onsubmit="javascript:return validate()">
+<s:form id="death-alteration-reject-form" method="post" action="eprDeathAlterationReject.do" onsubmit="javascript:return validate()">
     <table>
         <caption/>
         <col width="250px"/>
@@ -54,5 +59,5 @@
     </div>
     <s:hidden name="pageNumber" value="1"/>
     <s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
-    <s:hidden id="coomentNull" value="%{getText('err.comment.null')}"/>
+    <s:hidden id="commentNull" value="%{getText('err.comment.null')}"/>
 </s:form>

@@ -16,10 +16,17 @@
     function validateMarriageDetails() {
 
         var errormsg = "";
+        var out="";
         var mode = document.getElementById("mode").value;
 
         errormsg = validateRegistrationDetails(errormsg);
         if (mode == 'register') {
+
+            out = checkActiveFieldsForSyntaxErrors('marriage-registration-form');
+            if (out != "") {
+                errormsg = errormsg + out;
+            }
+
             return printErrorMessages(errormsg);
         }
 
@@ -40,6 +47,12 @@
         errormsg = validateRegisterAndMarriedDate(errormsg);
         errormsg = validatePinOrNic("malePIN", "", "errorMalePIN", errormsg);
         errormsg = validatePinOrNic("femalePIN", "", "errorFemalePIN", errormsg);
+
+
+        out = checkActiveFieldsForSyntaxErrors('marriage-registration-form');
+        if (out != "") {
+                errormsg = errormsg + out;
+        }
 
         return printErrorMessages(errormsg);
     }
@@ -77,7 +90,7 @@
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage cssStyle="color:blue;font-size:10pt"/>
 <div class="marriage-notice-outer">
-<s:form method="post" enctype="multipart/form-data" onsubmit="javascript:return validateMarriageDetails()">
+<s:form id="marriage-registration-form" method="post" enctype="multipart/form-data" onsubmit="javascript:return validateMarriageDetails()">
 <s:hidden name="idUKey"/>
 <s:hidden name="editMode" id="editMode"/>
 <s:hidden name="mode" id="mode"/>

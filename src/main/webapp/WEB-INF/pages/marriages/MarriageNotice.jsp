@@ -194,6 +194,11 @@ function validate() {
 
     validateOptionals();
 
+    var out = checkActiveFieldsForSyntaxErrors('marriage-notice-form');
+    if (out != "") {
+         errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         // customAlert(errormsg);
         alert(errormsg);
@@ -417,7 +422,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
 </s:else>
 
 <div class="marriage-notice-outer">
-<s:form action="%{addAction}" method="post" onsubmit="javascript:return validate()">
+<s:form id="marriage-notice-form" action="%{addAction}" method="post" onsubmit="javascript:return validate()">
 <%--section official usage--%>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend align="right"><b><s:label value="%{getText('label.how.collect.license')}"/>

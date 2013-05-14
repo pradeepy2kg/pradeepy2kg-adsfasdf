@@ -334,6 +334,12 @@ function validate() {
     domObject = document.getElementById('days_before_abortion_or_birth');
     isNumeric(domObject.value, 'p1error1', 'daysBeforeAbortionOrBirth')
     //  otherValidations();
+
+    var out = checkActiveFieldsForSyntaxErrors('death-registration-form-1');
+    if(out != ""){
+        errormsg = errormsg + out;
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -559,7 +565,7 @@ function maxLengthCalculate(id, max, divId) {
                 <br>Reason for the late registration of the death
             </td>
             <td>
-                <s:textarea name="death.reasonForLateRegistration" id="resonForLateRegistration" cssStyle="width:880px;"
+                <s:textarea name="death.reasonForLateRegistration" id="resonForLateRegistration" onchange="checkSyntax('resonForLateRegistration')" cssStyle="width:880px;"
                             onblur="maxLengthCalculate('resonForLateRegistration','255','resonForLateRegistration_div');"/>
                 <div id="resonForLateRegistration_div" style="color:red;font-size:8pt"></div>
 
@@ -670,7 +676,7 @@ function maxLengthCalculate(id, max, divId) {
         <br>In Sinhala or Tamil
     </td>
     <td colspan="5">
-        <s:textarea name="death.placeOfDeath" id="placeOfDeath" cssStyle="width:555px;"
+        <s:textarea name="death.placeOfDeath" id="placeOfDeath" onchange="checkSyntax('placeOfDeath')" cssStyle="width:555px;"
                     onblur="maxLengthCalculate('placeOfDeath','255','placeOfDeath_div');"/>
         <div id="placeOfDeath_div" style="color:red;font-size:8pt"></div>
     </td>
@@ -744,7 +750,7 @@ function maxLengthCalculate(id, max, divId) {
         <br>Cause of death
     </td>
     <td colspan="4">
-        <s:textarea name="death.causeOfDeath" id="causeOfDeath" cssStyle="width:420px;"
+        <s:textarea name="death.causeOfDeath" id="causeOfDeath" onchange="checkSyntax('causeOfDeath')" cssStyle="width:420px;"
                     onblur="maxLengthCalculate('causeOfDeath','600','causeOfDeath_div');" rows="6"/>
         <div id="causeOfDeath_div" style="color:red;font-size:8pt"></div>
     </td>
@@ -762,7 +768,7 @@ function maxLengthCalculate(id, max, divId) {
         <br>Place of burial or cremation
     </td>
     <td colspan="8">
-        <s:textarea name="death.placeOfBurial" id="placeOfBurial" cssStyle="width:880px;"
+        <s:textarea name="death.placeOfBurial" id="placeOfBurial" onchange="checkSyntax('placeOfBurial')" cssStyle="width:880px;"
                     onblur="maxLengthCalculate('placeOfBurial','255','placeOfBurial_div');"/>
         <div id="placeOfBurial_div" style="color:red;font-size:8pt"></div>
     </td>
@@ -940,7 +946,7 @@ function maxLengthCalculate(id, max, divId) {
     </td>
     <td colspan="10">
 
-        <s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang"
+        <s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang" onchange="checkSyntax('deathPersonNameOfficialLang')"
                     onblur="maxLengthCalculate('deathPersonNameOfficialLang','600','deathPersonNameOfficialLang_div');"
                     cssStyle="width:99%"/>
         <div id="deathPersonNameOfficialLang_div" style="color:red;font-size:8pt"></div>
@@ -968,7 +974,7 @@ function maxLengthCalculate(id, max, divId) {
         <br>Permanent Address
     </td>
     <td colspan="10">
-        <s:textarea name="deathPerson.deathPersonPermanentAddress" id="deathPersonPermanentAddress"
+        <s:textarea name="deathPerson.deathPersonPermanentAddress" id="deathPersonPermanentAddress" onchange="checkSyntax('deathPersonPermanentAddress')"
                     cssStyle="width:99%;"
                     onblur="maxLengthCalculate('deathPersonPermanentAddress','255','deathPersonPermanentAddress_div');"/>
         <div id="deathPersonPermanentAddress_div" style="color:red;font-size:8pt"></div>
@@ -1028,7 +1034,7 @@ function maxLengthCalculate(id, max, divId) {
         <td colspan="10">
                 <%--<s:textarea name="deathPerson.lastAddressOfMissingPerson" id="lastAddressOfMissingPerson"
                 cssStyle="width:98%;"/>--%>
-            <s:textarea name="deathPerson.lastAddressOfMissingPerson" id="lastAddressOfMissingPerson"
+            <s:textarea name="deathPerson.lastAddressOfMissingPerson" id="lastAddressOfMissingPerson" onchange="checkSyntax('lastAddressOfMissingPerson')"
                         cssStyle="width:99%;"
                         onblur="maxLengthCalculate('lastAddressOfMissingPerson','255','lastAddressOfMissingPerson_div');"/>
             <div id="lastAddressOfMissingPerson_div" style="color:red;font-size:8pt"></div>
@@ -1043,7 +1049,7 @@ function maxLengthCalculate(id, max, divId) {
     </td>
     <td colspan="4">
 
-        <s:textarea name="deathPerson.rankOrProfession" id="deathPersonRank"
+        <s:textarea name="deathPerson.rankOrProfession" id="deathPersonRank" onchange="checkSyntax('deathPersonRank')"
                     cssStyle="width:98%;"
                     onblur="maxLengthCalculate('deathPersonRank','255','deathPersonRank_div');"/>
         <div id="deathPersonRank_div" style="color:red;font-size:8pt"></div>
@@ -1100,7 +1106,7 @@ function maxLengthCalculate(id, max, divId) {
     </td>
     <td colspan="10">
 
-        <s:textarea name="deathPerson.deathPersonFatherFullName" id="deathPersonFatherFullName"
+        <s:textarea name="deathPerson.deathPersonFatherFullName" id="deathPersonFatherFullName" onchange="checkSyntax('deathPersonFatherFullName')"
                     cssStyle="width:99%;"
                     onblur="maxLengthCalculate('deathPersonFatherFullName','255','deathPersonFatherFullName_div');"/>
         <div id="deathPersonFatherFullName_div" style="color:red;font-size:8pt"></div>
@@ -1131,7 +1137,7 @@ function maxLengthCalculate(id, max, divId) {
     </td>
     <td colspan="10">
 
-        <s:textarea name="deathPerson.deathPersonMotherFullName" id="deathPersonMotherFullName"
+        <s:textarea name="deathPerson.deathPersonMotherFullName" id="deathPersonMotherFullName" onchange="checkSyntax('deathPersonMotherFullName')"
                     cssStyle="width:99%;"
                     onblur="maxLengthCalculate('deathPersonMotherFullName','255','deathPersonMotherFullName_div');"/>
         <div id="deathPersonMotherFullName_div" style="color:red;font-size:8pt"></div>

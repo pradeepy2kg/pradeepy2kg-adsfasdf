@@ -117,6 +117,11 @@
         if (domObject.value == 1 || domObject.value == 2)
             checkLateOrBelated();
 
+        var out = checkActiveFieldsForSyntaxErrors('birth-registration-form-4');
+        if(out != ""){
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;

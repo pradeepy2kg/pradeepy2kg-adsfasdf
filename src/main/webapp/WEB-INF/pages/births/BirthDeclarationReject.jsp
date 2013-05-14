@@ -6,14 +6,23 @@
     }
     var errorMsg = "";
     function validate() {
+        var returnval = true;
         var comment = document.getElementById('comments').value;
         if (comment == "") {
             errorMsg = errorMsg + document.getElementById('commentEmpty').value;
-            alert(errorMsg);
-            errorMsg = "";
-            return false;
         }
-        return true;
+
+        var out = checkActiveFieldsForSyntaxErrors('birth-declaration-reject-form');
+        if(out != ""){
+            errorMsg = errorMsg + out;
+        }
+
+        if(errorMsg != ""){
+            alert(errorMsg);
+            returnval = false;
+        }
+        errorMsg = "";
+        return returnval;
     }
 </script>
 <div id="birth-declaration-reject-outer" class="birth-declaration-reject-outer">
@@ -38,7 +47,7 @@
 
     <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
-    <s:form action="eprRejectBirthDeclaration.do" method="post" onsubmit="javascript:return validate()">
+    <s:form id="birth-declaration-reject-form" action="eprRejectBirthDeclaration.do" method="post" onsubmit="javascript:return validate()">
         <fieldset>
             <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
             <s:hidden name="bdId" value="%{#request.bdId}"/>

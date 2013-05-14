@@ -39,12 +39,24 @@
     function validateSerial() {
         var errormsg = "";
         errormsg = validateSerialNo("serialNumber", "errorEmptySerialNumber", "errorInvalidSerialNumber", errormsg);
+
+        var out = checkActiveFieldsForSyntaxErrors('searchBySerial');
+            if (out != "") {
+                errormsg = errormsg + out;
+        }
+
         return printErrorMessages(errormsg);
     }
 
     function validatePINNumber() {
         var errormsg = "";
         errormsg = validatePinOrNic("pinOrNic", "errorEmptyRegistrarPIN", "errorInvalidRegistrarPIN", errormsg);
+
+        var out = checkActiveFieldsForSyntaxErrors('searchByPIN');
+            if (out != "") {
+                errormsg = errormsg + out;
+        }
+
         return printErrorMessages(errormsg);
     }
 
@@ -61,8 +73,32 @@
     function validateMarriageIdUkey() {
         var errormsg = "";
         errormsg = validateIdUkey("marriageIdUKey", "errorEmptyMarriageIdUKey", "errorInvalidMarriageIdUKey", errormsg);
+
+        var out = checkActiveFieldsForSyntaxErrors('searchByIdUKey');
+            if (out != "") {
+                errormsg = errormsg + out;
+        }
+
         return printErrorMessages(errormsg);
     }
+
+    var errormsg = "";
+    function validate() {
+        var returnVal = true;
+
+        var out = checkActiveFieldsForSyntaxErrors('generalSearch');
+        if (out != "") {
+            errormsg = errormsg + out;
+        }
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnVal = false;
+        }
+        errormsg = "";
+        return returnVal;
+    }
+
 
     function initPage() {
     }
@@ -128,7 +164,7 @@
             <a href="#fragment-4"><span> <s:label value="%{getText('label.marriageregister.search.byIdUKey')}"/></span></a>
         </li>
     </ul>
-    <s:form action="eprMarriageRegisterSearch.do" id="generalSearch" method="POST">
+    <s:form action="eprMarriageRegisterSearch.do" id="generalSearch" method="POST" onsubmit="javascript:return validate()">
         <div id="fragment-1">
             <table>
                 <caption/>

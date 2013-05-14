@@ -97,6 +97,11 @@
             validatePIN(domObject, 'error1', 'error5');
         }
 
+        var out = checkActiveFieldsForSyntaxErrors('marriage-notice-search-form');
+        if (out != "") {
+            errormsg = errormsg + out;
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnVal = false;
@@ -109,7 +114,7 @@
     }
 </script>
 
-<s:form action="eprMarriageNoticeSearchInit.do" method="POST" onsubmit="javascript:return validate()">
+<s:form id="marriage-notice-search-form" action="eprMarriageNoticeSearchInit.do" method="POST" onsubmit="javascript:return validate()">
     <div id="tabs" style="font-size:10pt;">
         <ul>
             <li>
