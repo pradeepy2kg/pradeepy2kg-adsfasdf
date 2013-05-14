@@ -80,6 +80,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private int childGender;
     private int childAgeFrom;
     private int childAgeTo;
+    private int suggesstedZonalOfficeId;
 
     private long idUKey;
     private long adoptionId;
@@ -209,7 +210,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     private ZonalOffice setZonalOffice(AdoptionOrder adoptionOrder) {
-        if (adoptionOrder.getBirthProvinceUKey() > 0) {
+        if(suggesstedZonalOfficeId > 0 ){
+            return zonalOfficesDAO.getZonalOffice(suggesstedZonalOfficeId);
+        } else if (adoptionOrder.getBirthProvinceUKey() > 0) {
             if (adoptionOrder.getBirthProvinceUKey() == 1 && adoptionOrder.getBirthDistrictId() > AppConstants.NO_OF_ACTUAL_DISTRICTS) {
                 return zonalOfficesDAO.getZonalOffice(AppConstants.CENTRAL_RECORD_ROOM_ID);
             } else {
@@ -296,6 +299,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
         //populate court
         courtId = adoption.getCourt().getCourtUKey();
+        suggesstedZonalOfficeId  = adoption.getNoticingZonalOffice().getZonalOfficeUKey();
         return SUCCESS;
     }
 
@@ -896,6 +900,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         provinceList = provinceDAO.getActiveProvinces(language);
         districtList = districtDAO.getAllDistrictNames(language, user);
         courtList = (courtDAO.getCourtNames(language));
+        zonalOfficeList = zonalOfficesDAO.getActiveZonalOffices(language);
     }
 
     private void populateDynamicLists(String language) {
@@ -1419,5 +1424,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setChildDateOfBirth(Date childDateOfBirth) {
         this.childDateOfBirth = childDateOfBirth;
+    }
+
+    public int getSuggesstedZonalOfficeId() {
+        return suggesstedZonalOfficeId;
+    }
+
+    public void setSuggesstedZonalOfficeId(int suggesstedZonalOfficeId) {
+        this.suggesstedZonalOfficeId = suggesstedZonalOfficeId;
     }
 }

@@ -457,6 +457,24 @@ function enableCertificateInfo(mode) {
                       cssStyle="width:200px; margin-left:5px;"></s:select>
         </td>
     </tr>
+    <tr>
+        <td colspan="2">
+            <s:if test="adoption.idUKey == 0">
+                * කළාප කාර්යාලය (විශේෂයෙන් සඳහන් කර ඇත්නම්)<br/>
+                *Suggested Zonal Office (if any) in ta<br/>
+                * Zonal Office (if mentioned specially)
+            </s:if>
+            <s:else>
+                කළාප කාර්යාලය <br/>
+                Zonal Office in ta <br/>
+                Zonal Office
+            </s:else>
+        </td>
+        <td colspan="2">
+            <s:select list="zonalOfficeList" name="suggesstedZonalOfficeId" cssStyle="margin-left:5px;width:300px;"
+                      headerKey="0" headerValue="%{getText('adoption.select_zonal_office.label')}" value="%{suggesstedZonalOfficeId}"/>
+        </td>
+    </tr>
 </table>
 <table class="adoption-reg-form-header-table">
     <tr>
