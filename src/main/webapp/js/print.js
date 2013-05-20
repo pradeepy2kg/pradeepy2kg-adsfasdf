@@ -29,6 +29,29 @@ function printPage() {
     }
 }
 
+function printPageById(id) {
+    if (typeof(jsPrintSetup) == 'undefined') {
+        installjsPrintSetup();
+    } else {
+        var printContentWrapper = $("#"+id).clone();
+
+        var windowUrl = 'about:blank';
+        var uniqueName = new Date();
+        var windowName = 'Print' + uniqueName.getTime();
+        var printWindow = window.open(windowUrl, windowName, 'left=0,top=0,width=200px,height=200px');
+
+        printWindow.document.write("<head><link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/webform.css\"/>");
+        printWindow.document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/style.css\"/>");
+        printWindow.document.write("<script language=\"JavaScript\" src=\"/ecivil/js/print.js\"><\/script>");
+        printWindow.document.write("<link rel=\"stylesheet\" type=\"text/css\" media=\"print\" href=\"/ecivil/css/print.css\"/></head>");
+        printWindow.document.write(printContentWrapper.html());
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.onload = printForm();
+        printWindow.close();
+    }
+}
+
 // Print function for forms using JSPrintSetup add-on...
 function printForm() {
     // set page orientation.
