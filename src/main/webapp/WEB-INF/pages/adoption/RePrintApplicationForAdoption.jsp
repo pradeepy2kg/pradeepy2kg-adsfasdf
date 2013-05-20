@@ -28,64 +28,12 @@
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
-<script type="text/javascript">
-    function initPage() {
-    }
-
-    $(function () {
-        var zonalOfficeId = $('#zonalOfficeId').val();
-        populateZonalOfficeAddress(zonalOfficeId);
-    });
-
-    function populateZonalOfficeAddress(zonalOfficeId) {
-        $.getJSON('/ecivil/crs/ZonalOfficeLookupService', {zonalOfficeId:zonalOfficeId}, function (data) {
-            var siAddress = data.siAddress;
-            var taAddress = data.taAddress;
-            var enAddress = data.enAddress;
-            var telephone = data.telephone;
-            /* Set New Zonal Office Addresses. */
-            $('textarea#siZonalOfficeAddress').html('සහකාර රෙජිස්ට්‍රාර් ජනරාල්,\n' + siAddress + '\nදුරකථන අංක: ' + telephone);
-            $('textarea#taZonalOfficeAddress').html('உதவி பதிவாளர் நாயகம்,\n' + taAddress + '\nTelephone Numbers in ta: ' + telephone);
-            $('textarea#enZonalOfficeAddress').html('Assistant Registrar General,\n' + enAddress + '\nTelephone Numbers: ' + telephone);
-        });
-    }
-</script>
-
-<div class="form-submit">
-
-    <s:url id="markAsPrint" action="eprMarkAdoptionNoticeAsPrinted.do">
-        <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-        <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
-        <s:param name="idUKey" value="%{#request.idUKey}"/>
-    </s:url>
-    <s:url id="cancel" action="eprSearchAdoptionRecord.do">
-        <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-        <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
-        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-    </s:url>
-    <s:url id="viewAdoptionOrderDetails" action="eprAdoptionOrderDetailsViewMode.do">
-        <s:param name="idUKey" value="idUKey"/>
-        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
-        <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-        <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-    </s:url>
-
-</div>
 <div id="adoption-page" class="form-submit">
     <s:if test="adoption.status.ordinal() >= 2">
         <s:a href="#" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
     </s:if>
-
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>
 </div>
 <div id="adoption-registration-form-outer">
-<div id="page1">
-<br/>
-
 
 <table class="adoption-reg-form-header-table" width="99%">
     <tr>
@@ -253,6 +201,23 @@
     <tr>
         <td colspan="7"></td>
     </tr>
+    <tr>
+        <td>
+            අවශ්‍ය පිටපත් ගණන<br/>
+            No of Copies in ta<br/>
+            No of Copies
+        </td>
+        <td></td>
+        <td colspan="2">
+            ගෙවීමේ මාර්ගය<br/>
+            Payment Means of in ta<br/>
+            Payment Means of
+        </td>
+        <td>මුදලින්<br/>Cash in ta<br/>Cash</td>
+        <td></td>
+        <td>බැංකුවට<br/>To Bank in ta<br/>To Bank</td>
+        <td></td>
+    </tr>
     </tbody>
 </table>
 
@@ -345,17 +310,6 @@
     </tbody>
 </table>
 
-
-<table style="width:1000px; text-align:left;border:none; margin-top:15px;margin-bottom:125px;">
-    <tr>
-        <td>
-            මුද්දර ගාස්තු (එක පිටපතක් සඳහා රු. 25/- වටිනා මුද්දර අලවන්න)
-            <br>முத்திரை தீர்வை ( ஒரு பிரதிக்கு ரூ. 25/- பெறுமதியான முத்திரையினை ஒட்டவும்)
-            <br>Stamp fee (affix Rs 25/= stamps per copy).
-        </td>
-    </tr>
-</table>
-
 <table border="1" width="99%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <caption></caption>
     <col width="327"/>
@@ -377,6 +331,4 @@
     </tr>
     </tbody>
 </table>
-<br><br><br><br><br>
 </div>
-<s:hidden id="zonalOfficeId" name="zonalOfficeId"/>
