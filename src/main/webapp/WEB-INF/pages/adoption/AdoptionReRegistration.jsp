@@ -678,11 +678,11 @@
 
 <table style="width:1000px; text-align:left;border:none; margin-top:15px;margin-bottom:125px;">
     <tr>
-        <td>
+       <%-- <td>
             මුද්දර ගාස්තු (එක පිටපතක් සඳහා රු. 25/- වටිනා මුද්දර අලවන්න)
             <br>முத்திரை தீர்வை ( ஒரு பிரதிக்கு ரூ. 25/- பெறுமதியான முத்திரையினை ஒட்டவும்)
             <br>Stamp fee (affix Rs 25/= stamps per copy).
-        </td>
+        </td>--%>
     </tr>
 </table>
 

@@ -271,7 +271,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public List<AdoptionOrder> searchAdoptionOrder(Long adoptionEntryNo, String courtOrderNumber, int courtUKey) {
-        logger.debug("Search Adoption - Entry No: {} \t Court Order No: {}", adoptionEntryNo, courtOrderNumber);
+        logger.debug("Search Adoption");
         List<AdoptionOrder> searchResults = new ArrayList<AdoptionOrder>();
         if (adoptionEntryNo != null && adoptionEntryNo > 0) {
             AdoptionOrder adoptionOrder = adoptionOrderDAO.getAdoptionByEntryNumber(adoptionEntryNo);
