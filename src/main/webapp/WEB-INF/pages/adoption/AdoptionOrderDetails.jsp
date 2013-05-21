@@ -291,7 +291,14 @@
                     </s:if>
                 </td>
                 <td><br/></td>
-                <td></td>
+                <td align="center" class="font-9">
+                    <s:textarea rows="16" disabled="true"
+                                cssStyle="margin: 0; resize: none; background: #fff; width: 100px; border: none;"/><br>
+                    ........................................... <br/>
+                    සහකාර රෙජිස්ට්‍රාර් ජනරාල්.<br>
+                    உதவி பதிவாளர் நாயகம்.<br>
+                    Assistant Registrar-General.
+                </td>
             </tr>
         </s:if>
         <s:else>
