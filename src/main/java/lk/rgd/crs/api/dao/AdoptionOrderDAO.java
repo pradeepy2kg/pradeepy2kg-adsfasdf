@@ -198,4 +198,6 @@ public interface AdoptionOrderDAO {
     public List<AdoptionOrder> getAdoptionsWithSameParentNames(String applicantName, String spouseName, long adoptionEntryNo);
 
     public List<AdoptionOrder> getAdoptionsWithSameApplicantName(String applicantName, long adoptionEntryNo);
+
+    public List<AdoptionOrder> searchAdoptionRecords(long adoptionEntryNo, String courtOrderNumber, int courtUKey);
 }
