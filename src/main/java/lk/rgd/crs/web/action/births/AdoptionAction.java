@@ -5,6 +5,7 @@ import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.ZonalOffice;
 import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.dao.AdoptionAlterationDAO;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,9 +46,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private final CourtDAO courtDAO;
     private final AppParametersDAO appParametersDAO;
     private final ZonalOfficesDAO zonalOfficesDAO;
+    private final AdoptionAlterationDAO adoptionAlterationDAO;
     private final BirthRegistrationService birthRegistrationService;
 
     private AdoptionOrder adoption;
+    private AdoptionOrder previousAdoption;
     private User user;
     private Map session;
 
@@ -108,13 +111,15 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String genderSi;
     private String language;
 
+    private BitSet alteredFields;
+
     private Date childDateOfBirth;
     private Date dataEntryPeriodFrom;
     private Date dataEntryPeriodTo;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
-                          BirthRegistrationService birthRegistrationService, CourtDAO courtDAO, ZonalOfficesDAO zonalOfficesDAO, ProvinceDAO provinceDAO) {
+                          BirthRegistrationService birthRegistrationService, CourtDAO courtDAO, ZonalOfficesDAO zonalOfficesDAO, ProvinceDAO provinceDAO, AdoptionAlterationDAO adoptionAlterationDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -125,6 +130,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.courtDAO = courtDAO;
         this.zonalOfficesDAO = zonalOfficesDAO;
         this.provinceDAO = provinceDAO;
+        this.adoptionAlterationDAO = adoptionAlterationDAO;
     }
 
     public String initAdoptionRegistrationOrCancelPrintAdoptionNotice() {
@@ -355,6 +361,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             addActionError(getText("er.invalid.Entry"));
             populateApprovalAndPrintList();
             return "skip";
+        }
+
+        if(adoption.getPreviousAdoptionIdUKey() > 0){
+            previousAdoption = service.getById(adoption.getPreviousAdoptionIdUKey(), user);
+            alteredFields = adoptionAlterationDAO.getAdoptionAlterationByAOUKey(previousAdoption.getIdUKey()).getApprovalStatuses();
         }
 
         if (adoption.getApplicantCountryId() > 0) {
@@ -1431,5 +1442,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setSuggesstedZonalOfficeId(int suggesstedZonalOfficeId) {
         this.suggesstedZonalOfficeId = suggesstedZonalOfficeId;
+    }
+
+    public AdoptionOrder getPreviousAdoption() {
+        return previousAdoption;
+    }
+
+    public void setPreviousAdoption(AdoptionOrder previousAdoption) {
+        this.previousAdoption = previousAdoption;
+    }
+
+    public BitSet getAlteredFields() {
+        return alteredFields;
+    }
+
+    public void setAlteredFields(BitSet alteredFields) {
+        this.alteredFields = alteredFields;
     }
 }

@@ -21,4 +21,6 @@ public interface AdoptionAlterationDAO {
     public List<AdoptionAlteration> getAllAdoptionAlterationRecords();
 
     public List<AdoptionAlteration> getAdoptionAlterationsByStatus(AdoptionAlteration.State state);
+
+    public AdoptionAlteration getAdoptionAlterationByAOUKey(long aoUKey);
 }

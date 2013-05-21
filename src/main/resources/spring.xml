@@ -455,6 +455,7 @@
         <constructor-arg ref="appParametersDAOImpl"/>
         <constructor-arg ref="courtDAOImpl"/>
         <constructor-arg ref="zonalOfficeDAOImpl"/>
+        <constructor-arg ref="adoptionAlterationDAOImpl"/>
     </bean>
 
     <bean id="adoptionAlterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction">
