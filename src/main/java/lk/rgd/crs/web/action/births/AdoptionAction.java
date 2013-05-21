@@ -10,9 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
-import java.util.Map;
-import java.util.Locale;
-import java.util.List;
+import java.util.*;
 
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
@@ -26,8 +24,6 @@ import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
 import lk.rgd.AppConstants;
-import java.util.Date;
-import java.util.Calendar;
 
 /**
  * @author Duminda Dharmakeerthi
@@ -224,10 +220,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String searchAdoptionRecords() {
+        if(adoptionEntryNo == null){
+            adoptionEntryNo = 0L;
+        }
+        if(courtOrderNo == null){
+            courtOrderNo = "";
+        }
         searchResults = service.searchAdoptionOrder(adoptionEntryNo, courtOrderNo, courtId);
-        adoptionEntryNo = null;
-        courtOrderNo = null;
-        courtId = 0;
         populateBasicLists(user.getPrefLanguage());
         return SUCCESS;
     }

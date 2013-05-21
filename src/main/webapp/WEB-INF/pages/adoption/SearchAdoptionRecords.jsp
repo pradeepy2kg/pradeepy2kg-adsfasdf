@@ -27,6 +27,10 @@
             "bJQueryUI":true,
             "sPaginationType":"full_numbers"
         });
+
+        if($('#entryNo').val() == 0){
+            $('#entryNo').val('');
+        }
     });
 </script>
 <div id="adoption-search-outer">

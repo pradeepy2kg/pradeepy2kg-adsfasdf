@@ -90,6 +90,10 @@ import java.util.Date;
     @NamedQuery(
         name = "getAllAdoptionsForADataEntryPeriod",
         query = "SELECT a FROM AdoptionOrder a WHERE a.lifeCycleInfo.createdTimestamp>=:dataEntryDateFrom And a.lifeCycleInfo.createdTimestamp<=:dataEntryDateTo "
+    ),
+    @NamedQuery(
+        name = "searchAdoptionRecords",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo OR a.courtOrderNumber LIKE :courtOrderNumber OR a.court.courtUKey = :courtUKey"
     )
 })
 
