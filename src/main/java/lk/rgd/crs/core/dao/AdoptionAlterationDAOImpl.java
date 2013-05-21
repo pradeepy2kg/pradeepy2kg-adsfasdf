@@ -62,4 +62,15 @@ public class AdoptionAlterationDAOImpl extends BaseDAO implements AdoptionAltera
         q.setParameter("state", state);
         return q.getResultList();
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public AdoptionAlteration getAdoptionAlterationByAOUKey(long aoUKey) {
+        Query q = em.createNamedQuery("getAdoptionAlterationByAOUKey");
+        q.setParameter("aoUKey", aoUKey);
+        try {
+            return (AdoptionAlteration) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

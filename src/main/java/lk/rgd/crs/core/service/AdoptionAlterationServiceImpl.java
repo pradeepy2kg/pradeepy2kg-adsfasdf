@@ -93,6 +93,7 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
             }
         }
         if (containsApprovedChanges) {
+            existing.setApprovalStatuses(adoptionAlteration.getApprovalStatuses());
             existing.setStatus(AdoptionAlteration.State.FULL_APPROVED);
 
             AdoptionOrder ao = adoptionOrderDAO.getById(existing.getAoUKey());
@@ -105,6 +106,7 @@ public class AdoptionAlterationServiceImpl implements AdoptionAlterationService 
             }
             applyChanges(adoptionAlteration, newAO);
             newAO.setStatus(AdoptionOrder.State.APPROVED);
+            newAO.setPreviousAdoptionIdUKey(ao.getIdUKey());
             adoptionOrderDAO.addAdoptionOrder(newAO, user);
             logger.debug("Added adoption order : {}", newAO.getIdUKey());
             ao.setStatus(AdoptionOrder.State.ARCHIVED_ALTERED);

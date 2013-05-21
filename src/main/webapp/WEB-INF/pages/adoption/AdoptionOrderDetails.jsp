@@ -130,86 +130,182 @@
                 Signature of officer authorized by Registrar-General to certify the entry
             </td>
         </tr>
-        <tr valign="top" class="font-9">
-            <td rowspan="3"><s:label name="adoption.adoptionEntryNo"/></td>
-            <td rowspan="3"><s:label name="adoption.orderReceivedDate"/></td>
-            <td rowspan="3"><s:label name="adoption.childNewName"/></td>
-            <td rowspan="3" align="center">
-                <label>
-                    <% AdoptionOrder a = (AdoptionOrder) request.getAttribute("adoption");
-                        out.print(GenderUtil.getGender(a.getChildGender(), a.getLanguageToTransliterate()));%>
-                </label>
-            </td>
-            <td rowspan="3" class="font-9">
-                <s:if test="adoption.jointApplicant">
-                    <s:label name="adoption.applicantName"/><br/>
-                    <s:label name="adoption.applicantOccupation"/><br/><br/>
-                    <s:label name="adoption.spouseName"/><br/>
-                    <s:label name="adoption.spouseOccupation"/><br/><br/>
-                    <s:textarea value="%{adoption.applicantAddress}"
-                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
-                                rows="5" disabled="true"/><br/>
-                    <s:textarea value="%{adoption.applicantSecondAddress}"
-                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
-                                rows="5" disabled="true"/>
-                </s:if>
-                <s:else>
-                    <s:label name="adoption.applicantName"/><br/>
-                    <s:label name="adoption.applicantOccupation"/><br/><br/>
-                    <s:textarea value="%{adoption.applicantAddress}"
-                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
-                                rows="5" disabled="true"/><br/>
-                    <s:textarea value="%{adoption.applicantSecondAddress}"
-                                cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
-                                rows="5" disabled="true"/>
-                </s:else>
-            </td>
-            <td rowspan="3" align="center">
-                <s:label name="adoption.childBirthDate"/>
-            </td>
-            <td rowspan="3">
-                <s:label name="adoption.orderIssuedDate"/><br><br>
-                <s:if test="adoption.languageToTransliterate == \"si\"">
-                    <s:label name="adoption.court.siCourtName"/><br><br>
-                </s:if><s:elseif test="adoption.languageToTransliterate == \"en\"">
-                <s:label name="adoption.court.enCourtName"/><br><br>
-            </s:elseif><s:elseif test="adoption.languageToTransliterate == \"ta\"">
-                <s:label name="adoption.court.taCourtName"/><br><br>
-            </s:elseif>
-                <s:label name="adoption.courtOrderNumber"/>
-            </td>
-            <td style="border-bottom:none;">
-                <s:textarea rows="12" disabled="true"
-                            cssStyle="margin: 0; resize: none; background: #fff; width: 100px; border: none;"/>
-            </td>
-        </tr>
-        <tr>
-            <td align="center" class="font-9" style="border-bottom: none;"><br>
-                ........................................... <br/>
-                සහකාර රෙජිස්ට්‍රාර් ජනරාල්.<br>
-                உதவி பதிவாளர் நாயகம்.<br>
-                Assistant Registrar-General.
-            </td>
-        </tr>
-        <tr>
-            <td style="border-top: none;">
-                <s:textarea rows="5" disabled="true"
-                            cssStyle="margin: 0; resize: none; background: #fff; width: 100px; border: none;"/>
-            </td>
-        </tr>
+        <s:if test="adoption.previousAdoptionIdUKey > 0">
+            <tr valign="top" class="font-9">
+                <td height="100px"><s:label name="previousAdoption.adoptionEntryNo"/></td>
+                <td><s:label name="previousAdoption.orderReceivedDate"/></td>
+                <td><s:label name="previousAdoption.childNewName"/></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <s:label name="previousAdoption.orderIssuedDate"/><br><br>
+                    <s:if test="previousAdoption.languageToTransliterate == \"si\"">
+                        <s:label name="previousAdoption.court.siCourtName"/><br><br>
+                    </s:if><s:elseif test="previousAdoption.languageToTransliterate == \"en\"">
+                        <s:label name="previousAdoption.court.enCourtName"/><br><br>
+                    </s:elseif><s:elseif test="previousAdoption.languageToTransliterate == \"ta\"">
+                        <s:label name="previousAdoption.court.taCourtName"/><br><br>
+                    </s:elseif>
+                        <s:label name="previousAdoption.courtOrderNumber"/>
+                </td>
+                <td></td>
+             </tr>
+        </s:if>
+        <s:else>
+            <tr valign="top" class="font-9">
+                <td rowspan="3"><s:label name="adoption.adoptionEntryNo"/></td>
+                <td rowspan="3"><s:label name="adoption.orderReceivedDate"/></td>
+                <td rowspan="3"><s:label name="adoption.childNewName"/></td>
+                <td rowspan="3" align="center">
+                    <label>
+                        <% AdoptionOrder a = (AdoptionOrder) request.getAttribute("adoption");
+                            out.print(GenderUtil.getGender(a.getChildGender(), a.getLanguageToTransliterate()));%>
+                    </label>
+                </td>
+                <td rowspan="3" class="font-9">
+                    <s:if test="adoption.jointApplicant">
+                        <s:label name="adoption.applicantName"/><br/>
+                        <s:label name="adoption.applicantOccupation"/><br/><br/>
+                        <s:label name="adoption.spouseName"/><br/>
+                        <s:label name="adoption.spouseOccupation"/><br/><br/>
+                        <s:textarea value="%{adoption.applicantAddress}"
+                                    cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
+                                    rows="5" disabled="true"/><br/>
+                        <s:textarea value="%{adoption.applicantSecondAddress}"
+                                    cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
+                                    rows="5" disabled="true"/>
+                    </s:if>
+                    <s:else>
+                        <s:label name="adoption.applicantName"/><br/>
+                        <s:label name="adoption.applicantOccupation"/><br/><br/>
+                        <s:textarea value="%{adoption.applicantAddress}"
+                                    cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
+                                    rows="5" disabled="true"/><br/>
+                        <s:textarea value="%{adoption.applicantSecondAddress}"
+                                    cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
+                                    rows="5" disabled="true"/>
+                    </s:else>
+                </td>
+                <td rowspan="3" align="center">
+                    <s:label name="adoption.childBirthDate"/>
+                </td>
+                <td rowspan="3">
+                    <s:label name="adoption.orderIssuedDate"/><br><br>
+                    <s:if test="adoption.languageToTransliterate == \"si\"">
+                        <s:label name="adoption.court.siCourtName"/><br><br>
+                    </s:if><s:elseif test="adoption.languageToTransliterate == \"en\"">
+                        <s:label name="adoption.court.enCourtName"/><br><br>
+                    </s:elseif><s:elseif test="adoption.languageToTransliterate == \"ta\"">
+                        <s:label name="adoption.court.taCourtName"/><br><br>
+                    </s:elseif>
+                        <s:label name="adoption.courtOrderNumber"/>
+                </td>
+                <td style="border-bottom:none;">
+                    <s:textarea rows="12" disabled="true"
+                                cssStyle="margin: 0; resize: none; background: #fff; width: 100px; border: none;"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" class="font-9" style="border-bottom: none;"><br>
+                    ........................................... <br/>
+                    සහකාර රෙජිස්ට්‍රාර් ජනරාල්.<br>
+                    உதவி பதிவாளர் நாயகம்.<br>
+                    Assistant Registrar-General.
+                </td>
+            </tr>
+            <tr>
+                <td style="border-top: none;">
+                    <s:textarea rows="5" disabled="true"
+                                cssStyle="margin: 0; resize: none; background: #fff; width: 100px; border: none;"/>
+                </td>
+            </tr>
+        </s:else>
         <tr class="font-7">
             <td colspan="8" align="center">වෙනස් කිරීම්/திருத்தங்கள்/AMENDMENTS</td>
         </tr>
-        <tr>
-            <td height="180px"><br/></td>
-            <td><br/></td>
-            <td><br/></td>
-            <td><br/></td>
-            <td><br/></td>
-            <td><br/></td>
-            <td><br/></td>
-            <td><br/></td>
-        </tr>
+        <s:if test="adoption.previousAdoptionIdUKey > 0">
+            <tr valign="top">
+                <td height="400px" valign="top"><s:label name="adoption.adoptionEntryNo"/></td>
+                <td><s:label name="adoption.orderReceivedDate"/></td>
+                <td>
+                    <s:if test="alteredFields.get(0)">
+                        <s:label name="adoption.childNewName"/>
+                    </s:if>
+                </td>
+                <td>
+                    <s:if test="alteredFields.get(1)">
+                        <label>
+                            <% AdoptionOrder a = (AdoptionOrder) request.getAttribute("adoption");
+                                out.print(GenderUtil.getGender(a.getChildGender(), a.getLanguageToTransliterate()));%>
+                        </label>
+                    </s:if>
+                </td>
+                <td>
+                    <s:if test="adoption.jointApplicant">
+                        <s:if test="alteredFields.get(3)">
+                            <s:label name="adoption.applicantName"/><br/>
+                        </s:if>
+                        <s:if test="alteredFields.get(6)">
+                            <s:label name="adoption.applicantOccupation"/><br/><br/>
+                        </s:if>
+                        <s:if test="alteredFields.get(7)">
+                            <s:label name="adoption.spouseName"/><br/>
+                        </s:if>
+                        <s:if test="alteredFields.get(8)">
+                            <s:label name="adoption.spouseOccupation"/><br/><br/>
+                        </s:if>
+                        <s:if test="alteredFields.get(4)">
+                            <s:textarea value="%{adoption.applicantAddress}"
+                                        cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
+                                        rows="5" disabled="true"/><br/>
+                        </s:if>
+                        <s:if test="alteredFields.get(5)">
+                            <s:textarea value="%{adoption.applicantSecondAddress}"
+                                        cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
+                                        rows="5" disabled="true"/>
+                        </s:if>
+                    </s:if>
+                    <s:else>
+                        <s:if test="alteredFields.get(3)">
+                            <s:label name="adoption.applicantName"/><br/>
+                        </s:if>
+                        <s:if test="alteredFields.get(6)">
+                            <s:label name="adoption.applicantOccupation"/><br/><br/>
+                        </s:if>
+                        <s:if test="alteredFields.get(4)">
+                            <s:textarea value="%{adoption.applicantAddress}"
+                                        cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
+                                        rows="5" disabled="true"/><br/>
+                        </s:if>
+                        <s:if test="alteredFields.get(5)">
+                            <s:textarea value="%{adoption.applicantSecondAddress}"
+                                        cssStyle="margin: 0; resize: none; color: #000; background: #fff; border: none; font-size: 9pt;"
+                                        rows="5" disabled="true"/>
+                        </s:if>
+                    </s:else>
+                </td>
+                <td>
+                    <s:if test="alteredFields.get(2)">
+                        <s:label name="adoption.childBirthDate"/>
+                    </s:if>
+                </td>
+                <td><br/></td>
+                <td></td>
+            </tr>
+        </s:if>
+        <s:else>
+            <tr>
+                <td height="180px"><br/></td>
+                <td><br/></td>
+                <td><br/></td>
+                <td><br/></td>
+                <td><br/></td>
+                <td><br/></td>
+                <td><br/></td>
+                <td><br/></td>
+            </tr>
+        </s:else>
 
     </table>
 

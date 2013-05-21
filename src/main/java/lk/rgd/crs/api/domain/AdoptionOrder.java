@@ -158,6 +158,10 @@ public class AdoptionOrder implements Serializable, Cloneable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
+    // This is to keep track of the parent record when an alteration happens.
+    @Column(nullable = true, columnDefinition = "bigint not null default 0")
+    private long previousAdoptionIdUKey;
+
     @Embedded
     private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
 
@@ -719,5 +723,13 @@ public class AdoptionOrder implements Serializable, Cloneable {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public long getPreviousAdoptionIdUKey() {
+        return previousAdoptionIdUKey;
+    }
+
+    public void setPreviousAdoptionIdUKey(long previousAdoptionIdUKey) {
+        this.previousAdoptionIdUKey = previousAdoptionIdUKey;
     }
 }

@@ -25,6 +25,10 @@ import java.util.Date;
     @NamedQuery(
         name = "getAdoptionAlterationsByStatus",
         query = "SELECT a FROM AdoptionAlteration a WHERE a.status = :state"
+    ),
+    @NamedQuery(
+        name = "getAdoptionAlterationByAOUKey",
+        query = "SELECT a FROM AdoptionAlteration a WHERE a.aoUKey = :aoUKey ORDER BY a.idUKey DESC LIMIT 1"
     )
 })
 public class AdoptionAlteration {
