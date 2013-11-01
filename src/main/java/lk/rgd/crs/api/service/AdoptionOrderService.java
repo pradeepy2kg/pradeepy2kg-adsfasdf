@@ -1,12 +1,11 @@
 package lk.rgd.crs.api.service;
 
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.domain.AdoptionOrder;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.DSDivision;
 
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Ashoka Ekanayaka
@@ -79,8 +78,9 @@ public interface AdoptionOrderService {
      *
      * @param adoptionId adoption order unique key to be approved
      * @param user       user invoking the action
+     * @param comments       user entered comments for reject
      */
-    public void rejectAdoptionOrder(long adoptionId, User user);
+    public void rejectAdoptionOrder(long adoptionId, User user, String comments);
 
     /**
      * @param adoption     Adoption Record representing the court order
@@ -162,9 +162,11 @@ public interface AdoptionOrderService {
      * @param adoptionEntryNo   Selected Adoption Entry Number
      * @param courtOrderNumber  Selected Court Order Number
      * @param courtUKey         CourtUKey of the selected court
+     * @param childName        nem childName
+     * @param childBirthDate        nem childName
      * @return List of adoption records match the given parameters.
      */
-    public List<AdoptionOrder> searchAdoptionOrder(Long adoptionEntryNo, String courtOrderNumber, int courtUKey);
+    public List<AdoptionOrder> searchAdoptionOrder(Long adoptionEntryNo, String courtOrderNumber, int courtUKey, String childName, Date childBirthDate);
 
     /**
      * Return the adoption record which is entered as the given entry number and court order number.
@@ -182,6 +184,13 @@ public interface AdoptionOrderService {
      * @return Adoption records which has the given entry number
      */
     public AdoptionOrder getAdoptionByEntryNumber(long adoptionEntryNo);
+
+    /**
+     *
+     * @param adoptionEntryNo
+     * @return
+     */
+    public List<AdoptionOrder> getHistoryRecords(long adoptionEntryNo);
 
     /**
      * Returns a list of adoption records with the given court order number.
@@ -205,6 +214,7 @@ public interface AdoptionOrderService {
      * @return
      */
     public List<AdoptionOrder> getAdoptionsByCourtOrderNumberForAlterations(String courtOrderNumber);
+
     /**
      * Returns a list of adoption records according to the court(i.e if a court has not been selected then show records of all courts) and entered date period.
      *
@@ -215,4 +225,6 @@ public interface AdoptionOrderService {
      * @return   List of Adoption records.
      */
     public List<AdoptionOrder> generateAdoptionReports(int courtId,Date dataEntryDateFrom,Date dataEntryDateTo);
+
+
 }
