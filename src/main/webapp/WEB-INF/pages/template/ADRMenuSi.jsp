@@ -270,6 +270,12 @@
                 ප්‍රතික්ෂේපිත මරණ වාර්තා
             </a>
         </li>
+
+        <li>
+            <a id="birth.serialNumberSearch.label" href="/ecivil/births/loadSerialNumberSearch.do">
+                පද්ධතියෙන් නිර්මිත උපත් අනුක්‍රමික අංකය වාර්තාව
+            </a>
+        </li>
     </ul>
 </li>
 
