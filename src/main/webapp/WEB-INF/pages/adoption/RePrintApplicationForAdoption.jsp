@@ -28,10 +28,20 @@
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+<s:url id="back" action="eprSearchAdoptionRecord.do">
+    <s:param name="courtId" value="courtId"/>
+    <s:param name="adoptionEntryNumber" value="adoptionEntryNo"/>
+    <s:param name="courtOrderNo" value="courtOrderNo"/>
+    <s:param name="childName" value="childName"/>
+    <s:param name="childBirthDate" value="childBirthDate"/>
+</s:url>
 <div id="adoption-page" class="form-submit">
     <s:if test="adoption.status.ordinal() >= 2">
         <s:a href="#" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
     </s:if>
+</div>
+<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
+    <s:a href="%{back}"><s:label value="%{getText('back.label')}"/></s:a>
 </div>
 <div id="adoption-registration-form-outer">
 

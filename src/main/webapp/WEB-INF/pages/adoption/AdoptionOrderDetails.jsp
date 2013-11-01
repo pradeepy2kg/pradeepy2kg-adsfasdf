@@ -91,12 +91,14 @@
         <tr valign="top" align="center" class="font-7">
             <td>
                 ලියාපදිංචි කිරීමේ අංකය<br>
-                Registration No in ta<br>
+                <%--Registration No in ta<br>--%>
+                பதிவிலக்கம்<br/>
                 Registration Number
             </td>
             <td>
                 ලියාපදිංචි කිරීමේ දිනය
-                <br/>Date of Registration in ta
+                <%--<br/>Date of Registration in ta--%>
+                <br/>பதிவுத்திகதி
                 <br/>Date of Registration
             </td>
             <td>
@@ -209,9 +211,14 @@
             <tr>
                 <td align="center" class="font-9" style="border-bottom: none;"><br>
                     ........................................... <br/>
-                    සහකාර රෙජිස්ට්‍රාර් ජනරාල්.<br>
-                    உதவி பதிவாளர் நாயகம்.<br>
-                    Assistant Registrar-General.
+                    <s:label value="%{oderApprovedUser}"/><br/>
+                    <s:if test="adoption.languageToTransliterate == \"si\"">
+                        <s:label value = "නියෝජ්‍ය  /  සහකාර රෙජිස්ට්‍රාර් ජනරාල්"/><br><br>
+                    </s:if><s:elseif test="adoption.languageToTransliterate == \"en\"">
+                        <s:label value = "Deputy / Assitant Registrar Genaral"/><br><br>
+                    </s:elseif><s:elseif test="adoption.languageToTransliterate == \"ta\"">
+                        <s:label value = "Deputy / Assitant Registrar Genaral in ta"/><br><br>
+                    </s:elseif>
                 </td>
             </tr>
             <tr>
@@ -295,9 +302,14 @@
                     <s:textarea rows="16" disabled="true"
                                 cssStyle="margin: 0; resize: none; background: #fff; width: 100px; border: none;"/><br>
                     ........................................... <br/>
-                    සහකාර රෙජිස්ට්‍රාර් ජනරාල්.<br>
-                    உதவி பதிவாளர் நாயகம்.<br>
-                    Assistant Registrar-General.
+                    <s:label value="%{oderApprovedUser}"/><br/>
+                    <s:if test="adoption.languageToTransliterate == \"si\"">
+                        <s:label value = "නියෝජ්‍ය  /  සහකාර රෙජිස්ට්‍රාර් ජනරාල්"/><br><br>
+                    </s:if><s:elseif test="adoption.languageToTransliterate == \"en\"">
+                        <s:label value = "Deputy / Assitant Registrar Genaral"/><br><br>
+                    </s:elseif><s:elseif test="adoption.languageToTransliterate == \"ta\"">
+                        <s:label value = "Deputy / Assitant Registrar Genaral in ta"/><br><br>
+                    </s:elseif>
                 </td>
             </tr>
         </s:if>

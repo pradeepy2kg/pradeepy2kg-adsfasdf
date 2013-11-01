@@ -117,7 +117,18 @@
         </s:label></td>
     </tr>
     <tr height="50px" style="text-align:left;font-size:10pt">
-        <td><s:label value="%{adoption.applicantName}"/> මයා/ මිය</td>
+        <td>
+            <s:if test="adoption.languageToTransliterate=='si'">
+                <s:label value="%{adoption.applicantName}"/> මයා/ මිය
+            </s:if>
+            <s:elseif test="adoption.languageToTransliterate=='en'">
+                Mr/Mrs/Miss. <s:label value="%{adoption.applicantName}"/>
+            </s:elseif>
+            <s:elseif test="adoption.languageToTransliterate=='ta'">
+                திரு / திருமதி / செல்வி <s:label value="%{adoption.applicantName}"/>
+            </s:elseif>
+
+        </td>
     </tr>
     <tr height="30px" style="text-align:left;font-size:10pt">
         <td><s:textarea value="%{adoption.applicantAddress}"
@@ -193,11 +204,10 @@
     </tr>
 </table>
 
-
 <table class="adoption-reg-form-header-table" width="99%">
     <tr>
         <td align="left">
-            මෙම නියෝගය පහත සඳහන් සහතික පත්‍ර අංකය යටතේ ලියාපදිංචි වී තිබේ:
+            <br/><br/> මෙම නියෝගය පහත සඳහන් සහතික පත්‍ර අංකය යටතේ ලියාපදිංචි වී තිබේ:
             <br>இக்கட்டளை கீழ் குறிப்பிட்ட தொடர் இலக்கத்தின் கீழ் பதியப்பட்டுள்ளது.
             <br>This order is registered under the following certificate number:
         </td>
@@ -224,7 +234,8 @@
     <tr>
         <td>
             ලියාපදිංචි කිරීමේ අංකය<br>
-            Registration No in ta<br>
+            <%--Registration No in ta<br>--%>
+            பதிவிலக்கம் <br/>
             Registration Number
         </td>
         <td>
@@ -232,7 +243,8 @@
         </td>
         <td>
             ලියාපදිංචි කිරීමේ දිනය
-            <br>Date of Registration in ta
+            <%--<br>Date of Registration in ta--%>
+            <br>பதிவுத்திகதி
             <br>Date of Registration
         </td>
         <td>
@@ -240,54 +252,84 @@
         </td>
     </tr>
 </table>
-
+<br/><br/>
 <ol>
     <li style="font-size:13px">
         <u style="font-size:15px">
             ලියාපදිංචි දරු ලේඛනයේ සහතික පිටපතක් (දරු සහතිකය) ලබාගැනීම
             <br>பதிவு செய்யப்பட்ட மகவேற்புப் பதிவேட்டின் பிரதியினை ( மகவேற்புச் சான்றிதழ்) பெற்றுக் கொள்ளல்
             <br>Obtaining a copy of the Certificate of Adoption </u>
+        <br><br/>
+        <table style="text-align:justify;">
+            <tr>
+                <td>මේ සමඟ එවා ඇති දරු සහතික ඉල්ලුම් පත්‍රය නිසි පරිදි සම්පූර්ණ කර පහත සඳහන් කාර්යාලයට ගොස් රු. 100 ක්
+                    ගෙවා දරු සහතිකය ලබා ගත හැක. තැපැල් මගින් යොමු කරන්නේ නම්, රෙජිස්ට්‍රාර් ජනරාල්ගේ ලංකා බැංකුවේ
+                    පිටකොටුව
+                    ශාඛාවේ අංක 7041650 දරණ ගිණුමට මුදල් බැර කර, ලදුපත සහ අයදුම්පත අමුණා එවිය යුතුය. තවද ලිපිනය සහිත
+                    කවරයක්
+                    අයදුම්පත සමඟ ඉදිරිපත් කළ යුතු අතර, ලියාපදිංචි/ සාමාන්‍ය තැපෑලට සරිලන මුද්දර, කවරයට අලවා එවිය යුතුය.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <s:if test="!adoption.jointApplicant">
+                        <br/><strong> සැ. යු.
+                        - </strong>දරු නියෝගය ගරු අධිකරණයෙන් නිකුත් කර ඇත්තේ විවාහක දෙමාපියන් වෙත නොවන බැවින් මෙම
+                        දරු උපත නැවත ලියාපදිංචි කිරීමට 1977 අංක 06 දරණ දරුකමට හදා ගැනීමේ සංශෝධිත පනතින් ප්‍රතිපාදන සැලසී නොමැත.
+                        එබැවින් දරු සහතිකය උප්පැන්නයක් ලෙස භාවිතා කිරීමට සිදු වන බව දන්වා සිටිමි.<br/>
+                    </s:if>
+                    <br/><br/>இத்துடன் அனுப்பப்பட்டுள்ள மகவேற்புச் சான்றிதழ் விண்ணப்பத்தினை உரிய விதத்தில் பூர்த்தி
+                    செய்து
+                    கீழ்
+                    குறிப்பிடப்படும் அலுவலகத்திற்குச் சென்று ரூ.100 பணத்தினை செலுத்தி மகவேற்புச் சான்றிதழினை பெற்றுக்
+                    கொள்ள
+                    முடியும். தபால் மூலம் சமர்ப்பிக்கப்படுமாயின், பதிவாளர் நாயகத்தின் இலங்கை வங்கியின் புறக்கோட்டை
+                    கிளையின் இலக்கம்
+                    7041650 உடைய கணக்கிற்கு வரவு வைத்து. பற்றுச்சீட்டு மற்றும் விண்ணப்பத்தினை இணைத்தனுப்பல் வேண்டும்.
+                    மேலும்
+                    முகவரியிடப்பட்ட கடித உறையினை விண்ணப்பத்துடன் சமரப்பித்தல் வேண்டியதுடன். பதிவு/ சாதாரண தபாலுக்குரிய
+                    முத்திறையினை
+                    உறையில் ஒட்டி அனுப்பல் வேண்டும்.
 
-        <br><br>මේ සමඟ එවා ඇති දරු සහතික ඉල්ලුම් පත්‍රය නිසි පරිදි සම්පූර්ණ කර පහත සඳහන් කාර්යාලයට ගොස් රු. 100 ක්
-        ගෙවා දරු සහතිකය ලබා ගත හැක. තැපැල් මගින් යොමු කරන්නේ නම්, රෙජිස්ට්‍රාර් ජනරාල්ගේ ලංකා බැංකුවේ පිටකොටුව
-        ශාඛාවේ අංක 7041650 දරණ ගිණුමට මුදල් බැර කර, ලදුපත සහ අයදුම්පත අමුණා එවිය යුතුය. තවද ලිපිනය සහිත කවරයක්
-        අයදුම්පත සමඟ ඉදිරිපත් කළ යුතු අතර, ලියාපදිංචි/ සාමාන්‍ය තැපෑලට සරිලන මුද්දර, කවරයට අලවා එවිය යුතුය.
-        <br/>
-        <s:if test="!adoption.jointApplicant">
-            <br/><strong> සැ. යු. - </strong>දරු නියෝගය ගරු අධිකරණයෙන් නිකුත් කර ඇත්තේ විවාහක දෙමාපියන් වෙත නොවන බැවින් මෙම
-            දරු උපත නැවත ලියාපදිංචි කිරීමට 1977 අංක 06 දරණ දරුකමට හදා ගැනීමේ සංශෝධිත පනතින් ප්‍රතිපාදන සැලසී නොමැත.
-            එබැවින් දරු සහතිකය උප්පැන්නයක් ලෙස භාවිතා කිරීමට සිදු වන බව දන්වා සිටිමි.<br/>
-        </s:if>
-        <br/>இத்துடன் அனுப்பப்பட்டுள்ள மகவேற்புச் சான்றிதழ் விண்ணப்பத்தினை உரிய விதத்தில் பூர்த்தி செய்து கீழ்
-        குறிப்பிடப்படும் அலுவலகத்திற்குச் சென்று ரூ.100 பணத்தினை செலுத்தி மகவேற்புச் சான்றிதழினை பெற்றுக் கொள்ள
-        முடியும். தபால் மூலம் சமர்ப்பிக்கப்படுமாயின், பதிவாளர் நாயகத்தின் இலங்கை வங்கியின் புறக்கோட்டை கிளையின் இலக்கம்
-        7041650 உடைய கணக்கிற்கு வரவு வைத்து. பற்றுச்சீட்டு மற்றும் விண்ணப்பத்தினை இணைத்தனுப்பல் வேண்டும். மேலும்
-        முகவரியிடப்பட்ட கடித உறையினை விண்ணப்பத்துடன் சமரப்பித்தல் வேண்டியதுடன். பதிவு/ சாதாரண தபாலுக்குரிய முத்திறையினை
-        உறையில் ஒட்டி அனுப்பல் வேண்டும்.
-        <br/>
-        <s:if test="!adoption.jointApplicant">
-            <br/><strong> கவனிக்குக:- </strong>
-            மகவேற்புக் கட்டளை கௌரவ நீதிமன்றத்தினால் வழங்கப்பட்டது திருமணமாகிய திறத்தாருக்கல்லாது விடின் இப் பிறப்பினை மீள பதிவு செய்வதற்கு 1977 ஆம் ஆண்டின் 06 ஆம் இலக்க மகவேற்புக் (திருத்தற்) கட்டளைச் சட்டத்தில் ஏற்பாடுகள் இல்லை. ஆகையினால் மகவேற்புச் சான்றிதழினை பிறப்புச் சான்றிதழாக உபயோகிப்பதற்கு ஏற்படும் என அறிவிக்கின்றேன்.
-            <br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <s:if test="!adoption.jointApplicant">
+                        <br/><strong> கவனிக்குக:- </strong>
+                        மகவேற்புக் கட்டளை கௌரவ நீதிமன்றத்தினால் வழங்கப்பட்டது திருமணமாகிய திறத்தாருக்கல்லாது விடின் இப் பிறப்பினை மீள பதிவு செய்வதற்கு 1977 ஆம் ஆண்டின் 06 ஆம் இலக்க மகவேற்புக் (திருத்தற்) கட்டளைச் சட்டத்தில் ஏற்பாடுகள் இல்லை. ஆகையினால் மகவேற்புச் சான்றிதழினை பிறப்புச் சான்றிதழாக உபயோகிப்பதற்கு ஏற்படும் என அறிவிக்கின்றேன்.
+                        <br/><br/>
 
-            <div style="page-break-after:always;"></div> <br/><br/><br/>
+                        <div style="page-break-after:always;"></div>
+                    </s:if>
+                    <br>The adoption certificate can be obtained from the following office by paying Rs. 100/= along
+                    with the
+                    duly completed adoption application which attached herewith. If submit by post, payment should be
+                    made by
+                    crediting Registrar General's Account bearing No. 7041650 in Bank of Ceylon Pettah Branch and the
+                    application should be sent along with the recipt. A self addressed stamped envelope should be
+                    provided with
+                    the application and the relevant stamps should be affixed for registered/ normal postage.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br/>
+                    <s:if test="!adoption.jointApplicant">
+                        <strong>N.B:-</strong>
+                        As the adoption order has not been issued to the married parties by the courts, there is no provisions to
+                        re-registration of birth in the amended <strong>Adoption act No.06 in
+                        1977</strong>. Therefore this adoption
+                        certificate has to be used as a Birth Certificate.
+                    </s:if>
+                </td>
+            </tr>
+        </table>
+
+        <s:if test="adoption.jointApplicant">
+            <div style="page-break-after:always;"></div>
+            <br/><br/><br/>
         </s:if>
-        <br>The adoption certificate can be obtained from the following office by paying Rs. 100/= along with the
-        duly completed adoption application which attached herewith. If submit by post, payment should be made by
-        crediting Registrar General's Account bearing No. 7041650 in Bank of Ceylon Pettah Branch and the
-        application should be sent along with the recipt. A self addressed stamped envelope should be provided with
-        the application and the relevant stamps should be affixed for registered/ normal postage.
-        <br/><br/>
-        <s:if test="!adoption.jointApplicant">
-            <strong>N.B:-</strong>
-            As the adoption order has not been issued to the married parties by the courts, there is no provisions to
-            re-registration of birth in the amended <strong>Adoption act No.06 in 1977</strong>. Therefore this adoption
-            certificate has to be used as a Birth Certificate.
-        </s:if>
-        <br/><br/>
-<s:if test="adoption.jointApplicant">
-    <div style="page-break-after:always;"></div> <br/><br/><br/>
-</s:if>
         <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0" width="99%">
             <tr>
                 <td height="90px">
@@ -305,7 +347,8 @@
                         <br/>பதிவாளர் நாயகம் திணைக்களம்
                         <br>234/A3, டென்சில் கொப்பேகடுவ மாவத்தை,
                         <br>பத்தரமுல்லை.
-                        <br/>Telephone Numbers in ta: 0112889488/89
+                        <%--<br/>Telephone Numbers in ta: 0112889488/89--%>
+                        <br/>தொலைபேசி இலக்கம்: 0112889488/89
                     </label>
                 </td>
                 <td>
@@ -503,7 +546,8 @@
     <tr>
         <td>
             ලියාපදිංචි කිරීමේ අංකය<br>
-            Registration No in ta<br>
+            <%--Registration No in ta<br>--%>
+            பதிவிலக்கம்<br/>
             Registration Number
         </td>
         <td colspan="2">
@@ -511,7 +555,8 @@
         </td>
         <td colspan="3">
             ලියාපදිංචි කිරීමේ දිනය
-            <br>Date of Registration in ta
+            <%--<br>Date of Registration in ta--%>
+            <br>பதிவுத்திகதி
             <br>Date of Registration
         </td>
         <td colspan="2">
@@ -675,19 +720,48 @@
     </tbody>
 </table>
 
-
-<table style="width:1000px; text-align:left;border:none; margin-top:15px;margin-bottom:125px;">
+<table class="adoption-reg-form-header-table" style="margin-top:15px;">
     <tr>
-       <%-- <td>
-            මුද්දර ගාස්තු (එක පිටපතක් සඳහා රු. 25/- වටිනා මුද්දර අලවන්න)
-            <br>முத்திரை தீர்வை ( ஒரு பிரதிக்கு ரூ. 25/- பெறுமதியான முத்திரையினை ஒட்டவும்)
-            <br>Stamp fee (affix Rs 25/= stamps per copy).
-        </td>--%>
+        <td style="font-size:16px">ගාස්තු ගෙවීම / பணம் ​செலுத்துதல்்/ Payment of fees
+        </td>
     </tr>
+</table>
+<%--<table style="width:1000px; text-align:left;border:none; margin-top:15px;margin-bottom:125px;">--%>
+<table border="1" width="99%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+
+    <tr>
+        <td>
+            <%--මුද්දර ගාස්තු (එක පිටපතක් සඳහා රු. 25/- වටිනා මුද්දර අලවන්න)
+            <br>முத்திரை தீர்வை ( ஒரு பிரதிக்கு ரூ. 25/- பெறுமதியான முத்திரையினை ஒட்டவும்)
+            <br>Stamp fee (affix Rs 25/= stamps per copy).--%>
+            පැමිණ මුදල් ගෙවීම
+            <br>நேரடியாக வருகைத்தந்து பணம் செலுத்துதல்
+            <br>Payment of fees directly to the office
+
+        </td>
+        <td>
+            <%--<input type="checkbox" name="checkMe" value="true" checked="checked" id="paymentChkId"/>--%>
+            <input type="checkbox" name="checkMe" value="false" id="paymentChkId"/>
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            බැංකුවට මුදල් ගෙවීම. (රිසිට්පත අයදුම්පතට අමුණා එවිය යුතුය.)
+            <br>வங்கியில் பணம் செலுத்துதல் (விண்ணப்பப் படிவத்துன் பற்றுச் சீட்டினை இணைத்தனுப்பல் வேண்டும்)
+            <br>Payment of fees through bank account (Receipt should be attach to the application)
+
+        </td>
+
+        <td><input type="checkbox" name="checkMe" value="true" id="paymentBankChkId"/>
+        </td>
+
+    </tr>
+
 </table>
 
 <table border="1" width="99%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
-    <caption></caption>
+    <%--<caption></caption>--%>
     <col width="327"/>
     <col/>
     <tbody>
@@ -707,7 +781,7 @@
     </tr>
     </tbody>
 </table>
-<br><br><br><br><br>
+<%--<br><br><br><br><br>--%>
 </div>
 <div id="adoption-page" class="form-submit">
     <s:if test="adoption.status.ordinal() >= 2">

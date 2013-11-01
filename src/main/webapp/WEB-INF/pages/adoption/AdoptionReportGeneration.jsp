@@ -7,13 +7,12 @@
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
-
     #adoption-search-outer {
         width: 100%;
     }
 
     @media print {
-        #report thead{
+        #report thead {
             background: #DDD;
         }
     }
@@ -52,26 +51,26 @@
             endDate:'2030-12-31'
         });
 
-       /*
-        $("#dataEntryPeriodFrom").change(function() {
-            $("#dataEntryPeriodFromReport").val($(this).val());
-        });
+        /*
+         $("#dataEntryPeriodFrom").change(function() {
+         $("#dataEntryPeriodFromReport").val($(this).val());
+         });
 
-        $("#dataEntryPeriodTo").change(function() {
-            $("#dataEntryPeriodToReport").val($(this).val());
-        });
+         $("#dataEntryPeriodTo").change(function() {
+         $("#dataEntryPeriodToReport").val($(this).val());
+         });
          */
     });
 
-    function validateDate1(){
-        var bStatus=true;
+    function validateDate1() {
+        var bStatus = true;
 
-        var date1=$("#dataEntryPeriodFrom").val();
-        var date2=$("#dataEntryPeriodTo").val();
+        var date1 = $("#dataEntryPeriodFrom").val();
+        var date2 = $("#dataEntryPeriodTo").val();
 
-        if(date2<date1){
-             alert($("#date-comparison").val())
-             bStatus=false ;
+        if (date2 < date1) {
+            alert($("#date-comparison").val())
+            bStatus = false;
         }
         return bStatus;
     }
@@ -82,25 +81,26 @@
 <div id="adoption-search-outer">
 
     <s:if test="hasActionErrors()">
-       <s:div id="message-box" class="message-box">
-           <div class="actionerror" >
-               <%--<s:label value="%{getText('error_occurred.label')}"/>--%>
-               <s:actionerror/>
-           </div>
-       </s:div>
-   </s:if>
+        <s:div id="message-box" class="message-box">
+            <div class="actionerror">
+                    <%--<s:label value="%{getText('error_occurred.label')}"/>--%>
+                <s:actionerror/>
+            </div>
+        </s:div>
+    </s:if>
 
 
     <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
         <legend><s:label value="%{getText('adoption.reports.label')}"/></legend>
-        <s:form action="eprAdoptionReportGeneration" method="POST" name="generateAdoptionReports" onsubmit="javascript:return validateDate1()">
+        <s:form action="eprAdoptionReportGeneration" method="POST" name="generateAdoptionReports"
+                onsubmit="javascript:return validateDate1()">
             <table width="100%">
                 <tr>
                     <td>
                         <s:label value="%{getText('court.label')}"/>
                     </td>
                     <td>
-                        <s:select  list="courtList" name="courtId" headerKey="0"
+                        <s:select list="courtList" name="courtId" headerKey="0"
                                   headerValue="%{getText('select.label')}"/>
                     </td>
                     <td>
@@ -157,7 +157,7 @@
                     <td>
                     </td>
                 </tr> -->
-                          
+
                 <tr>
                     <td>
                         <s:label value="%{getText('adoption.data.entry.period.label')}"/>
@@ -194,7 +194,7 @@
         <table id="searchList" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-                <th width="80px">#</th>
+                <th width="80px"><s:label value="%{getText('certificate_number.label')}"/></th>
                 <th width="120px"><s:label value="%{getText('entry_no.label')}"/></th>
                 <th><s:label value="%{getText('name.label')}"/></th>
                 <th width="150px"><s:label value="%{getText('court.order.no.label')}"/></th>
@@ -237,75 +237,79 @@
         </table>
     </fieldset>
 </div>
-<div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPageById('adoption-search-report')"/>
-</div>
-<div id="adoption-search-report">
-   <div align="center">
-       <h2><s:label  value="%{getText('adoption.order.reports.label')}"/> </h2>
-   </div>
 
-    <table id="reportHeader" width="700px">
-        <tr>
-            <td>
-                <s:label value="%{getText('court.label')}"/>
-            </td>
-            <td colspan="4">
-               <s:select list="courtList" name="courtId" headerKey="0" cssStyle="font-size: 10pt;"
-                              headerValue="%{getText('select.label')}" disabled="true"/>
-            </td>
-        </tr>
+<fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
+    <div class="form-submit">
+        <s:submit type="button" value="%{getText('print.button')}" onclick="printPageById('adoption-search-report')"/>
+    </div>
+    <div id="adoption-search-report">
+        <div align="center">
+            <h2><s:label value="%{getText('adoption.order.reports.label')}"/></h2>
+        </div>
 
-        <tr>
-            <td>
-                <s:label value="%{getText('adoption.data.entry.period.label')}"/>
-            </td>
-            <td><s:label value="%{getText('from.label')}"/></td>
-            <td width="50px"><s:label value="%{#request.dataEntryPeriodFrom}"/></td>
-            <td><s:label value="%{getText('to.label')}"/></td>
-            <td width="50px"><s:label value="%{#request.dataEntryPeriodTo}"/></td>
-        </tr>
-
-    </table>
-    <br/>
-    <br/>
-    <table id="report" width="99%" border="1" cellpadding="2" cellspacing="0" style="border: 1px solid #000; border-collapse: collapse;">
-        <thead>
-        <tr style="background: #DDD;">
-            <th width="40px">#</th>
-            <th width="100px"><s:label value="%{getText('registration.no.label')}"/></th>
-            <th width="100px"><s:label value="%{getText('registration.date.label')}"/></th>
-            <th width="120x"><s:label value="%{getText('court.order.no.label')}"/></th>
-            <th width="100px"><s:label value="%{getText('court.order.issued.date.label')}"/></th>
-            <th width="350px"><s:label value="%{getText('status.label')}"/></th>
-        </tr>
-        </thead>
-        <tbody>
-        <s:iterator id="searchResults" value="searchResults" status="searchStatus">
+        <table id="reportHeader" width="700px" border="0">
             <tr>
                 <td>
-                    <s:property value="idUKey"/>
+                    <s:label value="%{getText('court.label')}"/>
                 </td>
-                <td>
-                    <s:property value="adoptionEntryNo"/>
-                </td>
-                <td>
-                    <s:property value="orderReceivedDate"/>
-                </td>
-                <td>
-                    <s:property value="courtOrderNumber"/>
-                </td>
-                <td>
-                    <s:property value="orderIssuedDate"/>
-                </td>
-                <td>
-                    <s:property value="getText(status)"/>
+                <td colspan="4">
+                    <s:select list="courtList" name="courtId" headerKey="0" cssStyle="font-size: 10pt;"
+                              headerValue="%{getText('select.label')}" disabled="true"/>
                 </td>
             </tr>
-        </s:iterator>
-        </tbody>
-    </table>
-</div>
+
+            <tr>
+                <td>
+                    <s:label value="%{getText('adoption.data.entry.period.label')}"/>
+                </td>
+                <td width="50px"><s:label value="%{#request.dataEntryPeriodFrom}"/></td>
+                <td><s:label value="%{getText('from.label')}"/></td>
+                <td width="50px"><s:label value="%{#request.dataEntryPeriodTo}"/></td>
+                <td><s:label value="%{getText('to.label')}"/></td>
+            </tr>
+
+        </table>
+        <br/>
+        <br/>
+        <table id="report" width="99%" border="1" cellpadding="2" cellspacing="0"
+               style="border: 1px solid #000; border-collapse: collapse;">
+            <thead>
+            <tr style="background: #DDD;">
+                <th width="8%"><s:label value="%{getText('certificate_number.label')}"/></th>
+                <th width="12%"><s:label value="%{getText('registration.no.label')}"/></th>
+                <th width="12%"><s:label value="%{getText('registration.date.label')}"/></th>
+                <th width="12%"><s:label value="%{getText('court.order.no.label')}"/></th>
+                <th width="16%"><s:label value="%{getText('court.order.issued.date.label')}"/></th>
+                <th width="40%"><s:label value="%{getText('status.label')}"/></th>
+            </tr>
+            </thead>
+            <tbody>
+            <s:iterator id="searchResults" value="searchResults" status="searchStatus">
+                <tr style="background:#E9F2F7">
+                    <td height="35px" style="background-color:#CDCDEC;">
+                        <s:property value="idUKey"/>
+                    </td>
+                    <td height="35px">
+                        <s:property value="adoptionEntryNo"/>
+                    </td>
+                    <td height="35px">
+                        <s:property value="orderReceivedDate"/>
+                    </td>
+                    <td height="35px">
+                        <s:property value="courtOrderNumber"/>
+                    </td>
+                    <td height="35px">
+                        <s:property value="orderIssuedDate"/>
+                    </td>
+                    <td height="35px">
+                        <s:property value="getText(status)"/>
+                    </td>
+                </tr>
+            </s:iterator>
+            </tbody>
+        </table>
+    </div>
+</fieldset>
 
 <s:hidden id="date-comparison" value="%{getText('date.comparison.validation.label')}"> </s:hidden>
 

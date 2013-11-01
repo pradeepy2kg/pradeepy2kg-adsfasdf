@@ -28,7 +28,7 @@
             "sPaginationType":"full_numbers"
         });
 
-        if($('#entryNo').val() == 0){
+        if ($('#entryNo').val() == 0) {
             $('#entryNo').val('');
         }
     });
@@ -40,10 +40,19 @@
             <table width="100%">
                 <tr>
                     <td>
+                        <s:label value="%{getText('court.label')}"/>
+                    </td>
+                    <td>
+                        <s:select list="courtList" name="courtId" headerKey="0"
+                                  headerValue="%{getText('select.label')}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <s:label value="%{getText('entry_no.label')}"/>
                     </td>
                     <td>
-                        <s:textfield name="adoptionEntryNo" id="entryNo" onkeypress="return numbersOnly(event, true);"/>
+                        <s:textfield name="adoptionEntryNumber" id="entryNo" onkeypress="return numbersOnly(event, true);"/>
                     </td>
                     <td>
                         <s:label value="%{getText('court.order.no.label')}"/>
@@ -53,13 +62,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <s:label value="%{getText('court.label')}"/>
-                    </td>
-                    <td>
-                        <s:select list="courtList" name="courtId" headerKey="0"
-                                  headerValue="%{getText('select.label')}"/>
-                    </td>
+                    <td><s:label value="%{getText('child_name.label')}"/></td>
+                    <td><s:textfield id="childName" name="childName"/></td>
+                    <td><s:label value="%{getText('child_birthdate.label')}"/></td>
+                    <td><s:textfield id="childBirthDate" name="childBirthDate"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td class="form-submit" align="right">
                         <s:submit value="%{getText('search.adoption.label')}" cssStyle="float: right;"/>
@@ -73,7 +83,7 @@
         <table id="searchList" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-                <th width="80px">#</th>
+                <th width="80px"><s:label value="%{getText('certificate_number.label')}"/></th>
                 <th width="120px"><s:label value="%{getText('entry_no.label')}"/></th>
                 <th><s:label value="%{getText('name.label')}"/></th>
                 <th width="150px"><s:label value="%{getText('court.order.no.label')}"/></th>
@@ -104,6 +114,12 @@
                     <td align="center">
                         <s:url id="viewSelected" action="eprAdoptionViewMode.do">
                             <s:param name="idUKey" value="idUKey"/>
+                                <s:param name="courtId" value="courtId"/>
+                                <s:param name="from" value="2"/>
+                                <s:param name="adoptionEntryNo" value="adoptionEntryNumber"/>
+                                <s:param name="courtOrderNo" value="courtOrderNo"/>
+                                <s:param name="childName" value="childName"/>
+                                <s:param name="childBirthDate" value="childBirthDate"/>
                         </s:url>
 
                         <s:a href="%{viewSelected}" title="%{getText('viewAdoptionRegistrationTooltip.label')}">
@@ -114,20 +130,45 @@
 
                     <td align="center">
 
-                        <s:url id="cetificatePrintUrl" action="eprRePrintApplicationForAdoption.do">
-                            <s:param name="idUKey" value="idUKey"/>
-                            <s:param name="certificateflag" value="false"/>
-                            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-                            <s:param name="pageNo" value="%{#request.pageNo}"/>
-                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                        </s:url>
+                        <s:if test="lifeCycleInfo.activeRecord">
+                            <s:url id="cetificatePrintUrl" action="eprRePrintApplicationForAdoption.do">
+                                <s:param name="idUKey" value="idUKey"/>
+                                <s:param name="certificateflag" value="false"/>
+                                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                                <s:param name="courtId" value="courtId"/>
+                                <s:param name="adoptionEntryNo" value="adoptionEntryNumber"/>
+                                <s:param name="courtOrderNo" value="courtOrderNo"/>
+                                <s:param name="childName" value="childName"/>
+                                <s:param name="childBirthDate" value="childBirthDate"/>
+                            </s:url>
 
-                        <s:a href="%{cetificatePrintUrl}"
-                             title="%{getText('reprintAdoptionRegistrationTooltip.label')}">
-                            <img id="printImage" src="<s:url value='/images/print_icon.gif'/>"
-                                 border="none" width="25" height="25"/>
-                        </s:a>
+                            <s:a href="%{cetificatePrintUrl}"
+                                 title="%{getText('reprintAdoptionRegistrationTooltip.label')}">
+
+
+                                <img id="printImage" src="<s:url value='/images/print_icon.gif'/>"
+                                     border="none" width="25" height="25"/>
+                            </s:a>
+                        </s:if>
+                        <s:else>
+                            <s:url id="viewSelected" action="eprViewAdoptionCertificate.do">
+                                <s:param name="idUKey" value="idUKey"/>
+                                <s:param name="courtId" value="courtId"/>
+                                <s:param name="adoptionEntryNo" value="adoptionEntryNumber"/>
+                                <s:param name="courtOrderNo" value="courtOrderNo"/>
+                                <s:param name="childName" value="childName"/>
+                                <s:param name="childBirthDate" value="childBirthDate"/>
+                            </s:url>
+
+                            <s:a href="%{viewSelected}" title="%{getText('viewAdoptionCertificateTooltip.label')}">
+                                <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                                     border="none"/>
+                            </s:a>
+                        </s:else>
+
 
                     </td>
 

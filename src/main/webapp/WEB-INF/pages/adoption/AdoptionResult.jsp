@@ -19,19 +19,22 @@
         <s:param name="approved" value="#request.approved"/>
     </s:url>
     <s:url id="mainUrl" action="eprAdoptionRegistrationHome.do"/>
-    <table align="center">
+
+    <s:url id="rejectSelected" action="eprRejectAdoption.do">
+        <s:param name="idUKey" value="#request.idUKey"/>
+        <s:param name="reject" value="true"/>
+    </s:url>
+
+    <table align="center" border = "0">
         <tr>
             <td><s:a href="%{mainUrl}"><s:label value="%{getText('goToMain_link.label')}"/></s:a></td>
-            <td>
-                <s:if test="#request.approved">
-                    <s:a href="%{printAdoptionNotice}">
-                        <s:label
-                                value="%{getText('PrintAdoptionNotice.label')}"/></s:a> &nbsp;&nbsp;&nbsp;&nbsp;
-                </s:if>
-                <s:elseif test="#request.allowApproveAdoption">
-                    <s:a href="%{approveAdoption}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-                </s:elseif>
-            </td>
+          <%--  <td><s:a href="%{rejectSelected}" title="%{getText('reject.label')}"><s:label value="%{getText('reject.label')}"/></s:a></td>--%>
+        <s:if test="#request.approved">
+            <td><s:a href="%{printAdoptionNotice}"><s:label value="%{getText('PrintAdoptionNotice.label')}"/></s:a> &nbsp;&nbsp;&nbsp;&nbsp;</td>
+        </s:if>
+        <s:elseif test="#request.allowApproveAdoption">
+             <td><s:a href="%{approveAdoption}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;  </td>
+        </s:elseif>
         </tr>
     </table>
 </div>
