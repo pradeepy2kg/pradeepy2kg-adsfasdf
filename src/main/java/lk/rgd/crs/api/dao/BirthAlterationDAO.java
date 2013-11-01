@@ -1,12 +1,10 @@
 package lk.rgd.crs.api.dao;
 
-import lk.rgd.crs.api.domain.BirthAlteration;
-import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.BirthAlteration;
 
 import java.util.List;
-import java.util.Date;
 
 /**
  * @author Indunil Moremada
@@ -68,6 +66,16 @@ public interface BirthAlterationDAO {
     /**
      * Returns a limited set of BirthAlterations based on given user location
      *
+     * @param birthCertificateNumber of the certificate
+     * @param pageNo  the page number for the results required (start from 1)
+     * @param noOfRows     number of rows
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getBulkOfAlterationByCertificateNumber(long birthCertificateNumber, int pageNo, int noOfRows);
+
+    /**
+     * Returns a limited set of BirthAlterations based on given user location
+     *
      * @param locationUKey idUKey  of the user location
      * @param pageNo       the page number for the results required (start from 1)
      * @param noOfRows     number of rows
@@ -82,4 +90,5 @@ public interface BirthAlterationDAO {
      * @return list of birth alterations for given birth certificate.
      */
     public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey);
+
 }

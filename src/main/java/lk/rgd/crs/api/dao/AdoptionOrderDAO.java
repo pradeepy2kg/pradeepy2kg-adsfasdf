@@ -138,6 +138,12 @@ public interface AdoptionOrderDAO {
     public AdoptionOrder getAdoptionByEntryNumber(long adoptionEntryNo);
 
     /**
+     *
+     * @param adoptionEntryNo
+     * @return
+     */
+    public List<AdoptionOrder> getHistoryRecords(long adoptionEntryNo);
+    /**
      * Return an adoption record which is entered as the given entry no and in the selected state
      *
      * @param adoptionEntryNo
@@ -199,5 +205,7 @@ public interface AdoptionOrderDAO {
 
     public List<AdoptionOrder> getAdoptionsWithSameApplicantName(String applicantName, long adoptionEntryNo);
 
-    public List<AdoptionOrder> searchAdoptionRecords(long adoptionEntryNo, String courtOrderNumber, int courtUKey);
+    public List<AdoptionOrder> searchAdoptionRecords(long adoptionEntryNo, String courtOrderNumber, int courtUKey, String childName, Date childBirthDate);
+
+
 }
