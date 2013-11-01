@@ -178,6 +178,12 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
+    public List<AdoptionOrder> getHistoryRecords(long adoptionEntryNo) {
+        Query q = em.createNamedQuery("getHistoryRecords");
+        q.setParameter("adoptionEntryNo", adoptionEntryNo);
+        return q.getResultList();
+    }
+    @Transactional(propagation = Propagation.SUPPORTS)
     public AdoptionOrder getAdoptionByEntryNumberAndState(long adoptionEntryNo, AdoptionOrder.State state) {
         Query q = em.createNamedQuery("getAdoptionByEntryNumberAndState");
         q.setParameter("adoptionEntryNo", adoptionEntryNo);
@@ -247,11 +253,18 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<AdoptionOrder> searchAdoptionRecords(long adoptionEntryNo, String courtOrderNumber, int courtUKey) {
+    public List<AdoptionOrder> searchAdoptionRecords(long adoptionEntryNo, String courtOrderNumber, int courtUKey, String childName, Date childBirthDate) {
         Query q = em.createNamedQuery("searchAdoptionRecords");
         q.setParameter("adoptionEntryNo", adoptionEntryNo);
         q.setParameter("courtOrderNumber", courtOrderNumber);
         q.setParameter("courtUKey", courtUKey);
+        if (childName != null && childName.length()>0){
+            q.setParameter("childName", "%"+childName+"%");
+        }
+        else{
+            q.setParameter("childName","");
+        }
+        q.setParameter("childBirthDate", childBirthDate);
         return q.getResultList();
     }
 
