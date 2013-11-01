@@ -322,6 +322,16 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     }
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthAlteration> getApprovalPendingByCertificateNmuber(long birthCertificateNumber, int pageNo, int noOfRows, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get birth alterations pending approval - by Certificate number: " + birthCertificateNumber +
+                " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        return populateTransientNameOfficialLanguage( birthAlterationDAO.
+            getBulkOfAlterationByCertificateNumber(birthCertificateNumber, pageNo, noOfRows));
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getApprovalPendingByUserLocationIdUKey(int locationUKey, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth alterations pending approval - by User location id : " + locationUKey +
