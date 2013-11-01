@@ -150,6 +150,8 @@ public class Menu {
         searchLink.put("eprMarkDeathCertificateSearch.do", new Link(null, "/ecivil/deaths/", "eprMarkDeathCertificateSearch.do", Permission.PRINT_DDF));
         searchLink.put("eprSearchBDFBySerialNo.do", new Link(null, "/ecivil/births/", "eprSearchBDFBySerialNo.do", Permission.SEARCH_BDF));
         searchLink.put("eprSearchBDFByIdUKey.do", new Link(null, "/ecivil/births/", "eprSearchBDFByIdUKey.do", Permission.SEARCH_BDF));
+        searchLink.put("loadSerialNumberSearch.do", new Link(null, "/ecivil/births/", "loadSerialNumberSearch.do", Permission.SEARCH_BDF));
+        searchLink.put("generateBirthSerialNumberReport.do", new Link(null, "/ecivil/births/", "generateBirthSerialNumberReport.do", Permission.SEARCH_BDF));
 
         // PRS links for DEO
         deoPRSLink.put("eprExistingPersonRegInit.do", new Link("prs.personRegistration.label", "/ecivil/prs/", "eprExistingPersonRegInit.do", Permission.PRS_ADD_PERSON));
@@ -320,6 +322,7 @@ public class Menu {
         deoAdoptionLink.put("eprMarkAdoptionOrderDetailsAsPrinted.do", new Link(null, "/ecivil/adoption/", "eprMarkAdoptionOrderDetailsAsPrinted.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprMarkAdoptionNoticeAsPrinted.do", new Link(null, "/ecivil/adoption/", "eprMarkAdoptionNoticeAsPrinted.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprPrintAdoptionCertificate.do", new Link(null, "/ecivil/adoption/", "eprPrintAdoptionCertificate.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprViewAdoptionCertificate.do", new Link(null, "/ecivil/adoption/", "eprViewAdoptionCertificate.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprMarkAdoptionCertificateAsPrinted.do", new Link(null, "/ecivil/adoption/", "eprMarkAdoptionCertificateAsPrinted.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionNext.do", new Link(null, "/ecivil/adoption/", "eprAdoptionNext.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionPrevious.do", new Link(null, "/ecivil/adoption/", "eprAdoptionPrevious.do", Permission.EDIT_ADOPTION));
