@@ -3,9 +3,11 @@ package lk.rgd.prs.web;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.HashUtil;
+import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.DeathPersonInfo;
 import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.web.WebConstants;
@@ -29,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +46,7 @@ public class BarCodeImageServlet extends HttpServlet {
     private PopulationRegistry ecivil;
     private BirthRegistrationService birthRegistrationService;
     private DeathRegistrationService deathRegistrationService;
+    private AdoptionOrderService adoptionRegitrationService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -52,6 +56,7 @@ public class BarCodeImageServlet extends HttpServlet {
         ecivil = (PopulationRegistry) context.getBean("ecivilService");
         birthRegistrationService = (BirthRegistrationService) context.getBean("manageBirthService");
         deathRegistrationService = (DeathRegistrationService) context.getBean("deathRegisterService");
+        adoptionRegitrationService = (AdoptionOrderService) context.getBean("adoptionOrderService");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -239,8 +244,92 @@ public class BarCodeImageServlet extends HttpServlet {
                         logger.debug("Death {} not found.", personId);
                     }
                 }
-                logger.debug("Barcode data size : {}", buffer.length());
+                else if (WebConstants.ADOPTION_CERTIFICATE.equals(certificateType)) {
 
+                    AdoptionOrder adoption =  adoptionRegitrationService.getById(personId, user);
+                    List<DeathRegister> deathRegisterList;
+                    if (adoption != null) {
+                        if (adoption.getChildNewName() != null) {
+                            //buffer.append(adoption.getChildNewName());
+                            String codeText = getCodeTextFromUnicode(adoption.getChildNewName());                                      // NEW NAME
+                            buffer.append(codeText);                                      // NEW NAME
+                        } else {
+                            buffer.append(" - ");
+                        }
+                        buffer.append("|");
+                         if (adoption.getChildPIN() != null && adoption.getChildPIN().length()>0){
+                            buffer.append(adoption.getChildPIN());                                               // PIN
+                        }else {
+                            buffer.append(" - ");
+                        }
+                        buffer.append("|");
+                         if (adoption.getChildBirthDate() != null){
+                            buffer.append(adoption.getChildBirthDate());                                  // BIRTH DATE
+                        } else {
+                            buffer.append(" - ");
+                        }
+                        buffer.append("|");
+                        buffer.append(adoption.getChildGender());                                             // Gender
+                        buffer.append("|");
+                        buffer.append(adoption.getCourtOrderNumber());                            // COURT ORDER NUMBER
+                        buffer.append("|");
+                        buffer.append(adoption.getAdoptionEntryNo());                          // ADOPTION ENTRY NUMBER
+                        buffer.append("|");
+                        buffer.append(DateTimeUtils.getISO8601FormattedString(adoption.getLifeCycleInfo().getApprovalOrRejectTimestamp()));   // Date of approve
+                        buffer.append("|");
+                        buffer.append(DateTimeUtils.getISO8601FormattedString(new Date()));            // Date of Issue   input.substring(0, 10); 
+                        buffer.append("|");
+                        String hash = HashUtil.hashString(buffer.toString());
+                        buffer.append(hash);
+
+                        //logger.debug("AAAAAAAAAAAAAAAAAAAAA {}", DateTimeUtils.getISO8601FormattedString(adoption.getLifeCycleInfo().getApprovalOrRejectTimestamp()));
+
+                  /*      buffer.append(adoption.getAdoptionEntryNo());          // ADOPTION ENTRY NUMBER
+                        buffer.append("|");
+                        buffer.append(adoption.getOrderReceivedDate());        // ADOPTION ORDER RECEIVED DATE 
+                        buffer.append("|");
+                            buffer.append(adoption.getCourtOrderNumber());        // COURT ORDER NUMBER
+                        buffer.append("|");
+                        if (adoption.getChildNewName() != null) {
+                            buffer.append(adoption.getChildNewName());                       // NEW NAME
+                        } else {
+                            buffer.append(" - ");
+                        }
+                        buffer.append("|");
+                        if (adoption.getChildAgeYears() != 0){
+                            buffer.append(adoption.getChildAgeYears());                  //CHILD AGE IN YEARS
+                        } else {
+                            buffer.append(" - ");
+                        }
+                        buffer.append("|");
+                        if (adoption.getChildAgeMonths() != 0){
+                            buffer.append(adoption.getChildAgeMonths());                //CHILD AGE IN MONTHS
+                        } else {
+                            buffer.append(" - ");
+                        }
+                        buffer.append("|");
+                        if (adoption.getChildPIN() != null && adoption.getChildPIN().length()>0){
+                            buffer.append(adoption.getChildPIN());                                          // PIN
+                        }else {
+                            buffer.append(" - ");
+                        }
+                        buffer.append("|");
+                        buffer.append(adoption.getChildGender());                                              // Gender
+                        buffer.append("|");
+                        buffer.append(adoption.getIdUKey());                    //  IDUKEY
+                        buffer.append("|");
+                      
+                        buffer.append(DateTimeUtils.getISO8601FormattedString(new Date()));             // Date of Issue
+                        buffer.append("|");
+                        String hash = HashUtil.hashString(buffer.toString());
+                        buffer.append(hash);    */                                                        // TODO Hash
+                    } else {
+                        logger.debug("Person {} not found.", personId);
+                    }
+
+                }
+                logger.debug("Barcode data size : {}", buffer.length());
+                logger.debug("Barcode Buffer is {}", buffer);
                 //Generate the barcode
                 bean.generateBarcode(canvas, buffer.toString());
 
@@ -253,7 +342,25 @@ public class BarCodeImageServlet extends HttpServlet {
             // Refactored barcode ends here...
         } catch (Exception e) {
             logger.error("Unexpected error generating the bar code : " + e.getLocalizedMessage());
+            e.printStackTrace();
         }
+    }
+
+    private static String getCodeTextFromUnicode(String s) throws UnsupportedEncodingException {
+        byte[] bs = s.getBytes("UTF-8");
+       StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < bs.length; i++) {
+            byte b = bs[i];
+            if(b >=0)
+            {
+                buf.append((char)b);
+            }
+            else
+            {
+                buf.append((char)(127 - b));
+            }
+        }
+        return buf.toString();
     }
 
     protected void doPost(
