@@ -314,6 +314,11 @@
         <put-attribute name="title" value="birth_alteration_type.title"/>
     </definition>
 
+    <definition name="epr.birthSerialNumberSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthSerialNumberSearch.jsp"/>
+        <put-attribute name="title" value="system.genarated.serial.number.report.label"/>
+    </definition>
+
     <!--death alteration related tiles-->
     <definition name="epr.deathAlterationSearchHome" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlterationSearch.jsp"/>
@@ -506,6 +511,10 @@
         <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionApprovalAndPrintList.jsp"/>
         <put-attribute name="title" value="adoption_approval_and_print_registration.label"/>
     </definition>
+    <definition name="epr.adoptionRejectOnComments" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionReject.jsp"/>     
+        <put-attribute name="title" value="reject.label"/>
+    </definition>     
     <definition name="epr.adoptionSearch" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/adoption/SearchAdoptionRecords.jsp"/>
         <put-attribute name="title" value="search_adoption_records.label"/>
