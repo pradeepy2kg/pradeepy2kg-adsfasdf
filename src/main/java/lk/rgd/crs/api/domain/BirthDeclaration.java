@@ -149,7 +149,11 @@ import java.io.Serializable;
     @NamedQuery(
         name = "getAllRejectedBirthsByDSDivision",
         query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = 7"
-    )
+    ),
+    @NamedQuery(name = "get.by.division.status.entered.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
+        "AND (bdf.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate) " +
+        "ORDER BY bdf.register.bdfSerialNo asc")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BirthDeclaration implements Serializable, Cloneable {
