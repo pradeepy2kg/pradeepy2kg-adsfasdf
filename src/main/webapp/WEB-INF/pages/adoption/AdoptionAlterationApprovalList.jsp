@@ -30,15 +30,17 @@
     <div style="float: left; width: 100%;">
         <table width="100%" id="adoptionAlterationListTable" cellpadding="0" cellspacing="0" class="display">
             <col width="80px"/>
-            <col/>
+            <col width="110px"/>
+            <col width=""/>
             <col width="120px"/>
-            <col width="100px"/>
+            <col width="120px"/>
             <col width="50px"/>
-            <col width="50px"/>
-            <col width="50px"/>
+            <col width="20px"/>
+            <col width="20px">
             <thead>
             <tr align="center">
                 <th>#</th>
+                <th><s:label value="%{getText('adoption_entry_no.label')}"/></th>
                 <th><s:label value="%{getText('child_name.label')}"/></th>
                 <th align="center"><s:label value="%{getText('method.label')}"/></th>
                 <th align="center"><s:label value="%{getText('status.label')}"/></th>
@@ -51,6 +53,7 @@
             <s:iterator id="adoptionAlterationList" value="adoptionAlterationList" status="status">
                 <tr>
                     <td><s:property value="idUKey"/></td>
+                    <td><s:property value="aoUKey"/> </td>
                     <td><s:property value="childName"/></td>
                     <td align="center"><s:property value="method"/></td>
                     <td align="center"><s:property value="status"/></td>

@@ -8,6 +8,7 @@
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../js/validate.js"></script>
 <script>
     $(document).ready(function() {
         $('#approval-list-table').dataTable({
@@ -69,11 +70,21 @@
         <tr>
             <td><s:label value="%{getText('select.status.label')}"/></td>
             <td>
-                <s:select list="#@java.util.HashMap@{'1':getText('data.entry'),'2':getText('Approved.label'),'3':getText('order.details.printed.label'),'4':getText('notice.printed.label'),
-        '5':getText('rejected.label'),'6':getText('certificate.issual.request.captured.label'),'7':getText('adoption.certificate.printed.label')}"
+<%--                <s:select list="#@java.util.HashMap@{'1':getText('data.entry'),'2':getText('Approved.label'),
+                '3':getText('order.details.printed.label'),'4':getText('notice.printed.label'),
+                '5':getText('rejected.label'),'6':getText('certificate.issual.request.captured.label'),
+                '7':getText('adoption.certificate.printed.label')}"
                           name="currentStatus" value="%{#request.currentStatus}" headerKey="0"
                           headerValue="%{getText('select.status.label')}"
-                          cssStyle="width:250px; margin-left:5px;"/></td>
+                          cssStyle="width:250px; margin-left:5px;"/>--%>
+                    <s:select list="#@java.util.HashMap@{'1':getText('data.entry'),'2':getText('Approved.label'),
+                '3':getText('order.details.printed.label'),'4':getText('notice.printed.label'),
+                '6':getText('certificate.issual.request.captured.label'),
+                '7':getText('adoption.certificate.printed.label')}"
+                          name="currentStatus" value="%{#request.currentStatus}" headerKey="0"
+                          headerValue="%{getText('select.status.label')}"
+                          cssStyle="width:250px; margin-left:5px;"/>
+            </td>
             <td class="button" align="left"><s:submit name="refresh" value="%{getText('refresh.label')}"/></td>
         </tr>
         </tbody>
@@ -149,6 +160,7 @@
                 </s:url>
 
                 <s:url id="viewSelected" action="eprAdoptionViewMode.do">
+                    <s:param name="from" value="1"/>
                     <s:param name="idUKey" value="idUKey"/>
                     <s:param name="currentStatus" value="%{#request.currentStatus}"/>
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -270,7 +282,7 @@
                         <s:if test="%{allowEditAdoption && status.ordinal()==0}">
                             <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
                                 <img id='deleteImage' src="<s:url value='/images/delete.gif'/>" width="25" height="25"
-                                     border="none"/>
+                                     border="none" onclick="javascript:return deleteWarning('warning')"/>
                             </s:a>
                         </s:if>
                     </td>
@@ -321,3 +333,4 @@
     </script>
 </s:if>
 
+<s:hidden id="warning" value="%{getText('adoptionDelete.warning.label')}"/>

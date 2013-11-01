@@ -388,7 +388,8 @@ function enableCertificateInfo(mode) {
     <tr>
         <td>
             ලියාපදිංචි කිරීමේ අංකය<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
-            Registration No in ta<br>
+            <%--Registration No in ta<br>--%>
+            பதிவிலக்கம்  <br>
             Registration Number
         </td>
         <td>
@@ -397,7 +398,8 @@ function enableCertificateInfo(mode) {
         </td>
         <td>
             ලියාපදිංචි කිරීමේ දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
-            <br>Date of Registration in ta
+            <%--<br>Date of Registration in ta--%>
+            <br>பதிவுத்திகதி
             <br>Date of Registration
         </td>
         <td>
@@ -461,7 +463,8 @@ function enableCertificateInfo(mode) {
         <td colspan="2">
             <s:if test="adoption.idUKey == 0">
                 * කළාප කාර්යාලය (විශේෂයෙන් සඳහන් කර ඇත්නම්)<br/>
-                *Suggested Zonal Office (if any) in ta<br/>
+                <%--*Suggested Zonal Office (if any) in ta<br/>--%>
+                *வலய அலுவலகம் (விசேடமாக குறிப்பிடப்பட்டிருப்பின்)<br/>
                 * Zonal Office (if mentioned specially)
             </s:if>
             <s:else>
@@ -497,12 +500,13 @@ function enableCertificateInfo(mode) {
     <tr>
         <td>
             ද්විත්ව අයදුම්කරුවන්ද?
-            <br>Are joint applicants in ta?
+            <%--<br>Are joint applicants in ta?--%>
+            <br>இணைந்த விண்ணப்பதாரர்களா?
             <br>Are Joint Applicants?
         </td>
         <td>
             ඔව්
-            <br>Yes in ta
+            <br>ஆம்
             <br>Yes
         </td>
         <td>
@@ -511,7 +515,7 @@ function enableCertificateInfo(mode) {
         </td>
         <td>
             නැත
-            <br>No in ta
+            <br>இல்லை
             <br>No
         </td>
         <td>
@@ -618,7 +622,8 @@ function enableCertificateInfo(mode) {
     <tr>
         <td>
             සහකරුගේ අනන්‍යතා අංකය
-            <br>Identification Number of Sopuse in ta
+            <%--<br>Identification Number of Sopuse in ta--%>
+            <br>கணவன் அல்லது மனைவியின் அடையாள இலக்கம்
             <br>Identification Number of Sopuse
         </td>
         <td colspan="5" class="find-person">
@@ -775,6 +780,7 @@ function enableCertificateInfo(mode) {
             උපත දැනටත් ලියාපදිංචි කර උප්පැන්න සහතිකයක් නිකුත් කර ඇතිනම්
             <br>பிறப்பு பதியப்பட்டு பிறப்புச் சான்றிதழ் வழங்கப்பட்டிருந்தால்
             <br>If the birth is already registered, and a Birth Certificate issued
+            <br/>
             <input type="button" id="clearInfo" value="clear" style="float: right; margin-bottom: 5px;"/>
         </td>
     </tr>
@@ -789,7 +795,8 @@ function enableCertificateInfo(mode) {
     <tr>
         <td>
             උපත දැනටමත් දත්ත පද්ධතියට ඇතුළත් කර ඇතිද?<br/>
-            Is Birth already registered in the system? in ta<br/>
+            <%--Is Birth already registered in the system? in ta<br/>--%>
+            ஏற்கனவே முறைமையின் கீழ் பிறப் பதியப்பட்டுள்ளது?<br/>
             Is Birth already registered in the system?
         </td>
         <td>
@@ -804,7 +811,8 @@ function enableCertificateInfo(mode) {
         </td>
         <td>
             නැත <br>
-            Un-available in ta<br/>
+            <%--Un-available in ta<br/>--%>
+            கிடைக்கவில்லை <br/>
             Un-available
         </td>
         <td>
@@ -816,7 +824,8 @@ function enableCertificateInfo(mode) {
     <tr>
         <td>
             උප්පැන්න සහතිකයේ අංකය<br/>
-            Birth Certificate Number in ta<br/>
+            <%--Birth Certificate Number in ta<br/>--%>
+            பிறப்புச் சான்றிதழின் இலக்கம்<br/>
             Birth Certificate Number
         </td>
         <td colspan="4">
@@ -837,7 +846,8 @@ function enableCertificateInfo(mode) {
     <tr>
         <td colspan="1">
             පළාත
-            <br>Province in ta
+            <%--<br>Province in ta--%>
+            <br>மாவட்டம்
             <br>Province
         </td>
         <td colspan="4"><s:select id="birthProvinceUKey" name="adoption.birthProvinceUKey" list="provinceList"
@@ -881,7 +891,7 @@ function enableCertificateInfo(mode) {
     <tr>
         <td>
             ලියාපදිංචි කළ දිනය<br/>
-            Registration Date in ta<br/>
+            பதிவுத்திகதி<br/>
             Registration Date
         </td>
         <td colspan="4">

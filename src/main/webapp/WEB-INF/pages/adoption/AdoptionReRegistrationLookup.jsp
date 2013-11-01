@@ -36,7 +36,7 @@
         <tr><s:actionerror cssStyle="color:red;"/></tr>
         <tr>
             <td>
-                <s:label value="%{getText('adoption_order_serial.label')}"/>
+                <s:label value="%{getText('certificate_number.label')}"/>
             </td>
             <td><s:textfield name="idUKey" id="idUKey"/></td>
             <td class="button"><s:submit name="search"

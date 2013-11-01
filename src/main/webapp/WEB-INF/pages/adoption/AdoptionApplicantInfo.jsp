@@ -162,8 +162,9 @@
     </tr>
     <tr>
         <td>නියෝගය නිකුත් කල දිනය <br/>
-            order Issued Date in ta <br>
-            order Issued Date
+            <%--order Issued Date in ta <br>--%>
+            கட்டளை வழங்கப்பட்ட திகதி<br/>
+            Order Issued Date
         </td>
         <td style="text-align:center;"><s:label value="%{#request.adoption.orderIssuedDate}"/></td>
     </tr>

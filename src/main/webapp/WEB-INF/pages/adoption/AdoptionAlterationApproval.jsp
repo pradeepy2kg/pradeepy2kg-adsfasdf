@@ -3,6 +3,8 @@
 
 <div id="adoption-alteration-outer">
     <s:actionmessage cssStyle="color: blue; font-size: 10pt;"/>
+    <s:actionerror cssStyle="color: red; font-size: 10pt;"/>
+
     <s:form method="POST" name="adoption-alteration-approval">
         <table border="1"
                style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">

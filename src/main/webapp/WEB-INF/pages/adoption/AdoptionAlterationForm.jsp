@@ -440,7 +440,7 @@
         <col style="width:190px;"/>
         <col style="width:190px;"/>
         <col style="width:190px;"/>
-        <tbody>
+        <tbody>  
         <tr>
             <td colspan="5" style="text-align:center;font-size:11pt">ප්‍රකාශය කරන්නාගේ විස්තර<br>
                 பிரதிக்கினை செய்பவரின் விபரங்கள்<br>

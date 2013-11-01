@@ -20,6 +20,7 @@
         width: 135px;
         height: 39px;
         margin: 208px 0px 0px 467px;
+        padding-top: 6px;
     }
 
     .link-approval {
@@ -29,6 +30,7 @@
         width: 137px;
         height: 39px;
         margin: 274px 0px 0px 465px;
+        padding-top: 7px;
     }
 
     .link-print-application {
@@ -38,6 +40,7 @@
         width: 146px;
         height: 94px;
         margin: 338px 0px 0px 463px;
+        padding-top:20px;
         cursor: pointer;
     }
 
@@ -49,6 +52,7 @@
         height: 48px;
         margin: 464px 0px 0px 471px;
         cursor: pointer;
+        padding-top:5px;
     }
 
     .link-data-entry-02 {
@@ -59,6 +63,7 @@
         height: 40px;
         margin: 466px 0px 0px 302px;
         cursor: pointer;
+        padding-top:3px;
     }
 
     .label01 {
@@ -138,7 +143,7 @@
         text-align: center;
         position: absolute;
         width: 175px;
-        margin: 645px 0px 0px 420px;
+        margin: 635px 0px 0px 435px;
     }
 
 </style>
@@ -192,3 +197,5 @@
 <div class="label10"><s:label value="%{getText('lb.office')}"/></div>
 <%-- background image div --%>
 <div class="bg1"></div>
+
+

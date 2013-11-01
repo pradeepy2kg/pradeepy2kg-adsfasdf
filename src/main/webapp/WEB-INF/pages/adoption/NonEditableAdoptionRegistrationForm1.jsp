@@ -5,8 +5,38 @@
     }
 </script>
 
+<s:url id="backfrom1" action="eprAdoptionBackToPreviousState.do">
+    <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+    <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+    <s:param name="pageNo" value="%{#request.pageNo}"/>
+</s:url>
+<s:url id="backfrom2" action="eprSearchAdoptionRecord.do">
+    <s:param name="courtId" value="courtId"/>
+    <s:param name="adoptionEntryNumber" value="adoptionEntryNo"/>
+    <s:param name="courtOrderNo" value="courtOrderNo"/>
+    <s:param name="childName" value="childName"/>
+    <s:param name="childBirthDate" value="childBirthDate"/>
+</s:url>
+
+
 <div id="adoption-registration-form-outer">
-<s:form action="eprAdoptionBackToPreviousState" name="" id="" method="POST">
+<%--<s:form name="" id="" method="POST">--%>
+<s:if test="from == 1">
+
+    <div class="form-submit" style="margin:15px 0 0 10px; ">
+
+        <s:a href="%{backfrom1}"><s:label value="%{getText('back.label')}"/></s:a>
+    </div>
+
+</s:if>
+<s:elseif test="from == 2 ">
+
+    <div id="adoption-page-b" class="form-submit" style="margin:15px 0 0 10px; ">
+        <s:a href="%{backfrom2}"><s:label value="%{getText('back.label')}"/></s:a>
+    </div>
+
+</s:elseif>
 
 <table class="adoption-reg-form-header-table" cellspacing="1" cellpadding="1">
     <caption></caption>
@@ -117,14 +147,10 @@
         </td>
         <td colspan="4">
             <s:if test="adoption.jointApplicant">
-                ඔව්
-                <br>Yes in ta
-                <br>Yes
+                <s:label name="" value="%{getText('yes.label')}"/>
             </s:if>
             <s:else>
-                නැත
-                <br>No in ta
-                <br>No
+                <s:label name="" value="%{getText('no.label')}"/>
             </s:else>
         </td>
     </tr>
@@ -287,7 +313,8 @@
             </s:elseif>
             <s:elseif test="#request.adoption.childGender == 2">
                 <s:label name="" value="%{getText('unknown.label')}"/>
-            </s:elseif></td>
+            </s:elseif>
+        </td>
     </tr>
     <tr>
         <td>වයස <br/>
@@ -408,16 +435,32 @@
         </td>
     </tr>
     </tbody>
+
+
 </table>
 
-<div class="button" align="right">
-    <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
-    <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-    <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
-    <s:hidden name="pageNo" value="%{#request.pageNo}"/>
-    <s:submit value="%{getText('back.label')}" cssStyle="margin-top:10px;"/>
-    <s:submit action="eprSearchAdoptionRecord" value="%{getText('another_search.label')}"/>
-</div>
-</s:form>
+
+<s:if test="from == 1">
+
+    <div class="form-submit" style="margin:15px 0 0 10px; ">
+            <%--        <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
+         <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+         <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
+         <s:hidden name="pageNo" value="%{#request.pageNo}"/>
+         <s:submit action="eprAdoptionBackToPreviousState" value="%{getText('back.label')}" cssStyle="margin-top:10px;"/>--%>
+            <%-- <s:submit action="eprSearchAdoptionRecord" value="%{getText('another_search.label')}"/>--%>
+
+        <s:a href="%{backfrom1}"><s:label value="%{getText('back.label')}"/></s:a>
+    </div>
+
+</s:if>
+<%--</s:form>--%>
+<s:elseif test="from == 2 ">
+
+    <div id="adoption-page-b" class="form-submit" style="margin:15px 0 0 10px; ">
+        <s:a href="%{backfrom2}"><s:label value="%{getText('back.label')}"/></s:a>
+    </div>
+
+</s:elseif>
 
 </div>
