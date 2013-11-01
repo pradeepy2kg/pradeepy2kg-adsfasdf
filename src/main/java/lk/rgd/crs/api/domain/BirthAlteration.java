@@ -28,8 +28,11 @@ import java.util.Date;
         " AND ba.status <=:state ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
     @NamedQuery(name = "get.alterations.by.birth.idUKey", query = "SELECT ba FROM BirthAlteration ba " +
         "WHERE ba.bdfIdUKey =:idUKey"),
+/*    @NamedQuery(name = "filter.birth.alteration.by.birth.certificate.number", query = "SELECT ba " +
+        "FROM BirthAlteration ba WHERE( ba.bdfIdUKey=:certificateNumber AND ba.lifeCycleInfo.activeRecord IS TRUE )" )*/
     @NamedQuery(name = "filter.birth.alteration.by.birth.certificate.number", query = "SELECT ba " +
-        "FROM BirthAlteration ba WHERE( ba.bdfIdUKey=:certificateNumber AND ba.lifeCycleInfo.activeRecord IS TRUE )")
+        "FROM BirthAlteration ba WHERE( ba.bdfIdUKey=:certificateNumber AND ba.lifeCycleInfo.activeRecord IS TRUE )" +
+        " AND ba.status <=:state ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
 })
 
 public class BirthAlteration {

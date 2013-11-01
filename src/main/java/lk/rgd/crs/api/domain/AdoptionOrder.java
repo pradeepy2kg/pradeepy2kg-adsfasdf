@@ -44,6 +44,10 @@ import java.util.Date;
         query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo AND a.lifeCycleInfo.activeRecord = 1"
     ),
     @NamedQuery(
+        name = "getHistoryRecords",
+        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo AND a.lifeCycleInfo.activeRecord = 0"
+    ),
+    @NamedQuery(
         name = "getAdoptionsByCourt",
         query = "SELECT a FROM AdoptionOrder a WHERE a.court.courtUKey = :courtUKey"
     ),
@@ -93,7 +97,7 @@ import java.util.Date;
     ),
     @NamedQuery(
         name = "searchAdoptionRecords",
-        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo OR a.courtOrderNumber LIKE :courtOrderNumber OR a.court.courtUKey = :courtUKey"
+        query = "SELECT a FROM AdoptionOrder a WHERE a.adoptionEntryNo = :adoptionEntryNo OR a.courtOrderNumber LIKE :courtOrderNumber OR a.court.courtUKey = :courtUKey OR a.childNewName LIKE :childName OR a.childBirthDate =:childBirthDate"
     )
 })
 
@@ -304,6 +308,10 @@ public class AdoptionOrder implements Serializable, Cloneable {
 
     @Column(nullable = false)
     private State status;
+
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date applicationEnteredDate;
 
     /**
      * To track the order of capture information of the adoption from parents.
@@ -731,5 +739,13 @@ public class AdoptionOrder implements Serializable, Cloneable {
 
     public void setPreviousAdoptionIdUKey(long previousAdoptionIdUKey) {
         this.previousAdoptionIdUKey = previousAdoptionIdUKey;
+    }
+
+    public Date getApplicationEnteredDate() {
+        return applicationEnteredDate;
+    }
+
+    public void setApplicationEnteredDate(Date applicationEnteredDate) {
+        this.applicationEnteredDate = applicationEnteredDate;
     }
 }
