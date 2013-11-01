@@ -4,6 +4,9 @@
     function initPage(){}
 </script>
 
+<fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
+        <legend><b><s:label value="%{getText('label.select.notice.type')}"/></b></legend>
+
 <s:form action="eprMarriageNoticeInit.do" method="post">
     <table>
         <caption/>
@@ -12,11 +15,7 @@
         <col/>
         <tbody>
         <tr>
-            <td align="left">
-                <s:label value="%{getText('label.select.notice.type')}"/>
-            </td>
             <td>
-
             </td>
             <td align="left">
                 <s:select
@@ -31,3 +30,5 @@
         <s:submit value="%{getText('button.go')}"/>
     </div>
 </s:form>
+
+</fieldset>

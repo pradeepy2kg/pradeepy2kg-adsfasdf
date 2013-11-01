@@ -38,35 +38,35 @@
     .label_capture_notice {
         text-align: center;
         position: absolute;
-        right: 600px;
+        right: 690px;
         top: 355px;
     }
 
     .label_validate_approve {
         text-align: center;
         position: absolute;
-        right: 590px;
+        right: 660px;
         top: 430px;
     }
 
     .label_capture_objections {
         text-align: center;
         position: absolute;
-        right: 485px;
+        right: 570px;
         top: 500px;
     }
 
     .label_objection_validate_approve {
         text-align: center;
         position: absolute;
-        right: 470px;
-        top: 570px;
+        right: 544px;
+        top: 567px;
     }
 
     .label_print_license {
         text-align: center;
         position: absolute;
-        right: 610px;
+        right: 680px;
         top: 645px;
     }
 
@@ -80,22 +80,23 @@
     .label_license_collect {
         text-align: center;
         position: absolute;
-        right: 250px;
-        top: 645px;
+        right: 340px;
+        top: 655px;
     }
 
     .label_objection {
         text-align: center;
         position: absolute;
-        right: 170px;
-        top: 500px;
+        right: 360px;
+        top: 562px;
     }
 
     .label_ADR {
         text-align: center;
         position: absolute;
-        right: 750px;
-        top: 420px;
+        right: 618px;
+        top: 430px;
+        font-size:12px;
     }
 </style>
 
@@ -108,12 +109,12 @@
     </div>
     <s:a href="eprSelectNoticeType.do">
         <div class="label_capture_notice">
-            <s:label value="%{getText('label.capture.notice')}" cssStyle="cursor:pointer;font-size:10px"/>
+            <s:label value="%{getText('label.capture.notice')}" cssStyle="cursor:pointer;font-size:12px"/>
         </div>
     </s:a>
     <s:a href="eprMarriageNoticeSearchInit.do">
         <div class="label_validate_approve">
-            <s:label value="%{getText('label.validate.approve')}" cssStyle="cursor:pointer;font-size:10px"/>
+            <s:label value="%{getText('label.validate.approve')}" cssStyle="cursor:pointer;font-size:12px"/>
         </div>
     </s:a>
     <div class="label_capture_objections">
@@ -121,12 +122,12 @@
     </div>
     <s:a href="eprMarriageNoticeSearchInit.do">
         <div class="label_objection_validate_approve">
-            <s:label value="%{getText('label.validate.approve')}" cssStyle="cursor:pointer;font-size:10px"/>
+            <s:label value="%{getText('label.validate.approve')}" cssStyle="cursor:pointer;font-size:12px"/>
         </div>
     </s:a>
     <s:a href="eprMarriageNoticeSearchInit.do">
         <div class="label_print_license">
-            <s:label value="%{getText('label.print.license')}" cssStyle="cursor:pointer;font-size:10px"/>
+            <s:label value="%{getText('label.print.license')}" cssStyle="cursor:pointer;font-size:12px"/>
         </div>
     </s:a>
     <div class="label_expire_license">
@@ -139,7 +140,7 @@
         <s:label value="%{getText('label.objections.to.marriage')}"/>
     </div>
     <div class="label_ADR">
-        <s:label value="%{getText('label.ADR')}"/>
+        (<s:label value="%{getText('label.ADR')}"/>)
     </div>
     <div class="bg1"></div>
 </div>

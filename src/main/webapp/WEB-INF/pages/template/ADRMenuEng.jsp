@@ -270,6 +270,13 @@
                 Rejected Death Records
             </a>
         </li>
+
+        <li>
+            <a id="birth.serialNumberSearch.label" href="/ecivil/births/loadSerialNumberSearch.do">
+                System Generated Serial Numbers Report
+            </a>
+        </li>
+
     </ul>
 </li>
 

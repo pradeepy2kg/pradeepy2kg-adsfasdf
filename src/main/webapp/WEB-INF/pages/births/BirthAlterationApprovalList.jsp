@@ -134,11 +134,13 @@
             locationID = "";
         }
         var certifcateNumber = document.getElementById('certificateNumber').value;
+        var bdDivisionSerial = document.getElementById('bdDivisionSerial').value;
+       
         var valueArray = new Array(locationID, certifcateNumber);
         for (var i = 0; i < valueArray.length; i++) {
             var c = valueArray[i];
             if (c != "") {
-                counter++
+                counter++;
             }
         }
         if (counter > 1) {
@@ -152,6 +154,9 @@
             alert(errormsg)
             errormsg = "";
             counter = 0;
+            document.getElementById("locationId").value = "0";
+            document.getElementById("certificateNumber").value = "";
+           /* document.getElementById("bdDivisionSerial").value = "0";*/
             return false;
         }
         else {
@@ -192,12 +197,12 @@
                     <td style="width:25%"><s:label name="district" value="%{getText('district.label')}"
                                                    cssStyle="margin-left:10px;"/></td>
                     <td style="width:25%">
-                        <s:select id="districtIdSerial" name="districtId" list="districtList" cssStyle="width:240px;"/>
+                        <s:select id="districtIdSerial" name="birthDistrictId" list="districtList" value="birthDistrictId" cssStyle="width:240px;"/>
                     </td>
                     <td style="width:25%"><s:label name="division" value="%{getText('select_DS_division.label')}"
-                                                   cssStyle="margin-left:10px;"/></td>
+                                                    cssStyle="margin-left:10px;"/></td>
                     <td style="width:25%">
-                        <s:select id="dsDivisionIdSerial" name="dsDivisionId" list="dsDivisionList" headerKey="0"
+                        <s:select id="dsDivisionIdSerial" name="dsDivisionId" value="dsDivisionId" list="dsDivisionList" headerKey="0"
                                   cssStyle="float:left;  width:240px;"/>
                     </td>
                 </tr>
@@ -205,7 +210,7 @@
                     <td><s:label name="bdDivisionSerial" value="%{getText('select_BD_division.label')}"
                                  cssStyle="margin-left:10px;"/></td>
                     <td>
-                        <s:select id="bdDivisionSerial" name="birthDivisionId" list="bdDivisionList"
+                        <s:select id="bdDivisionSerial" name="birthDivisionId" list="bdDivisionList" value="birthDivisionId"
                                   headerKey="0" headerValue="%{getText('select.registrationDivision.label')}"
                                   cssStyle="float:left;width:240px;margin:2px 0;"/>
                     </td>
@@ -253,7 +258,7 @@
         <s:label value="%{getText('no.items.found.lable')}" cssStyle="color:blue;margin-left:30px;"/>
     </s:if>
     <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
-        <s:if test="birthAlterationPendingApprovalList.size>0">
+<%--        <s:if test="birthAlterationPendingApprovalList.size>0">--%>
             <thead>
             <tr>
                 <th align="center" width="125px"><s:label value="%{getText('cer.number.label')}"/></th>
@@ -266,7 +271,7 @@
                 <th width="50px"></th>
             </tr>
             </thead>
-        </s:if>
+       <%-- </s:if>--%>
         <tbody>
         <s:iterator status="approvalStatus" value="birthAlterationPendingApprovalList" id="approvalList">
             <%--todo has to be completed--%>
