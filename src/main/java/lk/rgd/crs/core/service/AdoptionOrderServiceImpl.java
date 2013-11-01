@@ -154,9 +154,9 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void rejectAdoptionOrder(long idUKey, User user) {
+    public void rejectAdoptionOrder(long idUKey, User user, String comments) {
         logger.debug("Rejecting adoption order : {}", idUKey);
-        setApprovalStatus(idUKey, user, AdoptionOrder.State.REJECTED);
+        setApprovalStatus(idUKey, user, AdoptionOrder.State.REJECTED, comments);
     }
 
     /**
@@ -251,6 +251,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<AdoptionOrder> getPaginatedListForAll(int pageNo, int noOfRows, User user) {
         try {
+            logger.debug("Adoptions getPaginatedListForAll: {}");
             return adoptionOrderDAO.getPaginatedListForAll(pageNo, noOfRows);
         } catch (Exception e) {
             return Collections.emptyList();
@@ -270,10 +271,10 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<AdoptionOrder> searchAdoptionOrder(Long adoptionEntryNo, String courtOrderNumber, int courtUKey) {
+    public List<AdoptionOrder> searchAdoptionOrder(Long adoptionEntryNo, String courtOrderNumber, int courtUKey, String childName, Date childBirthDate) {
         logger.debug("Search Adoption");
         List<AdoptionOrder> searchResults = new ArrayList<AdoptionOrder>();
-        searchResults = adoptionOrderDAO.searchAdoptionRecords(adoptionEntryNo, courtOrderNumber, courtUKey);
+        searchResults = adoptionOrderDAO.searchAdoptionRecords(adoptionEntryNo, courtOrderNumber, courtUKey, childName,childBirthDate);
 
         if (searchResults != null && searchResults.size() > 0) {
             return searchResults;
@@ -293,6 +294,10 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         return adoptionOrderDAO.getAdoptionByEntryNumber(adoptionEntryNo);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<AdoptionOrder> getHistoryRecords(long adoptionEntryNo) {
+        return adoptionOrderDAO.getHistoryRecords(adoptionEntryNo);
+    }
     @Transactional(propagation = Propagation.REQUIRED)
     public List<AdoptionOrder> getAdoptionOrdersByCourtOrderNumber(String courtOrderNo) {
         List<AdoptionOrder> adoptionOrders = adoptionOrderDAO.getAdoptionsByCourtOrderNumber(courtOrderNo);
@@ -320,7 +325,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         }
     }
 
-    private void setApprovalStatus(long idUKey, User user, AdoptionOrder.State state) {
+    private void setApprovalStatus(long idUKey, User user, AdoptionOrder.State state, String comments) {
         AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
         if (AdoptionOrder.State.DATA_ENTRY != adoption.getStatus()) {
             handleException("Cannot approve/reject adoption order " + adoption.getIdUKey() +
@@ -329,6 +334,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         validateAccess(user);
 
         adoption.setStatus(state);
+        adoption.setComments(comments);
         adoption.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
         adoption.getLifeCycleInfo().setApprovalOrRejectUser(user);
         adoptionOrderDAO.updateAdoptionOrder(adoption, user);
