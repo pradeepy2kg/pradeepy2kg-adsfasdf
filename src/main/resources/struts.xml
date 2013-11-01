@@ -318,7 +318,7 @@
         <action name="eprRejectBirthDeclaration" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
                 method="reject">
             <result type="tiles" name="successDeclarationReject">epr.birthRegisterApproval</result>
-            <result type="tiles" name="successConfirmationReject">epr.BirthConfirmationApproval</result>
+            <result type="tiles" name="successConfirmationReject">epr.BirthConfirmationApproval</result>            
             <result type="tiles" name="rejectGetComments">epr.birthRegisterReject</result>
         </action>
 
@@ -609,6 +609,17 @@
             <result type="tiles" name="success">epr.stillBirth</result>
         </action>
 
+        <!-- My -->
+        <action name="loadSerialNumberSearch" class="lk.rgd.crs.web.action.births.BirthRegistrationReportsAction"
+                method="loadSerialNumberSearch">
+            <result type="tiles" name="success">epr.birthSerialNumberSearch</result>
+        </action>
+
+        <action name="generateBirthSerialNumberReport" class="lk.rgd.crs.web.action.births.BirthRegistrationReportsAction"
+                method="generateSerialNumberReport">
+            <result type="tiles" name="success">epr.birthSerialNumberSearch</result>
+        </action>
+
         <!--Birth Certificate Search-->
         <action name="eprBirthCertificateSearch" class="lk.rgd.crs.web.action.births.SearchAction"
                 method="certificateSearch">
@@ -823,6 +834,7 @@
         <action name="eprSearchAdoptionRecord" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="searchAdoptionRecords">
             <result type="tiles" name="success">epr.adoptionSearch</result>
+            <param name="actionName"> searck </param>
             <result type="tiles" name="none">epr.error</result>
         </action>
 
@@ -909,7 +921,7 @@
         </action>
 
         <!--approve and print list related-->
-        <action name="eprAdoptionApprovalAndPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"
+        <action name="eprAdoptionApprovalAndPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"    
                 method="adoptionApprovalAndPrint">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
             <result type="tiles" name="none">epr.error</result>
@@ -923,9 +935,10 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprRejectAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
+        <action name="eprRejectAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"  
                 method="rejectAdoption">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="rejectAdoptionGetComments">epr.adoptionRejectOnComments</result>
             <result type="tiles" name="none">epr.error</result>
         </action>
 
@@ -1002,6 +1015,12 @@
                 method="loadAdoptionCertificate">
             <result type="tiles" name="success">epr.adoptionCertificate</result>
             <result type="tiles" name="skip">epr.adoptionApprovalAndPrint</result>
+            <result type="tiles" name="none">epr.error</result>
+        </action>
+
+        <action name="eprViewAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="viewAdoptionCertificate">
+            <result type="tiles" name="success">epr.adoptionCertificate</result>
             <result type="tiles" name="none">epr.error</result>
         </action>
 
@@ -1536,7 +1555,8 @@
         <action name="eprApproveAdoptionAlteration" class="lk.rgd.crs.web.action.births.AdoptionAlterationAction"
                 method="approveAdoptionAlteration">
             <interceptor-ref name="adoption"/>
-            <result type="redirectAction" name="success">eprAdoptionAlterationManagement</result>
+            <!--<result type="redirectAction" name="success">eprAdoptionAlterationManagement</result> -->  
+            <result type="tiles" name="success">epr.adoptionAlterationManagement</result>
             <result type="tiles" name="none">epr.error</result>
         </action>
 
