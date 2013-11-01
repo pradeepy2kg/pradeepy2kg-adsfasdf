@@ -1,16 +1,14 @@
 package lk.rgd.crs.core.dao;
 
-import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.BirthAlterationDAO;
-import lk.rgd.crs.api.domain.BirthAlteration;
 import lk.rgd.crs.api.domain.BDDivision;
-import org.springframework.transaction.annotation.Transactional;
+import lk.rgd.crs.api.domain.BirthAlteration;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
 
@@ -80,6 +78,16 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         q.setParameter("state", BirthAlteration.State.REJECT);
         q.setParameter("idUKey", idUKey);
         return (BirthAlteration) q.getSingleResult();
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthAlteration> getBulkOfAlterationByCertificateNumber(long birthCertificateNumber, int pageNo, int noOfRows) {
+        logger.debug("DAO IMPL");
+        Query q = em.createNamedQuery("filter.birth.alteration.by.birth.certificate.number").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("certificateNumber", birthCertificateNumber);
+        q.setParameter("state", BirthAlteration.State.REJECT);
+        return q.getResultList();
     }
 
 
