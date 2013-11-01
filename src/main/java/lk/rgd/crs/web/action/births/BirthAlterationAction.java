@@ -366,6 +366,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         logger.debug("attempt to search berth alteration ");
         filterBirthAlteration();
         populateBasicLists();
+
         logger.debug("successfully search birth alteration");
         return SUCCESS;
     }
@@ -457,24 +458,31 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
         try {
             if (birthCertificateNumber != 0) {
-                BirthAlteration baApprovalPending = alterationService.getApprovalPendingByIdUKey
-                    (idUKey, pageNo, noOfRows, user);
+                logger.debug("aaaaaaaaaaaaaaaaaaa birthCertificateNumber- - - - {}", birthCertificateNumber);
+                /*BirthAlteration baApprovalPending = alterationService.getApprovalPendingByIdUKey
+                    (birthCertificateNumber, pageNo, noOfRows, user);*/
+                birthAlterationPendingApprovalList= alterationService.getApprovalPendingByCertificateNmuber
+                    (birthCertificateNumber, pageNo, noOfRows, user);
+                //logger.debug("jij {}", baApprovalPending);
                 if (birthAlterationPendingApprovalList == null) {
                     birthAlterationPendingApprovalList = new ArrayList<BirthAlteration>();
+                    logger.debug("NULL NULL -----------------");
                 }
-                birthAlterationPendingApprovalList.add(baApprovalPending);
+                //birthAlterationPendingApprovalList.add(baApprovalPending);
                 logger.debug("filter Birth Alteration to approve by Birth Alteration Serial Number :{}", idUKey);
             } else if (locationUKey != 0) {
+                logger.debug("bbbbbbbbbb locationUKey {}", locationUKey);
                 logger.debug("filter Birth Alteration to approve by idUKey of the location :{}", locationUKey);
                 birthAlterationPendingApprovalList = alterationService.getApprovalPendingByUserLocationIdUKey(
                     locationUKey, pageNo, noOfRows, user);
             } else if (birthDivisionId != 0) {
+                logger.debug("cccccccccc birthDivisionId {}", birthDivisionId);
                 logger.debug("filter Birth Alteration to approve by Birth Serial Number :{}", serialNo);
                 birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
                     bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows);
-
             }
         } catch (Exception CRSRuntimeException) {
+            logger.debug("EXCEPTION");
             addActionMessage(getText("cp1.error.entryNotAvailable"));
             logger.debug("User {} can not filter birth alteration with idUKey :{}", user.getUserId(), idUKey);
         }
@@ -1065,7 +1073,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             birthDivisionId = bdDivisionList.keySet().iterator().next();
             logger.debug("first allowed BD Div in the list {} was set", birthDivisionId);
         }
-    }
+    }      
+
 
     private void populateDistrictAndDSDivision() {
         districtList = districtDAO.getDistrictNames(language, user);

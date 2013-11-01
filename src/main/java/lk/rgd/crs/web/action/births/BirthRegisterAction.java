@@ -239,6 +239,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 if (bdf.getIdUKey() == 0) {
                     populateRegistrars(bdf);
                 }
+
                 break;
             case 4:
                 birthType = bdf.getRegister().getBirthType();
@@ -1011,9 +1012,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 String PINOrNIC = bdf.getParent().getFatherNICorPIN();
                 Person father = null;
                 marriage = new MarriageInfo();
-                if (PinAndNicUtils.isValidPIN(PINOrNIC)) {
+                if (PinAndNicUtils.isValidPINorNIC(PINOrNIC,ecivilService,user)) {
                     // PIN, There is only 1 record for a PIN.
-                    father = ecivilService.findPersonByPIN(Long.parseLong(PINOrNIC), user);
+                    father = ecivilService.findPersonByPINorNIC(PINOrNIC, user);
                 }
                 if (father != null && father.getLastMarriage() != null && father.getLastMarriage().getDateOfMarriage() != null && father.getLastMarriage().getPlaceOfMarriage() != null) {
                     marriage.setDateOfMarriage(father.getLastMarriage().getDateOfMarriage());
@@ -1025,9 +1026,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 String PINOrNIC = bdf.getParent().getMotherNICorPIN();
                 Person mother = null;
                 marriage = new MarriageInfo();
-                if (PinAndNicUtils.isValidPIN(PINOrNIC)) {
+                if (PinAndNicUtils.isValidPINorNIC(PINOrNIC, ecivilService, user)) {
                     // PIN, There is only 1 record for a PIN.
-                    mother = ecivilService.findPersonByPIN(Long.parseLong(PINOrNIC), user);
+                    mother = ecivilService.findPersonByPINorNIC(PINOrNIC, user);
                 }
                 if (mother != null && mother.getLastMarriage() != null && mother.getLastMarriage().getDateOfMarriage() != null && mother.getLastMarriage().getPlaceOfMarriage() != null) {
                     marriage.setDateOfMarriage(mother.getLastMarriage().getDateOfMarriage());

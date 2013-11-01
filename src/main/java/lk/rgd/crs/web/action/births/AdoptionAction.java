@@ -1,30 +1,31 @@
 package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
+import lk.rgd.Permission;
 import lk.rgd.common.api.dao.*;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.ZonalOffice;
+import lk.rgd.common.util.DateTimeUtils;
+import lk.rgd.common.util.GenderUtil;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.AdoptionAlterationDAO;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.CourtDAO;
+import lk.rgd.crs.api.domain.AdoptionAlteration;
+import lk.rgd.crs.api.domain.AdoptionOrder;
+import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.service.AdoptionOrderService;
+import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 import java.util.*;
-
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.util.GenderUtil;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.CourtDAO;
-import lk.rgd.crs.api.domain.AdoptionOrder;
-import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.api.service.AdoptionOrderService;
-import lk.rgd.crs.api.service.BirthRegistrationService;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.CRSRuntimeException;
-import lk.rgd.Permission;
-import lk.rgd.AppConstants;
 
 /**
  * @author Duminda Dharmakeerthi
@@ -80,11 +81,16 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private int childAgeFrom;
     private int childAgeTo;
     private int suggesstedZonalOfficeId;
+    private int from;
+    private BitSet changedFields;
 
     private long idUKey;
     private long adoptionId;
     private long adoptionSerialNo;
     private Long adoptionEntryNo;
+    private Long adoptionEntryNumber;
+    private String childName;
+    private Date childBirthDate;
 
     private boolean allowEditAdoption;
     private boolean allowApproveAdoption;
@@ -94,6 +100,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private boolean approved;
     private boolean printed;
     private boolean jointApplicant;
+    private boolean reject;
 
     private String courtOrderNo;
     private String dsDivisionName;
@@ -110,12 +117,18 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String genderEn;
     private String genderSi;
     private String language;
+    private String comments;
 
     private BitSet alteredFields;
 
     private Date childDateOfBirth;
     private Date dataEntryPeriodFrom;
     private Date dataEntryPeriodTo;
+    private Date orderReceivedDate;
+    private String certificateIssuedDate;
+    private String applicationEnteredDate;
+    private String oderApprovedUser;
+
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
@@ -212,7 +225,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     private ZonalOffice setZonalOffice(AdoptionOrder adoptionOrder) {
-        if(suggesstedZonalOfficeId > 0 ){
+        if (suggesstedZonalOfficeId > 0) {
             return zonalOfficesDAO.getZonalOffice(suggesstedZonalOfficeId);
         } else if (adoptionOrder.getBirthProvinceUKey() > 0) {
             if (adoptionOrder.getBirthProvinceUKey() == 1 && adoptionOrder.getBirthDistrictId() > AppConstants.NO_OF_ACTUAL_DISTRICTS) {
@@ -226,42 +239,53 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String searchAdoptionRecords() {
-        if(adoptionEntryNo == null){
+        if (adoptionEntryNo == null) {
             adoptionEntryNo = 0L;
         }
-        if(courtOrderNo == null){
+        if (adoptionEntryNumber == null) {
+            adoptionEntryNumber = 0L;
+        }
+        if (courtOrderNo == null) {
             courtOrderNo = "";
         }
-        searchResults = service.searchAdoptionOrder(adoptionEntryNo, courtOrderNo, courtId);
+        if (childName == null) {
+            childName = "";
+        }
+        if (childBirthDate == null) {
+            childBirthDate = null;
+        }
+        searchResults = service.searchAdoptionOrder(adoptionEntryNumber, courtOrderNo, courtId, childName, childBirthDate);
         populateBasicLists(user.getPrefLanguage());
+        logger.debug("Searched Adoptions for adoptionEntryNumber {} courtOrderNo {}", adoptionEntryNumber, courtOrderNo);
         return SUCCESS;
     }
 
     /*
        This method sets the maximun time value for a given date.
      */
-    private Date setMaxTimePartForDates(Date date){
-        Date d=null;
-        try{
+
+    private Date setMaxTimePartForDates(Date date) {
+        Date d = null;
+        try {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            cal.set(Calendar.HOUR_OF_DAY,23);
-            cal.set(Calendar.MINUTE,59);
-            cal.set(Calendar.SECOND,59);
-            cal.set(Calendar.MILLISECOND,999);
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+            cal.set(Calendar.MILLISECOND, 999);
             d = cal.getTime();
-       }catch(Exception ex){
+        } catch (Exception ex) {
 
-       }
-       return d;
+        }
+        return d;
     }
 
     public String generateAdoptionReports() {
-        if(dataEntryPeriodFrom!=null && dataEntryPeriodTo!=null && dataEntryPeriodTo.before(dataEntryPeriodFrom)){
-           logger.debug("Inside the date validation condition. ");
-           addActionError(getText("date.comparison.validation.label"));
+        if (dataEntryPeriodFrom != null && dataEntryPeriodTo != null && dataEntryPeriodTo.before(dataEntryPeriodFrom)) {
+            logger.debug("Inside the date validation condition. ");
+            addActionError(getText("date.comparison.validation.label"));
         }
-        searchResults = service.generateAdoptionReports(courtId,dataEntryPeriodFrom,setMaxTimePartForDates(dataEntryPeriodTo));
+        searchResults = service.generateAdoptionReports(courtId, dataEntryPeriodFrom, setMaxTimePartForDates(dataEntryPeriodTo));
         populateBasicLists(user.getPrefLanguage());
         return SUCCESS;
     }
@@ -304,7 +328,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
         //populate court
         courtId = adoption.getCourt().getCourtUKey();
-        suggesstedZonalOfficeId  = adoption.getNoticingZonalOffice().getZonalOfficeUKey();
+        suggesstedZonalOfficeId = adoption.getNoticingZonalOffice().getZonalOfficeUKey();
         return SUCCESS;
     }
 
@@ -345,7 +369,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (adoption.getCourt().getCourtId() > 0) {
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtId(), language);
         }
-
         return SUCCESS;
     }
 
@@ -356,14 +379,15 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String eprAdoptionOrderDetailsViewMode() {
         logger.debug("initializing view mode for idUKey : {}", idUKey);
-        adoption = service.getById(idUKey, user);
+        //adoption = service.getById(idUKey, user);
+        adoption = service.getWithRelationshipsById(idUKey, user);
         if (adoption == null) {
             addActionError(getText("er.invalid.Entry"));
             populateApprovalAndPrintList();
             return "skip";
         }
 
-        if(adoption.getPreviousAdoptionIdUKey() > 0){
+        if (adoption.getPreviousAdoptionIdUKey() > 0) {
             previousAdoption = service.getById(adoption.getPreviousAdoptionIdUKey(), user);
             alteredFields = adoptionAlterationDAO.getAdoptionAlterationByAOUKey(previousAdoption.getIdUKey()).getApprovalStatuses();
         }
@@ -377,7 +401,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (adoption.getCourt().getCourtId() > 0) {
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtId(), language);
         }
+        getNameFromSiEnSignatureText(adoption.getLifeCycleInfo().getApprovalOrRejectUser());
         return SUCCESS;
+    }
+
+    private void getNameFromSiEnSignatureText(User user) {
+        String[] temp;
+        if (user.getSienSignatureText() != null) {
+            temp = user.getSienSignatureText().split("/");
+            if (temp.length > 0 && adoption.getLanguageToTransliterate().equals("si")) {
+                oderApprovedUser = temp[0];
+            } else if (temp.length > 1 && adoption.getLanguageToTransliterate().equals("en")) {
+                oderApprovedUser = temp[1];
+            }
+        }
+
     }
 
     /**
@@ -530,9 +568,74 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 birthDistrictName = districtDAO.getNameByPK(birthDistrictId, language);
                 dsDivisionName = dsDivisionDAO.getNameByPK(dsDivisionId, language);
             }
+            List<AdoptionOrder> historyRecords = service.getHistoryRecords(adoption.getAdoptionEntryNo());
+            for (AdoptionOrder ao : historyRecords) {
+                markChangedFieds(historyRecords);
+            }
+
+            certificateIssuedDate = DateTimeUtils.getISO8601FormattedString(new Date());
+            applicationEnteredDate = DateTimeUtils.getISO8601FormattedString(adoption.getLifeCycleInfo().getApprovalOrRejectTimestamp());
+            getNameFromSiEnSignatureText(adoption.getLifeCycleInfo().getApprovalOrRejectUser());
             return SUCCESS;
         }
     }
+
+    public String viewAdoptionCertificate() {
+        adoption = service.getWithRelationshipsById(idUKey, user);
+        if (adoption == null) {
+            addActionError(getText("er.invalid.Entry"));
+            populateApprovalAndPrintList();
+            return "skip";
+        }
+        if (adoption.getStatus() != AdoptionOrder.State.ARCHIVED_ALTERED) {
+            addActionError(getText("adoption.not.permited.operation"));
+            logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
+            return ERROR;
+        } else {
+            logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
+            String certificatePrifLang = adoption.getLanguageToTransliterate();
+            courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(), certificatePrifLang);
+            genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
+            genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
+            //place of issue in prefered language
+            User issuedUser = adoption.getLifeCycleInfo().getApprovalOrRejectUser();
+
+            //certifacate preferd language
+            String lang = adoption.getLanguageToTransliterate();
+            placeOfIssue = dsDivisionDAO.getNameByPK(issuedUser.getPrefBDDSDivision().getDsDivisionUKey(), lang);
+
+
+            BirthDeclaration bdf = null;
+            if (adoption.getBirthCertificateNumber() > 0) {
+                bdf = birthRegistrationService.getByIdForAdoptionLookup(adoption.getBirthCertificateNumber(), user);
+            }
+
+            if (bdf != null) {
+                birthDistrictId = bdf.getRegister().getBirthDistrict().getDistrictUKey();
+                dsDivisionId = bdf.getRegister().getDsDivision().getDsDivisionUKey();
+                birthDistrictName = districtDAO.getNameByPK(birthDistrictId, language);
+                dsDivisionName = dsDivisionDAO.getNameByPK(dsDivisionId, language);
+            }
+            List<AdoptionOrder> historyRecords = service.getHistoryRecords(adoption.getAdoptionEntryNo());
+            for (AdoptionOrder ao : historyRecords) {
+                markChangedFieds(historyRecords);
+            }
+
+            certificateIssuedDate = DateTimeUtils.getISO8601FormattedString(new Date());
+            getNameFromSiEnSignatureText(adoption.getLifeCycleInfo().getApprovalOrRejectUser());
+            return SUCCESS;
+        }
+    }
+
+    private void markChangedFieds(List<AdoptionOrder> historyRecords) {
+        changedFields = new BitSet();
+        for (AdoptionOrder ao : historyRecords) {
+            AdoptionAlteration al = adoptionAlterationDAO.getAdoptionAlterationByAOUKey(ao.getIdUKey());
+            changedFields.or(al.getApprovalStatuses());
+            logger.debug("Marked {}", changedFields.get(0));
+        }
+    }
+
 
     /**
      * marks adoption certificate as printed only if
@@ -614,7 +717,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String filterByStatus() {
         setPageNo(1);
-        logger.debug("requested to filter by : {}", currentStatus);
+        logger.debug("requested to filter by : {} state {}", currentStatus, state);
         populate();
         initPermissionForApprovalAndPrint();
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
@@ -801,14 +904,22 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String rejectAdoption() {
         logger.debug("requested to reject AdoptionOrder with idUKey : {}", idUKey);
-        try {
-            service.rejectAdoptionOrder(idUKey, user);
-            addActionMessage(getText("message.successfully.reject.adoption"));
-        } catch (CRSRuntimeException e) {
-            addActionError(getText("adoption.error.no.permission"));
+        if (reject) {
+            AdoptionOrder adoptionOrder = service.getById(idUKey, user);
+            adoptionEntryNo = adoptionOrder.getAdoptionEntryNo();
+            orderReceivedDate = adoptionOrder.getOrderReceivedDate();
+            return "rejectAdoptionGetComments";
+        } else {
+            try {
+                service.rejectAdoptionOrder(idUKey, user, comments);
+                addActionMessage(getText("message.successfully.reject.adoption"));
+            } catch (CRSRuntimeException e) {
+                addActionError(getText("adoption.error.no.permission"));
+            }
+            populateApprovalAndPrintList();
+            return SUCCESS;
         }
-        populateApprovalAndPrintList();
-        return SUCCESS;
+
     }
 
     /**
@@ -843,6 +954,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 adoption.setCertificateApplicantName(certificateApplicantName);
                 adoption.setCertificateApplicantPINorNIC(certificateApplicantPINorNIC);
                 adoption.setCertificateApplicantType(certificateApplicantType);
+                adoption.setApplicationEnteredDate(new Date());
                 service.setApplicantInfo(adoption, user);
             } else {
                 addActionError("er.label.cannot_capture_data");
@@ -1348,6 +1460,22 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.adoptionEntryNo = adoptionEntryNo;
     }
 
+    public String getChildName() {
+        return childName;
+    }
+
+    public void setChildName(String childName) {
+        this.childName = childName;
+    }
+
+    public Date getChildBirthDate() {
+        return childBirthDate;
+    }
+
+    public void setChildBirthDate(Date childBirthDate) {
+        this.childBirthDate = childBirthDate;
+    }
+
     public List<AdoptionOrder> getSearchResults() {
         return searchResults;
     }
@@ -1458,5 +1586,77 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setAlteredFields(BitSet alteredFields) {
         this.alteredFields = alteredFields;
+    }
+
+    public boolean isReject() {
+        return reject;
+    }
+
+    public void setReject(boolean reject) {
+        this.reject = reject;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public Date getOrderReceivedDate() {
+        return orderReceivedDate;
+    }
+
+    public void setOrderReceivedDate(Date orderReceivedDate) {
+        this.orderReceivedDate = orderReceivedDate;
+    }
+
+    public String getCertificateIssuedDate() {
+        return certificateIssuedDate;
+    }
+
+    public void setCertificateIssuedDate(String certificateIssuedDate) {
+        this.certificateIssuedDate = certificateIssuedDate;
+    }
+
+    public String getOderApprovedUser() {
+        return oderApprovedUser;
+    }
+
+    public void setOderApprovedUser(String oderApprovedUser) {
+        this.oderApprovedUser = oderApprovedUser;
+    }
+
+    public BitSet getChangedFields() {
+        return changedFields;
+    }
+
+    public void setChangedFields(BitSet changedFields) {
+        this.changedFields = changedFields;
+    }
+
+    public Long getAdoptionEntryNumber() {
+        return adoptionEntryNumber;
+    }
+
+    public void setAdoptionEntryNumber(Long adoptionEntryNumber) {
+        this.adoptionEntryNumber = adoptionEntryNumber;
+    }
+
+    public String getApplicationEnteredDate() {
+        return applicationEnteredDate;
+    }
+
+    public void setApplicationEnteredDate(String applicationEnteredDate) {
+        this.applicationEnteredDate = applicationEnteredDate;
+    }
+
+    public int getFrom() {
+        return from;
+    }
+
+    public void setFrom(int from) {
+        this.from = from;
     }
 }

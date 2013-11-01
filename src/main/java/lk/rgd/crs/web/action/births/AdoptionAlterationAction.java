@@ -141,6 +141,7 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
             }
             adoptionAlteration.setApprovalStatuses(approvedBits);
             adoptionAlterationService.approveAdoptionAlteration(adoptionAlteration, user);
+            adoptionAlterationList = adoptionAlterationService.getAdoptionAlterationsForApproval(user);
             addActionMessage(getText("approve.adoption.alteration.success.label"));
         } catch (CRSRuntimeException e) {
             logger.error(e.getMessage());
@@ -185,8 +186,10 @@ public class AdoptionAlterationAction extends ActionSupport implements SessionAw
                 adoptionOrderList.addAll(adoptionOrders);
             }
         }
+
         adoptionEntryNo = 0;
         courtOrderNo = null;
+
         if (adoptionOrderList.size() > 0) {
             return SUCCESS;
         }

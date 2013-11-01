@@ -64,6 +64,7 @@ public class WebConstants {
     public static final String PRS_CERTIFICATE = "prs";
     public static final String BIRTH_CERTIFICATE = "birth";
     public static final String DEATH_CERTIFICATE = "death";
+    public static final String ADOPTION_CERTIFICATE = "adoption";
 
     //to indicate time durations for statistics
     public static final int WEEK = 1;
