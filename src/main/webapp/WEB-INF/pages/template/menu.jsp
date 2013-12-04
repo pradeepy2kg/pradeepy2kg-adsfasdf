@@ -36,6 +36,8 @@
 <%@ include file="RGMenuSi.jsp" %>
 <%} else if (Role.ROLE_ADMIN.equals(userRole)) {%>
 <%@ include file="ADMINMenuSi.jsp" %>
+<%} else if (Role.ROLE_STAT.equals(userRole)) {%>
+<%@ include file="STATMenuSi.jsp" %>
 <%}%>
 <%--Tamil Links--%>
 <%} else if (AppConstants.TAMIL.equals(preLang)) {%>
@@ -51,6 +53,8 @@
 <%@ include file="RGMenuTa.jsp" %>
 <%} else if (Role.ROLE_ADMIN.equals(userRole)) {%>
 <%@ include file="ADMINMenuTa.jsp" %>
+<%} else if (Role.ROLE_STAT.equals(userRole)) {%>
+<%@ include file="STATMenuTa.jsp" %>
 <%}%>
 <%--English Links--%>
 <%} else {%>
@@ -66,5 +70,7 @@
 <%@ include file="RGMenuEng.jsp" %>
 <%} else if (Role.ROLE_ADMIN.equals(userRole)) {%>
 <%@ include file="ADMINMenuEng.jsp" %>
+<%} else if (Role.ROLE_STAT.equals(userRole)) {%>
+<%@ include file="STATMenuEng.jsp" %>
 <%} }%>
 

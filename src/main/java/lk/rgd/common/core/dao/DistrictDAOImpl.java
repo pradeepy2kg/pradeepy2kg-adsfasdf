@@ -86,7 +86,6 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         } else {
             handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
         }
-
         if (user == null) {
             logger.error("Error getting DistrictNames using null for User");
             throw new IllegalArgumentException("User can not be null");

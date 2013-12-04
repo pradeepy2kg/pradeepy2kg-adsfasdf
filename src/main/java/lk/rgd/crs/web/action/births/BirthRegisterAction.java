@@ -57,6 +57,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final UserDAO userDAO;
     private final RoleDAO roleDAO;
     private final PopulationRegistry ecivilService;
+    private final HospitalDAO hospitalDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> countryList;
@@ -68,6 +69,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> allDSDivisionList;
     private Map<Integer, String> locationList;
     private Map<String, String> userList;
+    private Map<Integer, String> hospitalList;
 
     private List<UserWarning> warnings;
     private List<BirthDeclaration> archivedEntryList;
@@ -146,6 +148,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String returnAddress;
     private String unknownFieldPref;
     private String unknownFieldEn;
+    private int hospitalId;
+    
 
     public String welcome() {
         return SUCCESS;
@@ -154,7 +158,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
         CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
         AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO,
-        AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO, PopulationRegistry ecivilService, UserDAO userDAO, RoleDAO roleDAO) {
+        AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO, PopulationRegistry ecivilService, UserDAO userDAO, RoleDAO roleDAO, HospitalDAO hospitalDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -172,9 +176,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.ecivilService = ecivilService;
         this.userDAO = userDAO;
         this.roleDAO = roleDAO;
+        this.hospitalDAO = hospitalDAO;
 
         dsDivisionList = new HashMap<Integer, String>();
         bdDivisionList = new HashMap<Integer, String>();
+        hospitalList = new HashMap<Integer, String>();
     }
 
     /**
@@ -362,6 +368,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.getRegister().setPreferredLanguage(register.getPreferredLanguage());
                 bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
                 bdf.getChild().setPlaceOfBirthEnglish(child.getPlaceOfBirthEnglish());
+                bdf.getChild().setBirthHospital(child.getBirthHospital());
 
                 bdf.getParent().setFatherNICorPIN(parent.getFatherNICorPIN());
                 bdf.getParent().setFatherRace(parent.getFatherRace());
@@ -1180,12 +1187,16 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         birthDistrictId = commonUtil.findDefaultListValue(districtList, birthDistrictId);
         dsDivisionId = commonUtil.findDivisionList(dsDivisionList, dsDivisionId, birthDistrictId, AppConstants.DS_DIVISION, user, language);
         birthDivisionId = commonUtil.findDivisionList(bdDivisionList, birthDivisionId, dsDivisionId, AppConstants.BIRTH, user, language);
+        hospitalId = commonUtil.findHospitalList(hospitalList, hospitalId, birthDivisionId, user, language);
     }
 
     private void populateBasicLists(String language) {
         countryList = countryDAO.getCountries(language);
         districtList = districtDAO.getDistrictNames(language, user);
         raceList = raceDAO.getRaces(language);
+        birthDistrictId = commonUtil.findDefaultListValue(districtList, birthDistrictId);
+        dsDivisionId = commonUtil.findDivisionList(dsDivisionList, dsDivisionId, birthDistrictId, AppConstants.DS_DIVISION, user, language);        
+        hospitalList =  hospitalDAO.getHospitalsbyDSDivision(language, dsDivisionId, user);
     }
 
     private void populateAllDSDivisionList(int districtID, String language) {
@@ -1847,5 +1858,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public Map<Integer, String> getHospitalList() {
+        return hospitalList;
+    }
+
+    public void setHospitalList(Map<Integer, String> hospitalList) {
+        this.hospitalList = hospitalList;
+    }
+
+    public int getHospitalId() {
+        return hospitalId;
+    }
+
+    public void setHospitalId(int hospitalId) {
+        this.hospitalId = hospitalId;
     }
 }

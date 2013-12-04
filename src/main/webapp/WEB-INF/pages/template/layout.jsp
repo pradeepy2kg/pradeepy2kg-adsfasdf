@@ -11,7 +11,11 @@
     User user = (User) session.getAttribute("user_bean");
     String preLang = ((Locale) session.getAttribute(WebConstants.SESSION_USER_LANG)).getLanguage();
 %>
-
+   <%--back button disable--%>
+<SCRIPT type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</SCRIPT>
 <html>
 <head>
     <title>E-Population System</title>

@@ -190,4 +190,26 @@ public class CommonUtil {
         return al;
     }
 
+    public int findHospitalList(Map<Integer, String> hospitalList, int hospitalId, int birthDivisionId, User user, String language) {
+       /*      if (AppConstants.DS_DIVISION.equals(divisionType)) {
+            divisionList.putAll(dsDivisionDAO.getDSDivisionNames(parentId, language, user));
+        } else if (AppConstants.BIRTH.equals(divisionType)) {
+            divisionList.putAll(bdDivisionDAO.getBDDivisionNames(parentId, language, user));
+        } else if (AppConstants.MARRIAGE.equals(divisionType)) {
+            divisionList.putAll(mrDivisionDAO.getMRDivisionNames(parentId, language, user));
+        } else {
+            logger.debug("Invalid Division Type");
+        }*/
+        return findDefaultListValuesOfHospital(hospitalList, hospitalId);
+    }
+
+    private int findDefaultListValuesOfHospital(Map<Integer, String> hospitalList, int hospitalId) {
+         if (hospitalId == 0) {
+            if (!hospitalList.isEmpty()) {
+                hospitalId = hospitalList.keySet().iterator().next();
+                logger.debug("first Division in the list {} was set", hospitalId);
+            }
+        }
+        return hospitalId;
+    }
 }

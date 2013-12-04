@@ -2,10 +2,7 @@ package lk.rgd.crs.web;
 
 import lk.rgd.AppConstants;
 import lk.rgd.common.RGDRuntimeException;
-import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.dao.DistrictDAO;
-import lk.rgd.common.api.dao.RoleDAO;
-import lk.rgd.common.api.dao.UserDAO;
+import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.LocaleUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -42,6 +39,7 @@ public class JSONDivisionLookupService extends HttpServlet {
     private GNDivisionDAO gnDivisionDAO;
     private UserDAO userDAO;
     private RoleDAO roleDAO;
+    private HospitalDAO hospitalDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -54,6 +52,7 @@ public class JSONDivisionLookupService extends HttpServlet {
         userDAO = (UserDAO) context.getBean("userDAOImpl");
         roleDAO = (RoleDAO) context.getBean("roleDAOImpl");
         gnDivisionDAO = (GNDivisionDAO) context.getBean("gnDivisionDAOImpl");
+        hospitalDAO = (HospitalDAO) context.getBean("hospitalDAOImpl");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -201,15 +200,27 @@ public class JSONDivisionLookupService extends HttpServlet {
             }else if ("19".equals(mode)){
                 List districts = getDistrictsByProvince(lang, divisionId, user);
                 optionLists.put("districtList", districts);
+
+            }else if("20".equals(mode)){
+                List hospitals = getHospitalsbyDSDivision(lang, divisionId,user);
+                optionLists.put("hospitalList", hospitals);
+            /*}else if("21".equals(mode)){
+                List hospitals = getHospitalsbyBdDivision(lang, divisionId,user);
+                optionLists.put("hospitalList", hospitals);*/
+            }else if("22".equals(mode)){
+                List hospitals = getHospitalsbyDistrict(lang, divisionId,user);
+                optionLists.put("hospitalList", hospitals);
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
                 List bd = getBDDivisions(lang, dsDivisionId, user);
                 List gn = getGNDivisions(lang, dsDivisionId, user);
+                List hospitals = getHospitals(lang,dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("bdDivisionList", bd);
                 optionLists.put("gnDivisionList", gn);
+                optionLists.put("hospitalList", hospitals);
             }
         } catch (Exception e) {
             logger.error("Fatal Error : {}", e);
@@ -222,6 +233,36 @@ public class JSONDivisionLookupService extends HttpServlet {
         mapper.writeValue(out, optionLists);
         out.flush();
     }
+
+    private List getHospitalsbyDistrict(String language, int districtId, User user) {
+        Map<Integer, String> hospitalList = hospitalDAO.getHospitalsbyDistrict(language,districtId, user);
+        logger.debug("Loaded hospital list : {}", hospitalList);
+        return getList(hospitalList);
+    }
+
+    private List getHospitalsbyDSDivision(String language, int dsDivisionId, User user) {
+        Map<Integer, String> hospitalList = hospitalDAO.getHospitalsbyDSDivision(language, dsDivisionId, user);
+        logger.debug("Loaded hospital list : {}", hospitalList);
+        return getList(hospitalList);
+    }
+
+    private List getHospitals(String language, int dsDivisionId, User user) {
+             Map<Integer, String> hospitaList = null;
+        try {
+            hospitaList = hospitalDAO.getHospitalsbyDSDivision(language, dsDivisionId, user);
+            logger.debug("Loaded GN list : {}", hospitaList);
+        } catch (RGDRuntimeException e) {
+            hospitaList = Collections.emptyMap();
+        }
+        return getList(hospitaList);
+
+    }
+
+ /*   private List getHospitalsbyBdDivision(String language, int bdDivisionId, User user) {
+        Map<Integer, String> hospitalList = hospitalDAO.getHospitalsNamesbyBdDivision(bdDivisionId, language);
+        logger.debug("Loaded hospital list : {}", hospitalList);
+        return getList(hospitalList);
+    }*/
 
     private List getDistrictsByProvince(String language, int provinceUKey, User user){
         Map<Integer, String> districtList = districtDAO.getDistrictNamesByProvince(language, provinceUKey, user);

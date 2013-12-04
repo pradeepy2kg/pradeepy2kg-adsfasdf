@@ -57,7 +57,7 @@ $(function() {
                 function(data) {
                     var options1 = '';
                     var ds = data.dsDivisionList;
-                    var select =  document.getElementById('selectDSDivision').value;
+                    var select = document.getElementById('selectDSDivision').value;
                     options1 += '<option value="' + 0 + '">' + select + '</option>';
                     for (var i = 0; i < ds.length; i++) {
                         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
@@ -130,18 +130,34 @@ $(function() {
 });
 $(function() {
     $('img#place').bind('click', function(evt) {
-        var text = $("input#placeOfBirth").attr("value");
 
-        $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
-                function(data) {
-                    if (data != null) {
-                        var s = data.translated;
-                        $("input#placeOfBirthEnglish").val(s);
-                    }
-                });
+        if ($('#placeOfBirthId').val() !=null && $('#placeOfBirthId').val().length>0) {
+
+            var text = $("input#placeOfBirth").attr("value");
+            $.post('/ecivil/TransliterationService', {text:text, gender:'U'},
+                    function (data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("input#placeOfBirthEnglish").val(s);
+                        }
+                    });
+
+        } else {
+
+            var e = document.getElementById("hospitalId");
+            var text = e.options[e.selectedIndex].text;         
+            $.post('/ecivil/TransliterationService', {text:text, gender:'U'},
+                    function(data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("input#placeOfBirthEnglish").val(s);
+                        }
+                    });
+        }
+
+
     });
-
-})
+});
 
 var errormsg = "";
 
@@ -198,7 +214,7 @@ function validateSearch() {
     }
 
     var out = checkActiveFieldsForSyntaxErrors('birth-confirmation-form-1');
-    if(out != ""){
+    if (out != "") {
         errormsg = errormsg + out;
     }
 
@@ -295,7 +311,8 @@ function initPage() {
     <tbody>
     <tr>
         <td class="cell_01">1</td>
-        <td width="60%">සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ අනුක්‍රමික අංකය
+        <td width="60%">සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ
+            අනුක්‍රමික අංකය
             හා දිනය
             <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடர் இலக்கமும் திகதியும்
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
@@ -387,7 +404,8 @@ function initPage() {
 </tr>
 <tr>
     <td>4</td>
-    <td colspan="7"><label> උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව / பிறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய  மொழி/<br>Preferred Language for
+    <td colspan="7"><label> උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව / பிறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய மொழி/<br>Preferred
+        Language for
         Birth Certificate </label></td>
     <td colspan="6">
         <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}" name="register.preferredLanguage"
@@ -429,13 +447,38 @@ function initPage() {
     <td colspan="6"><s:select name="birthDivisionId" list="bdDivisionList" id="bdDivisionId"/></td>
 </tr>
 <tr>
-    <td colspan="12"><label>උපන් ස්ථානය  / பிறந்த இடம்/ Place of Birth</label></td>
+    <td colspan="12"><label>උපන් ස්ථානය / பிறந்த இடம்/ Place of Birth</label></td>
 </tr>
 <tr>
     <td colspan="1"><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
-    <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
-                                 disabled="true" size="45"/></td>
-    <td colspan="5"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth" onchange="checkSyntax('placeOfBirth')"/></td>
+
+    <s:if test="child.birthAtHospital == 0">
+        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
+                                     disabled="true" size="45"/></td>
+        <td colspan="5"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"
+                                     onchange="checkSyntax('placeOfBirth')"/></td>
+    </s:if>
+    <s:else>
+        <s:if test="register.preferredLanguage == 'si'">
+            <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.birthHospital.hospitalNameSi"
+                                         cssClass="disable"
+                                         disabled="true" size="45"/></td>
+        </s:if>
+        <s:elseif test="register.preferredLanguage == 'ta'">
+            <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.birthHospital.hospitalNameTa"
+                                         cssClass="disable"
+                                         disabled="true" size="45"/></td>
+        </s:elseif>
+
+        <td colspan="5"><s:select id="hospitalId" name="child.birthHospital.hospitalUKey" list="hospitalList"
+                                  cssStyle="float:left;  width:285px; margin:2px 5px;"/></td>
+
+    </s:else>
+
+        <%--
+   <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
+                                disabled="true" size="45"/></td>
+   <td colspan="5"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth" onchange="checkSyntax('placeOfBirth')"/></td>--%>
 </tr>
 <tr>
     <td colspan="1"><label>ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கில மொழியில்<br>In English</label></td>
@@ -539,7 +582,7 @@ function initPage() {
     </td>
     <td colspan="6">
         <s:textfield name="#session.birthConfirmation_db.parent.motherDistrictPrint" cssClass="disable"
-                         disabled="true"/>
+                     disabled="true"/>
     </td>
     <td>
         <s:select list="allDistrictList" name="motherDistrictId" headerValue="%{getText('select_district.label')}"
@@ -587,6 +630,7 @@ function initPage() {
 </table>
 
 <s:hidden name="pageNo" value="1"/>
+<s:hidden id="placeOfBirthId" name="#session.birthConfirmation_db.child.placeOfBirth"/>
 
 <s:if test="bdId != 0">
     <div class="form-submit">

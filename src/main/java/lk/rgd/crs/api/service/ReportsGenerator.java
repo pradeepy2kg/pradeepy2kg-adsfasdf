@@ -3,6 +3,8 @@ package lk.rgd.crs.api.service;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.bean.BirthIslandWideStatistics;
 
+import java.io.FileNotFoundException;
+
 /**
  * Define an interface to use Spring to read info within a transaction as Person-citizenship is a lazy load collection
  *
@@ -125,7 +127,7 @@ public interface ReportsGenerator {
      * @param headerCode
      * @return String the path and name of the created CSV file.  @param user
      */
-    public String createReport(User user, int headerCode);
+    public String createReport(User user, int headerCode) throws FileNotFoundException;
 
     /**
      * @param user

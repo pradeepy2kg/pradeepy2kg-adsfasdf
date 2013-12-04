@@ -62,7 +62,7 @@
                 </li>
                 <li>
                     <a id="report.title" href="/ecivil/management/eprInitCreateReports.do">
-                        Report Generation ta
+                        அறிக்கை தயாரித்தல்
                     </a>
                 </li>
             </ul>

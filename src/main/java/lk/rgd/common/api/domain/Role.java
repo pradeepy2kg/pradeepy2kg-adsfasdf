@@ -6,7 +6,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.BitSet;
-import java.util.Set;
 
 /**
  * Represents a Role defined in the system. A user may belong to one or more Roles
@@ -29,6 +28,8 @@ public class Role implements Serializable {
     public static final String ROLE_ADR = "ADR";
     /** The Data Entry Operators */
     public static final String ROLE_DEO = "DEO";
+    /**The Stat Role*/
+    public static final String ROLE_STAT = "STAT";
 
     @Id
     @Column(updatable = false)

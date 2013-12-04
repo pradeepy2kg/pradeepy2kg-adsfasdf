@@ -124,7 +124,7 @@
         </li>
         <li>
             <a id="search_adoption_reports.label" href="/ecivil/adoption/eprAdoptionReportGeneration.do">
-                (6) Reports Generation in ta
+                (6) அறிக்கை தயாரித்தல்
             </a>
         </li>
     </ul>
@@ -321,7 +321,7 @@
 <li>
     </s:else>
     <a href="/ecivil/statistics/eprStatHome.do">
-        Statistics in Tamil
+        புள்ளிவிபரவியல்
     </a>
 </li>
 </ul>

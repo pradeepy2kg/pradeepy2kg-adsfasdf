@@ -1,12 +1,10 @@
 package lk.rgd.crs.core;
 
-import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.core.dao.PreloadableDAO;
 import lk.rgd.common.util.RolePermissionUtils;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.prs.api.domain.*;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
@@ -79,6 +77,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
         entityClasses.add(Statistics.class);
         entityClasses.add(GNDivision.class);
+
+        entityClasses.add(Hospital.class);
     }
 
     public void setDataSource(DataSource dataSource) {
