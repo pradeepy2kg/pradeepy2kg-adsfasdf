@@ -19,6 +19,11 @@
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+
+</HEAD>
+<BODY onload="noBack();"
+    onpageshow="if (event.persisted) noBack();" onunload="">
+<%--back button disable--%>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script type="text/javascript">

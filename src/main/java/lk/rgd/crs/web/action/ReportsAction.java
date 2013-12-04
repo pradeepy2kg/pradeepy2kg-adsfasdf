@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.StatisticsManager;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.api.service.ReportsGenerator;
 import lk.rgd.crs.web.ReportCodes;
 import lk.rgd.crs.web.WebConstants;
@@ -11,6 +12,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -33,6 +35,10 @@ public class ReportsAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> viewChartList;
     private Map session;
     private boolean clearCache;
+    private InputStream fileInputStream;
+    public String fileName;
+    public String downLoadFileName="";
+    public String today;
 
     public ReportsAction(ReportsGenerator reportsService, StatisticsManager statisticsManager) {
         this.reportsService = reportsService;
@@ -51,63 +57,77 @@ public class ReportsAction extends ActionSupport implements SessionAware {
      *
      * @return String
      */
-    public String create() {
+    public String create() throws FileNotFoundException {
         // todo permission and security validations
+        today= DateTimeUtils.getISO8601FormattedString(new Date());
         logger.info("Clear Cache {}", clearCache);
-
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         try {
             if (chartType == 0) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_TABLE_2_2"+"_"+today;
                 generateReport(year, user, ReportCodes.TABLE_2_2);                //todo don't generate if we already have one
-                reportsService.createReport(user, ReportCodes.TABLE_2_2);
+                downLoadFileName = reportsService.createReport(user, ReportCodes.TABLE_2_2);
             } else if (chartType == 1) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_TABLE_2_4"+"_"+today;
                 generateReport(year, user, ReportCodes.TABLE_2_4);
-                reportsService.createReport(user, ReportCodes.TABLE_2_4);
+                 downLoadFileName=reportsService.createReport(user, ReportCodes.TABLE_2_4);
             } else if (chartType == 3) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_TABLE_2_8"+"_"+today;
                 generateReport(year, user, ReportCodes.TABLE_2_8);
-                reportsService.createReport(user, ReportCodes.TABLE_2_8);
+                 downLoadFileName=reportsService.createReport(user, ReportCodes.TABLE_2_8);
             } else if (chartType == 2) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_TABLE_2_5"+"_"+today;
                 generateReport(year, user, ReportCodes.TABLE_2_5);
-                reportsService.createReport(user, ReportCodes.TABLE_2_5);
+                downLoadFileName= reportsService.createReport(user, ReportCodes.TABLE_2_5);
             } else if (chartType == 4) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_TABLE_2_7"+"_"+today;
                 generateReport(year, user, ReportCodes.TABLE_2_7);
-                reportsService.createReport(user, ReportCodes.TABLE_2_7);
+                downLoadFileName= reportsService.createReport(user, ReportCodes.TABLE_2_7);
             } else if (chartType == 5) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_TABLE_2_6"+"_"+today;
                 generateReport(year, user, ReportCodes.TABLE_2_6);
-                reportsService.createReport(user, ReportCodes.TABLE_2_6);
+               downLoadFileName= reportsService.createReport(user, ReportCodes.TABLE_2_6);
             } else if (chartType == 6) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_TABLE_2_2A"+"_"+today;
                 generateReport(year, user, ReportCodes.TABLE_2_2A);
-                reportsService.createReport(user, ReportCodes.TABLE_2_2A);
+              downLoadFileName=  reportsService.createReport(user, ReportCodes.TABLE_2_2A);
             } else if (chartType == 7) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_TABLE_2_3"+"_"+today;
                 generateReport(year, user, ReportCodes.TABLE_2_3);
-                reportsService.createReport(user, ReportCodes.TABLE_2_3);
+               downLoadFileName= reportsService.createReport(user, ReportCodes.TABLE_2_3);
             } else if (chartType == 8) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_TABLE_2_11"+"_"+today;
                 generateReport(year, user, ReportCodes.TABLE_2_11);
-                reportsService.createReport(user, ReportCodes.TABLE_2_11);
+              downLoadFileName=  reportsService.createReport(user, ReportCodes.TABLE_2_11);
             } else if (chartType == 9) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_TABLE_2_10"+"_"+today;
                 generateReport(year, user, ReportCodes.TABLE_2_10);
-                reportsService.createReport(user, ReportCodes.TABLE_2_10);
+              downLoadFileName=  reportsService.createReport(user, ReportCodes.TABLE_2_10);
             } else if (chartType == 10) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_TABLE_2_12"+"_"+today;
                 generateReport(year, user, ReportCodes.TABLE_2_12);
-                reportsService.createReport(user, ReportCodes.TABLE_2_12);
+               downLoadFileName= reportsService.createReport(user, ReportCodes.TABLE_2_12);
             } else if (chartType == 11) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_INFANT_DEATH_TABLE_1"+"_"+today;
                 generateReport(year, user, ReportCodes.INFANT_DEATH_TABLE_1);
-                //reportsService.createReport(user, ReportCodes.INFANT_DEATH_TABLE_1);
+                downLoadFileName=reportsService.createReport(user, ReportCodes.INFANT_DEATH_TABLE_1);
             } else if (chartType == 12) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_INFANT_DEATH_TABLE_3_5a"+"_"+today;
                 generateReport(year, user, ReportCodes.INFANT_DEATH_TABLE_3_5a);
+                downLoadFileName=reportsService.createReport(user, ReportCodes.INFANT_DEATH_TABLE_3_5a);
             } else if (chartType == 13) {
                 logger.debug("Chart Type {}", chartType);
                 generateReport(year, user, ReportCodes.DEATH_TABLE_4_3);
@@ -123,27 +143,38 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 logger.debug("Chart Type {}", chartType);
                 //generateReport(year, user, ReportCodes.DEATH_TABLE_4_3);
                 reportsService.createDeathReport_4_4(user, ReportCodes.DEATH_TABLE_4_4);
-            }*/ else if (chartType == 16) {
+            }*/
+            else if (chartType == 16) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_BIRTH_RAW_DATA"+"_"+today;
                 generateReport(year, user, ReportCodes.BIRTH_RAW_DATA);
+                downLoadFileName="reports/2013/RawData/BIRTH_RAW_DATA.csv";
             } else if (chartType == 17) {
                 logger.debug("Chart Type {}", chartType);
+                fileName=year+"_DEATH_RAW_DATA"+"_"+today;
                 generateReport(year, user, ReportCodes.DEATH_RAW_DATA);
+                downLoadFileName="reports/2013/RawData/DEATH_RAW_DATA.csv";
             }
 
         } catch (RGDRuntimeException error) {
             addActionError(getText("permission.denied"));
         }
-        addActionMessage(getText("report.generation.completed"));
+
         logger.debug("Selected year {}", year);
+        logger.debug("Download File Name {}", downLoadFileName);
 
+        fileInputStream = new FileInputStream(new File(downLoadFileName));
         populateLists();
-
+        addActionMessage(getText("report.generation.completed"));
         return ActionSupport.SUCCESS;
     }
-
-    public String viewReport() {
+    public InputStream getFileInputStream() {
+		return fileInputStream;
+	}
+    public String viewReport() throws IOException {
         logger.info("VIEW called");
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+
         populateLists();
         return ActionSupport.SUCCESS;
     }
@@ -152,7 +183,7 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         statisticsManager.deleteOldStatistics();
         statisticsManager.triggerScheduledStatJobs();
         statisticsManager.updateStatisticsList();
-        populateLists();
+        populateLists();                                    
         addActionMessage("Statistics populating completed");
         return SUCCESS;
     }

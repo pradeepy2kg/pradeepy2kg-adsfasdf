@@ -149,7 +149,7 @@ public class UserManagerImpl implements UserManager {
                 assDistrict.add(districtDAO.getDistrict(districtUKey));
             }
 
-            if (roleId.equals(Role.ROLE_DEO) || roleId.equals(Role.ROLE_ADR)) {
+            if (roleId.equals(Role.ROLE_DEO) || roleId.equals(Role.ROLE_ADR) || roleId.equals(Role.ROLE_STAT)) {
                 for (int dsDivisionId : assDivisions) {
                     assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
                 }

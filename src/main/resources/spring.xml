@@ -140,6 +140,7 @@
     <bean id="personCitizenshipDAOImpl" class="lk.rgd.prs.core.dao.PersonCitizenshipDAOImpl"/>
     <bean id="marriageRegistrationDAOImpl" class="lk.rgd.crs.core.dao.MarriageRegistrationDAOImpl"/>
     <bean id="statisticsDAOImpl" class="lk.rgd.common.core.dao.StatisticsDAOImpl"/>
+    <bean id="hospitalDAOImpl" class="lk.rgd.common.core.dao.HospitalDAOImpl"/>
 
     <!--Utility singletons-->
     <bean id="birthDeclarationValidator" class="lk.rgd.crs.core.service.BirthDeclarationValidator">

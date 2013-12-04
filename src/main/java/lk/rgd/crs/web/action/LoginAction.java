@@ -68,7 +68,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private String role;
 
     public LoginAction(UserManager userManager, AppParametersDAO appParaDao, DistrictDAO districtDAO,
-        DSDivisionDAO dsDivisionDAO, UserDAO userDAO, RoleDAO roleDAO) {
+                       DSDivisionDAO dsDivisionDAO, UserDAO userDAO, RoleDAO roleDAO) {
         this.userManager = userManager;
         this.appParaDao = appParaDao;
         this.districtDAO = districtDAO;
@@ -183,9 +183,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
             if (divisionList == null && districtList != null) {
                 divisionList = dsDivisionDAO.getAllDSDivisionNames(
-                    districtList.keySet().iterator().next(),
-                    user.getPrefLanguage(),
-                    user);
+                        districtList.keySet().iterator().next(),
+                        user.getPrefLanguage(),
+                        user);
                 logger.debug("division List : {}", divisionList.size());
             } else {
                 if (districtList == null) {
@@ -201,9 +201,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
             if (divisionList == null && districtList != null) {
                 divisionList = dsDivisionDAO.getAllDSDivisionNames(
-                    districtList.keySet().iterator().next(),
-                    user.getPrefLanguage(),
-                    user);
+                        districtList.keySet().iterator().next(),
+                        user.getPrefLanguage(),
+                        user);
                 logger.debug("division List : {}", divisionList.size());
             } else {
                 if (districtList == null) {
@@ -214,7 +214,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             if (deoList == null && divisionList != null) {
                 logger.debug("Role = {}", user.getRole());
                 deoList = userDAO.getDEOsByDSDivision(
-                    user.getPrefLanguage(), user, dsDivisionDAO.getDSDivisionByPK(divisionList.keySet().iterator().next()), roleDAO.getRole("DEO"));
+                        user.getPrefLanguage(), user, dsDivisionDAO.getDSDivisionByPK(divisionList.keySet().iterator().next()), roleDAO.getRole("DEO"));
                 logger.debug("DEO List : {}", deoList.size());
             }
         } else if (userType.toLowerCase().equals(WebConstants.USER_DR)) {
@@ -225,9 +225,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
             if (divisionList == null && districtList != null) {
                 divisionList = dsDivisionDAO.getAllDSDivisionNames(
-                    districtList.keySet().iterator().next(),
-                    user.getPrefLanguage(),
-                    user);
+                        districtList.keySet().iterator().next(),
+                        user.getPrefLanguage(),
+                        user);
                 logger.debug("division List : {}", divisionList.size());
             } else {
                 if (districtList == null) {
@@ -238,8 +238,25 @@ public class LoginAction extends ActionSupport implements SessionAware {
             if (adrList == null && divisionList != null) {
                 logger.debug("Role = {}", user.getRole());
                 adrList = userDAO.getADRsByDistrictId(
-                    districtDAO.getDistrict(districtList.keySet().iterator().next()), roleDAO.getRole("ADR"));
+                        districtDAO.getDistrict(districtList.keySet().iterator().next()), roleDAO.getRole("ADR"));
                 logger.debug("ADR List : {}", adrList.size());
+            }
+        } else if (userType.toLowerCase().equals(WebConstants.USER_STAT)) {
+            if (districtList == null) {
+                districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
+                logger.debug("district List : {}", districtList.size());
+            }
+
+            if (divisionList == null && districtList != null) {
+                divisionList = dsDivisionDAO.getAllDSDivisionNames(
+                        districtList.keySet().iterator().next(),
+                        user.getPrefLanguage(),
+                        user);
+                logger.debug("division List : {}", divisionList.size());
+            } else {
+                if (districtList == null) {
+                    logger.debug("DistrictList null for user : {}", user.getUserId());
+                }
             }
         }
     }
@@ -254,7 +271,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
         User.State currentState = userManager.getUserByID(user.getUserId()).getStatus();
         if (User.State.INACTIVE.equals(currentState) || User.State.DELETED.equals(currentState) ||
-            User.State.LOCKEDOUT.equals(currentState)) {
+                User.State.LOCKEDOUT.equals(currentState)) {
             logger.warn("User Status is : {} for user :{}", user.getStatus(), user.getUserName());
             return ERROR;
         }

@@ -405,7 +405,7 @@ function initSerialNumber() {
         domObject.value = null;
     }
     if (isFieldEmpty(domObject)) {
-        domObject.value = new Date().getFullYear() + "0";
+        domObject.value = new Date().getFullYear() + "1";
     }
 }
 

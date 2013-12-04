@@ -607,7 +607,7 @@ function enableCertificateInfo(mode) {
     <tr>
         <td><br/>
             සහකරුගේ විස්තර
-            <br>Spouse's details in ta
+            <br>துணைவரின் விபரம் 
             <br>Spouse's details
         </td>
     </tr>

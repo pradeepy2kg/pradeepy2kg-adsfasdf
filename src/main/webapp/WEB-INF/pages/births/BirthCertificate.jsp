@@ -393,7 +393,23 @@
                 **&nbsp;
             </s:if>
         </div>
-        <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:11pt;"/>
+            <%-- <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:11pt;"/>--%>
+
+          <s:if test="child.placeOfBirth != null || child.placeOfBirth.length > 0">
+                <s:label name="child.placeOfBirth" cssStyle="font-size:12pt;"/>
+            </s:if>
+            <s:else>
+                <s:if test="register.preferredLanguage == 'si'">
+                    <s:label name="child.birthHospital.hospitalNameSi" cssStyle="font-size:12pt;"/>
+                </s:if>
+                <s:elseif test="register.preferredLanguage == 'ta'">
+                    <s:label name="child.birthHospital.hospitalNameTa" cssStyle="font-size:12pt;"/>
+                </s:elseif>
+
+            </s:else>
+
+
+
         <br>
 
         <div class="changes-done">

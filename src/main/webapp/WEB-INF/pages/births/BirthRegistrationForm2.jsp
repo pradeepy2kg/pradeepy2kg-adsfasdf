@@ -21,6 +21,23 @@
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/agecalculator.js"/>"></script>
+<%--  <script type="text/javascript">
+        $(document).ready(function () {
+            $('#parent.motherAdmissionDate').datepicker({
+                changeYear: true,
+                beforeShow: function (textbox, instance) {
+                instance.dpDiv.css({
+                    marginTop: '20 px',
+                    marginLeft: '10px'
+                });
+                }
+            });
+        });
+    </script>--%>
+</HEAD>
+<BODY onload="noBack();"
+    onpageshow="if (event.persisted) noBack();" onunload="">
+<%--back button disable--%>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <s:hidden id="p2error1" value="%{getText('p2.fatherName.error.value')}"/>

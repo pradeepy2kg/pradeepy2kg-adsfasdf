@@ -249,6 +249,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         // does the user have access to the BDF being updated
         validateAccessOfUser(user, bdf);
+
+        // validate if the minimum required fields are adequately filled
+        birthDeclarationValidator.validateMinimalRequirements(bdf);
+
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
         validateBirthType(existing, BirthDeclaration.BirthType.LIVE);
@@ -276,6 +280,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.BELATED);
         logger.debug("Attempt to edit belated birth declaration record : {}", bdf.getIdUKey());
+
+        // validate if the minimum required fields are adequately filled
+        birthDeclarationValidator.validateMinimalRequirements(bdf);
 
         // does the user have access to the BDF being updated
         validateAccessOfUser(user, bdf);
@@ -310,6 +317,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // TODO check user have access to edit still BDF
         // does the user have access to the BDF being updated
         validateAccessOfUser(user, bdf);
+
+        // validate if the minimum required fields are adequately filled
+        birthDeclarationValidator.validateMinimalRequirements(bdf);
+
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
         validateBirthType(existing, BirthDeclaration.BirthType.STILL);
@@ -336,6 +347,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
         logger.debug("Attempt to edit adoption birth declaration record : {}", bdf.getIdUKey());
+
+        // validate if the minimum required fields are adequately filled
+        birthDeclarationValidator.validateMinimalRequirements(bdf);
 
         // does the user have access to the BDF being updated
         validateAccessOfUser(user, bdf);

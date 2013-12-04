@@ -6,6 +6,11 @@
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+
+</HEAD>
+<BODY onload="noBack();"
+      onpageshow="if (event.persisted) noBack();" onunload="">
+<%--back button disable--%>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <s:if test="birthType.ordinal()==0">
     <%--still birth--%>
@@ -21,6 +26,36 @@
 </s:elseif>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        if ($('#birthAtHospitaltrue').is(':checked')) {
+
+            $(".no_hospital").hide();
+            $(".yes_hospital").show();
+
+        } else if ($('#birthAtHospitalfalse').is(':checked')) {
+
+            $(".yes_hospital").hide();
+            $(".no_hospital").show();
+        }
+
+        $('input[type="radio"]').click(function() {
+            if ($(this).attr("value") == "true") {
+                $(".no_hospital").hide();
+                $(".yes_hospital").show();
+                $("#placeOfBirth").val('');
+                $("#placeOfBirthEnglish").val('');
+            }
+            if ($(this).attr("value") == "false") {
+                $(".yes_hospital").hide();
+                $(".no_hospital").show();
+                $("#placeOfBirthEnglish").val('');
+            }
+        });
+    });
+</script>
 <script>
 $(function () {
     $("#submitDatePicker").datepicker({
@@ -70,6 +105,13 @@ $(function () {
                         options3 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
                     }
                     $("select#gnDivisionId").html(options3);
+
+                    var options4 = '';
+                    var hos = data.hospitalList;
+                    for (var l = 0; l < hos.length; l++) {
+                        options4 += '<option value ="' + hos[l].optionValue + '">' + hos[l].optionDisplay + '</option>';
+                    }
+                    $("select#hospitalId").html(options4);
                 });
     });
 
@@ -93,6 +135,47 @@ $(function () {
                 });
     });
 
+    $('select#ditrictId').bind('change', function(evt4) {
+        var id = $("select#districtId").attr("value");
+        $.getJSON('/ecivil/crs/SivisionLookupService', {id:id, mode:22},
+                function (data) {
+                    var options = '';
+                    for (var i = 0; i < hospital.length; i++) {
+                        options += '<option value="' + hospital[i].optionValue + '">' + hospital[i].optionDisplay + '</option>';
+                    }
+                    $("select#hospitalId").html(options);
+                })
+    });
+
+    $('select#dsDivisionId').bind('change', function(evt3) {
+        var id = $("select#dsDivisionId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:20},
+                function(data) {
+                    var options = '';
+                    var hospital = data.hospitalList;
+                    for (var i = 0; i < hospital.length; i++) {
+                        options += '<option value="' + hospital[i].optionValue + '">' + hospital[i].optionDisplay + '</option>';
+                    }
+                    $("select#hospitalId").html(options);
+                })
+    });
+
+    //Dynamic view of hospitals according to bd division
+    /*  $('select#birthDivisionId').bind('change', function(evt3) {
+     var id = $("select#birthDivisionId").attr("value");
+     $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:21},
+     function(data){
+     var options = '';
+     var hospital = data.hospitalList;
+     for (var i =0; i< hospital.length; i++){
+     options += '<option value="' + hospital[i].optionValue + '">' + hospital[i].optionDisplay + '</option>';
+     }
+     $("select#hospitalId").html(options);
+     }
+     )
+
+     });*/
+
 
     $('img#childName').bind('click', function (evt3) {
         var text = $("textarea#childFullNameOfficialLang").attr("value");
@@ -107,18 +190,37 @@ $(function () {
     });
 
     $('img#place').bind('click', function (evt4) {
-        var text = $("input#placeOfBirth").attr("value");
 
-        $.post('/ecivil/TransliterationService', {text:text, gender:'U'},
-                function (data) {
-                    if (data != null) {
-                        var s = data.translated;
-                        $("input#placeOfBirthEnglish").val(s);
-                    }
-                });
+        if ($('#birthAtHospitaltrue').is(':checked')) {
+
+            var e = document.getElementById("hospitalId");
+            var text = e.options[e.selectedIndex].text;
+            $.post('/ecivil/TransliterationService', {text:text, gender:'U'},
+                    function(data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("input#placeOfBirthEnglish").val(s);
+                        }
+                    });
+
+        }else if($('#birthAtHospitalfalse').is(':checked')){
+
+            var text = $("input#placeOfBirth").attr("value");
+            $.post('/ecivil/TransliterationService', {text:text, gender:'U'},
+                    function (data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("input#placeOfBirthEnglish").val(s);
+                        }
+                    });
+
+        }
+
+
     });
-});
 
+
+});
 var errormsg = "";
 
 function validate() {
@@ -144,7 +246,7 @@ function validate() {
     }
 
     var out = checkActiveFieldsForSyntaxErrors('birth-registration-form-1');
-    if(out != ""){
+    if (out != "") {
         errormsg = errormsg + out;
     }
 
@@ -189,8 +291,20 @@ function commonTags() {
     }
 
     //place of birth
-    domObject = document.getElementById('placeOfBirth');
-    isEmpty(domObject, "", 'error11')
+
+    if ($('#birthAtHospitaltrue').is(':checked')) {
+        domObject = document.getElementById("hospitalId");
+        if ($("select#hospitalId").attr("value") == 0) {
+            errormsg = errormsg + "\n" + document.getElementById('error11').value;
+        }
+    }
+
+    if ($('#birthAtHospitalfalse').is(':checked')) {
+        domObject = document.getElementById("placeOfBirth");
+        isEmpty(domObject, "", 'error11');
+    }
+
+
 }
 
 //still birth tags
@@ -303,7 +417,7 @@ function dateRange() {
 function initSerialNumber() {
     var domobject = document.getElementById('bdfSerialNo');
     if (isFieldEmpty(domobject)) {
-        domobject.value = new Date().getFullYear() + "0";
+        domobject.value = new Date().getFullYear() + "1";
     }
 }
 
@@ -534,12 +648,29 @@ function maxLengthCalculate(id, max, divId) {
     </td>
 </tr>
 <tr>
+    <td colspan="3"><label>උපත සිදුවුයේ රෝහලකද? <br>பிறப்பு நிகழ்ந்தது வைத்தியசாலையிலா?<br>Did the birth occur at a
+        hospital?</label></td>
+    <td colspan="1"><label>ඔව් / ஆம் / Yes </label></td>
+    <td align="center"><s:radio name="child.birthAtHospital" id="birthAtHospital" list="#@java.util.HashMap@{'true':''}"
+                                value="true"/></td>
+    <td><label>නැත / இல்லை / No</label></td>
+    <td align="center"><s:radio name="child.birthAtHospital" id="birthAtHospital"
+                                list="#@java.util.HashMap@{'false':''}"/></td>
+</tr>
+<tr>
     <td rowspan="2">උපන් ස්ථානය<br/>பிறந்த இடம்<br/>Place of Birth</td>
     <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
     <td colspan="6">
-        <s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:95%;"
-                     maxLength="255"/>
+        <div class="no_hospital">
+            <s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:95%;"
+                         maxLength="255"/>
+        </div>
+        <div class="yes_hospital">
+            <s:select id="hospitalId" name="child.birthHospital.hospitalUKey" list="hospitalList"
+                      headerKey="0" headerValue="%{getText('select_hospital.label')}" cssStyle="float:left;  width:285px; margin:2px 5px;"/>
+        </div>
     </td>
+
 </tr>
 <tr>
     <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கில மொழியில்<br>In English</label></td>
@@ -549,15 +680,7 @@ function maxLengthCalculate(id, max, divId) {
         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;" id="place">
     </td>
 </tr>
-<tr>
-    <td colspan="3"><label>උපත සිදුවුයේ රෝහලකද? <br>பிறப்பு நிகழ்ந்தது வைத்தியசாலையிலா?<br>Did the birth occur at a
-        hospital?</label></td>
-    <td colspan="1"><label>ඔව් / ஆம் / Yes </label></td>
-    <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}"
-                                value="true"/></td>
-    <td><label>නැත / இல்லை / No</label></td>
-    <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'false':''}"/></td>
-</tr>
+
 <s:if test="birthType.ordinal() != 0">
     <tr>
         <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
@@ -665,9 +788,9 @@ function maxLengthCalculate(id, max, divId) {
 </table>
 </div>
 
-<s:hidden name="pageNo" value="1"/>
-<s:hidden name="rowNumber" value="%{row}"/>
-<s:hidden name="counter" value="%{i}"/>
+    <s:hidden name="pageNo" value="1"/>
+    <s:hidden name="rowNumber" value="%{row}"/>
+    <s:hidden name="counter" value="%{i}"/>
 
 <div class="skip-validation">
     <s:checkbox name="skipjavaScript" id="skipjs" value="false">

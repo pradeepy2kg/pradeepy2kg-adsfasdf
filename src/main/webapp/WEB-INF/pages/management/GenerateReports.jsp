@@ -97,6 +97,10 @@
             </s:form>
         </table>
 
+       <%--     <s:url id="fileDownload" action="eprViewReport.do" ></s:url>
+            <s:a href="%{fileDownload}" target="_blank"> DOWNLOAD</s:a>
+            
+               <a href="BIRTH_RAW_DATA.csv" target="_blank">download</a>--%>
     </div>
 </div>
 <s:form action="eprPopulateStatistics.do" method="post">

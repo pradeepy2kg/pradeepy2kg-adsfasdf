@@ -119,12 +119,12 @@
         </li>
         <li>
             <a id="search_adoption_records.label" href="/ecivil/adoption/eprSearchAdoptionRecord.do">
-                (5) Search Adoption Records in ta
+                (5) மகவேற்பு அறிக்கையினை தேடுதல்
             </a>
         </li>
         <li>
             <a id="search_adoption_reports.label" href="/ecivil/adoption/eprAdoptionReportGeneration.do">
-                (6) Reports Generation in ta
+                (6) அறிக்கை தயாரித்தல்
             </a>
         </li>
     </ul>
@@ -163,12 +163,12 @@
         </li>
         <li>
             <a id="adoption.registration.alterations" href="/ecivil/alteration/eprAdoptionAlterationPageLoad.do">
-                Adoption Alteration in ta
+                 மகவேற்புச் சான்றிதழினை மாற்றுதல்
             </a>
         </li>
         <li>
             <a id="adoption.manage.alterations" href="/ecivil/alteration/eprAdoptionAlterationManagement.do">
-                Manage Adoption Alteration in ta
+                மகவேற்புச் சான்றிதழில் திருத்தத்தினை முகாமை செய்தல்
             </a>
         </li>
     </ul>
@@ -303,7 +303,7 @@
 <li>
     </s:else>
     <a href="/ecivil/statistics/eprStatHome.do">
-        Statistics in Tamil
+        புள்ளிவிபரவியல்
     </a>
 </li>
 </ul>

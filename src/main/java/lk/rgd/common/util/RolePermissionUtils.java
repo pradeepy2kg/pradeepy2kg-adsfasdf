@@ -16,7 +16,7 @@ import java.util.BitSet;
  */
 public class RolePermissionUtils {
     private static final Logger logger = LoggerFactory.getLogger(RolePermissionUtils.class);
-
+    
     private static final BitSet deoBitSet;
     private static final BitSet adrBitSet;
 
@@ -25,7 +25,10 @@ public class RolePermissionUtils {
     private static final BitSet rgBitSet;
     private static final BitSet adminBitSet;
 
+    private static final BitSet statBitSet;
+
     static {
+
         // DEO
         deoBitSet = new BitSet();
         deoBitSet.set(Permission.EDIT_ADOPTION);
@@ -104,6 +107,11 @@ public class RolePermissionUtils {
         adminBitSet.set(Permission.GENERATE_REPORTS);
         adminBitSet.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
         adminBitSet.set(Permission.PRS_ADD_PERSON);
+
+        //  ROLE_STAT
+        statBitSet = new BitSet();
+        statBitSet.set(Permission.USER_PREFERENCES);
+        statBitSet.set(Permission.GENERATE_REPORTS);
     }
 
     public static void setPermissionBits(ApplicationContext ctx) {
@@ -135,6 +143,9 @@ public class RolePermissionUtils {
             adminRole.setPermBitSet(adminBitSet);
             roleDao.save(adminRole);
 
+            Role statRole = roleDao.getRole("STAT");
+            statRole.setPermBitSet(statBitSet);
+            roleDao.save(statRole); 
 
             logger.info("Initialized the database by performing permission initialization");
         } catch (Exception e) {

@@ -11,7 +11,6 @@ import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
-import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.bean.*;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
@@ -21,11 +20,8 @@ import lk.rgd.crs.web.ReportCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -61,6 +57,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     private static final String CSV_EXT = ".csv";
     private static final String NEW_LINE = "\n";
     private static final String QUOTE = "\"";
+    private FileInputStream fileInputStream;
 
     public enum DeathColumn {
         TOTAL,
@@ -2218,6 +2215,8 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             append("UGN").append(COMMA).
             append("MRACE").append(COMMA).
             append("FRACE").append(COMMA).
+            append("MDISID").append(COMMA).
+            append("MDSID").append(COMMA).
             append("MARITAL\n");
 
 
@@ -2290,6 +2289,13 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         }
                         csv.append(parent.getMotherRace().getRaceId()).append(COMMA).
                             append(parent.getFatherRace().getRaceId()).append(COMMA);
+
+                        if (parent.getMotherDSDivision() != null){
+                            csv.append(parent.getMotherDSDivision().getDistrict().getDistrictId()).append(COMMA);
+                            csv.append(parent.getMotherDSDivision().getDivisionId()).append(COMMA);
+                        }else{
+                            csv.append(",,");
+                        }
                     } else {
                         csv.append(",,,,,,,,,");
                     }
@@ -2488,7 +2494,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
      * @return String the path and name of the created CSV file.
      */
 
-    public String createReport(User user, int headerCode) {
+    public String createReport(User user, int headerCode) throws FileNotFoundException {
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
             handleException(user.getUserId() + " doesn't have permission to create the report",
                 ErrorCodes.PERMISSION_DENIED);
@@ -2813,7 +2819,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             logger.error("Error writing the CSV - {} {}", file.getPath() + file.getName(), e.getMessage());
         }
 
-        return null;
+        return filePath;
     }
 
     private float checkZero(int i) {

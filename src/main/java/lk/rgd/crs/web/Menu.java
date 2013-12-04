@@ -30,7 +30,9 @@ public class Menu {
     private static final Map<String, Map> deoLinks = new LinkedHashMap<String, Map>();
     private static final Map<String, Map> adrLinks = new LinkedHashMap<String, Map>();
     private static final Map<String, Map> argLinks = new LinkedHashMap<String, Map>();
+    private static final Map<String, Map> statLinks = new LinkedHashMap<String, Map>();
 
+    private static final Map statLink = new LinkedHashMap();
     // admin menu items
     private static final Map adminLink = new LinkedHashMap();
 
@@ -462,6 +464,11 @@ public class Menu {
         // ARG marriage links
         argMarriageLink.putAll(adrMarriageLink);
 
+        //Stat
+        statLink.put("eprInitCreateReports.do", new Link("report.title", "/ecivil/management/", "eprInitCreateReports.do", Permission.GENERATE_REPORTS));
+        statLink.put("eprCreateReports.do", new Link(null, "/ecivil/management/", "eprCreateReports.do", Permission.GENERATE_REPORTS));
+               
+
         //marriage related links ends
 
         // assemble menu for admins : insertion - order
@@ -504,6 +511,11 @@ public class Menu {
         argLinks.put(MARRIAGE_MENU, argMarriageLink);
         argLinks.put(STATISTICS_MENU, statisticsLink);
 
+        //assemble menu for stat department
+        statLinks.put(STATISTICS_MENU, statisticsLink);
+        statLinks.put(PREFERENCE_MENU,preferanceLink);
+        statLinks.put(STATISTICS_MENU, statLink);
+
     }
 
     public static Map<String, Map> getAllowedLinks(Role role) {
@@ -516,6 +528,8 @@ public class Menu {
             return argLinks;
         } else if (roleName.equals(Role.ROLE_RG)) {  //for now arg gets the same menu as ARG
             return argLinks;
+        }else if(roleName.equals(Role.ROLE_STAT)){
+            return statLinks;
         } else {  // for now dr also gets the same menu as ADR.
             return adrLinks;
         }

@@ -327,8 +327,19 @@
             <br>பிறந்த இடம்
             <br>Place of Birth</label></td>
         <td colspan="6">
-            <s:label name="child.placeOfBirth" cssStyle="font-size:10pt;"/><br>
-            <s:label name="child.placeOfBirthEnglish"/>
+            <s:if test="child.placeOfBirth != null || child.placeOfBirth.length > 0">
+                <s:label name="child.placeOfBirth" cssStyle="font-size:12pt;"/>
+            </s:if>
+            <s:else>
+                <s:if test="register.preferredLanguage == 'si'">
+                    <s:label name="child.birthHospital.hospitalNameSi" cssStyle="font-size:12pt;"/>
+                </s:if>
+                <s:elseif test="register.preferredLanguage == 'ta'">
+                    <s:label name="child.birthHospital.hospitalNameTa" cssStyle="font-size:12pt;"/>
+                </s:elseif>
+
+            </s:else>
+           <%-- <s:label name="child.placeOfBirthEnglish"/>--%>
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
@@ -358,6 +369,7 @@
     </tbody>
 </table>
 <br/>
+
 <div style="page-break-after:always;"></div>
 <br/>
 <br/>
@@ -449,7 +461,7 @@
         <td class="cell_001">14</td>
         <td width="200px"><p></p><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන්
             (සිංහල / දෙමළ)
-            <br>பிள்ளையின்  பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
+            <br>பிள்ளையின் பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
             <br>Child's name in the official languages (Sinhala / Tamil)</label>
 
             <p></p></td>
@@ -490,7 +502,7 @@
         <td class="cell_001">15</td>
         <td width="200px"><p></p>
             <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්
-                <br>பிள்ளையின்  பெயர் ஆங்கில மொழியில்
+                <br>பிள்ளையின் பெயர் ஆங்கில மொழியில்
                 <br>Child's name in English
             </label>
 
@@ -532,8 +544,9 @@
     <tr>
         <td class="cell_001">16</td>
         <td width="200px"><p></p><label>පියාගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
-            <br>தந்தையின் முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
+            <br>தந்தையின் முழுப் பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
             <br>Father's Full Name in any of the official languages (Sinhala / Tamil)</label>
+
             <p></p>
         </td>
         <td><s:label name="parent.fatherFullName" cssStyle="font-size:12pt;"/></td>
@@ -562,6 +575,7 @@
     </tbody>
 </table>
 <br/>
+
 <div style="page-break-after:always;"></div>
 <br/>
 
@@ -628,8 +642,9 @@
     <tr>
         <td class="cell_001">18</td>
         <td width="200px"><p></p><label>මවගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
-            <br>தாயின் முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
+            <br>தாயின் முழுப் பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
             <br>Mother's Full Name in any of the official languages (Sinhala / Tamil)</label>
+
             <p></p>
         </td>
         <td><s:label name="parent.motherFullName" cssStyle="font-size:12pt;"/></td>
@@ -639,6 +654,7 @@
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
             <br>பெயர் மாற்றப்பட வேண்டிய விதம்
             <br>Corrected name</label>
+
             <p></p></td>
         <td>&nbsp;</td>
     </tr>
@@ -669,6 +685,7 @@
         <td width="200px"><p></p><label>මවගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
             <br>தாயின் முழுப் பெயர் ஆங்கில மொழியில் (பெரிய எழுத்துக்களில்)
             <br>Mother's Full Name in English (in block letters)</label>
+
             <p></p>
         </td>
         <td><s:label name="parent.motherFullNameInEnglish" cssStyle="font-size:12pt;"/></td>
@@ -678,6 +695,7 @@
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
             <br>பெயர் மாற்றப்பட வேண்டிய விதம்
             <br>Corrected name</label>
+
             <p></p></td>
         <td>&nbsp;</td>
     </tr>
@@ -696,6 +714,7 @@
     </tbody>
 </table>
 <br/>
+
 <div style="page-break-after:always;"></div>
 <br/>
 
@@ -707,10 +726,12 @@
         <tr>
             <td colspan="3" style="text-align:center;font-size:12pt">
                 <p></p><label>
-                    උපත තහවුරු කරන්නාගේ විස්තර
-                    <br>பிறப்பினை உறுதிப்படுத்துபவரின் விபரம்
-                    <br>Person confirming the birth details
-                </label><p></p>
+                උපත තහවුරු කරන්නාගේ විස්තර
+                <br>பிறப்பினை உறுதிப்படுத்துபவரின் விபரம்
+                <br>Person confirming the birth details
+            </label>
+
+                <p></p>
             </td>
         </tr>
         </tbody>
@@ -750,6 +771,7 @@
                     <br>அடையாள எண்
                     <br>Identification number
                 </label>
+
                 <p></p>
             </td>
             <td colspan="7" width="350px">&nbsp;</td>
@@ -837,6 +859,7 @@
                 மாவட்டப் பதிவாளர்)
                 /Above information has been entered into the Civil Registration System.
             </label>
+
             <p></p>
         </td>
         <td><label>දිනය<br>திகதி<br>Date</label>
@@ -868,13 +891,15 @@
         <td rowspan="7" width="10%" height="300px"></td>
         <td colspan="3" width="80%" height="100px"
             style="text-align:center;margin-left:auto;margin-right:auto;font-size:22pt">
-            <label>රාජ්‍ය සේවය පිණිසයි   &nbsp;&nbsp;அரச பணி   &nbsp;&nbsp;ON STATE SERVICE</label><br/>
-            <label style="font-size:11pt;">රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව  &nbsp;&nbsp;பதிவாளர் நாயகம் திணைக்களம்
+            <label>රාජ්‍ය සේවය පිණිසයි &nbsp;&nbsp;அரச பணி &nbsp;&nbsp;ON STATE SERVICE</label><br/>
+            <label style="font-size:11pt;">රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව &nbsp;&nbsp;பதிவாளர் நாயகம் திணைக்களம்
                 &nbsp;&nbsp;REGISTRAR GENERAL'S DEPARTMENT</label>
         </td>
         <td rowspan="7" width="10%"></td>
     </tr>
-    <tr><td colspan="5" height="20px;"></td></tr>
+    <tr>
+        <td colspan="5" height="20px;"></td>
+    </tr>
     <tr>
         <td></td>
         <td width="10%">&nbsp;</td>
@@ -886,7 +911,7 @@
     <tr>
         <td height="50px" width="30%">
             <s:textarea id="retAddress" value="%{returnAddress}" disabled="true" rows="4"
-                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:14pt;background:transparent;border:none;" />
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:14pt;background:transparent;border:none;"/>
         </td>
         <td width="10%">&nbsp;</td>
         <td width="30%"></td>

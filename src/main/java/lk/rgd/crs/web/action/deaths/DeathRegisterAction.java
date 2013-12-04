@@ -69,6 +69,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private final CommonUtil commonUtil;
     private final GNDivisionDAO gnDivisionDAO;
     private final AssignmentDAO assignmentDAO;
+    private final HospitalDAO hospitalDAO;
 
     private BitSet changedFields;
 
@@ -142,11 +143,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private boolean directPrint;
     private boolean addNewMode;
     private boolean certificateSearch;
+    private Map<Integer, String> hospitalList;
+    private int hospitalId;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
         CountryDAO countryDAO, DeathRegistrationService deathRegistrationService, AppParametersDAO appParametersDAO,
         RaceDAO raceDAO, DeathAlterationService deathAlterationService, UserLocationDAO userLocationDAO, UserDAO userDAO,
-        LocationDAO locationDAO, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO, AssignmentDAO assignmentDAO) {
+        LocationDAO locationDAO, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO, AssignmentDAO assignmentDAO, HospitalDAO hospitalDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -161,6 +164,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.commonUtil = commonUtil;
         this.gnDivisionDAO = gnDivisionDAO;
         this.assignmentDAO = assignmentDAO;
+        this.hospitalDAO = hospitalDAO;
     }
 
 
@@ -933,6 +937,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         districtList = districtDAO.getDistrictNames(language, user);
         setCountryList(countryDAO.getCountries(language));
         setRaceList(raceDAO.getRaces(language));
+        deathDistrictId = commonUtil.findDefaultListValue(districtList, deathDistrictId);
+       // deathDivisionId = commonUtil.findDivisionList(dsDivisionList, deathDivisionId, deathDistrictId, AppConstants.DS_DIVISION, user, language);
+        deathDivisionId = 1;
+        hospitalList =  hospitalDAO.getHospitalsbyDSDivision(language, deathDivisionId, user);
     }
 
     private void populateDynamicLists(String language) {
@@ -957,6 +965,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         int allDistrictUKey = deathPersonPermenentAddressDistrictId != 0 ? deathPersonPermenentAddressDistrictId :
             allDistrictList.keySet().iterator().next();
         allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(allDistrictUKey, language, user);
+
         try {
             int dsDivisionUKey = deathPersonPermenentAddressDSDivisionId != 0 ? deathPersonPermenentAddressDSDivisionId :
                 allDSDivisionList.keySet().iterator().next();
@@ -1741,5 +1750,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setSearchResultList(List searchResultList) {
         this.searchResultList = searchResultList;
+    }
+
+    public Map<Integer, String> getHospitalList() {
+        return hospitalList;
+    }
+
+    public void setHospitalList(Map<Integer, String> hospitalList) {
+        this.hospitalList = hospitalList;
     }
 }

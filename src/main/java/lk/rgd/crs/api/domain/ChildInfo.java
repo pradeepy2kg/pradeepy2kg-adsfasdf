@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.Hospital;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.WebUtils;
 
@@ -32,6 +33,10 @@ public class ChildInfo implements Serializable, Cloneable {
      */
     @Column(nullable = true, length = 255)
     private String placeOfBirth;
+
+    @ManyToOne
+    @JoinColumn(name = "hospitalUKey", nullable = true)
+    private Hospital birthHospital;
 
     /**
      * The place of birth in English - usually the village or hospital name
@@ -226,6 +231,14 @@ public class ChildInfo implements Serializable, Cloneable {
 
     public void setPlaceOfBirthEnglish(String placeOfBirthEnglish) {
         this.placeOfBirthEnglish = WebUtils.filterBlanksAndToUpperAndTrim(placeOfBirthEnglish, 255, "placeOfBirthEnglish");
+    }
+
+    public Hospital getBirthHospital() {
+        return birthHospital;
+    }
+
+    public void setBirthHospital(Hospital birthHospital) {
+        this.birthHospital = birthHospital;
     }
 
     @Override
