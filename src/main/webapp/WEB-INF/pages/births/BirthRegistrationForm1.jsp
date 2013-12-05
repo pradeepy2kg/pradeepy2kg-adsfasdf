@@ -132,22 +132,18 @@ $(function () {
                         options4 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
                     }
                     $("select#gnDivisionId").html(options4);
-                });
-    });
 
-    $('select#ditrictId').bind('change', function(evt4) {
-        var id = $("select#districtId").attr("value");
-        $.getJSON('/ecivil/crs/SivisionLookupService', {id:id, mode:22},
-                function (data) {
-                    var options = '';
-                    for (var i = 0; i < hospital.length; i++) {
-                        options += '<option value="' + hospital[i].optionValue + '">' + hospital[i].optionDisplay + '</option>';
+                    var options2 = '';
+                    var hospital = data.hospitalList;
+                    for (var j = 0; j < hospital.length; j++) {
+                        options2 += '<option value="' + hospital[j].optionValue + '">' + hospital[j].optionDisplay + '</option>';
                     }
-                    $("select#hospitalId").html(options);
-                })
-    });
+                    $("select#hospitalId").html(options2);
 
-    $('select#dsDivisionId').bind('change', function(evt3) {
+                });
+    });   
+
+   /* $('select#dsDivisionId').bind('change', function(evt3) {
         var id = $("select#dsDivisionId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:20},
                 function(data) {
@@ -158,7 +154,7 @@ $(function () {
                     }
                     $("select#hospitalId").html(options);
                 })
-    });
+    });*/
 
     //Dynamic view of hospitals according to bd division
     /*  $('select#birthDivisionId').bind('change', function(evt3) {

@@ -91,6 +91,9 @@ public class JSONDivisionLookupService extends HttpServlet {
                 // passing dsDivisionId, return the BD list
                 optionLists.put("bdDivisionList", getBDDivisions(lang, divisionId, user));
                 optionLists.put("gnDivisionList", getGNDivisions(lang, divisionId, user));
+                List hospitals = getHospitalsbyDSDivision(lang, divisionId,user);
+                optionLists.put("hospitalList", hospitals);
+
             } else if ("3".equals(mode)) {
                 // passing districtId, return all DSDivision list.
                 optionLists.put("dsDivisionList", getAllDSDivisions(lang, divisionId, user));
@@ -209,6 +212,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("hospitalList", hospitals);*/
             }else if("22".equals(mode)){
                 List hospitals = getHospitalsbyDistrict(lang, divisionId,user);
+                logger.debug("death- - - - -- - ---------------- - - -divisionId : {}, kkk    {}", divisionId,hospitals);
                 optionLists.put("hospitalList", hospitals);
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
