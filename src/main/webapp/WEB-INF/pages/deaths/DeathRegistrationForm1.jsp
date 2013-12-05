@@ -3,7 +3,23 @@
 <%-- @author Duminda Dharmakeerthi --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%--<script type="text/javascript">
+    $(document).ready(function() {
+        $(".no_hospital").show();
+        $(".yes_hospital").hide();
 
+        $('input[type="radio"]').click(function() {
+            if ($(this).attr("value") == "true") {
+                $(".no_hospital").hide();
+                $(".yes_hospital").show();
+            }
+            if ($(this).attr("value") == "false") {
+                $(".yes_hospital").hide();
+                $(".no_hospital").show();
+            }
+        });
+    });
+</script>--%>
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
@@ -103,6 +119,31 @@ $(function () {
 
                 });
     });
+/*    $('select#deathDistrictId').bind('change', function(evt2){
+        var id = $("select#deathDistrictId").attr("value");
+        $.getJSON('ecivil/crs/DivisionLookupService', {id:id, mode:22},
+                function(data){
+                    var options = '';
+                    var hos = data.hospitalList;
+                    for (var l = 0; l < hos.length; l++) {
+                        options4 += '<option value ="' + hos[l].optionValue + '">' + hos[l].optionDisplay + '</option>';
+                    }
+                    $("select#hospitalId").html(options4);
+                });
+    });
+
+      $('select#deathDsDivisionId').bind('change', function(evt2){
+        var id = $("select#deathDsDivisionId").attr("value");
+        $.getJSON('ecivil/crs/DivisionLookupService', {id:id, mode:20},
+                function(data){
+                    var options = '';
+                    var hos = data.hospitalList;
+                    for (var l = 0; l < hos.length; l++) {
+                        options4 += '<option value ="' + hos[l].optionValue + '">' + hos[l].optionDisplay + '</option>';
+                    }
+                    $("select#hospitalId").html(options4);
+                }); 
+    });*/
 
     $('select#deathPersonPermenentAddressDistrictId').bind('change', function (evt1) {
         var id = $("select#deathPersonPermenentAddressDistrictId").attr("value");
@@ -663,40 +704,7 @@ function maxLengthCalculate(id, max, divId) {
     </td>
     <td colspan="5"><s:select id="deathDivisionId" name="deathDivisionId" list="bdDivisionList"
                               cssStyle="float:left;"/></td>
-</tr>
-<tr>
-    <td rowspan="2" colspan="1">
-        ස්ථානය
-        <br>இடம்
-        <br>Place
-    </td>
-    <td colspan="2">
-        සිංහල හෝ දෙමළ භාෂාවෙන්
-        <br>சிங்களம்அல்லது தமிழ் மொழியில்
-        <br>In Sinhala or Tamil
-    </td>
-    <td colspan="5">
-        <s:textarea name="death.placeOfDeath" id="placeOfDeath" onchange="checkSyntax('placeOfDeath')" cssStyle="width:555px;"
-                    onblur="maxLengthCalculate('placeOfDeath','255','placeOfDeath_div');"/>
-        <div id="placeOfDeath_div" style="color:red;font-size:8pt"></div>
-    </td>
-</tr>
-<tr>
-    <td colspan="2">
-        ඉංග්‍රීසි භාෂාවෙන්
-        <br>ஆங்கில மொழியில்
-        <br>In English
-    </td>
-    <td colspan="5">
-
-        <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"
-                     maxLength="240"/>
-
-        <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
-             id="place">
-    </td>
-</tr>
-<tr>
+</tr>   <tr>
     <td colspan="4">
         මරණය සිදුවුයේ රෝහලක් තුලදී ද?
         <br>மரணம் வைத்தியசாலையில் இடம்பெற்றதா?
@@ -717,6 +725,49 @@ function maxLengthCalculate(id, max, divId) {
     <td colspan="1" align="center">
         <s:radio name="death.deathOccurAtaHospital"
                  list="#@java.util.HashMap@{'false':''}"/>
+    </td>
+</tr>
+<tr>
+    <td rowspan="2" colspan="1">
+        ස්ථානය
+        <br>இடம்
+        <br>Place
+    </td>
+    <td colspan="2">
+        සිංහල හෝ දෙමළ භාෂාවෙන්
+        <br>சிங்களம்அல்லது தமிழ் மொழியில்
+        <br>In Sinhala or Tamil
+    </td>
+    <td colspan="5">
+        <s:textarea name="death.placeOfDeath" id="placeOfDeath" onchange="checkSyntax('placeOfDeath')" cssStyle="width:555px;"
+                    onblur="maxLengthCalculate('placeOfDeath','255','placeOfDeath_div');"/>
+
+<%--
+         <div class="no_hospital">
+            <s:textarea name="death.placeOfDeath" id="placeOfDeath" onchange="checkSyntax('placeOfDeath')" cssStyle="width:555px;"
+                    onblur="maxLengthCalculate('placeOfDeath','255','placeOfDeath_div');"/>
+        </div>
+        <div class="yes_hospital">
+            <s:select id="hospitalId" name="hospitalId" value="%{hospitalId}" list="hospitalList"
+                      cssStyle="float:left;  width:285px; margin:2px 5px;"/>
+        </div>--%>
+        
+        <div id="placeOfDeath_div" style="color:red;font-size:8pt"></div>
+    </td>
+</tr>
+<tr>
+    <td colspan="2">
+        ඉංග්‍රීසි භාෂාවෙන්
+        <br>ஆங்கில மொழியில்
+        <br>In English
+    </td>
+    <td colspan="5">
+
+        <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"
+                     maxLength="240"/>
+
+        <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
+             id="place">
     </td>
 </tr>
 <tr>
