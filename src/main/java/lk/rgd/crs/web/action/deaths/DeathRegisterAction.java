@@ -896,6 +896,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 deathPersonRace = deathPerson.getDeathPersonRace().getRaceId();
             }
         }
+        //pupulate Hospital
+        hospitalList =  hospitalDAO.getHospitalsbyDSDivision(language, dsDivisionId, user);
+
     }
 
     private void beanPopulate(DeathRegister ddf) {
@@ -939,8 +942,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         setRaceList(raceDAO.getRaces(language));
         deathDistrictId = commonUtil.findDefaultListValue(districtList, deathDistrictId);
        // deathDivisionId = commonUtil.findDivisionList(dsDivisionList, deathDivisionId, deathDistrictId, AppConstants.DS_DIVISION, user, language);
-        deathDivisionId = 1;
-        hospitalList =  hospitalDAO.getHospitalsbyDSDivision(language, deathDivisionId, user);
+        //deathDivisionId = commonUtil.findDivisionList(dsDivisionList, dsDivisionId, deathDistrictId, AppConstants.DS_DIVISION, user, language);
+
+        //deathDivisionId = 1;
+        //hospitalList =  hospitalDAO.getHospitalsbyDSDivision(language, deathDivisionId, user);
+
     }
 
     private void populateDynamicLists(String language) {
@@ -969,7 +975,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         try {
             int dsDivisionUKey = deathPersonPermenentAddressDSDivisionId != 0 ? deathPersonPermenentAddressDSDivisionId :
                 allDSDivisionList.keySet().iterator().next();
-            gnDivisionList = gnDivisionDAO.getGNDivisionNames(dsDivisionUKey, language, user);
+            gnDivisionList = gnDivisionDAO.getGNDivisionNames(dsDivisionUKey, language, user);          
+
+
         } catch (RGDRuntimeException e) {
             gnDivisionList = Collections.emptyMap();
         }
