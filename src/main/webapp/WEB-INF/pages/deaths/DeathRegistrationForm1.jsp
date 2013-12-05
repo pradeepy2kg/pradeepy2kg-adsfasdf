@@ -3,23 +3,33 @@
 <%-- @author Duminda Dharmakeerthi --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%--<script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function() {
-        $(".no_hospital").show();
-        $(".yes_hospital").hide();
+
+        if ($('#deathOccurAthospitaltrue').is(':checked')) {
+            $(".no_hospital").hide();
+            $(".yes_hospital").show();
+
+        } else if ($('#deathOccurAthospitalfalse').is(':checked')) {
+            $(".yes_hospital").hide();
+            $(".no_hospital").show();
+        }
 
         $('input[type="radio"]').click(function() {
             if ($(this).attr("value") == "true") {
                 $(".no_hospital").hide();
                 $(".yes_hospital").show();
+                $("#placeOfDeath").val('');
+                $("#placeOfDeathInEnglish").val('');
             }
             if ($(this).attr("value") == "false") {
                 $(".yes_hospital").hide();
                 $(".no_hospital").show();
+                $("#placeOfDeathInEnglish").val('');
             }
         });
     });
-</script>--%>
+</script>
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
@@ -42,18 +52,18 @@
 </s:elseif>
 <s:hidden id="pageType" value="%{pageType}"/>
 <script type="text/javascript">
-   $(function(){
-       $('#clearWomanInfo').val($('#clear').val());
-       $('#clearWomanInfo').bind('click',function(){
-           $('#pregnantAtTimeOfDeathYestrue').attr('checked', false);
-           $('#pregnantAtTimeOfDeathNofalse').attr('checked', false);
-           $('#givenABirthWithInPreviouse6WeeksYestrue').attr('checked', false);
-           $('#givenABirthWithInPreviouse6WeeksNofalse').attr('checked', false);
-           $('#anAbortionTakenPlaceYestrue').attr('checked', false);
-           $('#anAbortionTakenPlaceNofalse').attr('checked', false);
-           $('#days_before_abortion_or_birth').val('');
-       });
-   });
+$(function() {
+    $('#clearWomanInfo').val($('#clear').val());
+    $('#clearWomanInfo').bind('click', function() {
+        $('#pregnantAtTimeOfDeathYestrue').attr('checked', false);
+        $('#pregnantAtTimeOfDeathNofalse').attr('checked', false);
+        $('#givenABirthWithInPreviouse6WeeksYestrue').attr('checked', false);
+        $('#givenABirthWithInPreviouse6WeeksNofalse').attr('checked', false);
+        $('#anAbortionTakenPlaceYestrue').attr('checked', false);
+        $('#anAbortionTakenPlaceNofalse').attr('checked', false);
+        $('#days_before_abortion_or_birth').val('');
+    });
+});
 
 $(function () {
     $("#timePicker").cantipi({size:140, roundto:5});
@@ -117,33 +127,30 @@ $(function () {
                     }
                     $("select#gnDivisionId").html(options3);
 
-                });
-    });
-/*    $('select#deathDistrictId').bind('change', function(evt2){
-        var id = $("select#deathDistrictId").attr("value");
-        $.getJSON('ecivil/crs/DivisionLookupService', {id:id, mode:22},
-                function(data){
-                    var options = '';
+                    var options4 = '';
                     var hos = data.hospitalList;
                     for (var l = 0; l < hos.length; l++) {
                         options4 += '<option value ="' + hos[l].optionValue + '">' + hos[l].optionDisplay + '</option>';
                     }
                     $("select#hospitalId").html(options4);
+
+
                 });
     });
 
-      $('select#deathDsDivisionId').bind('change', function(evt2){
-        var id = $("select#deathDsDivisionId").attr("value");
-        $.getJSON('ecivil/crs/DivisionLookupService', {id:id, mode:20},
-                function(data){
-                    var options = '';
-                    var hos = data.hospitalList;
-                    for (var l = 0; l < hos.length; l++) {
-                        options4 += '<option value ="' + hos[l].optionValue + '">' + hos[l].optionDisplay + '</option>';
-                    }
-                    $("select#hospitalId").html(options4);
-                }); 
-    });*/
+
+    /* $('select#deathDsDivisionId').bind('change', function(evt3) {
+     var id = $("select#dsDivisionId").attr("value");
+     $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:20},
+     function(data) {
+     var options = '';
+     var hospital = data.hospitalList;
+     for (var i = 0; i < hospital.length; i++) {
+     options += '<option value="' + hospital[i].optionValue + '">' + hospital[i].optionDisplay + '</option>';
+     }
+     $("select#hospitalId").html(options);
+     })
+     });*/
 
     $('select#deathPersonPermenentAddressDistrictId').bind('change', function (evt1) {
         var id = $("select#deathPersonPermenentAddressDistrictId").attr("value");
@@ -181,6 +188,15 @@ $(function () {
                         options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                     }
                     $("select#deathDivisionId").html(options);
+
+                    var options2 = '';
+                    var hospital = data.hospitalList;
+                    for (var j = 0; j < hospital.length; j++) {
+                        options2 += '<option value="' + hospital[j].optionValue + '">' + hospital[j].optionDisplay + '</option>';
+                    }
+                    $("select#hospitalId").html(options2);
+
+
                 });
     });
 
@@ -312,10 +328,10 @@ function validate() {
     if (!isFieldEmpty(domObject))
         validatePINorNIC(domObject, 'p1error1', 'p1errorPIN3');
 
-    domObject = document.getElementById('placeOfDeath');
-    if (isFieldEmpty(domObject)) {
-        errormsg = errormsg + "\n" + document.getElementById('error3').value;
-    }
+    /*domObject = document.getElementById('placeOfDeath');
+     if (isFieldEmpty(domObject)) {
+     errormsg = errormsg + "\n" + document.getElementById('error3').value;
+     }*/
     domObject = document.getElementById('placeOfBurial');
     if (isFieldEmpty(domObject)) {
         errormsg = errormsg + "\n" + document.getElementById('error4').value;
@@ -377,7 +393,7 @@ function validate() {
     //  otherValidations();
 
     var out = checkActiveFieldsForSyntaxErrors('death-registration-form-1');
-    if(out != ""){
+    if (out != "") {
         errormsg = errormsg + out;
     }
 
@@ -414,15 +430,40 @@ function otherValidations() {
 
 $(function () {
     $('img#place').bind('click', function (evt6) {
-        var text = $("textarea#placeOfDeath").attr("value");
+        /*    var text = $("textarea#placeOfDeath").attr("value");
 
-        $.post('/ecivil/TransliterationService', {text:text, gender:'U'},
-                function (data) {
-                    if (data != null) {
-                        var s = data.translated;
-                        $("input#placeOfDeathInEnglish").val(s);
-                    }
-                });
+         $.post('/ecivil/TransliterationService', {text:text, gender:'U'},
+         function (data) {
+         if (data != null) {
+         var s = data.translated;
+         $("input#placeOfDeathInEnglish").val(s);
+         }
+         });*/
+
+
+        if ($('#deathOccurAthospitaltrue').is(':checked')) {
+            var e = document.getElementById("hospitalId");
+            var text = e.options[e.selectedIndex].text;
+            $.post('/ecivil/TransliterationService', {text:text, gender:'U'},
+                    function(data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("input#placeOfDeathInEnglish").val(s);
+                            $("textarea#placeOfDeath").val(text);     // to do edit
+                        }
+                    });
+
+        } else if ($('#deathOccurAthospitalfalse').is(':checked')) {
+            var text = $("textarea#placeOfDeath").attr("value");
+            $.post('/ecivil/TransliterationService', {text:text, gender:'U'},
+                    function (data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("input#placeOfDeathInEnglish").val(s);
+                        }
+                    });
+
+        }
     });
 
     $('img#deathName').bind('click', function (evt7) {
@@ -606,7 +647,8 @@ function maxLengthCalculate(id, max, divId) {
                 <br>Reason for the late registration of the death
             </td>
             <td>
-                <s:textarea name="death.reasonForLateRegistration" id="resonForLateRegistration" onchange="checkSyntax('resonForLateRegistration')" cssStyle="width:880px;"
+                <s:textarea name="death.reasonForLateRegistration" id="resonForLateRegistration"
+                            onchange="checkSyntax('resonForLateRegistration')" cssStyle="width:880px;"
                             onblur="maxLengthCalculate('resonForLateRegistration','255','resonForLateRegistration_div');"/>
                 <div id="resonForLateRegistration_div" style="color:red;font-size:8pt"></div>
 
@@ -704,7 +746,8 @@ function maxLengthCalculate(id, max, divId) {
     </td>
     <td colspan="5"><s:select id="deathDivisionId" name="deathDivisionId" list="bdDivisionList"
                               cssStyle="float:left;"/></td>
-</tr>   <tr>
+</tr>
+<tr>
     <td colspan="4">
         මරණය සිදුවුයේ රෝහලක් තුලදී ද?
         <br>மரணம் வைத்தியசாலையில் இடம்பெற்றதா?
@@ -715,7 +758,7 @@ function maxLengthCalculate(id, max, divId) {
         <br>Yes
     </td>
     <td colspan="1" align="center">
-        <s:radio name="death.deathOccurAtaHospital"
+        <s:radio name="death.deathOccurAtaHospital" id="deathOccurAthospital"
                  list="#@java.util.HashMap@{'true':''}"/>
     </td>
     <td colspan="1">
@@ -723,7 +766,7 @@ function maxLengthCalculate(id, max, divId) {
         இல்லை <br> No
     </td>
     <td colspan="1" align="center">
-        <s:radio name="death.deathOccurAtaHospital"
+        <s:radio name="death.deathOccurAtaHospital" id="deathOccurAthospital"
                  list="#@java.util.HashMap@{'false':''}"/>
     </td>
 </tr>
@@ -739,19 +782,21 @@ function maxLengthCalculate(id, max, divId) {
         <br>In Sinhala or Tamil
     </td>
     <td colspan="5">
-        <s:textarea name="death.placeOfDeath" id="placeOfDeath" onchange="checkSyntax('placeOfDeath')" cssStyle="width:555px;"
-                    onblur="maxLengthCalculate('placeOfDeath','255','placeOfDeath_div');"/>
+            <%--   <s:textarea name="death.placeOfDeath" id="placeOfDeath" onchange="checkSyntax('placeOfDeath')" cssStyle="width:555px;"
+            onblur="maxLengthCalculate('placeOfDeath','255','placeOfDeath_div');"/>--%>
 
-<%--
-         <div class="no_hospital">
-            <s:textarea name="death.placeOfDeath" id="placeOfDeath" onchange="checkSyntax('placeOfDeath')" cssStyle="width:555px;"
-                    onblur="maxLengthCalculate('placeOfDeath','255','placeOfDeath_div');"/>
+
+        <div class="no_hospital">
+            <s:textarea name="death.placeOfDeath" id="placeOfDeath" onchange="checkSyntax('placeOfDeath')"
+                        cssStyle="width:555px;"
+                        onblur="maxLengthCalculate('placeOfDeath','255','placeOfDeath_div');"/>
         </div>
         <div class="yes_hospital">
-            <s:select id="hospitalId" name="hospitalId" value="%{hospitalId}" list="hospitalList"
+            <s:select id="hospitalId" name="death.deathHospital.hospitalUKey" list="hospitalList"
+                      headerKey="0" headerValue="%{getText('select_hospital.label')}"
                       cssStyle="float:left;  width:285px; margin:2px 5px;"/>
-        </div>--%>
-        
+        </div>
+
         <div id="placeOfDeath_div" style="color:red;font-size:8pt"></div>
     </td>
 </tr>
@@ -801,7 +846,8 @@ function maxLengthCalculate(id, max, divId) {
         <br>Cause of death
     </td>
     <td colspan="4">
-        <s:textarea name="death.causeOfDeath" id="causeOfDeath" onchange="checkSyntax('causeOfDeath')" cssStyle="width:420px;"
+        <s:textarea name="death.causeOfDeath" id="causeOfDeath" onchange="checkSyntax('causeOfDeath')"
+                    cssStyle="width:420px;"
                     onblur="maxLengthCalculate('causeOfDeath','600','causeOfDeath_div');" rows="6"/>
         <div id="causeOfDeath_div" style="color:red;font-size:8pt"></div>
     </td>
@@ -819,7 +865,8 @@ function maxLengthCalculate(id, max, divId) {
         <br>Place of burial or cremation
     </td>
     <td colspan="8">
-        <s:textarea name="death.placeOfBurial" id="placeOfBurial" onchange="checkSyntax('placeOfBurial')" cssStyle="width:880px;"
+        <s:textarea name="death.placeOfBurial" id="placeOfBurial" onchange="checkSyntax('placeOfBurial')"
+                    cssStyle="width:880px;"
                     onblur="maxLengthCalculate('placeOfBurial','255','placeOfBurial_div');"/>
         <div id="placeOfBurial_div" style="color:red;font-size:8pt"></div>
     </td>
@@ -997,7 +1044,8 @@ function maxLengthCalculate(id, max, divId) {
     </td>
     <td colspan="10">
 
-        <s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang" onchange="checkSyntax('deathPersonNameOfficialLang')"
+        <s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang"
+                    onchange="checkSyntax('deathPersonNameOfficialLang')"
                     onblur="maxLengthCalculate('deathPersonNameOfficialLang','600','deathPersonNameOfficialLang_div');"
                     cssStyle="width:99%"/>
         <div id="deathPersonNameOfficialLang_div" style="color:red;font-size:8pt"></div>
@@ -1025,7 +1073,8 @@ function maxLengthCalculate(id, max, divId) {
         <br>Permanent Address
     </td>
     <td colspan="10">
-        <s:textarea name="deathPerson.deathPersonPermanentAddress" id="deathPersonPermanentAddress" onchange="checkSyntax('deathPersonPermanentAddress')"
+        <s:textarea name="deathPerson.deathPersonPermanentAddress" id="deathPersonPermanentAddress"
+                    onchange="checkSyntax('deathPersonPermanentAddress')"
                     cssStyle="width:99%;"
                     onblur="maxLengthCalculate('deathPersonPermanentAddress','255','deathPersonPermanentAddress_div');"/>
         <div id="deathPersonPermanentAddress_div" style="color:red;font-size:8pt"></div>
@@ -1085,7 +1134,8 @@ function maxLengthCalculate(id, max, divId) {
         <td colspan="10">
                 <%--<s:textarea name="deathPerson.lastAddressOfMissingPerson" id="lastAddressOfMissingPerson"
                 cssStyle="width:98%;"/>--%>
-            <s:textarea name="deathPerson.lastAddressOfMissingPerson" id="lastAddressOfMissingPerson" onchange="checkSyntax('lastAddressOfMissingPerson')"
+            <s:textarea name="deathPerson.lastAddressOfMissingPerson" id="lastAddressOfMissingPerson"
+                        onchange="checkSyntax('lastAddressOfMissingPerson')"
                         cssStyle="width:99%;"
                         onblur="maxLengthCalculate('lastAddressOfMissingPerson','255','lastAddressOfMissingPerson_div');"/>
             <div id="lastAddressOfMissingPerson_div" style="color:red;font-size:8pt"></div>
@@ -1157,7 +1207,8 @@ function maxLengthCalculate(id, max, divId) {
     </td>
     <td colspan="10">
 
-        <s:textarea name="deathPerson.deathPersonFatherFullName" id="deathPersonFatherFullName" onchange="checkSyntax('deathPersonFatherFullName')"
+        <s:textarea name="deathPerson.deathPersonFatherFullName" id="deathPersonFatherFullName"
+                    onchange="checkSyntax('deathPersonFatherFullName')"
                     cssStyle="width:99%;"
                     onblur="maxLengthCalculate('deathPersonFatherFullName','255','deathPersonFatherFullName_div');"/>
         <div id="deathPersonFatherFullName_div" style="color:red;font-size:8pt"></div>
@@ -1188,7 +1239,8 @@ function maxLengthCalculate(id, max, divId) {
     </td>
     <td colspan="10">
 
-        <s:textarea name="deathPerson.deathPersonMotherFullName" id="deathPersonMotherFullName" onchange="checkSyntax('deathPersonMotherFullName')"
+        <s:textarea name="deathPerson.deathPersonMotherFullName" id="deathPersonMotherFullName"
+                    onchange="checkSyntax('deathPersonMotherFullName')"
                     cssStyle="width:99%;"
                     onblur="maxLengthCalculate('deathPersonMotherFullName','255','deathPersonMotherFullName_div');"/>
         <div id="deathPersonMotherFullName_div" style="color:red;font-size:8pt"></div>

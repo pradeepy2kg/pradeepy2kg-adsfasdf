@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.Hospital;
 import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class DeathInfo implements Serializable, Cloneable {
     @Column(nullable = false)
     private long deathSerialNo;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = true, length = 255)
     private String placeOfDeath;
 
     @Column(nullable = false)
@@ -32,6 +33,10 @@ public class DeathInfo implements Serializable, Cloneable {
 
     @Column(nullable = true)
     private String placeOfIssue;
+
+    @ManyToOne
+    @JoinColumn(name = "hospitalUKey", nullable = true)
+    private Hospital deathHospital;
 
     @Column(nullable = true)
     private String timeOfDeath;
@@ -210,6 +215,14 @@ public class DeathInfo implements Serializable, Cloneable {
 
     public void setDeathOccurAtaHospital(boolean deathOccurAtaHospital) {
         this.deathOccurAtaHospital = deathOccurAtaHospital;
+    }
+
+    public Hospital getDeathHospital() {
+        return deathHospital;
+    }
+
+    public void setDeathHospital(Hospital deathHospital) {
+        this.deathHospital = deathHospital;
     }
 
     @Override

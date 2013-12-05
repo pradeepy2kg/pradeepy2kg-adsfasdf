@@ -28,3 +28,12 @@ USE CRS;
 
 ALTER TABLE BIRTH_REGISTER ADD COLUMN `hospitalUKey` int(11);
 ALTER TABLE BIRTH_REGISTER ADD CONSTRAINT `FK_BirthRegister_Hospital_hospitalUkey` FOREIGN KEY (`hospitalUKey`) REFERENCES `COMMON`.`HOSPITAL` (`hospitalUKey`);
+
+
+--select the database :COMMON
+USE CRS;
+
+--add hospitalId to BIRTH_REGISTER table
+
+ALTER TABLE DEATH_REGISTER ADD COLUMN `hospitalUKey` int(11);
+ALTER TABLE DEATH_REGISTER ADD CONSTRAINT `FK_DeathRegister_Hospital_hospitalUkey` FOREIGN KEY (`hospitalUKey`) REFERENCES `COMMON`.`HOSPITAL` (`hospitalUKey`);

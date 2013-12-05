@@ -4,7 +4,6 @@ import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.DateTimeUtils;
-import lk.rgd.common.util.PinAndNicUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
@@ -57,12 +56,13 @@ public class DeathDeclarationValidator {
         logger.debug("validating death register for adding");
         boolean primaryCondition = deathRegister.getDeath().getDateOfRegistration() == null ||
             deathRegister.getDeath().getDeathDivision() == null || deathRegister.getDeath().getDateOfDeath() == null ||
-            isEmptyString(deathRegister.getDeath().getPlaceOfDeath()) || isEmptyString(deathRegister.getDeclarant().getDeclarantAddress()) ||
+            //isEmptyString(deathRegister.getDeath().getPlaceOfDeath()) ||
+                isEmptyString(deathRegister.getDeclarant().getDeclarantAddress()) ||
             deathRegister.getDeclarant().getDeclarantSignDate() == null ||
             deathRegister.getNotifyingAuthority().getNotifyingAuthoritySignDate() == null ||
             isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityName()) ||
             isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
-            isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityPIN());
+            isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityPIN()) ||validateDeathPlace(deathRegister);
 
         //validating serial number and duplicate serial numbers
         validateSerialNumber(deathRegister.getDeath().getDeathSerialNo(), deathRegister.getDeath().getDeathDivision());
@@ -284,6 +284,27 @@ public class DeathDeclarationValidator {
                 bdDivision.getEnDivisionName() + "unable to add marriage notice",
                 ErrorCodes.POSSIBLE_DEATH_REGISTER_SERIAL_NUMBER_DUPLICATION);
         }
+    }
+
+    //to do edit --- for temporary fix
+    public boolean validateDeathPlace(DeathRegister deathRegister) {
+         logger.debug("validateDeathPlace");
+        if (deathRegister.getDeath().isDeathOccurAtaHospital()) {
+            if (deathRegister.getDeath().getDeathHospital().getHospitalUKey() == 0) {
+                logger.debug("deathRegister.getDeath().getDeathHospital().getHospitalUKey() {} ",deathRegister.getDeath().getDeathHospital().getHospitalUKey());
+                return true;
+            } else {
+                logger.debug("validateDeathPlace");
+                //deathRegister.getDeath().setPlaceOfDeath(deathRegister.getDeath().getDeathHospital().getHospitalNameEn());
+                 //logger.debug("deathRegister.getDeath().getPlaceOfDeath {}" ,deathRegister.getDeath().getPlaceOfDeath());
+                return false;
+            }
+        } else {
+            logger.debug("validateDeathPlace 2");
+            deathRegister.getDeath().setDeathHospital(null);
+            return isEmptyString(deathRegister.getDeath().getPlaceOfDeath());
+        }
+
     }
 
 }
