@@ -147,9 +147,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private int hospitalId;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-        CountryDAO countryDAO, DeathRegistrationService deathRegistrationService, AppParametersDAO appParametersDAO,
-        RaceDAO raceDAO, DeathAlterationService deathAlterationService, UserLocationDAO userLocationDAO, UserDAO userDAO,
-        LocationDAO locationDAO, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO, AssignmentDAO assignmentDAO, HospitalDAO hospitalDAO) {
+                               CountryDAO countryDAO, DeathRegistrationService deathRegistrationService, AppParametersDAO appParametersDAO,
+                               RaceDAO raceDAO, DeathAlterationService deathAlterationService, UserLocationDAO userLocationDAO, UserDAO userDAO,
+                               LocationDAO locationDAO, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO, AssignmentDAO assignmentDAO, HospitalDAO hospitalDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -278,7 +278,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String deathCertificate() {
         deathRegister = service.getWithTransientValuesById(idUKey, certificateSearch, user);
         if ((deathRegister.getStatus() != DeathRegister.State.ARCHIVED_CERT_GENERATED) && (deathRegister.getStatus()
-            != DeathRegister.State.ARCHIVED_ALTERED) && (deathRegister.getStatus() != DeathRegister.State.APPROVED)) {
+                != DeathRegister.State.ARCHIVED_ALTERED) && (deathRegister.getStatus() != DeathRegister.State.APPROVED)) {
             addActionError(getText("death.error.no.permission.print"));
             logger.debug("Current state of death certificate : {}", deathRegister.getStatus());
             return ERROR;
@@ -303,7 +303,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             if (!certificateSearch) {
                 //loading historical recodes
                 archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(death.getDeathDivision(),
-                    death.getDeathSerialNo(), idUKey, user);
+                        death.getDeathSerialNo(), idUKey, user);
                 //create changed bit set to display *  marks
                 if (archivedEntryList.size() > 0) {
                     displayChangesInStarMark(archivedEntryList);
@@ -347,10 +347,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         initPermissionForApprovalAndPrint();
         if (state != null) {
             deathApprovalAndPrintList = service.getPaginatedListForStateByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
-                pageNo, noOfRows, state, user);
+                    pageNo, noOfRows, state, user);
         } else {
             deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
-                pageNo, noOfRows, user);
+                    pageNo, noOfRows, user);
         }
         paginationHandler(deathApprovalAndPrintList.size());
         previousFlag = false;
@@ -378,42 +378,42 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                     if (deathDivisionId == 0) {
                         //for all death divisions
                         deathApprovalAndPrintList = service.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRange(
-                            dsDivisionId, fromDate, endDate, true, pageNo, noOfRows, user);
+                                dsDivisionId, fromDate, endDate, true, pageNo, noOfRows, user);
                     } else {
                         deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRange(
-                            bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
+                                bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
                     }
                 } else {
                     if (deathDivisionId == 0) {
                         //for all death divisions
                         deathApprovalAndPrintList = service.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRangeAndState(
-                            dsDivisionId, fromDate, endDate, true, pageNo, noOfRows, state, user);
+                                dsDivisionId, fromDate, endDate, true, pageNo, noOfRows, state, user);
                     } else {
                         deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRangeAndState(
-                            bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, state, user);
+                                bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, state, user);
                     }
                 }
                 addActionMessage(getText("message.search.results.form.to", new String[]
-                    {DateTimeUtils.getISO8601FormattedString(fromDate), DateTimeUtils.getISO8601FormattedString(endDate)}));
+                        {DateTimeUtils.getISO8601FormattedString(fromDate), DateTimeUtils.getISO8601FormattedString(endDate)}));
 
             } else {
                 if (currentStatus == 0) {
                     if (deathDivisionId != 0) {
                         //search by state with all state with in a deathDivision
                         deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),
-                            pageNo, noOfRows, user);
+                                pageNo, noOfRows, user);
                     } else {
                         deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
-                            pageNo, noOfRows, user);
+                                pageNo, noOfRows, user);
                     }
                 } else {
                     if (deathDivisionId != 0) {
                         //search by state with a state with in a deathDivision
                         deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),
-                            pageNo, noOfRows, state, user);
+                                pageNo, noOfRows, state, user);
                     } else {
                         deathApprovalAndPrintList = service.getPaginatedListForStateByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
-                            pageNo, noOfRows, state, user);
+                                pageNo, noOfRows, state, user);
                     }
                 }
             }
@@ -495,19 +495,19 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private void selectDropDownListForEditMode(DeathRegister deathRegister) {
         // populate death person race
         deathPersonRace = deathRegister.getDeathPerson().getDeathPersonRace() != null ?
-            deathRegister.getDeathPerson().getDeathPersonRace().getRaceId() : 0;
+                deathRegister.getDeathPerson().getDeathPersonRace().getRaceId() : 0;
         // populate death person address related lists
         BDDivision bddivision = deathRegister.getDeath().getDeathDivision();
         dsDivisionId = bddivision.getDsDivision().getDsDivisionUKey();
         deathDivisionId = bddivision.getBdDivisionUKey();
         deathDistrictId = bddivision.getDistrict().getDistrictUKey();
         gnDivisionId = deathRegister.getDeathPerson().getGnDivision() != null ?
-            deathRegister.getDeathPerson().getGnDivision().getGnDivisionUKey() : 0;
+                deathRegister.getDeathPerson().getGnDivision().getGnDivisionUKey() : 0;
         DSDivision dsDivisionPermanentAddress = deathRegister.getDeathPerson().getDsDivisionOfPermanentAddress();
         deathPersonPermenentAddressDistrictId = (dsDivisionPermanentAddress != null) ?
-            dsDivisionPermanentAddress.getDistrict().getDistrictUKey() : 0;
+                dsDivisionPermanentAddress.getDistrict().getDistrictUKey() : 0;
         deathPersonPermenentAddressDSDivisionId = (dsDivisionPermanentAddress != null) ?
-            deathRegister.getDeathPerson().getDsDivisionOfPermanentAddress().getDsDivisionUKey() : 0;
+                deathRegister.getDeathPerson().getDsDivisionOfPermanentAddress().getDsDivisionUKey() : 0;
         allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(deathPersonPermenentAddressDistrictId, language, user);
     }
 
@@ -530,7 +530,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public String approveDeath() {
         logger.debug("requested to approve Death Declaration with idUKey : {} and current state : {} ", idUKey,
-            currentStatus);
+                currentStatus);
         approveDeathRegistration();
         if (warnings != null && warnings.size() > 0) {
             return "warning";
@@ -539,10 +539,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         if (deathDivisionId != 0) {
             deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(
-                deathDivisionId), pageNo, noOfRows, user);
+                    deathDivisionId), pageNo, noOfRows, user);
         } else {
             deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         }
 
         initPermissionForApprovalAndPrint();
@@ -561,7 +561,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 case ErrorCodes.PRS_DUPLICATE_NIC:
                     final DeathRegister dr = service.getById(idUKey, user);
                     addActionError(getText("error.death.duplicateNic.fail",
-                        new String[]{Long.toString(dr.getDeath().getDeathSerialNo()), dr.getDeathPerson().getDeathPersonPINorNIC()}));
+                            new String[]{Long.toString(dr.getDeath().getDeathSerialNo()), dr.getDeathPerson().getDeathPersonPINorNIC()}));
                     break;
                 case ErrorCodes.INVALID_STATE_FOR_APPROVE_DEATH_REGISTRATION:
                     break;
@@ -592,7 +592,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                     case ErrorCodes.PRS_DUPLICATE_NIC:
                         final DeathRegister dr = service.getById(idUKey, user);
                         addActionError(getText("error.death.duplicateNic.fail",
-                            new String[]{Long.toString(dr.getDeath().getDeathSerialNo()), dr.getDeathPerson().getDeathPersonPINorNIC()}));
+                                new String[]{Long.toString(dr.getDeath().getDeathSerialNo()), dr.getDeathPerson().getDeathPersonPINorNIC()}));
                         break;
                     default:
                         addActionError(getText("error.death.registration.approval.fail", new String[]{Long.toString(idUKey)}));
@@ -644,10 +644,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         if (deathDivisionId != 0) {
             deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.
-                getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
+                    getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
         } else {
             deathApprovalAndPrintList = service.
-                getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+                    getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         }
         initPermissionForApprovalAndPrint();
         populate();
@@ -710,10 +710,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                         deathRegister.setOriginalDCPlaceOfIssue(locationDAO.getLocation(locationId));
                         service.markDeathCertificateAsPrinted(deathRegister, user);
                         addActionMessage(getText("message.mark.as.print.success",
-                            new String[]{Long.toString(deathRegister.getDeath().getDeathSerialNo())}));
+                                new String[]{Long.toString(deathRegister.getDeath().getDeathSerialNo())}));
                     } else {
                         addActionError(getText("error.mark.as.print",
-                            new String[]{Long.toString(deathRegister.getDeath().getDeathSerialNo())}));
+                                new String[]{Long.toString(deathRegister.getDeath().getDeathSerialNo())}));
                         logger.debug("For the first time Death certificate print issued location and user must be filled");
                     }
                 } catch (CRSRuntimeException e) {
@@ -722,7 +722,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             } else if (deathRegister != null && deathRegister.getStatus() == DeathRegister.State.ARCHIVED_CERT_GENERATED) {
                 logger.debug("already marked as printed death register record : idUKey {}", idUKey);
                 addActionMessage(getText("message.already.marked.as.print",
-                    new String[]{Long.toString(deathRegister.getDeath().getDeathSerialNo())}));
+                        new String[]{Long.toString(deathRegister.getDeath().getDeathSerialNo())}));
             }
             if (pageNo == 0) {
                 pageNo = 1;
@@ -731,10 +731,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
             if (deathDivisionId != 0) {
                 deathApprovalAndPrintList = service.getPaginatedListForAll(
-                    bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
+                        bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
             } else {
                 deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(
-                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+                        dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
             }
         }
 
@@ -795,7 +795,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             case ErrorCodes.PRS_DUPLICATE_NIC:
                 final DeathRegister dr = service.getById(idUKey, user);
                 addActionError(getText("error.death.duplicateNic.fail",
-                    new String[]{Long.toString(dr.getDeath().getDeathSerialNo()), dr.getDeathPerson().getDeathPersonPINorNIC()}));
+                        new String[]{Long.toString(dr.getDeath().getDeathSerialNo()), dr.getDeathPerson().getDeathPersonPINorNIC()}));
                 break;
             case ErrorCodes.UNABLE_TO_APPROVE_LATE_DEATH_REGISTRATION_NEED_HIGHER_APPROVAL_THAN_DR:
                 addActionError(getText("error.death.registration.approval.fail.need.higher.approval", new String[]{Long.toString(idUKey)}));
@@ -896,8 +896,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 deathPersonRace = deathPerson.getDeathPersonRace().getRaceId();
             }
         }
-        //pupulate Hospital
-        hospitalList =  hospitalDAO.getHospitalsbyDSDivision(language, dsDivisionId, user);
 
     }
 
@@ -941,10 +939,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         setCountryList(countryDAO.getCountries(language));
         setRaceList(raceDAO.getRaces(language));
         deathDistrictId = commonUtil.findDefaultListValue(districtList, deathDistrictId);
-       // deathDivisionId = commonUtil.findDivisionList(dsDivisionList, deathDivisionId, deathDistrictId, AppConstants.DS_DIVISION, user, language);
+        // deathDivisionId = commonUtil.findDivisionList(dsDivisionList, deathDivisionId, deathDistrictId, AppConstants.DS_DIVISION, user, language);
         //deathDivisionId = commonUtil.findDivisionList(dsDivisionList, dsDivisionId, deathDistrictId, AppConstants.DS_DIVISION, user, language);
 
-        //deathDivisionId = 1;
+        //deathDivisionId = 72;
         //hospitalList =  hospitalDAO.getHospitalsbyDSDivision(language, deathDivisionId, user);
 
     }
@@ -969,13 +967,15 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         // populate all district list, DS Division list and GN Division list accordingly selected divisions
         allDistrictList = districtDAO.getAllDistrictNames(language, user);
         int allDistrictUKey = deathPersonPermenentAddressDistrictId != 0 ? deathPersonPermenentAddressDistrictId :
-            allDistrictList.keySet().iterator().next();
+                allDistrictList.keySet().iterator().next();
         allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(allDistrictUKey, language, user);
 
         try {
             int dsDivisionUKey = deathPersonPermenentAddressDSDivisionId != 0 ? deathPersonPermenentAddressDSDivisionId :
-                allDSDivisionList.keySet().iterator().next();
-            gnDivisionList = gnDivisionDAO.getGNDivisionNames(dsDivisionUKey, language, user);          
+                    allDSDivisionList.keySet().iterator().next();
+            gnDivisionList = gnDivisionDAO.getGNDivisionNames(dsDivisionUKey, language, user);
+            //pupulate Hospital
+            hospitalList = hospitalDAO.getHospitalsbyDSDivision(language, dsDivisionId, user);
 
 
         } catch (RGDRuntimeException e) {
@@ -985,9 +985,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     private void populateRegistrars(DeathRegister ddf) {
         if (!addNewMode && (ddf.getDeath().getDeathDivision() == null ||
-            ddf.getDeath().getDeathDivision().getBdDivisionUKey() != deathDivisionId)) {
+                ddf.getDeath().getDeathDivision().getBdDivisionUKey() != deathDivisionId)) {
             List<Assignment> deathRegistrarsAssigned = assignmentDAO.getAllAssignmentsByBDorMRDivisionAndType(
-                deathDivisionId, Assignment.Type.DEATH, true, false);
+                    deathDivisionId, Assignment.Type.DEATH, true, false);
             if (deathRegistrarsAssigned.size() > 0) {
                 // Get the first registrar from the list.
                 Registrar registrar = deathRegistrarsAssigned.get(0).getRegistrar();
@@ -1005,14 +1005,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
-    public String searchRejectedDeathRecords(){
-        if(deathDistrictId > 0 && dsDivisionId == 0){
+    public String searchRejectedDeathRecords() {
+        if (deathDistrictId > 0 && dsDivisionId == 0) {
             /* District has selected. But, no DSDivision selected. */
             searchResultList = service.getAllRejectedDeathsByDistrict(districtDAO.getDistrict(deathDistrictId), user);
-        }else if(deathDistrictId > 0 && dsDivisionId > 0){
+        } else if (deathDistrictId > 0 && dsDivisionId > 0) {
             /* Both District and DSDivision has selected */
             searchResultList = service.getAllRejectedDeathsByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), user);
-        }else {
+        } else {
             /* Nothing selected. (Initial access) */
             searchResultList = service.getAllRejectedDeathsByUser(user);
         }
