@@ -318,16 +318,16 @@
     </bean>
 
     <!--Solr index manager-->
-    <bean id="solrIndexManager" class="lk.rgd.common.core.index.SolrIndexManager">
+    <!--<bean id="solrIndexManager" class="lk.rgd.common.core.index.SolrIndexManager">
         <constructor-arg value="http://localhost:9443/solr/births"/>
         <constructor-arg value="http://localhost:9443/solr/prs"/>
         <constructor-arg value="http://localhost:9443/solr/deaths"/>
-    </bean>
-    <!--<bean id="solrIndexManager" class="lk.rgd.common.core.index.SolrIndexManager">
+    </bean>-->
+    <bean id="solrIndexManager" class="lk.rgd.common.core.index.SolrIndexManager">
         <constructor-arg value="http://localhost:8080/solr/births"/>
         <constructor-arg value="http://localhost:8080/solr/prs"/>
         <constructor-arg value="http://localhost:8080/solr/deaths"/>
-    </bean>-->
+    </bean>
     <bean id="birthRecordsIndexer" class="lk.rgd.crs.core.service.BirthRecordsIndexer">
         <constructor-arg ref="solrIndexManager"/>
         <constructor-arg ref="birthDeclarationDAOImpl"/>

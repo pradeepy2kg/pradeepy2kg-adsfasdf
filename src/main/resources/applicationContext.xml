@@ -9,28 +9,28 @@
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
        default-init-method="init" default-destroy-method="destroy">
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <!--bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost/?useUnicode=true&amp;characterEncoding=UTF-8&amp;tcpKeepAlive=true&amp;autoReconnect=true"/>
-        <property name="username" value="root"/>
-        <property name="password" value=""/>
+        <property name="username" value="epop"/>
+        <property name="password" value="epop"/>
         <property name="initialSize" value="10"/>
         <property name="maxActive" value="50"/>
-        <!--<\!\-\-property name="validationQuery" value="select count(*) from COMMON.COUNTRIES"/\-\- >-->
+        <\!\-\-property name="validationQuery" value="select count(*) from COMMON.COUNTRIES"/\-\- >
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter">
             <bean
-                    class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="database" value="MYSQL"/>
                 <property name="showSql" value="false"/>
             </bean>
         </property>
-    </bean>
+    </bean-->
 
-    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver"/>
         <property name="url" value="jdbc:derby://localhost:1527/unit-testing-jpa;create=true"/>
         <property name="username" value="epop"/>
@@ -46,7 +46,7 @@
             </bean>
         </property>
         <property name="persistenceUnitName" value="punit"/>
-    </bean>-->
+    </bean>
 
     <!-- DO NOT define any Spring beans here - instead use the included spring.xml below -->
     <import resource="spring.xml"/>
