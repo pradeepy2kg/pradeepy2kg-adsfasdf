@@ -15,7 +15,7 @@
             $(".no_hospital").show();
         }
 
-        $('input[type="radio"]').click(function() {
+        $('input[name="death.deathOccurAtaHospital"]').click(function() {
             if ($(this).attr("value") == "true") {
                 $(".no_hospital").hide();
                 $(".yes_hospital").show();
@@ -28,6 +28,8 @@
                 $("#placeOfDeathInEnglish").val('');
             }
         });
+
+        
     });
 </script>
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
@@ -63,6 +65,7 @@ $(function() {
         $('#anAbortionTakenPlaceNofalse').attr('checked', false);
         $('#days_before_abortion_or_birth').val('');
     });
+
 });
 
 $(function () {
@@ -332,6 +335,21 @@ function validate() {
      if (isFieldEmpty(domObject)) {
      errormsg = errormsg + "\n" + document.getElementById('error3').value;
      }*/
+
+     //place of Death
+
+    if ($('#deathOccurAthospitaltrue').is(':checked')) {
+        domObject = document.getElementById("hospitalId");
+        if ($("select#hospitalId").attr("value") == 0) {
+            errormsg = errormsg + "\n" + document.getElementById('error3').value;
+        }
+    }
+
+    if ($('#deathOccurAthospitalfalse').is(':checked')) {
+        domObject = document.getElementById("placeOfDeath");
+        isEmpty(domObject, "", 'error3');
+    }
+
     domObject = document.getElementById('placeOfBurial');
     if (isFieldEmpty(domObject)) {
         errormsg = errormsg + "\n" + document.getElementById('error4').value;
@@ -535,6 +553,13 @@ function maxLengthCalculate(id, max, divId) {
     else {
         document.getElementById(divId).innerHTML = "";
     }
+}
+//TO DO: tempoary
+function setDeathPlace(){
+        var e = document.getElementById("hospitalId");
+        var text = e.options[e.selectedIndex].text;
+        $("textarea#placeOfDeath").val(text);     // to do edit
+
 }
 </script>
 
@@ -793,7 +818,7 @@ function maxLengthCalculate(id, max, divId) {
         </div>
         <div class="yes_hospital">
             <s:select id="hospitalId" name="death.deathHospital.hospitalUKey" list="hospitalList"
-                      headerKey="0" headerValue="%{getText('select_hospital.label')}"
+                      headerKey="0" headerValue="%{getText('select_hospital.label')}" onchange="setDeathPlace()"
                       cssStyle="float:left;  width:285px; margin:2px 5px;"/>
         </div>
 
